@@ -149,8 +149,6 @@ class _LoginHomeState extends State<LoginHome> {
           SmartDialog.show(
               widget: HintDialog(
                   title: '提示', subTitle: value['msg']));
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const LoginHome()));
         }
       } else {
         SmartDialog.showToast('', widget: const CustomToast('出现异常了'));

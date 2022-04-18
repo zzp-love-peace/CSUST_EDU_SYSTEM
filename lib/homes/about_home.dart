@@ -1,5 +1,4 @@
 import 'package:csust_edu_system/widgets/custom_toast.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -51,7 +50,7 @@ class AboutHome extends StatelessWidget {
               ),
               const Text(
                 'https://github.com/zzp-love-peace/CSUST_EDU_SYSTEM',
-                style: TextStyle(color: Colors.blueGrey),
+                style: TextStyle(color: Colors.blueGrey, fontSize: 12),
               ),
               const SizedBox(
                 height: 8,
@@ -68,11 +67,11 @@ class AboutHome extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 15,
+                height: 18,
               ),
               const Text('本项目使用flutter开发且开源 欢迎star和fork'),
               const SizedBox(
-                height: 20,
+                height: 25,
               ),
               const Text(
                 '关于我们',
@@ -81,7 +80,7 @@ class AboutHome extends StatelessWidget {
               const Padding(
                   padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                   child: Text(
-                      '本app由长沙理工大学计通学院凡路实验移动开发部20级部长开发，对app有任何的建议，都可以反馈给我们。非常期待您推荐给身边的同学。')),
+                      '本app由长沙理工大学计通学院凡路实验室移动开发部20级部长开发，对app有任何的建议，都可以反馈给我们。非常期待您推荐给身边的同学。')),
               const Spacer(),
               const Text(
                 'made in zzp',

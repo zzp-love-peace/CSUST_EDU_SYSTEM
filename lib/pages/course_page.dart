@@ -312,6 +312,7 @@ class _CoursePageState extends State<CoursePage>
               ? Colors.lightBlue
               : Colors.lightBlueAccent.withOpacity(0.5)),
       child: InkWell(
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
         onTap: () {
           SmartDialog.show(
               widget: _courseDialog(name, place, teacher, time),

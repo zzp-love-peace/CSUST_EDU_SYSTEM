@@ -118,7 +118,7 @@ class _GuideHomeState extends State<GuideHome> {
                 StuInfo.cookie, DateInfo.nowTerm, DateInfo.totalWeek);
             _saveData(allCourseData);
             Navigator.of(context).pushReplacement(PageRouteBuilder(
-                transitionDuration: const Duration(milliseconds: 1200),
+                transitionDuration: const Duration(milliseconds: 800),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return ScaleTransition(
@@ -134,7 +134,7 @@ class _GuideHomeState extends State<GuideHome> {
             List data = json.decode(list);
             SmartDialog.showToast('', widget: const CustomToast('出现异常了'));
             Navigator.of(context).pushReplacement(PageRouteBuilder(
-                transitionDuration: const Duration(milliseconds: 1200),
+                transitionDuration: const Duration(milliseconds: 800),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   return ScaleTransition(

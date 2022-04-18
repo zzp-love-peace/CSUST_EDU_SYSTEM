@@ -1,10 +1,16 @@
 import 'package:csust_edu_system/homes/guide_home.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'homes/login_home.dart';
 
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
   runApp(const MyApp());
 }
 
@@ -20,6 +26,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+        cupertinoOverrideTheme: const CupertinoThemeData(
+            brightness: Brightness.light
+        ),
       ),
       home: const GuideHome(),
       navigatorObservers: [FlutterSmartDialog.observer],

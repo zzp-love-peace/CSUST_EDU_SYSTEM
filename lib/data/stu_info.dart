@@ -20,6 +20,7 @@ class StuInfo {
   static initData(Map loginData) {
     token = loginData['token'];
     cookie = loginData['cookie'];
+    print(token);
     name = loginData['stuInfo']['name'];
     stuId = loginData['stuInfo']['stuId'];
     college = loginData['stuInfo']['college'];

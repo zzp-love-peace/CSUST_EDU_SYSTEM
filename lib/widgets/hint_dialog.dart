@@ -14,7 +14,7 @@ class HintDialog extends StatelessWidget {
       child: Container(
           width: double.infinity,
           height: 150,
-          margin: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+          margin: const EdgeInsets.fromLTRB(40, 0, 40, 0),
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.9),
             borderRadius: BorderRadius.circular(20),

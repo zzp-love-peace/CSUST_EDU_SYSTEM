@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GradePage extends StatefulWidget {
   const GradePage({Key? key}) : super(key: key);
@@ -65,70 +66,70 @@ class _GradePageState extends State<GradePage> {
     return _point == 0
         ? Container()
         : Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                '平均绩点:',
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 3),
-                child: Text(
-                  _point.toStringAsFixed(2),
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ),
-              const SizedBox(
-                width: 30,
-              )
-            ],
-          );
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Text(
+          '平均绩点:',
+          style: TextStyle(fontSize: 16),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 3),
+          child: Text(
+            _point.toStringAsFixed(2),
+            style: const TextStyle(fontSize: 16),
+          ),
+        ),
+        const SizedBox(
+          width: 30,
+        )
+      ],
+    );
   }
 
   Widget _gradeCenterLayout() {
     return _gradeList.isNotEmpty
         ? Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  children: ListTile.divideTiles(
-                          context: context, tiles: _getGradeItem())
-                      .toList(),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: const [
-                  Text('Tip:点击学科列表获取平时成绩', style: TextStyle(fontSize: 10),),
-                  SizedBox(
-                    width: 10,
-                  )
-                ],
-              )
-            ],
-          )
+      children: [
+        Expanded(
+          child: ListView(
+            children: ListTile.divideTiles(
+                context: context, tiles: _getGradeItem())
+                .toList(),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const [
+            Text('Tip:点击学科列表获取平时成绩', style: TextStyle(fontSize: 10),),
+            SizedBox(
+              width: 10,
+            )
+          ],
+        )
+      ],
+    )
         : Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/no_message_grade.png'),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  '暂无数据',
-                  style: TextStyle(fontSize: 16, color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 80,
-                ),
-              ],
-            ),
-          );
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset('assets/images/no_message_grade.png'),
+          const SizedBox(
+            height: 20,
+          ),
+          const Text(
+            '暂无数据',
+            style: TextStyle(fontSize: 16, color: Colors.black),
+          ),
+          const SizedBox(
+            height: 80,
+          ),
+        ],
+      ),
+    );
   }
 
   List<Widget> _getGradeItem() {
@@ -175,37 +176,58 @@ class _GradePageState extends State<GradePage> {
     for (var element in _gradeList) {
       sum += double.parse(element['xuefen']);
       sumPointXScore +=
-          (double.parse(element['xuefen']) * double.parse(element['point']));
+      (double.parse(element['xuefen']) * double.parse(element['point']));
     }
     return sumPointXScore / sum;
   }
 
-  _queryScore(String term) {
+  _queryScore(String term) async {
+    print(222);
     if (StuInfo.token.isEmpty && StuInfo.cookie.isEmpty) return;
-    HttpManager().queryScore(StuInfo.token, StuInfo.cookie, term).then((value) {
+    var value = await HttpManager().queryScore(
+        StuInfo.token, StuInfo.cookie, term);
+    if (value.isNotEmpty) {
       print(value);
-      if (value.isNotEmpty) {
-        if (value['code'] == 200) {
-          setState(() {
-            _gradeList = value['data'];
-            _point = _getSumPoint();
-          });
-        } else {
-          setState(() {
-            _gradeList = [];
-            _point = 0;
-          });
+      if (value['code'] == 200) {
+        setState(() {
+          _gradeList = value['data'];
+          _point = _getSumPoint();
+        });
+      } else if (value['code'] == 401 && value['msg'] == '客户端数量达到上限') {
+        print(1111);
+        var prefs = await SharedPreferences.getInstance();
+        var username = prefs.getString("username");
+        var password = prefs.getString("password");
+        if (username != null && password != null) {
+          await HttpManager().login(username, password);
+          var v = await HttpManager().queryScoreInfo(
+              StuInfo.token, StuInfo.cookie, term);
+          print(v);
+          if (v.isNotEmpty) {
+            if (v['code'] == 200) {
+              setState(() {
+                _gradeList = v['data'];
+                _point = _getSumPoint();
+              });
+            }
+          }
         }
-      } else {
-        SmartDialog.showToast('', widget: const CustomToast('获取成绩异常'));
       }
-    });
+      else {
+        setState(() {
+          _gradeList = [];
+          _point = 0;
+        });
+      }
+    } else {
+      SmartDialog.showToast('', widget: const CustomToast('获取成绩异常'));
+    }
   }
 
   Future<Map> _queryScoreInfo(String url) async {
     var result = {};
     var value =
-        await HttpManager().queryScoreInfo(StuInfo.token, StuInfo.cookie, url);
+    await HttpManager().queryScoreInfo(StuInfo.token, StuInfo.cookie, url);
     if (value.isNotEmpty) {
       if (value['code'] == 200) {
         result = value['data'];
@@ -317,8 +339,7 @@ class _ExamData {
   // 期末成绩比例
   final String finalGradePer;
 
-  const _ExamData(
-      this.courseName,
+  const _ExamData(this.courseName,
       this.score,
       this.normalGrade,
       this.normalGradePer,

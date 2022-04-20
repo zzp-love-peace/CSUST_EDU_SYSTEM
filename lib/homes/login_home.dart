@@ -244,7 +244,7 @@ class _UsernameTextFieldState extends State<UsernameTextField> {
       decoration: const InputDecoration(
         border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10))),
-        labelText: "用户名",
+        labelText: "学号",
         errorText: null,
       ),
     );

@@ -60,30 +60,7 @@ class _CoursePageState extends State<CoursePage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MyDatePicker(
-                    callBack: (term) {
-                      _term = term;
-                      try {
-                        HttpManager()
-                            .getAllCourse(StuInfo.token, StuInfo.cookie, _term,
-                                DateInfo.totalWeek)
-                            .then((value) {
-                          widget._courseData =
-                              CourseUtil.changeCourseDataList(value);
-                          if (_term != DateInfo.nowTerm) {
-                            _weekNum = 1;
-                          } else {
-                            _weekNum = DateInfo.nowWeek;
-                          }
-                          _pageController.jumpToPage(_weekNum - 1);
-                          _pageList = _initCourseLayout();
-                          setState(() {});
-                        });
-                      } on Exception {
-                        SmartDialog.showToast('',
-                            widget: const CustomToast('获取学期出错了'));
-                      }
-                    },
-                  ),
+                    callBack: _datePickerCallback,),
                   Expanded(child: _weekBelowAppBar())
                 ],
               ))),
@@ -188,6 +165,7 @@ class _CoursePageState extends State<CoursePage>
       } else {
         stringOfDate = "";
       }
+      bool isToday = today[1] == monthOfSunday && today[2] == date && _term == DateInfo.nowTerm;
       switch (i) {
         case 0:
           widget = isNowTerm
@@ -198,43 +176,43 @@ class _CoursePageState extends State<CoursePage>
           widget = _weekLayoutItem(
             '周日',
             stringOfDate,
-            today[1] == monthOfSunday && today[2] == date,
+            isToday,
           );
           break;
         case 2:
           widget = _weekLayoutItem(
             '周一',
             stringOfDate,
-            today[1] == monthOfSunday && today[2] == date,
+            isToday,
           );
           break;
         case 3:
           widget = _weekLayoutItem('周二', stringOfDate,
-              today[1] == monthOfSunday && today[2] == date);
+              isToday);
           break;
         case 4:
           widget = _weekLayoutItem('周三', stringOfDate,
-              today[1] == monthOfSunday && today[2] == date);
+              isToday);
           break;
         case 5:
           widget = _weekLayoutItem(
             '周四',
             stringOfDate,
-            today[1] == monthOfSunday && today[2] == date,
+            isToday,
           );
           break;
         case 6:
           widget = _weekLayoutItem(
             '周五',
             stringOfDate,
-            today[1] == monthOfSunday && today[2] == date,
+            isToday,
           );
           break;
         case 7:
           widget = _weekLayoutItem(
             '周六',
             stringOfDate,
-            today[1] == monthOfSunday && today[2] == date,
+            isToday,
           );
           break;
         default:
@@ -291,7 +269,7 @@ class _CoursePageState extends State<CoursePage>
           value['address'],
           value['teacher'],
           value['time'],
-          i == (index % 8) && courseDataIndex + 1 == DateInfo.nowWeek);
+          i == (index % 8) && courseDataIndex + 1 == DateInfo.nowWeek && _term == DateInfo.nowTerm);
     }
   }
 
@@ -426,5 +404,29 @@ class _CoursePageState extends State<CoursePage>
                 ],
               ))),
     );
+  }
+
+  _datePickerCallback(term) {
+    _term = term;
+    try {
+      HttpManager()
+          .getAllCourse(StuInfo.token, StuInfo.cookie, _term,
+          DateInfo.totalWeek)
+          .then((value) {
+        widget._courseData =
+            CourseUtil.changeCourseDataList(value);
+        if (_term != DateInfo.nowTerm) {
+          _weekNum = 1;
+        } else {
+          _weekNum = DateInfo.nowWeek;
+        }
+        _pageController.jumpToPage(_weekNum - 1);
+        _pageList = _initCourseLayout();
+        setState(() {});
+      });
+    } on Exception {
+      SmartDialog.showToast('',
+          widget: const CustomToast('获取学期出错了'));
+    }
   }
 }

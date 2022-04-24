@@ -6,7 +6,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 class AboutHome extends StatelessWidget {
   const AboutHome({Key? key}) : super(key: key);
 
-  final String _version = "内测版";
+  final String _version = "1.0.0";
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class AboutHome extends StatelessWidget {
               const Padding(
                   padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                   child: Text(
-                      '本app由长沙理工大学计通学院凡路实验室移动开发部20级部长开发，对app有任何的建议，都可以反馈给我们。非常期待您推荐给身边的同学。')),
+                      '本app由长沙理工大学计通学院凡路实验室移动开发部20级部长兼IOS俱乐部成员开发，对app有任何的建议，都可以反馈给我们。非常期待您推荐给身边的同学。')),
               const Spacer(),
               const Text(
                 'made by zzp',

@@ -58,7 +58,8 @@ class _BottomTabHomeState extends State<BottomTabHome> {
                   TabData(iconData: Icons.quiz, title: "考试"),
                   TabData(iconData: Icons.person, title: "我的")
                 ],
-                textColor: Colors.black.withOpacity(0.7))),
+                textColor: Colors.black.withOpacity(0.7))
+        ),
         onWillPop: _isExit);
   }
 

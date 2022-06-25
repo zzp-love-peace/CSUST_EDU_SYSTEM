@@ -38,7 +38,7 @@ class _MyDatePickerState extends State<MyDatePicker> with AutomaticKeepAliveClie
           });
         } else {
           if (kDebugMode) {
-            print('获取学期出错了');
+            print('获取所有学期出错了');
           }
         }
       }

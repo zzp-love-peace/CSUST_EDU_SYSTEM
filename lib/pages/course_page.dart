@@ -17,8 +17,7 @@ class CoursePage extends StatefulWidget {
   State<CoursePage> createState() => _CoursePageState();
 }
 
-class _CoursePageState extends State<CoursePage>
-    with SingleTickerProviderStateMixin {
+class _CoursePageState extends State<CoursePage> {
   int _weekNum = DateInfo.nowWeek;
   String _term = DateInfo.nowTerm;
   late PageController _pageController;
@@ -60,7 +59,8 @@ class _CoursePageState extends State<CoursePage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MyDatePicker(
-                    callBack: _datePickerCallback,),
+                    callBack: _datePickerCallback,
+                  ),
                   Expanded(child: _weekBelowAppBar())
                 ],
               ))),
@@ -165,54 +165,57 @@ class _CoursePageState extends State<CoursePage>
       } else {
         stringOfDate = "";
       }
-      bool isToday = today[1] == monthOfSunday && today[2] == date && _term == DateInfo.nowTerm;
+      bool isToday = today[1] == monthOfSunday &&
+          today[2] == date &&
+          _term == DateInfo.nowTerm;
       switch (i) {
         case 0:
           widget = isNowTerm
-              ? _weekLayoutItem(monthOfSunday.toString(), '月', false)
-              : _weekLayoutItem('', '', false);
+              ? _WeekLayoutItem(
+                  title: monthOfSunday.toString(), date: '月', isToday: false)
+              : const _WeekLayoutItem(title: '', date: '', isToday: false);
           break;
         case 1:
-          widget = _weekLayoutItem(
-            '周日',
-            stringOfDate,
-            isToday,
+          widget = _WeekLayoutItem(
+            title: '周日',
+            date: stringOfDate,
+            isToday: isToday,
           );
           break;
         case 2:
-          widget = _weekLayoutItem(
-            '周一',
-            stringOfDate,
-            isToday,
+          widget = _WeekLayoutItem(
+            title: '周一',
+            date: stringOfDate,
+            isToday: isToday,
           );
           break;
         case 3:
-          widget = _weekLayoutItem('周二', stringOfDate,
-              isToday);
+          widget = _WeekLayoutItem(
+              title: '周二', date: stringOfDate, isToday: isToday);
           break;
         case 4:
-          widget = _weekLayoutItem('周三', stringOfDate,
-              isToday);
+          widget = _WeekLayoutItem(
+              title: '周三', date: stringOfDate, isToday: isToday);
           break;
         case 5:
-          widget = _weekLayoutItem(
-            '周四',
-            stringOfDate,
-            isToday,
+          widget = _WeekLayoutItem(
+            title: '周四',
+            date: stringOfDate,
+            isToday: isToday,
           );
           break;
         case 6:
-          widget = _weekLayoutItem(
-            '周五',
-            stringOfDate,
-            isToday,
+          widget = _WeekLayoutItem(
+            title: '周五',
+            date: stringOfDate,
+            isToday: isToday,
           );
           break;
         case 7:
-          widget = _weekLayoutItem(
-            '周六',
-            stringOfDate,
-            isToday,
+          widget = _WeekLayoutItem(
+            title: '周六',
+            date: stringOfDate,
+            isToday: isToday,
           );
           break;
         default:
@@ -223,18 +226,87 @@ class _CoursePageState extends State<CoursePage>
     return result;
   }
 
-  Widget _weekLayoutItem(
-    String title,
-    String date,
-    bool isToday,
-  ) {
+  Widget _getCourseData(int index, int courseDataIndex) {
+    if (index % 8 == 0) {
+      int t = (index ~/ 8) * 2 + 1;
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [Text(t.toString()), Text((t + 1).toString())],
+        ),
+      );
+    }
+    int i = (DateUtil.date2Week(DateInfo.nowDate) + 1) % 8;
+    bool isToday = i == (index % 8) &&
+        courseDataIndex + 1 == DateInfo.nowWeek &&
+        _term == DateInfo.nowTerm;
+    if (widget._courseData[courseDataIndex][index ~/ 8][index % 8] == null) {
+      return _TransactionItem(isToday: isToday);
+    } else {
+      var value = widget._courseData[courseDataIndex][index ~/ 8][index % 8];
+      return _CourseItem(
+          name: value['courseName'],
+          place: value['address'],
+          teacher: value['teacher'],
+          time: value['time'],
+          isToday: isToday);
+    }
+  }
+
+  List<Widget> _gridCourseList(int index) {
+    List<Widget> result = [];
+    for (int i = 0; i < 40; i++) {
+      result.add(_getCourseData(i, index));
+    }
+    return result;
+  }
+
+  _datePickerCallback(term) {
+    _term = term;
+    try {
+      HttpManager()
+          .getAllCourse(
+              StuInfo.token, StuInfo.cookie, _term, DateInfo.totalWeek)
+          .then((value) {
+        widget._courseData = CourseUtil.changeCourseDataList(value);
+        if (_term != DateInfo.nowTerm) {
+          _weekNum = 1;
+        } else {
+          _weekNum = DateInfo.nowWeek;
+        }
+        _pageController.jumpToPage(_weekNum - 1);
+        _pageList = _initCourseLayout();
+        setState(() {});
+      });
+    } on Exception {
+      SmartDialog.showToast('', widget: const CustomToast('获取学期出错了'));
+    }
+  }
+}
+
+class _WeekLayoutItem extends StatelessWidget {
+  final bool isToday;
+  final String title;
+  final String date;
+
+  const _WeekLayoutItem(
+      {Key? key,
+      required this.isToday,
+      required this.title,
+      required this.date})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
         flex: 1,
         child: Container(
           margin: const EdgeInsets.fromLTRB(0, 0, 3, 3),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: isToday ? Colors.blue.withOpacity(0.2) : Colors.transparent,
+            color: isToday
+                ? Theme.of(context).primaryColor.withOpacity(0.2)
+                : Colors.transparent,
           ),
           child: Column(
             children: [
@@ -248,47 +320,32 @@ class _CoursePageState extends State<CoursePage>
           ),
         ));
   }
+}
 
-  Widget _getCourseData(int index, int courseDataIndex) {
-    if (index % 8 == 0) {
-      int t = (index ~/ 8) * 2 + 1;
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [Text(t.toString()), Text((t + 1).toString())],
-        ),
-      );
-    }
-    if (widget._courseData[courseDataIndex][index ~/ 8][index % 8] == null) {
-      return Container();
-    } else {
-      int i = (DateUtil.date2Week(DateInfo.nowDate) + 1) % 8;
-      var value = widget._courseData[courseDataIndex][index ~/ 8][index % 8];
-      return _courseItem(
-          value['courseName'],
-          value['address'],
-          value['teacher'],
-          value['time'],
-          i == (index % 8) && courseDataIndex + 1 == DateInfo.nowWeek && _term == DateInfo.nowTerm);
-    }
-  }
+class _CourseItem extends StatelessWidget {
+  final bool isToday;
+  final String name;
+  final String place;
+  final String teacher;
+  final String time;
 
-  List<Widget> _gridCourseList(int index) {
-    List<Widget> result = [];
-    for (int i = 0; i < 40; i++) {
-      result.add(_getCourseData(i, index));
-    }
-    return result;
-  }
+  const _CourseItem({
+    Key? key,
+    required this.isToday,
+    required this.name,
+    required this.place,
+    required this.teacher,
+    required this.time,
+  }) : super(key: key);
 
-  Widget _courseItem(
-      String name, String place, String teacher, String time, bool isToday) {
+  @override
+  Widget build(BuildContext context) {
     return Ink(
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           color: isToday
-              ? Colors.lightBlue
-              : Colors.lightBlueAccent.withOpacity(0.5)),
+              ? Theme.of(context).primaryColor
+              : Theme.of(context).primaryColor.withOpacity(0.45)),
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         onTap: () {
@@ -405,28 +462,64 @@ class _CoursePageState extends State<CoursePage>
               ))),
     );
   }
+}
 
-  _datePickerCallback(term) {
-    _term = term;
-    try {
-      HttpManager()
-          .getAllCourse(StuInfo.token, StuInfo.cookie, _term,
-          DateInfo.totalWeek)
-          .then((value) {
-        widget._courseData =
-            CourseUtil.changeCourseDataList(value);
-        if (_term != DateInfo.nowTerm) {
-          _weekNum = 1;
-        } else {
-          _weekNum = DateInfo.nowWeek;
-        }
-        _pageController.jumpToPage(_weekNum - 1);
-        _pageList = _initCourseLayout();
-        setState(() {});
-      });
-    } on Exception {
-      SmartDialog.showToast('',
-          widget: const CustomToast('获取学期出错了'));
-    }
+class _TransactionItem extends StatefulWidget {
+  final bool isToday;
+
+  const _TransactionItem({Key? key, required this.isToday}) : super(key: key);
+
+  @override
+  State<_TransactionItem> createState() => _TransactionItemState();
+}
+
+class _TransactionItemState extends State<_TransactionItem> {
+  bool _isClicked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Ink(
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          color: _isClicked
+              ? Theme.of(context).primaryColor.withOpacity(0.2)
+              : Colors.transparent),
+      child: InkWell(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          onTap: () {
+            return;
+            if (_isClicked == false) {
+              Future.delayed(const Duration(milliseconds: 5000), () {
+                setState(() {
+                  _isClicked = false;
+                });
+              });
+            } else {}
+            setState(() {
+              _isClicked = !_isClicked;
+            });
+          },
+          child: _isClicked
+              ? const Center(
+                  child: Icon(
+                    Icons.add,
+                    size: 30,
+                    color: Colors.grey,
+                  ),
+                )
+              : Container()
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 2),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       const SizedBox(
+          //         height: 3,
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          ),
+    );
   }
 }

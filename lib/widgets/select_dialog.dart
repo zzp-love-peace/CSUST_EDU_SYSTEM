@@ -39,9 +39,9 @@ class SelectDialog extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: TextButton(
-                      child: const Text(
+                      child: Text(
                         '取消',
-                        style: TextStyle(fontSize: 16, color: Colors.blue),
+                        style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
                       ),
                       onPressed: () {
                         SmartDialog.dismiss();
@@ -58,9 +58,9 @@ class SelectDialog extends StatelessWidget {
                   Expanded(
                       flex: 1,
                       child: TextButton(
-                        child: const Text(
+                        child: Text(
                           '确定',
-                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                          style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
                         ),
                         onPressed: () { callback(); },
                       ))

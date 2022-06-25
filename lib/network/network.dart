@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:csust_edu_system/utils/course_util.dart';
 import 'package:dio/dio.dart';
@@ -9,7 +10,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class HttpManager {
   static final HttpManager _instance = HttpManager._internal();
 
-  static const _baseUrl = 'http://finalab.cn:8081';
+  // static const _baseUrl = 'http://finalab.cn:8081';
+  static const _baseUrl = 'http://47.97.205.5:8989';
+  // static const _baseUrl = 'http://1.117.154.123:8081';
+  // static const _baseUrl = 'http://101.34.59.239:8081';
   Dio? _dio;
 
   factory HttpManager() => _instance;
@@ -17,6 +21,7 @@ class HttpManager {
   ///通用全局单例，第一次使用时初始化
   HttpManager._internal() {
     _dio ??= Dio(BaseOptions(baseUrl: _baseUrl, connectTimeout: 8000));
+    // _dio ??= Dio(BaseOptions(baseUrl: _baseUrl, connectTimeout: 8000));
   }
 
   static HttpManager getInstance() => _instance;
@@ -39,6 +44,7 @@ class HttpManager {
     if (response?.data is DioError) {
       return {};
     }
+    // print(response?.data);
     return response?.data;
   }
 
@@ -59,6 +65,7 @@ class HttpManager {
     if (response?.data is DioError) {
       return {};
     }
+    // print(response?.data);
     return response?.data;
   }
 
@@ -93,29 +100,22 @@ class HttpManager {
           FormData.fromMap({'cookie': cookie, 'xueqi': term, 'zc': weekNum}),
           header: token);
 
-  // 并发获取所有周的课程表
+  // 并行获取所有周的课程表
   Future<List> getAllCourse(
       String token, String cookie, String term, int totalWeek) async {
     List result = [];
     List<Future> futures = [];
+    print(totalWeek);
     for (int i = 1; i <= totalWeek; i++) {
       futures.add(HttpManager().queryCourse(token, cookie, term, i.toString()));
     }
     var response = await Future.wait(futures);
     for (Map value in response) {
       if (value.isNotEmpty) {
+        print(value);
         if (value['code'] == 200) {
           result.add(value['data']);
         }
-        // else if (value['code'] == 401 && value['msg'] == '客户端数量达到上限') {
-        //   var prefs = await SharedPreferences.getInstance();
-        //   var username = prefs.getString("username");
-        //   var password = prefs.getString("password");
-        //   if (username != null && password != null) {
-        //     await HttpManager().login(username, password);
-        //     result = await getAllCourse(token, cookie, term, totalWeek);
-        //   }
-        // }
         else {
           if (kDebugMode) {
             print('出异常了');
@@ -131,4 +131,34 @@ class HttpManager {
     }
     return result;
   }
+
+  // 串行获取所有周的课程表
+  // Future<List> getAllCourse(
+  //     String token, String cookie, String term, int totalWeek) async {
+  //   List result = [];
+  //   // List<Future> futures = [];
+  //   print(totalWeek);
+  //   for (int i = 1; i <= totalWeek; i++) {
+  //     var value =
+  //         await HttpManager().queryCourse(token, cookie, term, i.toString());
+  //     await Future.delayed(const Duration(milliseconds: 1500));
+  //     if (value.isNotEmpty) {
+  //       print(i);
+  //       if (value['code'] == 200) {
+  //         result.add(value['data']);
+  //       } else {
+  //         if (kDebugMode) {
+  //           print('出异常了');
+  //         }
+  //         throw Exception('获取课表出错了');
+  //       }
+  //     } else {
+  //       if (kDebugMode) {
+  //         print('出异常了');
+  //       }
+  //       throw Exception('获取课表出错了');
+  //     }
+  //   }
+  //   return result;
+  // }
 }

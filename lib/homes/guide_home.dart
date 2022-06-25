@@ -5,6 +5,7 @@ import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/login_home.dart';
 import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/provider/app_provider.dart';
 import 'package:csust_edu_system/utils/course_util.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bottom_tab_home.dart';
@@ -102,8 +104,10 @@ class _GuideHomeState extends State<GuideHome> {
   }
 
   _preWork() async {
-    //TODO:检查版本是否需要更新
     prefs = await SharedPreferences.getInstance();
+    String colorKey = prefs.getString('color')??'blue';
+    // 设置初始化主题颜色
+    Provider.of<AppInfoProvider>(context, listen: false).setTheme(colorKey);
     var username = prefs.getString("username");
     var password = prefs.getString("password");
     var isRemember = prefs.getBool("isRemember") ?? false;
@@ -130,22 +134,13 @@ class _GuideHomeState extends State<GuideHome> {
                 pageBuilder: (context, animation, secondaryAnimation) =>
                     BottomTabHome(allCourseData)));
           } on Exception {
-            String list = await _initData();
-            List data = json.decode(list);
-            SmartDialog.showToast('', widget: const CustomToast('出现异常了'));
-            Navigator.of(context).pushReplacement(PageRouteBuilder(
-                transitionDuration: const Duration(milliseconds: 500),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return ScaleTransition(
-                    scale: Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                        parent: animation, curve: Curves.fastOutSlowIn)),
-                    child: child,
-                  );
-                },
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    BottomTabHome(data)));
+            // SmartDialog.showToast('', widget: const CustomToast('出现异常了'));
+            _loginWithException();
           }
+        } else if (loginValue['code'] == 501) {
+          _loginWithException();
+        } else if (loginValue['code'] == 502) {
+          _loginWithException();
         } else {
           SmartDialog.showToast('', widget: CustomToast(loginValue['msg']));
           Navigator.of(context).pushReplacement(PageRouteBuilder(
@@ -162,14 +157,11 @@ class _GuideHomeState extends State<GuideHome> {
                   const LoginHome()));
         }
       } else {
-        String list = await _initData();
-        List data = json.decode(list);
-        SmartDialog.showToast('', widget: const CustomToast('出现异常了'));
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => BottomTabHome(data)));
+        SmartDialog.showToast('', widget: const CustomToast('登录异常'));
+        _loginWithException();
       }
     } else {
-      Future.delayed(const Duration(milliseconds: 2000), () {
+      Future.delayed(const Duration(milliseconds: 1800), () {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const LoginHome()));
       });
@@ -190,8 +182,6 @@ class _GuideHomeState extends State<GuideHome> {
   }
 
   Future<String> _initData() async {
-    StuInfo.token = "";
-    StuInfo.cookie = "";
     StuInfo.name = prefs.getString('name') ?? '';
     StuInfo.stuId = prefs.getString('stuId') ?? '';
     StuInfo.college = prefs.getString('college') ?? '';
@@ -223,5 +213,23 @@ class _GuideHomeState extends State<GuideHome> {
             fontSize: 32,
             fontWeight: FontWeight.bold,
             fontStyle: FontStyle.italic));
+  }
+
+  _loginWithException() async {
+    String list = await _initData();
+    List data = json.decode(list);
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      Navigator.of(context).pushReplacement(PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 500),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return ScaleTransition(
+              scale: Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                  parent: animation, curve: Curves.fastOutSlowIn)),
+              child: child,
+            );
+          },
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              BottomTabHome(data)));
+    });
   }
 }

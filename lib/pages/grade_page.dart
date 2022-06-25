@@ -19,6 +19,8 @@ class GradePage extends StatefulWidget {
 class _GradePageState extends State<GradePage> {
   List _gradeList = [];
   double _point = 0;
+  String _term = DateInfo.nowTerm;
+  int _lastClick=0;
 
   @override
   void initState() {
@@ -46,11 +48,19 @@ class _GradePageState extends State<GradePage> {
                 children: [
                   MyDatePicker(callBack: (term) {
                     _queryScore(term);
+                    _term = term;
                   }),
                   _pointBelowAppBar()
                 ],
               ))),
       elevation: 0,
+      actions: [IconButton(onPressed: (){
+        var now = DateTime.now().millisecondsSinceEpoch;
+        if (now - _lastClick < 1500) return;
+        _lastClick = now;
+        _queryScore(_term);
+        SmartDialog.showToast('', widget: const CustomToast('刷新成功'));
+      }, icon: const Icon(Icons.refresh, color: Colors.white,))],
       centerTitle: true,
       title: const Text(
         "成绩",
@@ -66,76 +76,83 @@ class _GradePageState extends State<GradePage> {
     return _point == 0
         ? Container()
         : Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text(
-          '平均绩点:',
-          style: TextStyle(fontSize: 16),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 3),
-          child: Text(
-            _point.toStringAsFixed(2),
-            style: const TextStyle(fontSize: 16),
-          ),
-        ),
-        const SizedBox(
-          width: 30,
-        )
-      ],
-    );
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                '平均绩点:',
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 3),
+                child: Text(
+                  _point.toStringAsFixed(2),
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
+              const SizedBox(
+                width: 30,
+              )
+            ],
+          );
   }
 
   Widget _gradeCenterLayout() {
     return _gradeList.isNotEmpty
         ? Column(
-      children: [
-        Expanded(
-          child: ListView(
-            children: ListTile.divideTiles(
-                context: context, tiles: _getGradeItem())
-                .toList(),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: const [
-            Text('Tip:点击学科列表获取平时成绩', style: TextStyle(fontSize: 10),),
-            SizedBox(
-              width: 10,
-            )
-          ],
-        )
-      ],
-    )
+            children: [
+              Expanded(
+                child: ListView(
+                  children: ListTile.divideTiles(
+                          context: context, tiles: _getGradeItem())
+                      .toList(),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
+                    child: Text(
+                      'Tip:点击学科列表获取平时成绩',
+                      style: TextStyle(fontSize: 10),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  )
+                ],
+              )
+            ],
+          )
         : Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/no_message_grade.png'),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text(
-            '暂无数据',
-            style: TextStyle(fontSize: 16, color: Colors.black),
-          ),
-          const SizedBox(
-            height: 80,
-          ),
-        ],
-      ),
-    );
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/no_message_grade.png'),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  '暂无数据',
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                ),
+                const SizedBox(
+                  height: 80,
+                ),
+              ],
+            ),
+          );
   }
 
   List<Widget> _getGradeItem() {
     List<Widget> result = [];
     for (var element in _gradeList) {
       result.add(ListTile(
+        tileColor: Colors.white,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
         leading: Icon(
@@ -147,7 +164,7 @@ class _GradePageState extends State<GradePage> {
             style: const TextStyle(color: Colors.black)),
         trailing: Text(
           element['score'],
-          style: const TextStyle(color: Colors.indigoAccent),
+          style: TextStyle(color: Theme.of(context).primaryColor),
         ),
         onTap: () {
           _queryScoreInfo(element['pscjUrl']).then((value) {
@@ -176,44 +193,24 @@ class _GradePageState extends State<GradePage> {
     for (var element in _gradeList) {
       sum += double.parse(element['xuefen']);
       sumPointXScore +=
-      (double.parse(element['xuefen']) * double.parse(element['point']));
+          (double.parse(element['xuefen']) * double.parse(element['point']));
     }
     return sumPointXScore / sum;
   }
 
   _queryScore(String term) async {
-    print(222);
     if (StuInfo.token.isEmpty && StuInfo.cookie.isEmpty) return;
-    var value = await HttpManager().queryScore(
-        StuInfo.token, StuInfo.cookie, term);
+    var value =
+        await HttpManager().queryScore(StuInfo.token, StuInfo.cookie, term);
     if (value.isNotEmpty) {
-      print(value);
       if (value['code'] == 200) {
         setState(() {
           _gradeList = value['data'];
           _point = _getSumPoint();
         });
-      } else if (value['code'] == 401 && value['msg'] == '客户端数量达到上限') {
-        print(1111);
-        var prefs = await SharedPreferences.getInstance();
-        var username = prefs.getString("username");
-        var password = prefs.getString("password");
-        if (username != null && password != null) {
-          await HttpManager().login(username, password);
-          var v = await HttpManager().queryScoreInfo(
-              StuInfo.token, StuInfo.cookie, term);
-          print(v);
-          if (v.isNotEmpty) {
-            if (v['code'] == 200) {
-              setState(() {
-                _gradeList = v['data'];
-                _point = _getSumPoint();
-              });
-            }
-          }
-        }
-      }
-      else {
+      } else if (value['code'] == 502) {
+        SmartDialog.showToast('', widget: CustomToast(value['msg']));
+      } else {
         setState(() {
           _gradeList = [];
           _point = 0;
@@ -227,7 +224,7 @@ class _GradePageState extends State<GradePage> {
   Future<Map> _queryScoreInfo(String url) async {
     var result = {};
     var value =
-    await HttpManager().queryScoreInfo(StuInfo.token, StuInfo.cookie, url);
+        await HttpManager().queryScoreInfo(StuInfo.token, StuInfo.cookie, url);
     if (value.isNotEmpty) {
       if (value['code'] == 200) {
         result = value['data'];
@@ -339,7 +336,8 @@ class _ExamData {
   // 期末成绩比例
   final String finalGradePer;
 
-  const _ExamData(this.courseName,
+  const _ExamData(
+      this.courseName,
       this.score,
       this.normalGrade,
       this.normalGradePer,

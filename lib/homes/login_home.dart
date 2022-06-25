@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/provider/app_provider.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/hint_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -78,7 +80,7 @@ class _LoginHomeState extends State<LoginHome> {
         child: Center(
           child: Text(
             "登录",
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 18, color: Colors.white),
           ),
         ),
         width: double.infinity,
@@ -121,6 +123,7 @@ class _LoginHomeState extends State<LoginHome> {
           background: Colors.black.withOpacity(0.7));
       var value = await HttpManager().login(username, password);
       if (value.isNotEmpty) {
+        print(value);
         if (value['code'] == 200) {
           SmartDialog.showToast('', widget: const CustomToast('登录成功'));
           _saveData();
@@ -161,6 +164,9 @@ class _LoginHomeState extends State<LoginHome> {
 
   _initData() async {
     prefs = await SharedPreferences.getInstance();
+    String colorKey = prefs.getString('color')??'blue';
+    // 设置初始化主题颜色
+    Provider.of<AppInfoProvider>(context, listen: false).setTheme(colorKey);
     final String? username = prefs.getString("username");
     final String? password = prefs.getString("password");
     setState(() {
@@ -196,8 +202,6 @@ class _LoginHomeState extends State<LoginHome> {
   }
 
   Future<String> _initLoginData() async {
-    StuInfo.token = "";
-    StuInfo.cookie = "";
     StuInfo.name = prefs.getString('name') ?? '';
     StuInfo.stuId = prefs.getString('stuId') ?? '';
     StuInfo.college = prefs.getString('college') ?? '';

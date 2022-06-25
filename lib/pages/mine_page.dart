@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/about_home.dart';
 import 'package:csust_edu_system/homes/login_home.dart';
+import 'package:csust_edu_system/homes/setting_home.dart';
 import 'package:csust_edu_system/network/network.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/hint_dialog.dart';
@@ -16,7 +17,7 @@ class MinePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _minePageAppBar(),
+      appBar: _minePageAppBar(context),
       body: ListView(
         children: [
           const SizedBox(height: 10),
@@ -31,8 +32,8 @@ class MinePage extends StatelessWidget {
               '关于',
               buttonColor: Colors.redAccent,
               callback: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const AboutHome()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const AboutHome()));
               },
             ),
           ),
@@ -40,6 +41,7 @@ class MinePage extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(30, 20, 30, 0),
             child: _BottomButton(
               '退出登录',
+              buttonColor: Theme.of(context).primaryColor,
               callback: () {
                 SmartDialog.show(
                     widget: SelectDialog(
@@ -60,37 +62,19 @@ class MinePage extends StatelessWidget {
     );
   }
 
-  AppBar _minePageAppBar() {
+  AppBar _minePageAppBar(context) {
     return AppBar(
       actions: [
-        Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 5, 10),
-            child: GestureDetector(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: const [
-                  Text(
-                    "意见反馈",
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon(
-                    Icons.message,
-                    size: 16,
-                  ),
-                ],
-              ),
-              onTap: () {
-                SmartDialog.show(
-                    widget: const HintDialog(
-                        title: '提示',
-                        subTitle: '若有任何意见或建议，请联系2055984287@qq.com'),
-                    clickBgDismissTemp: false);
-              },
-            ))
+        IconButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const SettingHome()));
+          },
+          icon: const Icon(
+            Icons.settings,
+            color: Colors.white,
+          ),
+        )
       ],
       centerTitle: true,
       title: const Text(
@@ -251,6 +235,7 @@ class _HeadImageRowState extends State<_HeadImageRow> {
   void initState() {
     super.initState();
     _setHeadImage();
+    print('it is ok');
   }
 
   @override
@@ -261,7 +246,7 @@ class _HeadImageRowState extends State<_HeadImageRow> {
           width: 30,
         ),
         _base64String == null
-            ? const SizedBox(
+            ? SizedBox(
                 height: 100,
                 width: 100,
                 child: Text(
@@ -270,7 +255,7 @@ class _HeadImageRowState extends State<_HeadImageRow> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 85,
-                      color: Colors.blue),
+                      color: Theme.of(context).primaryColor),
                 ),
               )
             : ClipOval(
@@ -326,7 +311,7 @@ class _BottomButton extends StatelessWidget {
   final void Function() callback;
 
   const _BottomButton(this._text,
-      {Key? key, this.buttonColor = Colors.blue, required this.callback})
+      {Key? key, required this.buttonColor, required this.callback})
       : super(key: key);
 
   @override
@@ -339,7 +324,7 @@ class _BottomButton extends StatelessWidget {
         },
         child: Text(
           _text,
-          style: const TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16, color: Colors.white),
         ),
         style: ButtonStyle(
             padding: MaterialStateProperty.all(

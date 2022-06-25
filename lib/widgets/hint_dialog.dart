@@ -36,9 +36,9 @@ class HintDialog extends StatelessWidget {
                   ),
                   SizedBox(width: double.infinity,child:
                     TextButton(
-                      child: const Text(
+                      child: Text(
                         '确定',
-                        style: TextStyle(fontSize: 16, color: Colors.blue),
+                        style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
                       ),
                       onPressed: () {
                         SmartDialog.dismiss();

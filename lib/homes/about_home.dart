@@ -6,7 +6,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 class AboutHome extends StatelessWidget {
   const AboutHome({Key? key}) : super(key: key);
 
-  final String _version = 'v1.2.5';
+  final String _version = 'v1.2.8';
   final String _url = 'https://github.com/zzp-love-peace/CSUST_EDU_SYSTEM';
 
   @override

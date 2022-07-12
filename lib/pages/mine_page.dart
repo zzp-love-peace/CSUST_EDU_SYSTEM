@@ -4,6 +4,7 @@ import 'package:csust_edu_system/homes/about_home.dart';
 import 'package:csust_edu_system/homes/login_home.dart';
 import 'package:csust_edu_system/homes/setting_home.dart';
 import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/utils/grade_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/hint_dialog.dart';
 import 'package:csust_edu_system/widgets/select_dialog.dart';
@@ -67,8 +68,8 @@ class MinePage extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const SettingHome()));
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const SettingHome()));
           },
           icon: const Icon(
             Icons.settings,
@@ -230,12 +231,13 @@ class _HeadImageRow extends StatefulWidget {
 
 class _HeadImageRowState extends State<_HeadImageRow> {
   String? _base64String;
+  double _allPoint = 0;
 
   @override
   void initState() {
     super.initState();
     _setHeadImage();
-    print('it is ok');
+    _setAllPoint();
   }
 
   @override
@@ -281,6 +283,13 @@ class _HeadImageRowState extends State<_HeadImageRow> {
               StuInfo.stuId,
               style: const TextStyle(fontSize: 16, color: Colors.black87),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              "总绩点  ${_allPoint.toStringAsFixed(2)}",
+              style: const TextStyle(fontSize: 16, color: Colors.black87),
+            ),
           ],
         )
       ],
@@ -302,6 +311,37 @@ class _HeadImageRowState extends State<_HeadImageRow> {
         // SmartDialog.showToast('', widget: const CustomToast('加载头像时出现异常了'));
       }
     });
+  }
+
+  _setAllPoint() async {
+    var value = await HttpManager().getAllSemester(StuInfo.token);
+    if (value.isNotEmpty) {
+      if (value['code'] == 200) {
+        List gradeList = [];
+        List allTerm = value['data'];
+        for (var term in allTerm) {
+          var scoreValue = await HttpManager().queryScore(StuInfo.token, StuInfo.cookie, term);
+          if (scoreValue['code'] == 200) {
+            List grade = scoreValue['data'];
+            gradeList.addAll(grade);
+          } else {
+            if (kDebugMode) {
+              print('获取$term成绩出错了');
+            }
+          }
+        }
+        if (kDebugMode) {
+          print(gradeList);
+        }
+        setState(() {
+          _allPoint = getSumPoint(gradeList);
+        });
+      } else {
+        if (kDebugMode) {
+          print('获取所有学期出错了');
+        }
+      }
+    }
   }
 }
 

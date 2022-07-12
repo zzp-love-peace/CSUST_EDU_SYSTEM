@@ -52,9 +52,7 @@ class _ExamPageState extends State<ExamPage> {
       actions: [
         IconButton(
             onPressed: () {
-              var now = DateTime
-                  .now()
-                  .millisecondsSinceEpoch;
+              var now = DateTime.now().millisecondsSinceEpoch;
               if (now - _lastClick < 1500) return;
               _lastClick = now;
               _queryExam(_term);
@@ -75,26 +73,26 @@ class _ExamPageState extends State<ExamPage> {
   Widget _examCenterLayout() {
     return _examList.isNotEmpty
         ? ListView(
-      children: _getExamItem(),
-    )
+            children: _getExamItem(),
+          )
         : Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/no_message_exam.png'),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text(
-            '暂无数据',
-            style: TextStyle(fontSize: 16, color: Colors.black),
-          ),
-          const SizedBox(
-            height: 80,
-          ),
-        ],
-      ),
-    );
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/no_message_exam.png'),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  '暂无数据',
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                ),
+                const SizedBox(
+                  height: 80,
+                ),
+              ],
+            ),
+          );
   }
 
   List<Widget> _getExamItem() {
@@ -113,61 +111,61 @@ class _ExamPageState extends State<ExamPage> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(15))),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(25, 20, 25, 20),
-            child: Stack(
-              alignment: Alignment.center,
+            padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
+            child: Row(
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    children: [
-                      // SizedBox(height: 10,),
-                      Text(
-                        '${date[0]}/',
+                Column(
+                  children: [
+                    Text(
+                      '${date[0]}/',
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: isToday ? Colors.white : Colors.black),
+                    ),
+                    Text('${date[1]}/${date[2]}',
                         style: TextStyle(
-                            fontSize: 18,
-                            color: isToday ? Colors.white : Colors.black),
-                      ),
-                      Text('${date[1]}/${date[2]}',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: isToday ? Colors.white : Colors.black))
-                    ],
-                  ),
+                            fontSize: 16,
+                            color: isToday ? Colors.white : Colors.black))
+                  ],
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        element['courseName'],
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: isToday ? Colors.white : Colors.black),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Padding(padding: const EdgeInsets.only(right: 35),
-                          child: Text('$startTime-$endTime',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: isToday ? Colors.white : Colors
-                                      .black)), ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Padding(padding: const EdgeInsets.only(right: 35),
-                        child: Text(element['address'],
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: isToday ? Colors.white : Colors
-                                    .black)),),
-                    ],
-                  ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      element['courseName'].toString().length > 12
+                          ? element['courseName'].toString().substring(0, 12) +
+                              "..."
+                          : element['courseName'].toString(),
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: isToday ? Colors.white : Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30),
+                      child: Text('$startTime-$endTime',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: isToday ? Colors.white : Colors.black)),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30),
+                      child: Text(element['address'],
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: isToday ? Colors.white : Colors.black)),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -191,9 +189,16 @@ class _ExamPageState extends State<ExamPage> {
             }
           });
         } else if (value['code'] == 401 && DateInfo.nowTerm == term) {
-          setState(() {
-            _examList = json.decode(_initExam());
-          });
+          if (DateInfo.nowWeek != -1) {
+            setState(() {
+              _examList = json.decode(_initExam());
+            });
+          } else {
+            setState(() {
+              _examList = [];
+              _saveExam();
+            });
+          }
         } else if (value['code'] == 501) {
           SmartDialog.showToast('', widget: CustomToast(value['msg']));
           setState(() {

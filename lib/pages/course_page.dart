@@ -126,6 +126,9 @@ class _CoursePageState extends State<CoursePage> {
   }
 
   Widget _newCourseLayout(int year, int month, int day, int index) {
+    var itemWidth = (MediaQuery.of(context).size.width - 31) / 8;
+    var itemHeight = 120.0;
+    var childAspectRatio = itemWidth / itemHeight;
     return Column(
       children: [
         Container(
@@ -141,7 +144,7 @@ class _CoursePageState extends State<CoursePage> {
                     crossAxisCount: 8,
                     crossAxisSpacing: 3.0,
                     mainAxisSpacing: 3.0,
-                    childAspectRatio: 0.35,
+                    childAspectRatio: childAspectRatio,
                     children: _gridCourseList(index),
                     padding: const EdgeInsets.fromLTRB(5, 5, 5, 40),
                   )
@@ -170,7 +173,7 @@ class _CoursePageState extends State<CoursePage> {
           _term == DateInfo.nowTerm;
       switch (i) {
         case 0:
-          widget = isNowTerm
+          widget = isNowTerm && DateInfo.nowWeek != -1
               ? _WeekLayoutItem(
                   title: monthOfSunday.toString(), date: '月', isToday: false)
               : const _WeekLayoutItem(title: '', date: '', isToday: false);
@@ -312,7 +315,7 @@ class _WeekLayoutItem extends StatelessWidget {
             children: [
               const SizedBox(height: 5),
               Text(title),
-              Text(date),
+              Text(DateInfo.nowWeek != -1 ? date : ""),
               const SizedBox(
                 height: 5,
               )
@@ -365,7 +368,7 @@ class _CourseItem extends StatelessWidget {
                 name,
                 maxLines: 3,
                 style: const TextStyle(
-                  fontSize: 13,
+                  fontSize: 12,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   overflow: TextOverflow.ellipsis,
@@ -375,7 +378,7 @@ class _CourseItem extends StatelessWidget {
                 '@$place',
                 maxLines: 3,
                 style: const TextStyle(
-                  fontSize: 13,
+                  fontSize: 12,
                   color: Colors.white,
                   overflow: TextOverflow.ellipsis,
                 ),

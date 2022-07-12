@@ -113,6 +113,7 @@ class _GuideHomeState extends State<GuideHome> {
     var isRemember = prefs.getBool("isRemember") ?? false;
     if (username != null && password != null && isRemember) {
       var loginValue = await HttpManager().login(username, password);
+      print(loginValue);
       if (loginValue.isNotEmpty) {
         if (loginValue['code'] == 200) {
           StuInfo.initData(loginValue['data']);

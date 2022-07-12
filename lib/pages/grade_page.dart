@@ -1,6 +1,7 @@
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/utils/grade_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/date_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -168,8 +169,13 @@ class _GradePageState extends State<GradePage> {
         ),
         onTap: () {
           _queryScoreInfo(element['pscjUrl']).then((value) {
+
             var examData = _ExamData(
                 element['courseName'],
+                element['point'],
+                element['method'],
+                element['property'],
+                element['nature'],
                 element['xuefen'],
                 value['pscj'] ?? '',
                 value['pscjBL'] ?? '',
@@ -187,16 +193,6 @@ class _GradePageState extends State<GradePage> {
     return result;
   }
 
-  double _getSumPoint() {
-    double sum = 0;
-    double sumPointXScore = 0;
-    for (var element in _gradeList) {
-      sum += double.parse(element['xuefen']);
-      sumPointXScore +=
-          (double.parse(element['xuefen']) * double.parse(element['point']));
-    }
-    return sumPointXScore / sum;
-  }
 
   _queryScore(String term) async {
     if (StuInfo.token.isEmpty && StuInfo.cookie.isEmpty) return;
@@ -206,7 +202,7 @@ class _GradePageState extends State<GradePage> {
       if (value['code'] == 200) {
         setState(() {
           _gradeList = value['data'];
-          _point = _getSumPoint();
+          _point = getSumPoint(_gradeList);
         });
       } else if (value['code'] == 502) {
         SmartDialog.showToast('', widget: CustomToast(value['msg']));
@@ -241,7 +237,7 @@ class _GradePageState extends State<GradePage> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
           ),
-          height: 400,
+          height: 450,
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
@@ -251,7 +247,6 @@ class _GradePageState extends State<GradePage> {
                 Text(
                   data.courseName,
                   style: const TextStyle(
-                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
@@ -264,8 +259,29 @@ class _GradePageState extends State<GradePage> {
                 ),
                 Row(
                   children: [
-                    const Text('平时成绩:'),
+                    const Text('绩点:'),
                     const SizedBox(width: 10),
+                    Text(data.point)
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text('课程性质:'),
+                    const SizedBox(width: 10),
+                    Text(data.property+" "+data.nature)
+                  ],
+                ),
+                // Row(
+                //   children: [
+                //     const Text('考核方式:'),
+                //     const SizedBox(width: 10),
+                //     Text(data.method)
+                //   ],
+                // ),
+                Row(
+                  children: [
+                     const Text('平时成绩:'),
+                     const SizedBox(width: 10),
                     Text(data.normalGrade)
                   ],
                 ),
@@ -315,6 +331,18 @@ class _ExamData {
   // 学科名称
   final String courseName;
 
+  // 绩点
+  final String point;
+
+  // 考试还是考查
+  final String method;
+
+  // 必修还是选修
+  final String property;
+
+  // 课程类别
+  final String nature;
+
   // 学分
   final String score;
 
@@ -338,6 +366,10 @@ class _ExamData {
 
   const _ExamData(
       this.courseName,
+      this.point,
+      this.method,
+      this.property,
+      this.nature,
       this.score,
       this.normalGrade,
       this.normalGradePer,

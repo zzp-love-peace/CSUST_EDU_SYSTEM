@@ -196,9 +196,8 @@ class _GradeHomeState extends State<GradeHome> {
           _gradeList = value['data'];
           _point = getSumPoint(_gradeList);
         });
-      } else if (value['code'] == 502) {
-        SmartDialog.compatible.showToast('', widget: CustomToast(value['msg']));
       } else {
+        SmartDialog.compatible.showToast('', widget: CustomToast(value['msg']));
         setState(() {
           _gradeList = [];
           _point = 0;
@@ -216,7 +215,11 @@ class _GradeHomeState extends State<GradeHome> {
     if (value.isNotEmpty) {
       if (value['code'] == 200) {
         result = value['data'];
+      } else {
+        SmartDialog.compatible.showToast('', widget: CustomToast(value['msg']));
       }
+    } else {
+      SmartDialog.compatible.showToast('', widget: const CustomToast('获取成绩异常'));
     }
     return result;
   }

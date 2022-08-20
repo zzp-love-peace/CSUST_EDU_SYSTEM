@@ -44,6 +44,9 @@ class _CoursePageState extends State<CoursePage> {
         _weekList.add('第$i周');
       }
     }
+    if (widget._courseData.isEmpty) {
+      _getAllCourseOfTerm();
+    }
   }
 
   @override
@@ -87,6 +90,15 @@ class _CoursePageState extends State<CoursePage> {
         ),
       ),
       actions: [
+        if (widget._courseData.isEmpty) IconButton(
+          onPressed: () {
+            _getAllCourseOfTerm();
+          },
+          icon: const Icon(
+            Icons.refresh,
+            color: Colors.white,
+          ),
+        ),
         IconButton(
           onPressed: () {
             Navigator.of(context).push(
@@ -100,8 +112,8 @@ class _CoursePageState extends State<CoursePage> {
       ],
       leading: IconButton(
         onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const NotificationHome()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const NotificationHome()));
         },
         icon: const Icon(
           Icons.notifications,
@@ -350,6 +362,61 @@ class _CoursePageState extends State<CoursePage> {
           .showToast('', widget: const CustomToast('获取课表出错了'));
     });
   }
+
+  _getAllCourseOfTerm() {
+    HttpManager()
+        .getAllCourseOfTerm(StuInfo.cookie, StuInfo.token, DateInfo.nowTerm)
+        .then((value) {
+      if (value.isNotEmpty) {
+        if (value['code'] == 200) {
+          List data = value['data'];
+          List allData = [];
+          for (int i = 1; i <= 20; i++) {
+            List dList = [];
+            for (int j=0; j<data.length; j++) {
+              List ddList = [];
+              for (int k=0; k< data[j].length; k++) {
+                Map? map = data[j][k];
+                if (map == null) {
+                  ddList.add(null);
+                  continue;
+                }
+                bool flag = false;
+                var sList = map['time'].toString().split(' ');
+                for (var s in sList) {
+                  var s1 = s.split('(');
+                  var s2 = s1[0].split('-');
+                  int start = int.parse(s2[0]);
+                  int end = int.parse(s2[1]);
+                  if (i >= start && i <= end ) {
+                    flag = true;
+                  }
+                }
+                if (!flag) {
+                  ddList.add(null);
+                } else {
+                  ddList.add(data[j][k]);
+                }
+              }
+              dList.add(ddList);
+            }
+            allData.add(dList);
+          }
+          setState(() {
+            widget._courseData = CourseUtil.changeCourseDataList(allData);
+            _pageList = _initCourseLayout();
+          });
+        } else {
+          SmartDialog.compatible
+              .showToast('', widget: const CustomToast('获取课表出错了'));
+        }
+      } else {
+        SmartDialog.compatible.showToast('', widget: const CustomToast('出异常了'));
+      }
+    }, onError: (_) {
+      SmartDialog.compatible.showToast('', widget: const CustomToast('出异常了'));
+    });
+  }
 }
 
 class _WeekLayoutItem extends StatelessWidget {
@@ -511,7 +578,7 @@ class _CourseItem extends StatelessWidget {
                       const SizedBox(
                         width: 30,
                       ),
-                      Text(teacher),
+                     Expanded(child: Text(teacher),),
                     ],
                   ),
                   Row(
@@ -523,7 +590,7 @@ class _CourseItem extends StatelessWidget {
                       const SizedBox(
                         width: 30,
                       ),
-                      Text(place),
+                      Expanded(child: Text(place),)
                     ],
                   )
                 ],

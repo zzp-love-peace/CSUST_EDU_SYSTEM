@@ -258,9 +258,10 @@ class _GuideHomeState extends State<GuideHome> {
     try {
        data = json.decode(list);
     } on FormatException {
-      SmartDialog.compatible.show(
-          widget: const HintDialog(
-              title: '提示', subTitle: '教务系统异常且暂未保存课程表，请稍后再试'));
+      // SmartDialog.compatible.show(
+      //     widget: const HintDialog(
+      //         title: '提示', subTitle: '教务系统异常且暂未保存课程表，请稍后再试'));
+      SmartDialog.compatible.showToast('', widget: const CustomToast('获取课表出错了'));
     }
     print("登录异常: isDate:$isDate  isStu:$isStu  isCourse:$isCourse");
     Future.delayed(const Duration(milliseconds: 1000), () {

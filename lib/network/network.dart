@@ -98,10 +98,12 @@ class HttpManager {
           params: FormData.fromMap({'username': username, 'sex': sex}),
           headers: {"token": token});
 
-  Future<Map> setHeadImg(String token, String imgPath) async => await _post(
-      '/setHeadImg',
-      params: FormData.fromMap({'img': await MultipartFile.fromFile(imgPath)}),
-      headers: {"token": token});
+  Future<Map> setHeadImg(String token, String imgPath) async =>
+      await _post(
+          '/setHeadImg',
+          params: FormData.fromMap(
+              {'img': await MultipartFile.fromFile(imgPath)}),
+          headers: {"token": token});
 
   Future<Map> restoreHeadImg(String cookie, String token) async =>
       await _post('/restoreHeadImg',
@@ -138,8 +140,8 @@ class HttpManager {
           params: FormData.fromMap({'cookie': cookie, 'pscjUrl': url}),
           headers: {"token": token});
 
-  Future<Map> queryCourse(
-          String token, String cookie, String term, String weekNum) async =>
+  Future<Map> queryCourse(String token, String cookie, String term,
+      String weekNum) async =>
       await _post('/getCourse',
           params: FormData.fromMap(
               {'cookie': cookie, 'xueqi': term, 'zc': weekNum}),
@@ -156,8 +158,8 @@ class HttpManager {
           params: FormData.fromMap({'cookie': cookie, 'ggid': ggid}),
           headers: {"token": token});
 
-  Future<Map> addAdvice(
-          String token, String content, String phone, String name) async =>
+  Future<Map> addAdvice(String token, String content, String phone,
+      String name) async =>
       await _post('/advice/add',
           params: FormData.fromMap(
               {'content': content, 'phone': phone, 'name': name}),
@@ -169,14 +171,14 @@ class HttpManager {
   Future<Map> getAllTab(String token) async =>
       await _get('/theme/all', header: token);
 
-  Future<Map> getFormListByTabId(
-          String token, int tabId, int page, int rows) async =>
+  Future<Map> getFormListByTabId(String token, int tabId, int page,
+      int rows) async =>
       await _post('/post/index',
           params: {'themeId': tabId, 'page': page, 'rows': rows},
           headers: {"token": token});
 
   Future<Map> postForum(String token, int themeId, String content,
-          bool isAnonymous, List<MultipartFile> images) async =>
+      bool isAnonymous, List<MultipartFile> images) async =>
       await _post('/post/write',
           params: FormData.fromMap({
             'themeId': themeId,
@@ -218,8 +220,8 @@ class HttpManager {
           params: {'postId': postId, 'content': content},
           headers: {"token": token});
 
-  Future<Map> postReply(
-          String token, int commentId, int replyId, String content) async =>
+  Future<Map> postReply(String token, int commentId, int replyId,
+      String content) async =>
       await _post('/reply/write', params: {
         'commentId': commentId,
         'replyId': replyId,
@@ -257,9 +259,14 @@ class HttpManager {
           },
           contentType: Headers.formUrlEncodedContentType);
 
+  Future<Map> getAllCourseOfTerm(String cookie, String token,
+      String term) async =>
+      await _post('/getCourse',
+          params: FormData.fromMap({'cookie': cookie, 'xueqi': term, 'zc': 0}), headers: {"token": token});
+
   // 并行获取所有周的课程表
-  Future<List> getAllCourse(
-      String token, String cookie, String term, int totalWeek) async {
+  Future<List> getAllCourse(String token, String cookie, String term,
+      int totalWeek) async {
     List result = [];
     List<Future> futures = [];
     // print(totalWeek);

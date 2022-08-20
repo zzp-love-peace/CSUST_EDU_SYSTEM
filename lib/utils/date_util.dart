@@ -1,5 +1,4 @@
 class DateUtil {
-
   /// 将xxxx-xx-xx的日期格式分割成int
   static List<int> splitDate(String date) {
     List<String> dates = date.split('-');
@@ -12,16 +11,18 @@ class DateUtil {
   ///  蔡勒公式计算星期几 0表示周日
   static int date2Week(String date) {
     List<int> dates = splitDate(date);
-    int year =dates[0];
-    int c = year~/100;
-    int y = year%100;
+    int year = dates[0];
+    int c = year ~/ 100;
+    int y = year % 100;
     int month = dates[1];
-    if (month<3) {
+    if (month < 3) {
       month += 12;
-      y --;
+      y--;
     }
     int day = dates[2];
-    int w = ((c~/4) - 2 * c + y + y~/4 + ((13 * (month+1)) ~/ 5) + day - 1) % 7;
+    int w =
+        ((c ~/ 4) - 2 * c + y + y ~/ 4 + ((13 * (month + 1)) ~/ 5) + day - 1) %
+            7;
     return w;
   }
 
@@ -29,7 +30,7 @@ class DateUtil {
     int n = 0;
     day -= num;
     if (day <= 0) {
-      month --;
+      month--;
       if (month == 0) {
         month = 12;
         year--;
@@ -51,8 +52,7 @@ class DateUtil {
           n = 30;
           break;
         case 2:
-          if ((year % 4 == 0 && year % 100 != 0) ||
-              year % 400 == 0) {
+          if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
             n = 29;
           } else {
             n = 28;
@@ -80,9 +80,9 @@ class DateUtil {
         if (day > 31) {
           if (month == 12) {
             month = 1;
-            year ++;
+            year++;
           } else {
-            month ++;
+            month++;
           }
           day -= 31;
         }
@@ -92,19 +92,19 @@ class DateUtil {
       case 9:
       case 11:
         if (day > 30) {
-          month ++;
+          month++;
           day -= 30;
         }
         break;
       case 2:
         if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
           if (day > 29) {
-            month ++;
+            month++;
             day -= 29;
           }
         } else {
           if (day > 28) {
-            month ++;
+            month++;
             day -= 28;
           }
         }
@@ -113,5 +113,43 @@ class DateUtil {
         throw Exception('月份传错了');
     }
     return d == day ? [year, month, day] : addDay(year, month, day, 0);
+  }
+}
+
+String getForumDateString(String postDate) {
+  var postDateTime = DateTime.parse(postDate);
+  var nowDateTime = DateTime.now();
+  // print('${nowDateTime.month}:${nowDateTime.day}');
+  var diffDateTime = nowDateTime.difference(postDateTime);
+  String minute;
+  String hour;
+  if (postDateTime.minute < 10) {
+    minute = '0${postDateTime.minute}';
+  } else {
+    minute = postDateTime.minute.toString();
+  }
+  if (postDateTime.hour < 10) {
+    hour = '0${postDateTime.hour}';
+  } else {
+    hour = postDateTime.hour.toString();
+  }
+  if (diffDateTime.inMinutes < 1) {
+    return '刚刚';
+  } else if (diffDateTime.inMinutes >= 1 && diffDateTime.inMinutes < 30) {
+    return '${diffDateTime.inMinutes}分钟前';
+  } else if (diffDateTime.inMinutes >= 30 && diffDateTime.inMinutes < 60) {
+    return '半小时前';
+  } else if (diffDateTime.inMinutes >= 60 && diffDateTime.inHours <= 10) {
+    return '${diffDateTime.inHours}小时前';
+  } else if (nowDateTime.day - postDateTime.day < 2) {
+    return '昨天 $hour:$minute';
+  } else if (nowDateTime.day - postDateTime.day < 3) {
+    return '前天 $hour:$minute';
+  } else if (nowDateTime.day - postDateTime.day < 4) {
+    return '大前天 $hour:$minute';
+  } else if (nowDateTime.year == postDateTime.year) {
+    return '${postDateTime.month}/${postDateTime.day} $hour:$minute';
+  } else {
+    return '${postDateTime.year} ${postDateTime.month}/${postDateTime.day} $hour:$minute';
   }
 }

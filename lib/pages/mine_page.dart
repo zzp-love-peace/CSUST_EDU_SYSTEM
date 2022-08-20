@@ -1,16 +1,27 @@
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/about_home.dart';
+import 'package:csust_edu_system/homes/electricity_home.dart';
+import 'package:csust_edu_system/homes/info_home.dart';
 import 'package:csust_edu_system/homes/login_home.dart';
+import 'package:csust_edu_system/homes/message_home.dart';
+import 'package:csust_edu_system/homes/my_collect_home.dart';
+import 'package:csust_edu_system/homes/my_forum_home.dart';
+import 'package:csust_edu_system/homes/theme_home.dart';
 import 'package:csust_edu_system/homes/setting_home.dart';
 import 'package:csust_edu_system/network/network.dart';
 import 'package:csust_edu_system/utils/grade_util.dart';
+import 'package:csust_edu_system/utils/my_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/hint_dialog.dart';
 import 'package:csust_edu_system/widgets/select_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class MinePage extends StatelessWidget {
   const MinePage({Key? key}) : super(key: key);
@@ -21,43 +32,138 @@ class MinePage extends StatelessWidget {
       appBar: _minePageAppBar(context),
       body: ListView(
         children: [
-          const SizedBox(height: 10),
-          const _HeadImageRow(),
-          const SizedBox(height: 10),
-          _divider(),
-          _infoCard(),
-          _divider(),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
-            child: _BottomButton(
-              '关于',
-              buttonColor: Colors.redAccent,
-              callback: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const AboutHome()));
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(30, 20, 30, 0),
-            child: _BottomButton(
-              '退出登录',
-              buttonColor: Theme.of(context).primaryColor,
-              callback: () {
-                SmartDialog.show(
-                    widget: SelectDialog(
-                      title: '提示',
-                      subTitle: '确定要退出登录吗？',
-                      callback: () {
-                        SmartDialog.dismiss();
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const LoginHome()));
-                      },
+          const _MineHeader(),
+          Card(
+            margin: const EdgeInsets.fromLTRB(12, 30, 12, 0),
+            color: Colors.white,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12))),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 8,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: ListTile(
+                    leading: const Icon(
+                      Icons.person_outline,
+                      // color: Theme.of(context).primaryColor,
+                      color: Colors.redAccent,
                     ),
-                    clickBgDismissTemp: false);
-              },
+                    title: const Text('个人资料'),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const InfoHome()));
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: ListTile(
+                    leading: const Icon(Icons.forum_outlined,
+                        // color: Theme.of(context).primaryColor
+                        color: Colors.orange),
+                    title: const Text('我的发帖'),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const MyForumHome()));
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: ListTile(
+                    leading: const Icon(Icons.star_outline,
+                        // color: Theme.of(context).primaryColor
+                        color: Colors.amber),
+                    title: const Text('我的收藏'),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const MyCollectHome()));
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: ListTile(
+                    leading: const Icon(Icons.message_outlined,
+                        // color: Theme.of(context).primaryColor
+                        color: Colors.green),
+                    title: const Text('我的消息'),
+                    trailing: Stack(
+                      alignment: Alignment.centerLeft,
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.only(left: 30),
+                          child: Icon(
+                            Icons.navigate_next,
+                            color: Colors.black,
+                          ),
+                        ),
+                        // Padding(padding: EdgeInsets.only(right: 30), child: Icon(Icons.circle, color: Colors.red, size: 9,),)
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const MessageHome()));
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: ListTile(
+                    leading: const Icon(Icons.group_add_outlined,
+                        // color: Theme.of(context).primaryColor
+                        color: Colors.cyan),
+                    title: const Text('加入app交流群'),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      Clipboard.setData(const ClipboardData(
+                          text: '955731766'));
+                      SmartDialog.compatible
+                          .showToast('', widget: const CustomToast('复制qq群号成功'));
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: ListTile(
+                    leading: const Icon(Icons.settings_outlined,
+                        // color: Theme.of(context).primaryColor
+                        color: Colors.blue),
+                    title: const Text('设置'),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SettingHome()));
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+              ],
             ),
-          ),
+          )
         ],
       ),
     );
@@ -65,14 +171,23 @@ class MinePage extends StatelessWidget {
 
   AppBar _minePageAppBar(context) {
     return AppBar(
+      elevation: 0,
       actions: [
         IconButton(
           onPressed: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const SettingHome()));
+            SmartDialog.compatible.show(
+                widget: SelectDialog(
+                  title: '提示',
+                  subTitle: '确定要退出登录吗？',
+                  callback: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const LoginHome()));
+                  },
+                ),
+                clickBgDismissTemp: false);
           },
           icon: const Icon(
-            Icons.settings,
+            Icons.exit_to_app,
             color: Colors.white,
           ),
         )
@@ -87,292 +202,125 @@ class MinePage extends StatelessWidget {
       ),
     );
   }
-
-  Divider _divider() {
-    return const Divider(
-      indent: 20,
-      endIndent: 20,
-      thickness: 1,
-      color: Colors.black45,
-    );
-  }
-
-  Card _infoCard() {
-    return Card(
-      elevation: 10,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20))),
-      color: Colors.white70,
-      margin: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          const SizedBox(height: 10),
-          const Text(
-            '学籍档案',
-            style: TextStyle(fontSize: 18),
-          ),
-          const Divider(
-            height: 20,
-            indent: 50,
-            endIndent: 50,
-            thickness: 1,
-            color: Colors.black45,
-          ),
-          _collegeRow(),
-          const SizedBox(height: 10),
-          _majorRow(),
-          const SizedBox(height: 10),
-          _classRow(),
-          const SizedBox(height: 15),
-        ],
-      ),
-    );
-  }
-
-  Row _collegeRow() {
-    return Row(
-      children: [
-        const SizedBox(
-          width: 20,
-        ),
-        Image.asset(
-          'assets/images/college.png',
-          color: Colors.black54,
-          height: 32,
-          width: 32,
-        ),
-        const SizedBox(
-          width: 30,
-        ),
-        const Expanded(
-          child:
-              Text('学院', style: TextStyle(fontSize: 16, color: Colors.black87)),
-          flex: 1,
-        ),
-        Expanded(
-          child: Text(
-            StuInfo.college,
-            style: const TextStyle(fontSize: 16, color: Colors.black),
-          ),
-          flex: 3,
-        )
-      ],
-    );
-  }
-
-  Row _majorRow() {
-    return Row(
-      children: [
-        const SizedBox(
-          width: 20,
-        ),
-        Image.asset(
-          'assets/images/major.png',
-          color: Colors.black54,
-          height: 32,
-          width: 32,
-        ),
-        const SizedBox(
-          width: 30,
-        ),
-        const Expanded(
-          child:
-              Text('专业', style: TextStyle(fontSize: 16, color: Colors.black87)),
-          flex: 1,
-        ),
-        Expanded(
-          child: Text(
-            StuInfo.major,
-            style: const TextStyle(fontSize: 16, color: Colors.black),
-          ),
-          flex: 3,
-        )
-      ],
-    );
-  }
-
-  Row _classRow() {
-    return Row(
-      children: [
-        const SizedBox(
-          width: 20,
-        ),
-        const Icon(
-          Icons.people_outline_outlined,
-          size: 36,
-          color: Colors.black54,
-        ),
-        const SizedBox(
-          width: 30,
-        ),
-        const Expanded(
-          child:
-              Text('班级', style: TextStyle(fontSize: 16, color: Colors.black87)),
-          flex: 1,
-        ),
-        Expanded(
-          child: Text(
-            StuInfo.className,
-            style: const TextStyle(fontSize: 16, color: Colors.black),
-          ),
-          flex: 3,
-        )
-      ],
-    );
-  }
 }
 
-class _HeadImageRow extends StatefulWidget {
-  const _HeadImageRow({Key? key}) : super(key: key);
+class _MineHeader extends StatefulWidget {
+  const _MineHeader({Key? key}) : super(key: key);
 
   @override
-  State<_HeadImageRow> createState() => _HeadImageRowState();
+  State<_MineHeader> createState() => _MineHeaderState();
 }
 
-class _HeadImageRowState extends State<_HeadImageRow> {
-  String? _base64String;
-  double _allPoint = 0;
+class _MineHeaderState extends State<_MineHeader> {
+  var _liquidValue = 0.0;
+  var _isIncrease = true;
+  var _isLoop = true;
 
   @override
   void initState() {
+    _circulate();
     super.initState();
-    _setHeadImage();
-    _setAllPoint();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(
-          width: 30,
-        ),
-        _base64String == null
-            ? SizedBox(
-                height: 100,
-                width: 100,
-                child: Text(
-                  '?',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 85,
-                      color: Theme.of(context).primaryColor),
-                ),
-              )
-            : ClipOval(
-                child: Image.memory(
-                const Base64Decoder().convert(_base64String!),
-                height: 100,
-                width: 100,
-              )),
-        const SizedBox(
-          width: 20,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              StuInfo.name,
-              style: const TextStyle(fontSize: 16, color: Colors.black87),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              StuInfo.stuId,
-              style: const TextStyle(fontSize: 16, color: Colors.black87),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              "总绩点  ${_allPoint.toStringAsFixed(2)}",
-              style: const TextStyle(fontSize: 16, color: Colors.black87),
-            ),
-          ],
-        )
-      ],
-    );
+  void dispose() {
+    _isLoop = false;
+    super.dispose();
   }
 
-  _setHeadImage() {
-    HttpManager().getHeadImage(StuInfo.cookie, StuInfo.token).then((value) {
-      if (value.isNotEmpty) {
-        if (value['code'] == 200) {
-          setState(() {
-            _base64String = value['data'];
-          });
+  _circulate() async {
+    while (_isLoop) {
+      await Future.delayed(const Duration(milliseconds: 300));
+      var value = _liquidValue;
+      if (_isIncrease) {
+        value += 0.005;
+        if (value > 1) {
+          value -= 0.005;
+          _isIncrease = false;
         }
       } else {
-        if (kDebugMode) {
-          print('加载头像时出现异常了');
+        value -= 0.005;
+        if (value < 0.0) {
+          value += 0.005;
+          _isIncrease = true;
         }
-        // SmartDialog.showToast('', widget: const CustomToast('加载头像时出现异常了'));
       }
-    });
-  }
-
-  _setAllPoint() async {
-    var value = await HttpManager().getAllSemester(StuInfo.token);
-    if (value.isNotEmpty) {
-      if (value['code'] == 200) {
-        List gradeList = [];
-        List allTerm = value['data'];
-        for (var term in allTerm) {
-          var scoreValue = await HttpManager().queryScore(StuInfo.token, StuInfo.cookie, term);
-          if (scoreValue['code'] == 200) {
-            List grade = scoreValue['data'];
-            gradeList.addAll(grade);
-          } else {
-            if (kDebugMode) {
-              print('获取$term成绩出错了');
-            }
-          }
-        }
-        if (kDebugMode) {
-          print(gradeList);
-        }
+      if (mounted) {
         setState(() {
-          _allPoint = getSumPoint(gradeList);
+          _liquidValue = value;
         });
-      } else {
-        if (kDebugMode) {
-          print('获取所有学期出错了');
-        }
       }
     }
   }
-}
-
-class _BottomButton extends StatelessWidget {
-  final String _text;
-  final Color buttonColor;
-  final void Function() callback;
-
-  const _BottomButton(this._text,
-      {Key? key, required this.buttonColor, required this.callback})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          callback();
-        },
-        child: Text(
-          _text,
-          style: const TextStyle(fontSize: 16, color: Colors.white),
-        ),
-        style: ButtonStyle(
-            padding: MaterialStateProperty.all(
-                const EdgeInsets.fromLTRB(0, 10, 0, 10)),
-            backgroundColor: MaterialStateProperty.all(buttonColor),
-            shape: MaterialStateProperty.all(const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20))))),
-      ),
+    return Container(
+      height: 150,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10))),
+      child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+              bottomRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10)),
+          child: LiquidLinearProgressIndicator(
+              value: _liquidValue,
+              borderColor: Colors.white10,
+              borderWidth: 0,
+              // backgroundColor: Colors.white10,
+              valueColor:
+              AlwaysStoppedAnimation(Theme
+                  .of(context)
+                  .primaryColor),
+              direction: Axis.vertical,
+              center: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                direction: Axis.vertical,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                   Container(
+                    width: 64,
+                    height: 64,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white, width: 3),
+                        borderRadius: BorderRadius.circular(40),
+                    ),
+                    child:  ClipOval(
+                        child:
+                        CachedNetworkImage(
+                            width: 64,
+                            height: 64,
+                            fit: BoxFit.cover,
+                            imageUrl: addPrefixToUrl(StuInfo.avatar),
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                CircularProgressIndicator(
+                                    value: downloadProgress.progress),
+                            errorWidget: (context, url, error) => Container(
+                                width: 64,
+                                height: 64,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                  borderRadius:
+                                  const BorderRadius.all(Radius.circular(40)),
+                                )))),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    StuInfo.username,
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ))),
     );
   }
 }

@@ -6,13 +6,14 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 class AboutHome extends StatelessWidget {
   const AboutHome({Key? key}) : super(key: key);
 
-  final String _version = 'v1.2.8';
-  final String _url = 'https://github.com/zzp-love-peace/CSUST_EDU_SYSTEM';
+  static const String version = 'v1.5.9(内测)';
+  // final String _url = 'https://github.com/zzp-love-peace/CSUST_EDU_SYSTEM';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
           foregroundColor: Colors.white,
           centerTitle: true,
           title: const Text(
@@ -42,64 +43,34 @@ class AboutHome extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Text('版本号: $_version'),
+              const Text('版本号: $version'),
               const SizedBox(
                 height: 15,
               ),
               const Text('长理教务'),
-              const SizedBox(
-                height: 15,
-              ),
-              Text(
-                _url,
-                style: const TextStyle(color: Colors.blueGrey, fontSize: 12),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              GestureDetector(
-                child: Text(
-                  '点我复制',
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, decoration: TextDecoration.underline),
+              Card(
+                margin: const EdgeInsets.fromLTRB(24, 15, 24, 15),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))
                 ),
-                onTap: () {
-                  Clipboard.setData(ClipboardData(text: _url));
-                  SmartDialog.showToast('', widget: const CustomToast('复制成功'));
-                },
-              ),
-              const SizedBox(
-                height: 18,
-              ),
-              const Text('本项目使用flutter开发且开源 欢迎star和fork'),
-              const SizedBox(
-                height: 25,
-              ),
-              const Text(
-                '关于我们',
-                style: TextStyle(fontSize: 16, color: Colors.black),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: Column(
+                child:
+                Column(
                   children: const [
-                    Text('本app由长沙理工大学计通学院凡路实验室移动开发部20级部长兼IOS俱乐部成员开发，'
-                        '对app有任何的建议，都可以反馈给我们。非常期待您推荐给身边的同学。'),
-                    SizedBox(height: 15,),
+                    SizedBox(height: 12,),
                     Text(
-                      '意见反馈',
+                      '关于我们',
                       style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
-                    SizedBox(height: 10,),
-                    Text('欢迎加入app交流群：955731766'),
-                    Text('或联系2055984287@qq.com')
+                    Padding(padding: EdgeInsets.fromLTRB(24, 12, 24, 20),
+                        child: Text('本app由长沙理工大学计通学院凡路实验室移动开发部20级部长兼IOS俱乐部成员开发，'
+                            '对app有任何的建议，都可以反馈给我们。非常期待您推荐给身边的同学。'), )
                   ],
                 ),
               ),
               const Spacer(),
-              const Text(
+               Text(
                 'made by zzp',
-                style: TextStyle(color: Colors.indigo),
+                style: TextStyle(color: Theme.of(context).primaryColor),
               ),
               const SizedBox(
                 height: 50,

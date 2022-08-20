@@ -36,6 +36,13 @@ class _LoginHomeState extends State<LoginHome> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -117,18 +124,36 @@ class _LoginHomeState extends State<LoginHome> {
 
   _doLogin(String username, String password) async {
     if (username.isNotEmpty && password.isNotEmpty) {
-      SmartDialog.showLoading(
+      SmartDialog.compatible.showLoading(
           msg: "登录中",
-          backDismiss: false,
-          background: Colors.black.withOpacity(0.7));
+          backDismiss: false,);
       var value = await HttpManager().login(username, password);
       if (value.isNotEmpty) {
         print(value);
         if (value['code'] == 200) {
-          SmartDialog.showToast('', widget: const CustomToast('登录成功'));
           _saveData();
-          StuInfo.initData(value['data']);
-          DateInfo.initData(value['data']);
+          StuInfo.token = value['data']['token'];
+          StuInfo.cookie = value['data']['cookie'];
+          var dateData = await HttpManager().getDateData(StuInfo.cookie, StuInfo.token);
+          if (dateData.isNotEmpty) {
+            if (dateData['code'] == 200) {
+              DateInfo.initData(dateData['data']);
+              var stuData = await HttpManager().getStuInfo(StuInfo.cookie, StuInfo.token);
+              if (stuData.isNotEmpty) {
+                if (stuData['code'] == 200) {
+                  StuInfo.initData(stuData['data']);
+                } else {
+                  SmartDialog.compatible.showToast('', widget: const CustomToast('登录异常'));
+                }
+              } else {
+                SmartDialog.compatible.showToast('', widget: const CustomToast('登录异常'));
+              }
+            } else {
+              SmartDialog.compatible.showToast('', widget: const CustomToast('登录异常'));
+            }
+          } else {
+            SmartDialog.compatible.showToast('', widget: const CustomToast('登录异常'));
+          }
           try {
             var allCourseData = await HttpManager().getAllCourse(StuInfo.token,
                 StuInfo.cookie, DateInfo.nowTerm, DateInfo.totalWeek);
@@ -139,26 +164,28 @@ class _LoginHomeState extends State<LoginHome> {
             String list = await _initLoginData();
             if (list.isNotEmpty) {
               List data = json.decode(list);
-              SmartDialog.showToast('', widget: const CustomToast('出现异常了'));
+              SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => BottomTabHome(data)));
             } else {
-              SmartDialog.show(
+              SmartDialog.compatible.show(
                   widget: const HintDialog(
-                      title: '提示', subTitle: '服务器异常且暂未保存课程表，请稍后再试'));
+                      title: '提示', subTitle: '教务系统异常且暂未保存课程表，请稍后再试'));
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const BottomTabHome([])));
             }
           }
         } else {
-          SmartDialog.show(
+          SmartDialog.compatible.show(
               widget: HintDialog(
                   title: '提示', subTitle: value['msg']));
         }
       } else {
-        SmartDialog.showToast('', widget: const CustomToast('出现异常了'));
+        SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
       }
       SmartDialog.dismiss();
     } else {
-      SmartDialog.showToast('', widget: const CustomToast('账号或密码不能为空'));
+      SmartDialog.compatible.showToast('', widget: const CustomToast('账号或密码不能为空'));
     }
   }
 
@@ -194,6 +221,7 @@ class _LoginHomeState extends State<LoginHome> {
     prefs.setString('college', StuInfo.college);
     prefs.setString('major', StuInfo.major);
     prefs.setString('className', StuInfo.className);
+    prefs.setString('avatar', StuInfo.avatar);
     prefs.setString('nowTerm', DateInfo.nowTerm);
     prefs.setString('nowDate', DateInfo.nowDate);
     prefs.setInt('nowWeek', DateInfo.nowWeek);

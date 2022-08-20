@@ -4,24 +4,26 @@ import 'package:csust_edu_system/network/network.dart';
 import 'package:csust_edu_system/utils/grade_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/date_picker.dart';
+import 'package:csust_edu_system/widgets/none_lottie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class GradePage extends StatefulWidget {
-  const GradePage({Key? key}) : super(key: key);
+class GradeHome extends StatefulWidget {
+  const GradeHome({Key? key}) : super(key: key);
 
   @override
-  State<GradePage> createState() => _GradePageState();
+  State<GradeHome> createState() => _GradeHomeState();
 }
 
-class _GradePageState extends State<GradePage> {
+class _GradeHomeState extends State<GradeHome> {
   List _gradeList = [];
   double _point = 0;
   String _term = DateInfo.nowTerm;
-  int _lastClick=0;
+  int _lastClick = 0;
 
   @override
   void initState() {
@@ -39,6 +41,7 @@ class _GradePageState extends State<GradePage> {
 
   AppBar _gradePageAppBar() {
     return AppBar(
+      foregroundColor: Colors.white,
       bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40.0),
           child: Container(
@@ -55,13 +58,20 @@ class _GradePageState extends State<GradePage> {
                 ],
               ))),
       elevation: 0,
-      actions: [IconButton(onPressed: (){
-        var now = DateTime.now().millisecondsSinceEpoch;
-        if (now - _lastClick < 1500) return;
-        _lastClick = now;
-        _queryScore(_term);
-        SmartDialog.showToast('', widget: const CustomToast('刷新成功'));
-      }, icon: const Icon(Icons.refresh, color: Colors.white,))],
+      actions: [
+        IconButton(
+            onPressed: () {
+              var now = DateTime.now().millisecondsSinceEpoch;
+              if (now - _lastClick < 1500) return;
+              _lastClick = now;
+              _queryScore(_term);
+              SmartDialog.compatible.showToast('', widget: const CustomToast('刷新成功'));
+            },
+            icon: const Icon(
+              Icons.refresh,
+              color: Colors.white,
+            ))
+      ],
       centerTitle: true,
       title: const Text(
         "成绩",
@@ -129,24 +139,8 @@ class _GradePageState extends State<GradePage> {
               )
             ],
           )
-        : Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/no_message_grade.png'),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  '暂无数据',
-                  style: TextStyle(fontSize: 16, color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 80,
-                ),
-              ],
-            ),
-          );
+        :   const NoneLottie(hint: '暂无数据...')
+    ;
   }
 
   List<Widget> _getGradeItem() {
@@ -169,7 +163,6 @@ class _GradePageState extends State<GradePage> {
         ),
         onTap: () {
           _queryScoreInfo(element['pscjUrl']).then((value) {
-
             var examData = _ExamData(
                 element['courseName'],
                 element['point'],
@@ -183,7 +176,7 @@ class _GradePageState extends State<GradePage> {
                 value['qzcjBL'] ?? '',
                 value['qmcj'] ?? '',
                 value['qmcjBL'] ?? '');
-            SmartDialog.show(
+            SmartDialog.compatible.show(
                 widget: _gradeDialog(examData), isLoadingTemp: false);
           });
         },
@@ -192,7 +185,6 @@ class _GradePageState extends State<GradePage> {
     result.add(const SizedBox(height: 5));
     return result;
   }
-
 
   _queryScore(String term) async {
     if (StuInfo.token.isEmpty && StuInfo.cookie.isEmpty) return;
@@ -205,7 +197,7 @@ class _GradePageState extends State<GradePage> {
           _point = getSumPoint(_gradeList);
         });
       } else if (value['code'] == 502) {
-        SmartDialog.showToast('', widget: CustomToast(value['msg']));
+        SmartDialog.compatible.showToast('', widget: CustomToast(value['msg']));
       } else {
         setState(() {
           _gradeList = [];
@@ -213,7 +205,7 @@ class _GradePageState extends State<GradePage> {
         });
       }
     } else {
-      SmartDialog.showToast('', widget: const CustomToast('获取成绩异常'));
+      SmartDialog.compatible.showToast('', widget: const CustomToast('获取成绩异常'));
     }
   }
 
@@ -247,8 +239,7 @@ class _GradePageState extends State<GradePage> {
                 Text(
                   data.courseName,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                      fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 Row(
                   children: [
@@ -268,7 +259,7 @@ class _GradePageState extends State<GradePage> {
                   children: [
                     const Text('课程性质:'),
                     const SizedBox(width: 10),
-                    Text(data.property+" "+data.nature)
+                    Text(data.property + " " + data.nature)
                   ],
                 ),
                 // Row(
@@ -280,8 +271,8 @@ class _GradePageState extends State<GradePage> {
                 // ),
                 Row(
                   children: [
-                     const Text('平时成绩:'),
-                     const SizedBox(width: 10),
+                    const Text('平时成绩:'),
+                    const SizedBox(width: 10),
                     Text(data.normalGrade)
                   ],
                 ),

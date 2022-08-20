@@ -1,119 +1,184 @@
-import 'package:csust_edu_system/data/color_data.dart';
-import 'package:csust_edu_system/provider/app_provider.dart';
+import 'package:csust_edu_system/homes/about_home.dart';
+import 'package:csust_edu_system/homes/advice_home.dart';
+import 'package:csust_edu_system/homes/theme_home.dart';
+import 'package:csust_edu_system/widgets/hint_dialog.dart';
+import 'package:csust_edu_system/widgets/select_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
-class SettingHome extends StatefulWidget {
+import 'login_home.dart';
+
+class SettingHome extends StatelessWidget {
   const SettingHome({Key? key}) : super(key: key);
-
-  @override
-  State<SettingHome> createState() => _SettingHomeState();
-}
-
-class _SettingHomeState extends State<SettingHome> {
-  final List<MaterialColor> _colors = [];
-  final List<String> _names = [];
-  late final SharedPreferences prefs;
-  String _groupValue = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _initColorsAndNames();
-    _initGroupValue();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          foregroundColor: Colors.white,
-          centerTitle: true,
-          title: const Text(
-            "设置",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+      appBar: AppBar(
+        elevation: 0,
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        title: const Text(
+          "设置",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        body: ListView.builder(
-            itemCount: _colors.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                  onTap: () {
-                    setState(() {
-                      _groupValue = _names[index];
-                      Provider.of<AppInfoProvider>(context, listen: false)
-                          .setTheme(_groupValue);
-                      _saveColor(_groupValue);
-                    });
-                  },
-                  child: Padding(
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              color: _colors[index],
-                              width: 35,
-                              height: 35,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            _names[index],
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.black),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 30),
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Radio(
-                                activeColor: _colors[index],
-                                value: _names[index],
-                                groupValue: _groupValue,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _groupValue = value.toString();
-                                    Provider.of<AppInfoProvider>(context,
-                                            listen: false)
-                                        .setTheme(_groupValue);
-                                    _saveColor(_groupValue);
-                                  });
-                                }),
-                          ),
-                        ),
-                      ],
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 18),
+            child: Text(
+              '通用',
+              style: TextStyle(color: Colors.grey, fontSize: 15),
+            ),
+          ),
+          Card(
+            margin: const EdgeInsets.fromLTRB(12, 10, 12, 0),
+            color: Colors.white,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12))),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 8,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.color_lens,
+                      color: Theme.of(context).primaryColor,
                     ),
-                    padding: const EdgeInsets.only(top: 10),
-                  ));
-            }));
-  }
-
-  _initColorsAndNames() {
-    themeColorMap.forEach((key, value) {
-      _names.add(key);
-      _colors.add(value);
-    });
-  }
-
-  _initGroupValue() async {
-    prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _groupValue = prefs.getString('color') ?? 'blue';
-    });
-  }
-
-  _saveColor(String value) async {
-    prefs.setString('color', value);
+                    title: const Text('更换主题'),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ThemeHome()));
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: ListTile(
+                    leading: Icon(Icons.cleaning_services,
+                        color: Theme.of(context).primaryColor),
+                    title: const Text('清理应用缓存'),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      SmartDialog.compatible.show(
+                          widget:
+                              const HintDialog(title: '提示', subTitle: '清理成功！'));
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 18),
+            child: Text(
+              '其他',
+              style: TextStyle(color: Colors.grey, fontSize: 15),
+            ),
+          ),
+          Card(
+            margin: const EdgeInsets.fromLTRB(12, 10, 12, 0),
+            color: Colors.white,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12))),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 8,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.people,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    title: const Text('关于我们'),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                          builder: (context) => const AboutHome()));
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: ListTile(
+                    leading: Icon(Icons.exit_to_app,
+                        color: Theme.of(context).primaryColor),
+                    title: const Text('退出登录'),
+                    trailing: const Icon(
+                      Icons.navigate_next,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      SmartDialog.compatible.show(
+                          widget: SelectDialog(
+                            title: '提示',
+                            subTitle: '确定要退出登录吗？',
+                            callback: () {
+                              // 移除全部
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const LoginHome()),
+                                  (Route router) => false);
+                            },
+                          ),
+                          clickBgDismissTemp: false);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Spacer(),
+          Center(
+            child: TextButton(
+              child: Text(
+                '有问题或建议？',
+                style: TextStyle(
+                    fontSize: 14, color: Theme.of(context).primaryColor),
+              ),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const AdviceHome()));
+              },
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
+    );
   }
 }

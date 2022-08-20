@@ -1,4 +1,4 @@
-import 'package:csust_edu_system/pages/exam_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
@@ -62,7 +62,8 @@ class SelectDialog extends StatelessWidget {
                           '确定',
                           style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
                         ),
-                        onPressed: () { callback(); },
+                        onPressed: () { callback();
+                        SmartDialog.dismiss();},
                       ))
                 ],
               )

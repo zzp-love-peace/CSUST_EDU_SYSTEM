@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SmartDialog.config
+    SmartDialog.compatible.config
       .maskColor = Colors.black45;
     return ChangeNotifierProvider(
         create: (_) => AppInfoProvider(),

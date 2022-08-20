@@ -1,12 +1,16 @@
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
+import 'package:csust_edu_system/homes/theme_home.dart';
 import 'package:csust_edu_system/network/network.dart';
 import 'package:csust_edu_system/utils/course_util.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/date_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+
+import '../homes/notification_home.dart';
 
 class CoursePage extends StatefulWidget {
   List _courseData;
@@ -22,6 +26,8 @@ class _CoursePageState extends State<CoursePage> {
   String _term = DateInfo.nowTerm;
   late PageController _pageController;
   late List<Widget> _pageList = _initCourseLayout();
+  final List _weekList = [];
+  List<int> _pickerIndex = [0];
 
   @override
   void initState() {
@@ -30,6 +36,14 @@ class _CoursePageState extends State<CoursePage> {
       initialPage: _weekNum - 1,
       keepPage: true,
     );
+    if (DateInfo.nowWeek > 0) {
+      _pickerIndex = [DateInfo.nowWeek - 1];
+    }
+    if (_weekList.isEmpty) {
+      for (int i = 1; i <= DateInfo.totalWeek; i++) {
+        _weekList.add('第$i周');
+      }
+    }
   }
 
   @override
@@ -72,6 +86,28 @@ class _CoursePageState extends State<CoursePage> {
           fontWeight: FontWeight.bold,
         ),
       ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const ThemeHome()));
+          },
+          icon: const Icon(
+            Icons.color_lens,
+            color: Colors.white,
+          ),
+        )
+      ],
+      leading: IconButton(
+        onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const NotificationHome()));
+        },
+        icon: const Icon(
+          Icons.notifications,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 
@@ -80,12 +116,43 @@ class _CoursePageState extends State<CoursePage> {
       alignment: Alignment.centerRight,
       children: [
         Padding(
-          padding: const EdgeInsets.only(right: 90),
-          child: Text(
-            '第$_weekNum周',
-            style: const TextStyle(fontSize: 16),
-          ),
-        ),
+            padding: const EdgeInsets.only(right: 90),
+            child: InkWell(
+              child: Wrap(
+                direction: Axis.horizontal,
+                children: [
+                  Text(
+                    '第$_weekNum周',
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  const Icon(Icons.arrow_drop_down, color: Colors.black),
+                ],
+              ),
+              onTap: () {
+                Picker(
+                    title: const Text(
+                      '选择周数',
+                      style: TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                    confirmText: '确定',
+                    cancelText: '取消',
+                    selecteds: _pickerIndex,
+                    adapter: PickerDataAdapter<String>(pickerdata: _weekList),
+                    changeToFirst: true,
+                    hideHeader: false,
+                    onConfirm: (Picker picker, List value) {
+                      setState(() {
+                        var week = picker.adapter.text
+                            .substring(1, picker.adapter.text.length - 1);
+                        _weekNum = _weekList.indexOf(week) + 1;
+                        _pageController.animateToPage(_weekNum - 1,
+                            duration: const Duration(milliseconds: 1200),
+                            curve: Curves.fastOutSlowIn);
+                        _pickerIndex = [value[0]];
+                      });
+                    }).showModal(context);
+              },
+            )),
         Padding(
           padding: const EdgeInsets.only(right: 30),
           child: Text(
@@ -146,7 +213,7 @@ class _CoursePageState extends State<CoursePage> {
                     mainAxisSpacing: 3.0,
                     childAspectRatio: childAspectRatio,
                     children: _gridCourseList(index),
-                    padding: const EdgeInsets.fromLTRB(5, 5, 5, 40),
+                    padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
                   )
                 : Container())
       ],
@@ -266,24 +333,22 @@ class _CoursePageState extends State<CoursePage> {
 
   _datePickerCallback(term) {
     _term = term;
-    try {
-      HttpManager()
-          .getAllCourse(
-              StuInfo.token, StuInfo.cookie, _term, DateInfo.totalWeek)
-          .then((value) {
-        widget._courseData = CourseUtil.changeCourseDataList(value);
-        if (_term != DateInfo.nowTerm) {
-          _weekNum = 1;
-        } else {
-          _weekNum = DateInfo.nowWeek;
-        }
-        _pageController.jumpToPage(_weekNum - 1);
-        _pageList = _initCourseLayout();
-        setState(() {});
-      });
-    } on Exception {
-      SmartDialog.showToast('', widget: const CustomToast('获取学期出错了'));
-    }
+    HttpManager()
+        .getAllCourse(StuInfo.token, StuInfo.cookie, _term, DateInfo.totalWeek)
+        .then((value) {
+      widget._courseData = CourseUtil.changeCourseDataList(value);
+      if (_term != DateInfo.nowTerm) {
+        _weekNum = 1;
+      } else {
+        _weekNum = DateInfo.nowWeek;
+      }
+      _pageController.jumpToPage(_weekNum - 1);
+      _pageList = _initCourseLayout();
+      setState(() {});
+    }, onError: (_) {
+      SmartDialog.compatible
+          .showToast('', widget: const CustomToast('获取课表出错了'));
+    });
   }
 }
 
@@ -352,7 +417,7 @@ class _CourseItem extends StatelessWidget {
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         onTap: () {
-          SmartDialog.show(
+          SmartDialog.compatible.show(
               widget: _courseDialog(name, place, teacher, time),
               isLoadingTemp: false);
         },

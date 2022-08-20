@@ -6,19 +6,20 @@ import 'package:csust_edu_system/network/network.dart';
 import 'package:csust_edu_system/provider/app_provider.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/date_picker.dart';
+import 'package:csust_edu_system/widgets/none_lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ExamPage extends StatefulWidget {
-  const ExamPage({Key? key}) : super(key: key);
+class ExamHome extends StatefulWidget {
+  const ExamHome({Key? key}) : super(key: key);
 
   @override
-  State<ExamPage> createState() => _ExamPageState();
+  State<ExamHome> createState() => _ExamHomeState();
 }
 
-class _ExamPageState extends State<ExamPage> {
+class _ExamHomeState extends State<ExamHome> {
   List _examList = [];
   late final SharedPreferences prefs;
   String _term = DateInfo.nowTerm;
@@ -38,6 +39,7 @@ class _ExamPageState extends State<ExamPage> {
 
   AppBar _examPageAppBar() {
     return AppBar(
+      foregroundColor: Colors.white,
       bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40.0),
           child: Container(
@@ -56,7 +58,8 @@ class _ExamPageState extends State<ExamPage> {
               if (now - _lastClick < 1500) return;
               _lastClick = now;
               _queryExam(_term);
-              SmartDialog.showToast('', widget: const CustomToast('刷新成功'));
+              SmartDialog.compatible
+                  .showToast('', widget: const CustomToast('刷新成功'));
             },
             icon: const Icon(Icons.refresh, color: Colors.white))
       ],
@@ -75,24 +78,7 @@ class _ExamPageState extends State<ExamPage> {
         ? ListView(
             children: _getExamItem(),
           )
-        : Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/no_message_exam.png'),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  '暂无数据',
-                  style: TextStyle(fontSize: 16, color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 80,
-                ),
-              ],
-            ),
-          );
+        : const NoneLottie(hint: '暂无数据...');
   }
 
   List<Widget> _getExamItem() {
@@ -129,50 +115,52 @@ class _ExamPageState extends State<ExamPage> {
                   ],
                 ),
                 const SizedBox(
-                  width: 20,
+                  width: 25,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      element['courseName'].toString().length > 12
-                          ? element['courseName'].toString().substring(0, 12) +
-                              "..."
-                          : element['courseName'].toString(),
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: isToday ? Colors.white : Colors.black),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30),
-                      child: Text('$startTime-$endTime',
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 25),
+                        child: Text(
+                          element['courseName'],
                           style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: isToday ? Colors.white : Colors.black)),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30),
-                      child: Text(element['address'],
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: isToday ? Colors.white : Colors.black)),
-                    ),
-                  ],
-                ),
+                              fontSize: 16,
+                              color: isToday ? Colors.white : Colors.black),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: Text('$startTime-$endTime',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: isToday ? Colors.white : Colors.black)),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: Text(element['address'],
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: isToday ? Colors.white : Colors.black)),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           )));
     }
     result.add(const SizedBox(
-      height: 50,
+      height: 20,
     ));
     return result;
   }
@@ -200,7 +188,8 @@ class _ExamPageState extends State<ExamPage> {
             });
           }
         } else if (value['code'] == 501) {
-          SmartDialog.showToast('', widget: CustomToast(value['msg']));
+          SmartDialog.compatible
+              .showToast('', widget: CustomToast(value['msg']));
           setState(() {
             _examList = json.decode(_initExam());
           });
@@ -211,7 +200,8 @@ class _ExamPageState extends State<ExamPage> {
         }
       } else {
         if (term != DateInfo.nowTerm) {
-          SmartDialog.showToast('', widget: const CustomToast('获取考试信息异常'));
+          SmartDialog.compatible
+              .showToast('', widget: const CustomToast('获取考试信息异常'));
         } else {
           setState(() {
             _examList = json.decode(_initExam());

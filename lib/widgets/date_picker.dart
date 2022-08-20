@@ -29,8 +29,9 @@ class _MyDatePickerState extends State<MyDatePicker> with AutomaticKeepAliveClie
   @override
   void initState() {
     super.initState();
-    HttpManager().getAllSemester(StuInfo.token).then((value) {
+    HttpManager().getAllSemester(StuInfo.cookie, StuInfo.token).then((value) {
       if (value.isNotEmpty) {
+        print(value);
         if (value['code'] == 200) {
           setState(() {
             _allTerm = value['data'];

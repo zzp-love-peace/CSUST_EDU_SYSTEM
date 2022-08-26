@@ -356,15 +356,19 @@ class _InfoHomeState extends State<InfoHome> {
       if (value['code'] == 200) {
         List gradeList = [];
         List allTerm = value['data'];
-        for (var term in allTerm) {
+        bool isError = false;
+        for (int i=0; i<allTerm.length; i++) {
           var scoreValue = await HttpManager()
-              .queryScore(StuInfo.token, StuInfo.cookie, term);
+              .queryScore(StuInfo.token, StuInfo.cookie, allTerm[i]);
           if (scoreValue['code'] == 200) {
             List grade = scoreValue['data'];
             gradeList.addAll(grade);
           } else {
+            if (i != allTerm.length -1) {
+              isError = true;
+            }
             if (kDebugMode) {
-              print('获取$term成绩出错了');
+              print('获取${allTerm[i]}成绩出错了');
             }
           }
         }
@@ -372,7 +376,7 @@ class _InfoHomeState extends State<InfoHome> {
           print(gradeList);
         }
         if (mounted) {
-          if (StuInfo.name.isNotEmpty) {
+          if (StuInfo.name.isNotEmpty && !isError) {
             setState(() {
               _allPoint = getSumPoint(gradeList);
             });
@@ -516,7 +520,7 @@ class _HeadImageRowState extends State<_HeadImageRow> {
                   InkWell(
                     child: const Center(
                         child: Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
                             child: Text(
                               '从相册选取',
                               style:
@@ -537,7 +541,7 @@ class _HeadImageRowState extends State<_HeadImageRow> {
                   InkWell(
                     child: const Center(
                         child: Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
                             child: Text(
                               '恢复默认头像',
                               style:
@@ -572,7 +576,7 @@ class _HeadImageRowState extends State<_HeadImageRow> {
                   InkWell(
                     child: const Center(
                         child: Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
                             child: Text(
                               '取消',
                               style:

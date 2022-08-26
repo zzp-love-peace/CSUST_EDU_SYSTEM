@@ -1,15 +1,8 @@
 import 'dart:async';
-import 'dart:ffi';
-import 'dart:io';
-import 'dart:math';
-
-import 'package:csust_edu_system/homes/about_home.dart';
-import 'package:csust_edu_system/utils/course_util.dart';
 import 'package:csust_edu_system/utils/my_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class HttpManager {
   static final HttpManager _instance = HttpManager._internal();
@@ -80,7 +73,7 @@ class HttpManager {
           params: FormData.fromMap({
             'stuNum': username,
             'password': password,
-            'version': '长理教务${AboutHome.version}${getAppSuffix()}'
+            'version': '$appName$version${getAppSuffix()}'
           }));
 
   Future<Map> getDateData(String cookie, String token) async =>
@@ -246,9 +239,23 @@ class HttpManager {
   Future<Map> getNotifications(String token) async =>
       await _get('/notice/get', header: token);
 
-  /*
-  社团
-   */
+  Future<Map> reportComment(String token, int postId) async =>
+      await _post('/report/add', params:  FormData.fromMap({'postId': postId}), headers: {"token": token});
+
+  Future<Map> getAssTabs(String token) async =>
+      await _get('/category/getAll', header: token);
+
+  Future<Map> getAssByTab(String token, int id) async =>
+      await _get('/association/get', params: {'id': id} , header: token);
+
+  Future<Map> getLastVersion(String token, String form) async =>
+      await _get('/getLastVersion', params: {'flag': 2, 'form': form} , header: token);
+
+  Future<Map> getAllRecruitInfo(String token) async =>
+      await _get('/recruitInfo/getAll', header: token);
+
+  Future<Map> getRecruitInfoByTitle(String token, String title) async =>
+      await _get('/recruitInfo/getByTitle', params: {'name': title}, header: token);
 
   queryElectricity(String jsonData) async =>
       await _post('http://yktwd.csust.edu.cn:8988/web/Common/Tsm.html',

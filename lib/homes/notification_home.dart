@@ -1,4 +1,5 @@
 import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/widgets/none_lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
@@ -38,9 +39,9 @@ class _NotificationHomeState extends State<NotificationHome> {
           ),
         ),
       ),
-      body: ListView(
+      body: _noticeList.isNotEmpty ? ListView(
         children: _noticeList,
-      ),
+      ) : const NoneLottie(hint: '暂无通知...')
     );
   }
 

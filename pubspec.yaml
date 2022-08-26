@@ -63,6 +63,12 @@ dependencies:
   photo_view: ^0.14.0
   # 网络图片缓存加载
   cached_network_image: ^3.2.1
+  # 数据源改变自带动画的列表
+  animated_list_plus: ^0.4.3
+  # url跳转
+  url_launcher: ^6.0.20
+  # 带动画的searchBar
+  animated_search_bar: ^2.3.0
 
 dev_dependencies:
   flutter_test:

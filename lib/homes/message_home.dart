@@ -1,12 +1,17 @@
+import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/network.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/widgets/forum_item.dart';
+import 'package:csust_edu_system/widgets/none_lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/theme_color_provider.dart';
+import '../provider/unread_msg_provider.dart';
 import '../utils/my_util.dart';
 import '../widgets/custom_toast.dart';
 import 'detail_home.dart';
@@ -31,7 +36,7 @@ class _MessageHomeState extends State<MessageHome> {
   final List<_Msg> _unreadMsgList = [];
   List<_Msg> _readMsgList = [];
 
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  // final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 
   @override
   void initState() {
@@ -77,31 +82,45 @@ class _MessageHomeState extends State<MessageHome> {
         ),
         body: TabBarView(children: [
           EasyRefresh(
-            header: MaterialHeader(),
-            onRefresh: () async {
-              _getUnreadMsg();
-            },
-            child: AnimatedList(
-                key: _listKey,
+              header: MaterialHeader(),
+              onRefresh: () async {
+                _getUnreadMsg();
+              },
+              child: _unreadMsgList.isNotEmpty ?
+              ImplicitlyAnimatedList<_Msg>(
+                items: _unreadMsgList,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                initialItemCount: _unreadMsgList.length,
-                itemBuilder: (context, index, animation) {
-                  return buildFadeWidget(
-                      _msgItem(_unreadMsgList[index], false), animation);
-                }),
-          ),
+                areItemsTheSame: (a, b) => a.id == b.id,
+                itemBuilder: (context, animation, item, index) {
+                  return buildFadeWidget(_msgItem(item, false), animation);
+                },
+                removeItemBuilder: (context, animation, oldItem) {
+                  return buildFadeWidget(_msgItem(oldItem, true), animation);
+                },
+              ) : const NoneLottie(hint: '空空如也...')
+              // AnimatedList(
+              //     key: _listKey,
+              //     shrinkWrap: true,
+              //     physics: const NeverScrollableScrollPhysics(),
+              //     initialItemCount: _unreadMsgList.length,
+              //     itemBuilder: (context, index, animation) {
+              //       return buildFadeWidget(
+              //           _msgItem(_unreadMsgList[index], false), animation);
+              //     }),
+              ),
           EasyRefresh(
             header: MaterialHeader(),
             onRefresh: () async {
               _getReadMsg();
             },
-            child: ListView.builder(
+            child: _readMsgList.isNotEmpty ?
+            ListView.builder(
                 itemCount: _readMsgList.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return _msgItem(_readMsgList[index], true);
-                }),
+                }) : const NoneLottie(hint: '空空如也...')
           )
         ]),
       ),
@@ -197,12 +216,14 @@ class _MessageHomeState extends State<MessageHome> {
           for (var msgData in data) {
             var msg = _Msg.fromJson(msgData);
             if (!_unreadMsgList.contains(msg)) {
-              int index = _unreadMsgList.length;
-              _unreadMsgList.add(msg);
-              _listKey.currentState?.insertItem(index);
+              // int index = _unreadMsgList.length;
+              setState(() {
+                _unreadMsgList.add(msg);
+              });
+              // _listKey.currentState?.insertItem(index);
             }
           }
-          setState(() {});
+          // setState(() {});
         } else {
           SmartDialog.compatible
               .showToast('', widget: CustomToast(value['msg']));
@@ -270,16 +291,20 @@ class _MessageHomeState extends State<MessageHome> {
     HttpManager().setMsgRead(StuInfo.token, msg.id, msg.type).then((value) {
       if (value.isNotEmpty) {
         if (value['code'] == 200) {
-          var index = _unreadMsgList.indexOf(msg);
-          _unreadMsgList.remove(msg);
-          _listKey.currentState?.removeItem(
-              index,
-              (context, animation) =>
-                  buildFadeWidget(_msgItem(msg, true), animation),
-              duration: const Duration(milliseconds: 500));
+          // var index = _unreadMsgList.indexOf(msg);
+          // _listKey.currentState?.removeItem(
+          //     index,
+          //     (context, animation) =>
+          //         buildFadeWidget(_msgItem(msg, true), animation),
+          //     duration: const Duration(milliseconds: 500));
           setState(() {
+            _unreadMsgList.remove(msg);
             _readMsgList.add(msg);
           });
+          if (_unreadMsgList.isEmpty) {
+            Provider.of<UnreadMsgProvider>(context, listen: false)
+                .setHasNewMsg(_unreadMsgList.isNotEmpty);
+          }
         } else {
           SmartDialog.compatible
               .showToast('', widget: CustomToast(value['msg']));
@@ -301,6 +326,8 @@ class _MessageHomeState extends State<MessageHome> {
             _readMsgList.addAll(_unreadMsgList);
             _unreadMsgList.clear();
           });
+          Provider.of<UnreadMsgProvider>(context, listen: false)
+              .setHasNewMsg(_unreadMsgList.isNotEmpty);
         } else {
           SmartDialog.compatible
               .showToast('', widget: CustomToast(value['msg']));

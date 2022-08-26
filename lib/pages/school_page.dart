@@ -3,10 +3,12 @@ import 'dart:math';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:csust_edu_system/data/poem_data.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
+import 'package:csust_edu_system/homes/association_home.dart';
 import 'package:csust_edu_system/homes/electricity_home.dart';
 import 'package:csust_edu_system/homes/exam_home.dart';
 import 'package:csust_edu_system/homes/grade_home.dart';
 import 'package:csust_edu_system/homes/notice_home.dart';
+import 'package:csust_edu_system/homes/recruit_home.dart';
 import 'package:csust_edu_system/network/network.dart';
 import 'package:csust_edu_system/route/fade_route.dart';
 import 'package:csust_edu_system/widgets/none_lottie.dart';
@@ -207,9 +209,15 @@ class _SchoolPageState extends State<SchoolPage> {
                         );
                       },)));
               }),
-              _functionItem('长理社团', 'assets/images/img_group.png', () {}),
+              _functionItem('长理社团', 'assets/images/img_group.png', () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const AssociationHome()));
+              }),
               // _functionItem('综测竞赛', 'assets/images/img_final_test.png', () {}),
-              _functionItem('兼职资讯', 'assets/images/img_work.png', () {}),
+              _functionItem('兼职资讯', 'assets/images/img_work.png', () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const RecruitHome()));
+              }),
             ],
           ),
           const SizedBox(

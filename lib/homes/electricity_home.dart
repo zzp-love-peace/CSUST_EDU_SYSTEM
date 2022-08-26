@@ -55,7 +55,7 @@ class _ElectricityHomeState extends State<ElectricityHome> {
               ),
               const Text(
                 '校区',
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
               Expanded(
                 child: GestureDetector(
@@ -63,7 +63,7 @@ class _ElectricityHomeState extends State<ElectricityHome> {
                     padding: const EdgeInsets.fromLTRB(60, 12, 0, 12),
                     child: Text(
                       _area,
-                      style: TextStyle(color: _area.startsWith("点击选择")?Colors.black54:Colors.black, fontSize: 18),
+                      style: TextStyle(color: _area.startsWith("点击选择")?Colors.black54:Colors.black, fontSize: 16),
                     ),
                   ),
                   onTap: () {
@@ -86,7 +86,7 @@ class _ElectricityHomeState extends State<ElectricityHome> {
               ),
               const Text(
                 '宿舍楼',
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
               Expanded(
                 child: GestureDetector(
@@ -94,7 +94,7 @@ class _ElectricityHomeState extends State<ElectricityHome> {
                     padding: const EdgeInsets.fromLTRB(42, 12, 0, 12),
                     child: Text(
                       _building,
-                      style: TextStyle(color: _building.startsWith("点击选择")?Colors.black54:Colors.black, fontSize: 18),
+                      style: TextStyle(color: _building.startsWith("点击选择")?Colors.black54:Colors.black, fontSize: 16),
                     ),
                   ),
                   onTap: () {
@@ -119,7 +119,7 @@ class _ElectricityHomeState extends State<ElectricityHome> {
               ),
               const Text(
                 '房间号',
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
               const SizedBox(
                 width: 42,
@@ -128,9 +128,9 @@ class _ElectricityHomeState extends State<ElectricityHome> {
                   child: TextField(
                 controller: _roomController,
                 maxLines: 1,
-                style: const TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 16),
                 decoration: const InputDecoration(
-                    hintText: '如：306，B123', hintStyle: TextStyle(fontSize: 18)),
+                    hintText: '如：306，B123', hintStyle: TextStyle(fontSize: 16)),
               )),
               const SizedBox(
                 width: 30,
@@ -150,7 +150,7 @@ class _ElectricityHomeState extends State<ElectricityHome> {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-            child: Text(_result, style: const TextStyle(fontSize: 16, color: Colors.black),)
+            child: Text(_result, style: const TextStyle(fontSize: 14, color: Colors.black),)
           ),
         ],
       ),
@@ -179,7 +179,7 @@ class _ElectricityHomeState extends State<ElectricityHome> {
     Picker(
         title: Text(
           title,
-          style: const TextStyle(fontSize: 18, color: Colors.black),
+          style: const TextStyle(fontSize: 16, color: Colors.black),
         ),
         confirmText: '确定',
         cancelText: '取消',
@@ -199,7 +199,7 @@ class _ElectricityHomeState extends State<ElectricityHome> {
         child: Center(
           child: Text(
             "查询",
-            style: TextStyle(fontSize: 18, color: Colors.white),
+            style: TextStyle(fontSize: 16, color: Colors.white),
           ),
         ),
         width: double.infinity,

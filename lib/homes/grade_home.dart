@@ -123,7 +123,7 @@ class _GradeHomeState extends State<GradeHome> {
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
@@ -132,9 +132,6 @@ class _GradeHomeState extends State<GradeHome> {
                       style: TextStyle(fontSize: 10),
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
-                  )
                 ],
               )
             ],

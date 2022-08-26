@@ -114,6 +114,34 @@ class DateUtil {
     }
     return d == day ? [year, month, day] : addDay(year, month, day, 0);
   }
+
+  static String indexToWeekDay(int index) {
+    String result = '';
+    switch (index) {
+      case 1:
+        result = '周日';
+        break;
+      case 2:
+        result = '周一';
+        break;
+      case 3:
+        result = '周二';
+        break;
+      case 4:
+        result = '周三';
+        break;
+      case 5:
+        result = '周四';
+        break;
+      case 6:
+        result = '周五';
+        break;
+      case 7:
+        result = '周六';
+        break;
+    }
+    return result;
+  }
 }
 
 String getForumDateString(String postDate) {
@@ -141,6 +169,8 @@ String getForumDateString(String postDate) {
     return '半小时前';
   } else if (diffDateTime.inMinutes >= 60 && diffDateTime.inHours <= 10) {
     return '${diffDateTime.inHours}小时前';
+  } else if (nowDateTime.day == postDateTime.day) {
+    return '今天 $hour:$minute';
   } else if (nowDateTime.day - postDateTime.day < 2) {
     return '昨天 $hour:$minute';
   } else if (nowDateTime.day - postDateTime.day < 3) {

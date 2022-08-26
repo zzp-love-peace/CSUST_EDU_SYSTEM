@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class AppInfoProvider with ChangeNotifier {
+class ThemeColorProvider with ChangeNotifier {
   String _themeColor = 'blue';
 
   String get themeColor => _themeColor;

@@ -1,3 +1,4 @@
+import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/network.dart';
@@ -39,7 +40,8 @@ class _DetailHomeState extends State<DetailHome> {
   final _contentController = TextEditingController();
 
   List<_Comment> _commentList = [];
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+
+  // final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 
   @override
   void initState() {
@@ -129,19 +131,39 @@ class _DetailHomeState extends State<DetailHome> {
                           ),
                           _likeAndCollectRow(),
                           if (_commentList.isNotEmpty)
-                            AnimatedList(
-                                key: _listKey,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                initialItemCount: _commentList.length,
-                                itemBuilder: (context, index, animation) {
-                                  return buildFadeWidget(
-                                      _CommentItem(
-                                        comment: _commentList[index],
-                                        deleteCallback: _deleteCallback,
-                                      ),
-                                      animation);
-                                })
+                            ImplicitlyAnimatedList<_Comment>(
+                              items: _commentList,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              areItemsTheSame: (a, b) => a.id == b.id,
+                              itemBuilder: (context, animation, item, index) {
+                                return buildFadeWidget(
+                                    _CommentItem(
+                                        comment: item,
+                                        deleteCallback: _deleteCallback),
+                                    animation);
+                              },
+                              removeItemBuilder: (context, animation, oldItem) {
+                                return buildFadeWidget(
+                                    _CommentItem(
+                                        comment: oldItem,
+                                        deleteCallback: _deleteCallback),
+                                    animation);
+                              },
+                            )
+                          // AnimatedList(
+                          //     key: _listKey,
+                          //     shrinkWrap: true,
+                          //     physics: const NeverScrollableScrollPhysics(),
+                          //     initialItemCount: _commentList.length,
+                          //     itemBuilder: (context, index, animation) {
+                          //       return buildFadeWidget(
+                          //           _CommentItem(
+                          //             comment: _commentList[index],
+                          //             deleteCallback: _deleteCallback,
+                          //           ),
+                          //           animation);
+                          //     })
                           else
                             const NoneLottie(hint: '荒无人烟...')
                         ],
@@ -196,16 +218,7 @@ class _DetailHomeState extends State<DetailHome> {
                         title: '提示',
                         subTitle: '您确定要举报该帖子吗？',
                         callback: () {
-                          SmartDialog.showLoading(msg: '上传中...');
-                          Future.delayed(const Duration(milliseconds: 1200),
-                              () {
-                            SmartDialog.dismiss();
-                            SmartDialog.compatible.show(
-                                widget: const HintDialog(
-                                    title: '提示',
-                                    subTitle: '您的举报已收到，我们将尽快核实并受理'),
-                                clickBgDismissTemp: false);
-                          });
+                          _reportComment(widget.forum.id);
                         },
                       ),
                       clickBgDismissTemp: false);
@@ -515,13 +528,14 @@ class _DetailHomeState extends State<DetailHome> {
       if (value.isNotEmpty) {
         // print('comment$value');
         if (value['code'] == 200) {
-          _commentList.insert(0, _Comment.fromJson(value['data']));
-          _listKey.currentState
-              ?.insertItem(0, duration: const Duration(milliseconds: 500));
+          // _commentList.insert(0, _Comment.fromJson(value['data']));
+          // _listKey.currentState
+          //     ?.insertItem(0, duration: const Duration(milliseconds: 500));
           SmartDialog.dismiss();
           Navigator.pop(context);
           _contentController.clear();
           setState(() {
+            _commentList.insert(0, _Comment.fromJson(value['data']));
             widget.forum.commentNum++;
           });
         } else if (value['code'] == 701) {
@@ -541,17 +555,39 @@ class _DetailHomeState extends State<DetailHome> {
     });
   }
 
+  _reportComment(int postId) {
+    SmartDialog.showLoading(msg: '上传中...');
+    HttpManager().reportComment(StuInfo.token, postId).then((value) {
+      SmartDialog.dismiss();
+      if (value.isNotEmpty) {
+        if (value['code'] == 200) {
+          SmartDialog.compatible.show(
+              widget: const HintDialog(
+                  title: '提示',
+                  subTitle: '您的举报已收到，我们将尽快核实并受理'),
+              clickBgDismissTemp: false);
+        } else {
+          SmartDialog.compatible.showToast('', widget: CustomToast(value['msg']));
+        }
+      } else {
+        SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
+      }
+    },onError: (_){
+      SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
+    });
+  }
+
   _deleteCallback(_Comment comment) {
-    var index = _commentList.indexOf(comment);
-    _commentList.remove(comment);
-    _listKey.currentState?.removeItem(
-        index,
-        (context, animation) => buildFadeWidget(
-            _CommentItem(comment: comment, deleteCallback: _deleteCallback),
-            animation),
-        duration: const Duration(milliseconds: 500));
+    // var index = _commentList.indexOf(comment);
+    // _listKey.currentState?.removeItem(
+    //     index,
+    //     (context, animation) => buildFadeWidget(
+    //         _CommentItem(comment: comment, deleteCallback: _deleteCallback),
+    //         animation),
+    //     duration: const Duration(milliseconds: 500));
     setState(() {
       widget.forum.commentNum--;
+      _commentList.remove(comment);
     });
   }
 }
@@ -571,8 +607,8 @@ class _CommentItem extends StatefulWidget {
 class _CommentItemState extends State<_CommentItem> {
   final _contentController = TextEditingController();
   bool _isExpanded = false;
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 
+  // final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   // List<_Reply> _replyList = [];
 
   @override
@@ -664,18 +700,30 @@ class _CommentItemState extends State<_CommentItem> {
               ),
               if (_isExpanded)
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: AnimatedList(
-                      key: _listKey,
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: ImplicitlyAnimatedList<_Reply>(
+                      items: widget.comment.replyList,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      initialItemCount: widget.comment.replyList.length,
-                      itemBuilder: (context, index, animation) {
-                        return buildFadeWidget(
-                            _replyItem(widget.comment.replyList[index]),
-                            animation);
-                      }),
-                ),
+                      areItemsTheSame: (a, b) => a.id == b.id,
+                      itemBuilder: (context, animation, item, index) {
+                        return buildFadeWidget(_replyItem(item), animation);
+                      },
+                      removeItemBuilder: (context, animation, oldItem) {
+                        return buildFadeWidget(_replyItem(oldItem), animation);
+                      },
+                    )
+                    // AnimatedList(
+                    //     key: _listKey,
+                    //     shrinkWrap: true,
+                    //     physics: const NeverScrollableScrollPhysics(),
+                    //     initialItemCount: widget.comment.replyList.length,
+                    //     itemBuilder: (context, index, animation) {
+                    //       return buildFadeWidget(
+                    //           _replyItem(widget.comment.replyList[index]),
+                    //           animation);
+                    //     }),
+                    ),
               if (widget.comment.replyList.isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.only(left: 50),
@@ -818,61 +866,70 @@ class _CommentItemState extends State<_CommentItem> {
   Widget _replyItem(_Reply reply) {
     return Padding(
         padding: const EdgeInsets.only(left: 50, bottom: 3),
-        child: InkWell(
-            onLongPress: () {
-              SmartDialog.compatible.show(
-                  widget: _controlDialog(reply: reply), isLoadingTemp: false);
-            },
-            child: Row(
-              children: [
-                ClipOval(
-                  child: CachedNetworkImage(
-                      width: 30,
-                      height: 30,
-                      fit: BoxFit.cover,
-                      imageUrl: addPrefixToUrl(reply.avatar),
-                      progressIndicatorBuilder:
-                          (context, url, downloadProgress) =>
-                              CircularProgressIndicator(
-                                  value: downloadProgress.progress),
-                      errorWidget: (context, url, error) => Container(
-                          width: 30,
-                          height: 30,
-                          color: Theme.of(context).primaryColor)),
-                ),
-                const SizedBox(
-                  width: 3,
-                ),
-                Expanded(
-                    child: RichText(
-                  text: TextSpan(
-                      text: reply.replyName == null
-                          ? '${reply.username}：'
-                          : reply.username,
-                      style: TextStyle(
-                          fontSize: 14, color: Theme.of(context).primaryColor),
-                      children: [
-                        if (reply.replyName != null)
-                          const TextSpan(
-                            text: ' 回复 ',
-                            style: TextStyle(fontSize: 14, color: Colors.black),
-                          ),
-                        if (reply.replyName != null)
-                          TextSpan(
-                            text: '${reply.replyName}：',
+        child: Ink(
+          child: InkWell(
+              onLongPress: () {
+                SmartDialog.compatible.show(
+                    widget: _controlDialog(reply: reply), isLoadingTemp: false);
+              },
+              onTap: (){
+                _showCommentBottomSheet(
+                    context, _contentController, _postReply,
+                    hint:
+                    '回复给 ${reply.username}:',
+                    replyId: reply.userId);
+              },
+              child: Row(
+                children: [
+                  ClipOval(
+                    child: CachedNetworkImage(
+                        width: 30,
+                        height: 30,
+                        fit: BoxFit.cover,
+                        imageUrl: addPrefixToUrl(reply.avatar),
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                                value: downloadProgress.progress),
+                        errorWidget: (context, url, error) => Container(
+                            width: 30,
+                            height: 30,
+                            color: Theme.of(context).primaryColor)),
+                  ),
+                  const SizedBox(
+                    width: 3,
+                  ),
+                  Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                            text: reply.replyName == null
+                                ? '${reply.username}：'
+                                : reply.username,
                             style: TextStyle(
-                                fontSize: 14,
-                                color: Theme.of(context).primaryColor),
-                          ),
-                        TextSpan(
-                          text: reply.content,
-                          style: const TextStyle(
-                              fontSize: 14, color: Colors.black),
-                        ),
-                      ]),
-                ))
-              ],
-            )));
+                                fontSize: 14, color: Theme.of(context).primaryColor),
+                            children: [
+                              if (reply.replyName != null)
+                                const TextSpan(
+                                  text: ' 回复 ',
+                                  style: TextStyle(fontSize: 14, color: Colors.black),
+                                ),
+                              if (reply.replyName != null)
+                                TextSpan(
+                                  text: '${reply.replyName}：',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                              TextSpan(
+                                text: reply.content,
+                                style: const TextStyle(
+                                    fontSize: 14, color: Colors.black),
+                              ),
+                            ]),
+                      ))
+                ],
+              )),color: Colors.white,
+        ));
   }
 
   _postReply(String content, {int? replyId}) {
@@ -882,15 +939,15 @@ class _CommentItemState extends State<_CommentItem> {
       if (value.isNotEmpty) {
         if (value['code'] == 200) {
           // print('reply$value');
-          int index = widget.comment.replyList.length;
-          widget.comment.replyList.add(_Reply.fromJson(value['data']));
-          if (_isExpanded == false) {
-            setState(() {
+          // int index = widget.comment.replyList.length;
+          setState(() {
+            widget.comment.replyList.add(_Reply.fromJson(value['data']));
+            if (_isExpanded == false) {
               _isExpanded = true;
-            });
-          }
-          _listKey.currentState
-              ?.insertItem(index, duration: const Duration(milliseconds: 500));
+            }
+          });
+          // _listKey.currentState
+          //     ?.insertItem(index, duration: const Duration(milliseconds: 500));
           SmartDialog.dismiss();
           Navigator.pop(context);
           _contentController.clear();
@@ -934,16 +991,16 @@ class _CommentItemState extends State<_CommentItem> {
       if (value.isNotEmpty) {
         // print(value);
         if (value['code'] == 200) {
-          var index = widget.comment.replyList.indexOf(reply);
-          widget.comment.replyList.remove(reply);
-          _listKey.currentState?.removeItem(
-              index,
-              (context, animation) =>
-                  buildFadeWidget(_replyItem(reply), animation),
-              duration: const Duration(milliseconds: 500));
-          if (widget.comment.replyList.isEmpty) {
-            setState(() {});
-          }
+          // var index = widget.comment.replyList.indexOf(reply);
+          setState(() {
+            widget.comment.replyList.remove(reply);
+          });
+          // _listKey.currentState?.removeItem(
+          //     index,
+          //     (context, animation) =>
+          //         buildFadeWidget(_replyItem(reply), animation),
+          //     duration: const Duration(milliseconds: 500));
+          // if (widget.comment.replyList.isEmpty) {}
         } else {
           SmartDialog.compatible
               .showToast('', widget: CustomToast(value['msg']));

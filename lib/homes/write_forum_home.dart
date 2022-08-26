@@ -13,14 +13,15 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 import '../route/fade_route.dart';
+import '../widgets/forum_item.dart';
 import '../widgets/select_dialog.dart';
 
 class WriteForumHome extends StatefulWidget {
   final List<String> tabs;
   final List<int> tabsId;
-  // final Function callback;
+  final Function(Forum, int) callback;
 
-  const WriteForumHome({Key? key, required this.tabs, required this.tabsId})
+  const WriteForumHome({Key? key, required this.tabs, required this.tabsId, required this.callback})
       : super(key: key);
 
   @override
@@ -340,8 +341,10 @@ class _WriteForumHomeState extends State<WriteForumHome> {
       if (value.isNotEmpty) {
         SmartDialog.dismiss();
         if (value['code'] == 200) {
+          Forum forum = Forum.fromJson(value['data']);
           SmartDialog.compatible.showToast('', widget: const CustomToast('上传成功'));
           Navigator.of(context).pop();
+          widget.callback(forum, themeId);
         } else if(value['code']== 701) {
           SmartDialog.compatible.show(widget: HintDialog(title: '提示', subTitle: value['msg']), clickBgDismissTemp: false);
         } else {
@@ -399,7 +402,7 @@ class _AddImgButton extends StatelessWidget {
                   InkWell(
                     child: const Center(
                         child: Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
                             child: Text(
                               '拍照',
                               style:
@@ -417,7 +420,7 @@ class _AddImgButton extends StatelessWidget {
                   InkWell(
                     child: const Center(
                         child: Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
                             child: Text(
                               '从相册选取',
                               style:
@@ -439,7 +442,7 @@ class _AddImgButton extends StatelessWidget {
                   InkWell(
                     child: const Center(
                         child: Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
                             child: Text(
                               '取消',
                               style:

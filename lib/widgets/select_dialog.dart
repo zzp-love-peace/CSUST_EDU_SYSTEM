@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
@@ -6,8 +5,16 @@ class SelectDialog extends StatelessWidget {
   final String title;
   final String subTitle;
   final Function callback;
+  final String positiveText;
+  final String negativeText;
 
-  const SelectDialog({Key? key, required this.title, required this.subTitle, required this.callback})
+  const SelectDialog(
+      {Key? key,
+      required this.title,
+      required this.subTitle,
+      required this.callback,
+      this.positiveText = '确定',
+      this.negativeText = '取消'})
       : super(key: key);
 
   @override
@@ -25,11 +32,21 @@ class SelectDialog extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const SizedBox(height: 20,),
-              Text(title, style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(title,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold)),
+              const SizedBox(
+                height: 10,
+              ),
               Text(subTitle, style: const TextStyle(color: Colors.black)),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               const Divider(
                 thickness: 2,
                 height: 0,
@@ -40,8 +57,10 @@ class SelectDialog extends StatelessWidget {
                     flex: 1,
                     child: TextButton(
                       child: Text(
-                        '取消',
-                        style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
+                        negativeText,
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).primaryColor),
                       ),
                       onPressed: () {
                         SmartDialog.dismiss();
@@ -59,11 +78,15 @@ class SelectDialog extends StatelessWidget {
                       flex: 1,
                       child: TextButton(
                         child: Text(
-                          '确定',
-                          style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
+                          positiveText,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Theme.of(context).primaryColor),
                         ),
-                        onPressed: () { callback();
-                        SmartDialog.dismiss();},
+                        onPressed: () {
+                          callback();
+                          SmartDialog.dismiss();
+                        },
                       ))
                 ],
               )

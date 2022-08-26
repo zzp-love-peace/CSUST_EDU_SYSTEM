@@ -1,5 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../data/stu_info.dart';
+import '../network/network.dart';
+import '../widgets/custom_toast.dart';
+import '../widgets/select_dialog.dart';
+
+const String version = 'v1.6.9';
+const String appName = '新长理教务';
 
 MaterialColor createMaterialColor(Color color) {
   List strengths = [.05];
@@ -22,7 +32,7 @@ MaterialColor createMaterialColor(Color color) {
 String getAppSuffix() {
   String result = '';
   if (Platform.isAndroid) {
-    result = '.apk2';
+    result = '.apk';
   } else if (Platform.isIOS) {
     result = '.ipa';
   }
@@ -46,4 +56,58 @@ Widget buildFadeWidget(
           opacity: animation,
           child: SizeTransition(
               axis: Axis.vertical, sizeFactor: animation, child: child)));
+}
+
+checkVersion({bool isBegin = false}) {
+  var form = '';
+  if (Platform.isAndroid) {
+    form = 'apk';
+  } else if (Platform.isIOS) {
+    form = 'ipa';
+  } else {
+    return;
+  }
+  HttpManager().getLastVersion(StuInfo.token, form).then((value) {
+    if (value.isNotEmpty) {
+      if (value['code'] == 200) {
+        String appPath = value['data']['apkPath'];
+        var string = appPath.split(appName);
+        var lastVersion = string[1].substring(0, string[1].length - 4);
+        if (version.compareTo(lastVersion) >= 0) {
+          if (!isBegin) {
+            SmartDialog.compatible
+                .showToast('', widget: const CustomToast('已经是最新版本了哦'));
+          }
+        } else {
+          SmartDialog.compatible.show(
+              widget: SelectDialog(
+                  title: '有新版本',
+                  subTitle: value['data']['info'],
+                  positiveText: '现在更新',
+                  negativeText: '以后再说',
+                  callback: () async {
+                    String url = form == 'apk'
+                        ? appPath
+                        : 'https://apps.apple.com/cn/app/%E9%95%BF%E7%90%86%E6%95%99%E5%8A%A1/id1619946564';
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    }
+                    else {
+                      SmartDialog.compatible.showToast(
+                          '', widget: const CustomToast('下载链接有误'));
+                    }
+                  }),
+              clickBgDismissTemp: false);
+        }
+      } else {
+        SmartDialog.compatible
+            .showToast('', widget: CustomToast(value['msg']));
+      }
+    } else {
+      SmartDialog.compatible
+          .showToast('', widget: const CustomToast('出现异常了'));
+    }
+  }, onError: (_) {
+    SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
+  });
 }

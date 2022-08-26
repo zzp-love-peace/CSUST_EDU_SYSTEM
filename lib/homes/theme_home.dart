@@ -1,5 +1,5 @@
 import 'package:csust_edu_system/data/color_data.dart';
-import 'package:csust_edu_system/provider/app_provider.dart';
+import 'package:csust_edu_system/provider/theme_color_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,7 +46,7 @@ class _ThemeHomeState extends State<ThemeHome> {
                   onTap: () {
                     setState(() {
                       _groupValue = _names[index];
-                      Provider.of<AppInfoProvider>(context, listen: false)
+                      Provider.of<ThemeColorProvider>(context, listen: false)
                           .setTheme(_groupValue);
                       _saveColor(_groupValue);
                     });
@@ -85,7 +85,7 @@ class _ThemeHomeState extends State<ThemeHome> {
                                 onChanged: (value) {
                                   setState(() {
                                     _groupValue = value.toString();
-                                    Provider.of<AppInfoProvider>(context,
+                                    Provider.of<ThemeColorProvider>(context,
                                             listen: false)
                                         .setTheme(_groupValue);
                                     _saveColor(_groupValue);

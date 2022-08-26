@@ -1,7 +1,4 @@
-import 'dart:ffi';
-
-import 'package:csust_edu_system/data/electricity_data.dart';
-import 'package:csust_edu_system/data/my_icons.dart';
+import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/write_forum_home.dart';
 import 'package:csust_edu_system/network/network.dart';
@@ -29,6 +26,8 @@ class _ForumPageState extends State<ForumPage> {
 
   late List<String> _tabs;
   late List<int> _tabsId;
+
+  static Map<int,Function> listCallbacks = {};
 
   @override
   void initState() {
@@ -68,6 +67,16 @@ class _ForumPageState extends State<ForumPage> {
                     builder: (context) => WriteForumHome(
                           tabs: _tabs,
                           tabsId: _tabsId,
+                      callback: (forum, id){
+                        Function? function = listCallbacks[id];
+                        Function? function2 = listCallbacks[0];
+                        if (function != null) {
+                          function(forum);
+                        }
+                        if (function2 != null) {
+                          function2(forum);
+                        }
+                      },
                         )));
               },
               shape: RoundedRectangleBorder(
@@ -92,7 +101,7 @@ class _ForumPageState extends State<ForumPage> {
             _tabList.insert(
                 0,
                 const Tab(
-                  text: '综合',
+                  text: '全部',
                 ));
             _tabPages.insert(0, const _ForumList(tabId: 0));
             _tabs = data.map((e) => e['themeName'].toString()).toList();
@@ -127,8 +136,9 @@ class _ForumListState extends State<_ForumList>
 
   int _page = 1;
   late int _totalPages;
-  final _rows = 8;
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  final _rows = 12;
+
+// final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 
   @override
   bool get wantKeepAlive => true;
@@ -137,11 +147,7 @@ class _ForumListState extends State<_ForumList>
   void initState() {
     super.initState();
     _getFormListByTabId(widget.tabId);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    _ForumPageState.listCallbacks[widget.tabId] = _addCallback;
   }
 
   @override
@@ -160,26 +166,34 @@ class _ForumListState extends State<_ForumList>
         },
         onLoad: () async {
           await Future.delayed(const Duration(milliseconds: 1200), () {
-            _page += 1;
+            _page++;
             if (_page <= _totalPages) {
               _getFormListByTabId(widget.tabId);
             }
           });
         },
         child: _forumList.isNotEmpty
-            ? AnimatedList(
-            key: _listKey,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            initialItemCount: _forumList.length,
-            itemBuilder: (context, index, animation) {
-              return buildFadeWidget(
-                  _getForumItem(_forumList[index]), animation);
-            })
-        // ListView.builder(
-        //         itemCount: _forumList.length,
-        //         itemBuilder: _getForumItem,
-        //       )
+            ? ImplicitlyAnimatedList<Forum>(
+                items: _forumList,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                areItemsTheSame: (a, b) => a.id == b.id,
+                itemBuilder: (context, animation, item, index) {
+                  return buildFadeWidget(_getForumItem(item), animation);
+                },
+                removeItemBuilder: (context, animation, oldItem) {
+                  return buildFadeWidget(_getForumItem(oldItem), animation);
+                },
+              )
+            // AnimatedList(
+            //         key: _listKey,
+            //         shrinkWrap: true,
+            //         physics: const NeverScrollableScrollPhysics(),
+            //         initialItemCount: _forumList.length,
+            //         itemBuilder: (context, index, animation) {
+            //           return buildFadeWidget(
+            //               _getForumItem(_forumList[index]), animation);
+            //         })
             : const NoneLottie(
                 hint: '荒无人烟...',
               ));
@@ -193,13 +207,21 @@ class _ForumListState extends State<_ForumList>
   }
 
   _deleteCallback(Forum forum) {
-    var index = _forumList.indexOf(forum);
-    _forumList.remove(forum);
-    _listKey.currentState?.removeItem(
-        index,
-            (context, animation) =>
-            buildFadeWidget(_getForumItem(forum), animation),
-        duration: const Duration(milliseconds: 500));
+    // var index = _forumList.indexOf(forum);
+    setState(() {
+      _forumList.remove(forum);
+    });
+    // _listKey.currentState?.removeItem(
+    //     index,
+    //     (context, animation) =>
+    //         buildFadeWidget(_getForumItem(forum), animation),
+    //     duration: const Duration(milliseconds: 500));
+  }
+
+  _addCallback(Forum forum) {
+    setState(() {
+      _forumList.insert(0, forum);
+    });
   }
 
   _getFormListByTabId(int tabId) {
@@ -208,12 +230,11 @@ class _ForumListState extends State<_ForumList>
       if (value.isNotEmpty) {
         print(value);
         if (value['code'] == 200) {
-          int totalCount = value['data']['totalCount'];
-          _totalPages = (totalCount / _rows).ceil();
           setState(() {
+            int totalCount = value['data']['totalCount'];
+            _totalPages = (totalCount / _rows).ceil();
             List data = value['data']['indexPosts'];
             if (_page == 1) {
-              _forumList.clear();
               _forumList = data.map((e) => Forum.fromJson(e)).toList();
             } else {
               List<Forum> list = data.map((e) => Forum.fromJson(e)).toList();

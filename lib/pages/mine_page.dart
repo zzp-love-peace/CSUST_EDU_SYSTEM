@@ -22,6 +22,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/theme_color_provider.dart';
+import '../provider/unread_msg_provider.dart';
 
 class MinePage extends StatelessWidget {
   const MinePage({Key? key}) : super(key: key);
@@ -103,19 +107,19 @@ class MinePage extends StatelessWidget {
                         // color: Theme.of(context).primaryColor
                         color: Colors.green),
                     title: const Text('我的消息'),
-                    trailing: Stack(
+                    trailing: Consumer<UnreadMsgProvider>(builder: (context, appInfo, _)=>Stack(
                       alignment: Alignment.centerLeft,
-                      children: const [
-                        Padding(
+                      children:  [
+                        const Padding(
                           padding: EdgeInsets.only(left: 30),
                           child: Icon(
                             Icons.navigate_next,
                             color: Colors.black,
                           ),
                         ),
-                        // Padding(padding: EdgeInsets.only(right: 30), child: Icon(Icons.circle, color: Colors.red, size: 9,),)
+                        if (appInfo.hasNewMsg) const Padding(padding: EdgeInsets.only(right: 30), child: Icon(Icons.circle, color: Colors.red, size: 9,),)
                       ],
-                    ),
+                    ),),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const MessageHome()));

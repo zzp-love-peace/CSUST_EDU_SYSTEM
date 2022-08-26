@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/network.dart';
-import 'package:csust_edu_system/provider/app_provider.dart';
+import 'package:csust_edu_system/provider/theme_color_provider.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/hint_dialog.dart';
@@ -193,7 +193,7 @@ class _LoginHomeState extends State<LoginHome> {
     prefs = await SharedPreferences.getInstance();
     String colorKey = prefs.getString('color')??'blue';
     // 设置初始化主题颜色
-    Provider.of<AppInfoProvider>(context, listen: false).setTheme(colorKey);
+    Provider.of<ThemeColorProvider>(context, listen: false).setTheme(colorKey);
     final String? username = prefs.getString("username");
     final String? password = prefs.getString("password");
     setState(() {

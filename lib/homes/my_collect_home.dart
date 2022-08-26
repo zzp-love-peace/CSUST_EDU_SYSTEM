@@ -1,3 +1,4 @@
+import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/widgets/forum_item.dart';
 import 'package:csust_edu_system/widgets/none_lottie.dart';
@@ -19,7 +20,7 @@ class MyCollectHome extends StatefulWidget {
 class _MyCollectHomeState extends State<MyCollectHome> {
 
   List<Forum> _forumList = [];
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  // final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 
   @override
   void initState() {
@@ -70,15 +71,27 @@ class _MyCollectHomeState extends State<MyCollectHome> {
                 ),
               ),
               if (_forumList.isNotEmpty)
-                AnimatedList(
-                    key: _listKey,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    initialItemCount: _forumList.length,
-                    itemBuilder: (context, index, animation) {
-                      return buildFadeWidget(
-                          _getForumItem(_forumList[index]), animation);
-                    })
+                ImplicitlyAnimatedList<Forum>(
+                  items: _forumList,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  areItemsTheSame: (a, b) => a.id == b.id,
+                  itemBuilder: (context, animation, item, index) {
+                    return buildFadeWidget(_getForumItem(item), animation);
+                  },
+                  removeItemBuilder: (context, animation, oldItem) {
+                    return buildFadeWidget(_getForumItem(oldItem), animation);
+                  },
+                )
+                // AnimatedList(
+                //     key: _listKey,
+                //     shrinkWrap: true,
+                //     physics: const NeverScrollableScrollPhysics(),
+                //     initialItemCount: _forumList.length,
+                //     itemBuilder: (context, index, animation) {
+                //       return buildFadeWidget(
+                //           _getForumItem(_forumList[index]), animation);
+                //     })
               else const NoneLottie(hint: '空空如也...')
             ],
           )),
@@ -93,13 +106,15 @@ class _MyCollectHomeState extends State<MyCollectHome> {
   }
 
   _deleteCallback(Forum forum) {
-    var index = _forumList.indexOf(forum);
-    _forumList.remove(forum);
-    _listKey.currentState?.removeItem(
-        index,
-            (context, animation) =>
-            buildFadeWidget(_getForumItem(forum), animation),
-        duration: const Duration(milliseconds: 500));
+    // var index = _forumList.indexOf(forum);
+    setState(() {
+      _forumList.remove(forum);
+    });
+    // _listKey.currentState?.removeItem(
+    //     index,
+    //         (context, animation) =>
+    //         buildFadeWidget(_getForumItem(forum), animation),
+    //     duration: const Duration(milliseconds: 500));
   }
 
   _getMyCollects() {

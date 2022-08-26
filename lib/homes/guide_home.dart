@@ -164,11 +164,14 @@ class _GuideHomeState extends State<GuideHome> {
           } on Exception {
             // SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
             _loginWithException(false, false, true);
+            _saveData([]);
           }
         } else if (loginValue['code'] == 501) {
           _loginWithException(false, false, true);
+          _saveData([]);
         } else if (loginValue['code'] == 502) {
           _loginWithException(false, false, true);
+          _saveData([]);
         } else {
           SmartDialog.compatible.showToast('', widget: CustomToast(loginValue['msg']));
           Navigator.of(context).pushReplacement(PageRouteBuilder(
@@ -264,6 +267,7 @@ class _GuideHomeState extends State<GuideHome> {
       SmartDialog.compatible.showToast('', widget: const CustomToast('获取课表出错了'));
     }
     print("登录异常: isDate:$isDate  isStu:$isStu  isCourse:$isCourse");
+
     Future.delayed(const Duration(milliseconds: 1000), () {
       Navigator.of(context).pushReplacement(PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 500),

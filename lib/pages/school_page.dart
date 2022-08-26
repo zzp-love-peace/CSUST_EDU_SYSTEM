@@ -60,6 +60,11 @@ class _SchoolPageState extends State<SchoolPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
+          actions: [
+            if (_noticeList.isEmpty) IconButton(onPressed: (){
+              _initNoticeList();
+            }, icon: const Icon(Icons.refresh, color: Colors.white,))
+          ],
         ),
         body: ListView(
           children: [

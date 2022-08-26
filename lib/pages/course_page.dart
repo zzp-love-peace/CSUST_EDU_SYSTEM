@@ -53,7 +53,8 @@ class _CoursePageState extends State<CoursePage> {
       }
     }
     if (widget._courseData.isEmpty) {
-      _getAllCourseOfTerm();
+      // _getAllCourseOfTerm(_term);
+      _getAllCourseOfTerm(DateInfo.nowTerm);
     }
   }
 
@@ -84,12 +85,12 @@ class _CoursePageState extends State<CoursePage> {
               child: Row(
                 children: [
                   Expanded(
-                    flex: 3,
+                    flex: 4,
                     child: MyDatePicker(
                       callBack: _datePickerCallback,
                     ),
                   ),
-                  Expanded(flex: 2, child: _weekBelowAppBar())
+                  Expanded(flex: 3, child: _weekBelowAppBar())
                 ],
               ))),
       centerTitle: true,
@@ -104,7 +105,8 @@ class _CoursePageState extends State<CoursePage> {
         if (widget._courseData.isEmpty)
           IconButton(
             onPressed: () {
-              _getAllCourseOfTerm();
+              // _getAllCourseOfTerm(_term);
+              _getAllCourseOfTerm(DateInfo.nowTerm);
             },
             icon: const Icon(
               Icons.refresh,
@@ -384,6 +386,7 @@ class _CoursePageState extends State<CoursePage> {
       _pageList = _initCourseLayout();
       setState(() {});
     }, onError: (_) {
+      // _getAllCourseOfTerm(_term);
       SmartDialog.compatible
           .showToast('', widget: const CustomToast('获取课表出错了'));
     });
@@ -398,79 +401,56 @@ class _CoursePageState extends State<CoursePage> {
     } on FormatException {
       list = [];
     }
-    print('list $list');
     myCourseList = list.map((e) => MyCourse.fromJson(e)).toList();
   }
 
-  _getAllCourseOfTerm() {
-    HttpManager()
-        .getAllCourseOfTerm(StuInfo.cookie, StuInfo.token, DateInfo.nowTerm)
-        .then((value) {
-      if (value.isNotEmpty) {
-        if (value['code'] == 200) {
-          List data = value['data'];
-          List allData = [];
-          for (int i = 1; i <= 20; i++) {
-            List dList = [];
-            for (int j = 0; j < data.length; j++) {
-              List ddList = [];
-              for (int k = 0; k < data[j].length; k++) {
-                Map? map = data[j][k];
-                if (map == null) {
-                  ddList.add(null);
-                  continue;
-                }
-                bool flag = false;
-                var sList = map['time'].toString().split(' ');
-                for (var s in sList) {
-                  var s1 = s.split('(');
-                  var s2 = s1[0].split('-');
-                  int start = int.parse(s2[0]);
-                  int end = int.parse(s2[1]);
-                  if (i >= start && i <= end) {
-                    flag = true;
-                  }
-                }
-                if (!flag) {
-                  ddList.add(null);
-                } else {
-                  ddList.add(data[j][k]);
-                }
-              }
-              dList.add(ddList);
-            }
-            allData.add(dList);
-          }
-          setState(() {
-            widget._courseData = CourseUtil.changeCourseDataList(allData);
-            _pageList = _initCourseLayout();
-            prefs.setString('courseData_exception', jsonEncode(allData));
-          });
-        } else {
-          SmartDialog.compatible
-              .showToast('', widget: const CustomToast('获取课表出错了'));
-          var jsonData = prefs.getString('courseData_exception') ?? '';
-          if (jsonData.isNotEmpty) {
-            List courseData = jsonDecode(jsonData);
+  _getAllCourseOfTerm(String term) {
+    Future.delayed(const Duration(milliseconds: 100), (){
+      HttpManager()
+          .getAllCourseOfTerm(StuInfo.cookie, StuInfo.token, term)
+          .then((value) {
+        if (value.isNotEmpty) {
+          if (value['code'] == 200) {
+            List data = value['data'];
+            List allData = CourseUtil.analyzeCourseOfTerm(data);
             setState(() {
-              widget._courseData = CourseUtil.changeCourseDataList(courseData);
+              print("sdasdsa");
+              widget._courseData = CourseUtil.changeCourseDataList(allData);
               _pageList = _initCourseLayout();
             });
+            if (_term == DateInfo.nowTerm) {
+              prefs.setString('courseData_exception', jsonEncode(allData));
+            }
+          } else {
+            SmartDialog.compatible
+                .showToast('', widget: const CustomToast('获取课表出错了'));
+            if (_term == DateInfo.nowTerm) {
+              var jsonData = prefs.getString('courseData_exception') ?? '';
+              if (jsonData.isNotEmpty) {
+                List courseData = jsonDecode(jsonData);
+                setState(() {
+                  widget._courseData = CourseUtil.changeCourseDataList(courseData);
+                  _pageList = _initCourseLayout();
+                });
+              }
+            }
+          }
+        } else {
+          SmartDialog.compatible.showToast('', widget: const CustomToast('出异常了'));
+          if (_term == DateInfo.nowTerm) {
+            var jsonData = prefs.getString('courseData_exception') ?? '';
+            if (jsonData.isNotEmpty) {
+              List courseData = jsonDecode(jsonData);
+              setState(() {
+                widget._courseData = CourseUtil.changeCourseDataList(courseData);
+                _pageList = _initCourseLayout();
+              });
+            }
           }
         }
-      } else {
+      }, onError: (_) {
         SmartDialog.compatible.showToast('', widget: const CustomToast('出异常了'));
-        var jsonData = prefs.getString('courseData_exception') ?? '';
-        if (jsonData.isNotEmpty) {
-          List courseData = jsonDecode(jsonData);
-          setState(() {
-            widget._courseData = CourseUtil.changeCourseDataList(courseData);
-            _pageList = _initCourseLayout();
-          });
-        }
-      }
-    }, onError: (_) {
-      SmartDialog.compatible.showToast('', widget: const CustomToast('出异常了'));
+      });
     });
   }
 }

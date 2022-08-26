@@ -162,17 +162,19 @@ class _LoginHomeState extends State<LoginHome> {
                 builder: (context) => BottomTabHome(allCourseData)));
           } on Exception {
             String list = await _initLoginData();
+            print(list);
+            List data = [];
             if (list.isNotEmpty) {
-              List data = json.decode(list);
-              SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
+              data = json.decode(list);
+              // SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => BottomTabHome(data)));
             } else {
-              SmartDialog.compatible.show(
-                  widget: const HintDialog(
-                      title: '提示', subTitle: '教务系统异常且暂未保存课程表，请稍后再试'));
+              // SmartDialog.compatible.show(
+              //     widget: const HintDialog(
+              //         title: '提示', subTitle: '教务系统异常且暂未保存课程表，请稍后再试'));
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const BottomTabHome([])));
+                  MaterialPageRoute(builder: (context) => BottomTabHome(data)));
             }
           }
         } else {

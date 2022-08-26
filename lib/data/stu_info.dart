@@ -35,10 +35,10 @@ class StuInfo {
     username = stuData['username'];
     avatar = stuData['avatar'];
     // print('avatar$avatar');
-    name = stuData['name'];
+    name = stuData['name'] ?? '';
     stuId = stuData['stuId'];
-    college = stuData['college'];
-    major = stuData['major'];
-    className = stuData['className'];
+    college = stuData['college'] ?? '';
+    major = stuData['major'] ?? '';
+    className = stuData['className'] ?? '';
   }
 }

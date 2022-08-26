@@ -52,7 +52,7 @@ class RecInfoHome extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Text(
+              SelectableText(
                 '联系方式：${recruit.contact}',
                 style: const TextStyle(fontSize: 16, color: Colors.black),
               ),

@@ -17,9 +17,8 @@ import '../network/network.dart';
 import '../provider/theme_color_provider.dart';
 
 class BottomTabHome extends StatefulWidget {
-  final List _courseData;
 
-  const BottomTabHome(this._courseData, {Key? key}) : super(key: key);
+  const BottomTabHome({Key? key}) : super(key: key);
 
   @override
   State<BottomTabHome> createState() => _BottomTabHomeState();
@@ -33,10 +32,8 @@ class _BottomTabHomeState extends State<BottomTabHome> {
   @override
   void initState() {
     super.initState();
-    // 修改完数据再传参
-    List changed = CourseUtil.changeCourseDataList(widget._courseData);
     _pages = [
-      CoursePage(changed),
+      const CoursePage(),
       const SchoolPage(),
       const ForumPage(),
       const MinePage(),

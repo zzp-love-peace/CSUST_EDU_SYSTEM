@@ -104,7 +104,8 @@ class _InfoHomeState extends State<InfoHome> {
                             _username = value;
                             _checkEnable();
                           });
-                        }), clickBgDismissTemp: false);
+                        }),
+                    clickBgDismissTemp: false);
               },
             ),
             ListTile(
@@ -278,9 +279,9 @@ class _InfoHomeState extends State<InfoHome> {
       SmartDialog.showLoading(msg: '上传中');
       HttpManager().setHeadImg(StuInfo.token, imgPath).then((value) {
         if (value.isNotEmpty) {
-          // print(value);
           SmartDialog.dismiss();
           if (value['code'] == 200) {
+            _refreshStuInfo();
             if (_sex != StuInfo.sex || _username != StuInfo.username) {
               HttpManager().setStuInfo(StuInfo.token, _username, _sex).then(
                   (value) {
@@ -313,7 +314,6 @@ class _InfoHomeState extends State<InfoHome> {
       });
     } else {
       if (_sex != StuInfo.sex || _username != StuInfo.username) {
-        print(_sex);
         HttpManager().setStuInfo(StuInfo.token, _username, _sex).then((value) {
           if (value.isNotEmpty) {
             if (value['code'] == 200) {
@@ -356,17 +356,13 @@ class _InfoHomeState extends State<InfoHome> {
       if (value['code'] == 200) {
         List gradeList = [];
         List allTerm = value['data'];
-        bool isError = false;
-        for (int i=0; i<allTerm.length; i++) {
+        for (int i = 0; i < allTerm.length; i++) {
           var scoreValue = await HttpManager()
               .queryScore(StuInfo.token, StuInfo.cookie, allTerm[i]);
           if (scoreValue['code'] == 200) {
             List grade = scoreValue['data'];
             gradeList.addAll(grade);
           } else {
-            if (i != allTerm.length -1) {
-              isError = true;
-            }
             if (kDebugMode) {
               print('获取${allTerm[i]}成绩出错了');
             }
@@ -376,7 +372,7 @@ class _InfoHomeState extends State<InfoHome> {
           print(gradeList);
         }
         if (mounted) {
-          if (StuInfo.name.isNotEmpty && !isError) {
+          if (StuInfo.name.isNotEmpty) {
             setState(() {
               _allPoint = getSumPoint(gradeList);
             });
@@ -393,12 +389,14 @@ class _InfoHomeState extends State<InfoHome> {
   _refreshStuInfo() {
     HttpManager().refreshStuInfo(StuInfo.cookie, StuInfo.token).then((value) {
       if (value.isNotEmpty) {
+        print(value);
         if (value['code'] == 200) {
-          print(value);
           StuInfo.initData(value['data']);
-          setState(() {
-            _initData();
-          });
+          if (mounted) {
+            setState(() {
+              _initData();
+            });
+          }
         } else {
           SmartDialog.compatible
               .showToast('', widget: CustomToast(value['msg']));

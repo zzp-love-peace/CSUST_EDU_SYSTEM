@@ -169,13 +169,13 @@ String getForumDateString(String postDate) {
     return '半小时前';
   } else if (diffDateTime.inMinutes >= 60 && diffDateTime.inHours <= 10) {
     return '${diffDateTime.inHours}小时前';
-  } else if (nowDateTime.day == postDateTime.day) {
+  } else if (postDateTime.day == nowDateTime.day) {
     return '今天 $hour:$minute';
-  } else if (nowDateTime.day - postDateTime.day < 2) {
+  } else if (nowDateTime.day == postDateTime.day + 1) {
     return '昨天 $hour:$minute';
-  } else if (nowDateTime.day - postDateTime.day < 3) {
+  } else if (nowDateTime.day == postDateTime.day + 2) {
     return '前天 $hour:$minute';
-  } else if (nowDateTime.day - postDateTime.day < 4) {
+  } else if (nowDateTime.day == postDateTime.day + 3) {
     return '大前天 $hour:$minute';
   } else if (nowDateTime.year == postDateTime.year) {
     return '${postDateTime.month}/${postDateTime.day} $hour:$minute';

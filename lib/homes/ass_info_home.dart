@@ -62,7 +62,7 @@ class AssInfoHome extends StatelessWidget {
               ),
               Text('公众号：${assInfo.publicNum}', style: const TextStyle(fontSize: 14, color: Colors.black)),
               const SizedBox(height: 10,),
-              Text('qq群：${assInfo.qq}', style: const TextStyle(fontSize: 14, color: Colors.black)),
+              Text('官q：${assInfo.qq}', style: const TextStyle(fontSize: 14, color: Colors.black)),
               const SizedBox(height: 50,),
               const Text('材料来源：长理学社联', style: TextStyle(fontSize: 12, color: Colors.blueGrey)),
               const SizedBox(height: 30,),

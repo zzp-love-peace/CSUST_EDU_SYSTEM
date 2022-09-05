@@ -257,6 +257,9 @@ class HttpManager {
   Future<Map> getRecruitInfoByTitle(String token, String title) async =>
       await _get('/recruitInfo/getByTitle', params: {'name': title}, header: token);
 
+  Future<Map> getBannerImg(String token) async =>
+      await _get('/loopImg/getAll', header: token);
+
   queryElectricity(String jsonData) async =>
       await _post('http://yktwd.csust.edu.cn:8988/web/Common/Tsm.html',
           params: {
@@ -272,35 +275,35 @@ class HttpManager {
           params: FormData.fromMap({'cookie': cookie, 'xueqi': term, 'zc': 0}), headers: {"token": token});
 
   // 并行获取所有周的课程表
-  Future<List> getAllCourse(String token, String cookie, String term,
-      int totalWeek) async {
-    List result = [];
-    List<Future> futures = [];
-    // print(totalWeek);
-    for (int i = 1; i <= totalWeek; i++) {
-      futures.add(HttpManager().queryCourse(token, cookie, term, i.toString()));
-    }
-    var response = await Future.wait(futures);
-    for (Map value in response) {
-      if (value.isNotEmpty) {
-        // print(value);
-        if (value['code'] == 200) {
-          result.add(value['data']);
-        } else {
-          if (kDebugMode) {
-            print('出异常了');
-          }
-          throw Exception('获取课表出错了');
-        }
-      } else {
-        if (kDebugMode) {
-          print('出异常了');
-        }
-        throw Exception('获取课表出错了');
-      }
-    }
-    return result;
-  }
+  // Future<List> getAllCourse(String token, String cookie, String term,
+  //     int totalWeek) async {
+  //   List result = [];
+  //   List<Future> futures = [];
+  //   // print(totalWeek);
+  //   for (int i = 1; i <= totalWeek; i++) {
+  //     futures.add(HttpManager().queryCourse(token, cookie, term, i.toString()));
+  //   }
+  //   var response = await Future.wait(futures);
+  //   for (Map value in response) {
+  //     if (value.isNotEmpty) {
+  //       // print(value);
+  //       if (value['code'] == 200) {
+  //         result.add(value['data']);
+  //       } else {
+  //         if (kDebugMode) {
+  //           print('出异常了');
+  //         }
+  //         throw Exception('获取课表出错了');
+  //       }
+  //     } else {
+  //       if (kDebugMode) {
+  //         print('出异常了');
+  //       }
+  //       throw Exception('获取课表出错了');
+  //     }
+  //   }
+  //   return result;
+  // }
 
 // 串行获取所有周的课程表
 // Future<List> getAllCourse(

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 class HintDialog extends StatelessWidget {
-
   final String title;
   final String subTitle;
-  const HintDialog({Key? key, required this.title, required this.subTitle}) : super(key: key);
+
+  const HintDialog({Key? key, required this.title, required this.subTitle})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,23 +23,34 @@ class HintDialog extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(padding: const EdgeInsets.only(top: 20), child:   Text(title,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold)),),
-              Text(subTitle, textAlign: TextAlign.center,style: const TextStyle(color: Colors.black)),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text(title,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold)),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Text(subTitle,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.black)),
+              ),
               Column(
                 children: [
                   const Divider(
                     thickness: 2,
                     height: 0,
                   ),
-                  SizedBox(width: double.infinity,child:
-                    TextButton(
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton(
                       child: Text(
                         '确定',
-                        style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).primaryColor),
                       ),
                       onPressed: () {
                         SmartDialog.dismiss();
@@ -47,7 +59,6 @@ class HintDialog extends StatelessWidget {
                   ),
                 ],
               ),
-
             ],
           )),
     );

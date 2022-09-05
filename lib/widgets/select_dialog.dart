@@ -8,13 +8,12 @@ class SelectDialog extends StatelessWidget {
   final String positiveText;
   final String negativeText;
 
-  const SelectDialog(
-      {Key? key,
-      required this.title,
-      required this.subTitle,
-      required this.callback,
-      this.positiveText = '确定',
-      this.negativeText = '取消'})
+  const SelectDialog({Key? key,
+    required this.title,
+    required this.subTitle,
+    required this.callback,
+    this.positiveText = '确定',
+    this.negativeText = '取消'})
       : super(key: key);
 
   @override
@@ -40,13 +39,9 @@ class SelectDialog extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.bold)),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(subTitle, style: const TextStyle(color: Colors.black)),
-              const SizedBox(
-                height: 20,
-              ),
+              Padding(padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+                  child: Text(
+                      subTitle, style: const TextStyle(color: Colors.black)),),
               const Divider(
                 thickness: 2,
                 height: 0,
@@ -60,7 +55,9 @@ class SelectDialog extends StatelessWidget {
                         negativeText,
                         style: TextStyle(
                             fontSize: 16,
-                            color: Theme.of(context).primaryColor),
+                            color: Theme
+                                .of(context)
+                                .primaryColor),
                       ),
                       onPressed: () {
                         SmartDialog.dismiss();
@@ -81,7 +78,9 @@ class SelectDialog extends StatelessWidget {
                           positiveText,
                           style: TextStyle(
                               fontSize: 16,
-                              color: Theme.of(context).primaryColor),
+                              color: Theme
+                                  .of(context)
+                                  .primaryColor),
                         ),
                         onPressed: () {
                           callback();

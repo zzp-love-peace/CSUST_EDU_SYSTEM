@@ -1,4 +1,5 @@
 import 'package:csust_edu_system/homes/guide_home.dart';
+import 'package:csust_edu_system/provider/course_term_provider.dart';
 import 'package:csust_edu_system/provider/theme_color_provider.dart';
 import 'package:csust_edu_system/provider/unread_msg_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +19,7 @@ void main() {
     providers: [
       ChangeNotifierProvider(create: (_) => ThemeColorProvider()),
       ChangeNotifierProvider(create: (_) => UnreadMsgProvider()),
+      ChangeNotifierProvider(create: (_) => CourseTermProvider()),
     ],
     child: const MyApp(),
   ));

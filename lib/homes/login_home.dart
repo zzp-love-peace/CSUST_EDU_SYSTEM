@@ -125,8 +125,9 @@ class _LoginHomeState extends State<LoginHome> {
   _doLogin(String username, String password) async {
     if (username.isNotEmpty && password.isNotEmpty) {
       SmartDialog.compatible.showLoading(
-          msg: "登录中",
-          backDismiss: false,);
+        msg: "登录中",
+        backDismiss: false,
+      );
       var value = await HttpManager().login(username, password);
       if (value.isNotEmpty) {
         print(value);
@@ -134,66 +135,56 @@ class _LoginHomeState extends State<LoginHome> {
           _saveData();
           StuInfo.token = value['data']['token'];
           StuInfo.cookie = value['data']['cookie'];
-          var dateData = await HttpManager().getDateData(StuInfo.cookie, StuInfo.token);
+          var dateData =
+              await HttpManager().getDateData(StuInfo.cookie, StuInfo.token);
           if (dateData.isNotEmpty) {
             if (dateData['code'] == 200) {
               DateInfo.initData(dateData['data']);
-              var stuData = await HttpManager().getStuInfo(StuInfo.cookie, StuInfo.token);
+              var stuData =
+                  await HttpManager().getStuInfo(StuInfo.cookie, StuInfo.token);
               if (stuData.isNotEmpty) {
                 if (stuData['code'] == 200) {
                   StuInfo.initData(stuData['data']);
+                  _saveLoginData();
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => const BottomTabHome()));
                 } else {
-                  SmartDialog.compatible.showToast('', widget: const CustomToast('登录异常'));
+                  SmartDialog.compatible
+                      .showToast('', widget: const CustomToast('登录异常'));
                 }
               } else {
-                SmartDialog.compatible.showToast('', widget: const CustomToast('登录异常'));
+                SmartDialog.compatible
+                    .showToast('', widget: const CustomToast('登录异常'));
               }
             } else {
-              SmartDialog.compatible.showToast('', widget: const CustomToast('登录异常'));
+              SmartDialog.compatible
+                  .showToast('', widget: const CustomToast('登录异常'));
             }
           } else {
-            SmartDialog.compatible.showToast('', widget: const CustomToast('登录异常'));
+            SmartDialog.compatible
+                .showToast('', widget: const CustomToast('登录异常'));
           }
-          try {
-            var allCourseData = await HttpManager().getAllCourse(StuInfo.token,
-                StuInfo.cookie, DateInfo.nowTerm, DateInfo.totalWeek);
-            _saveLoginData(allCourseData);
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => BottomTabHome(allCourseData)));
-          } on Exception {
-            String list = await _initLoginData();
-            print(list);
-            List data = [];
-            if (list.isNotEmpty) {
-              data = json.decode(list);
-              // SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => BottomTabHome(data)));
-            } else {
-              // SmartDialog.compatible.show(
-              //     widget: const HintDialog(
-              //         title: '提示', subTitle: '教务系统异常且暂未保存课程表，请稍后再试'));
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => BottomTabHome(data)));
-            }
-          }
+          // var allCourseData = await HttpManager().getAllCourse(StuInfo.token,
+          //     StuInfo.cookie, DateInfo.nowTerm, DateInfo.totalWeek);
+          // _saveLoginData(allCourseData);
         } else {
-          SmartDialog.compatible.show(
-              widget: HintDialog(
-                  title: '提示', subTitle: value['msg']));
+          SmartDialog.compatible
+              .show(widget: HintDialog(title: '提示', subTitle: value['msg']));
         }
       } else {
-        SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
+        SmartDialog.compatible
+            .showToast('', widget: const CustomToast('出现异常了'));
       }
       SmartDialog.dismiss();
     } else {
-      SmartDialog.compatible.showToast('', widget: const CustomToast('账号或密码不能为空'));
+      SmartDialog.compatible
+          .showToast('', widget: const CustomToast('账号或密码不能为空'));
     }
   }
 
   _initData() async {
     prefs = await SharedPreferences.getInstance();
-    String colorKey = prefs.getString('color')??'blue';
+    String colorKey = prefs.getString('color') ?? 'blue';
     // 设置初始化主题颜色
     Provider.of<ThemeColorProvider>(context, listen: false).setTheme(colorKey);
     final String? username = prefs.getString("username");
@@ -217,7 +208,7 @@ class _LoginHomeState extends State<LoginHome> {
     await prefs.setString("username", _usernameController.text);
   }
 
-  _saveLoginData(List courseData) async {
+  _saveLoginData() async {
     prefs.setString('name', StuInfo.name);
     prefs.setString('stuId', StuInfo.stuId);
     prefs.setString('college', StuInfo.college);
@@ -228,10 +219,9 @@ class _LoginHomeState extends State<LoginHome> {
     prefs.setString('nowDate', DateInfo.nowDate);
     prefs.setInt('nowWeek', DateInfo.nowWeek);
     prefs.setInt('totalWeek', DateInfo.totalWeek);
-    prefs.setString('courseData', jsonEncode(courseData));
   }
 
-  Future<String> _initLoginData() async {
+  _initLoginData() {
     StuInfo.name = prefs.getString('name') ?? '';
     StuInfo.stuId = prefs.getString('stuId') ?? '';
     StuInfo.college = prefs.getString('college') ?? '';
@@ -253,8 +243,8 @@ class _LoginHomeState extends State<LoginHome> {
     } else {
       DateInfo.nowWeek = -1;
     }
-    String courseData = prefs.getString('courseData') ?? '';
-    return courseData;
+    // String courseData = prefs.getString('courseData') ?? '';
+    // return courseData;
   }
 }
 

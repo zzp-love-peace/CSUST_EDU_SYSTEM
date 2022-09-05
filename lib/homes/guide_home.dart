@@ -6,7 +6,6 @@ import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/login_home.dart';
 import 'package:csust_edu_system/network/network.dart';
 import 'package:csust_edu_system/provider/theme_color_provider.dart';
-import 'package:csust_edu_system/utils/course_util.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +15,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../provider/course_term_provider.dart';
 import '../widgets/hint_dialog.dart';
 import 'bottom_tab_home.dart';
 
@@ -120,60 +120,64 @@ class _GuideHomeState extends State<GuideHome> {
           //获取date相关数据
           StuInfo.token = loginValue['data']['token'];
           StuInfo.cookie = loginValue['data']['cookie'];
-          var dateData = await HttpManager().getDateData(StuInfo.cookie, StuInfo.token);
+          var dateData =
+              await HttpManager().getDateData(StuInfo.cookie, StuInfo.token);
           if (dateData.isNotEmpty) {
             if (dateData['code'] == 200) {
               DateInfo.initData(dateData['data']);
-              var stuData = await HttpManager().getStuInfo(StuInfo.cookie, StuInfo.token);
+              Provider.of<CourseTermProvider>(context, listen: false)
+                  .setNowTerm(DateInfo.nowTerm);
+              print('dateData$dateData');
+              var stuData =
+                  await HttpManager().getStuInfo(StuInfo.cookie, StuInfo.token);
               if (stuData.isNotEmpty) {
                 if (stuData['code'] == 200) {
                   print('studData$stuData');
                   StuInfo.initData(stuData['data']);
                 } else {
-                  SmartDialog.compatible.showToast('', widget: CustomToast(stuData['msg']));
-                  _loginWithException(true, false, false);
+                  SmartDialog.compatible
+                      .showToast('', widget: CustomToast(stuData['msg']));
+                  _loginWithException(false, true);
                 }
               } else {
-                SmartDialog.compatible.showToast('', widget: const CustomToast('登录异常'));
-                _loginWithException(true, false, false);
+                SmartDialog.compatible
+                    .showToast('', widget: const CustomToast('登录异常'));
+                _loginWithException(false, true);
               }
             } else {
-              SmartDialog.compatible.showToast('', widget: CustomToast(dateData['msg']));
-              _loginWithException(true, true, false);
+              SmartDialog.compatible
+                  .showToast('', widget: CustomToast(dateData['msg']));
+              _loginWithException(true, true);
             }
           } else {
-            SmartDialog.compatible.showToast('', widget: const CustomToast('登录异常'));
-            _loginWithException(true, true, false);
+            SmartDialog.compatible
+                .showToast('', widget: const CustomToast('登录异常'));
+            _loginWithException(true, true);
           }
-          try {
-            var allCourseData = await HttpManager().getAllCourse(StuInfo.token,
-                StuInfo.cookie, DateInfo.nowTerm, DateInfo.totalWeek);
-            _saveData(allCourseData);
-            Navigator.of(context).pushReplacement(PageRouteBuilder(
-                transitionDuration: const Duration(milliseconds: 500),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return ScaleTransition(
-                    scale: Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                        parent: animation, curve: Curves.fastOutSlowIn)),
-                    child: child,
-                  );
-                },
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    BottomTabHome(allCourseData)));
-          } on Exception {
-            // SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
-            _loginWithException(false, false, true);
-            _saveData([]);
-          }
+          // _loginWithException(false, false);
+          _saveData();
+          // var allCourseData = await HttpManager().getAllCourse(StuInfo.token,
+          //     StuInfo.cookie, DateInfo.nowTerm, DateInfo.totalWeek);
+          // _saveData(courseData: allCourseData);
+          Navigator.of(context).pushReplacement(PageRouteBuilder(
+              transitionDuration: const Duration(milliseconds: 300),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return ScaleTransition(
+                  scale: Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                      parent: animation, curve: Curves.fastOutSlowIn)),
+                  child: child,
+                );
+              },
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  const BottomTabHome()));
         } else if (loginValue['code'] == 501) {
-          _loginWithException(false, false, true);
-          _saveData([]);
+          _loginWithException(true, true);
         } else if (loginValue['code'] == 502) {
-          _loginWithException(false, false, true);
-          _saveData([]);
+          _loginWithException(true, true);
         } else {
-          SmartDialog.compatible.showToast('', widget: CustomToast(loginValue['msg']));
+          SmartDialog.compatible
+              .showToast('', widget: CustomToast(loginValue['msg']));
           Navigator.of(context).pushReplacement(PageRouteBuilder(
               transitionDuration: const Duration(milliseconds: 500),
               transitionsBuilder:
@@ -189,7 +193,7 @@ class _GuideHomeState extends State<GuideHome> {
         }
       } else {
         SmartDialog.compatible.showToast('', widget: const CustomToast('登录异常'));
-        _loginWithException(true, true, true);
+        _loginWithException(true, true);
       }
     } else {
       Future.delayed(const Duration(milliseconds: 1800), () {
@@ -199,7 +203,7 @@ class _GuideHomeState extends State<GuideHome> {
     }
   }
 
-  _saveData(List courseData) async {
+  _saveData() {
     prefs.setString('name', StuInfo.name);
     prefs.setString('stuId', StuInfo.stuId);
     prefs.setString('college', StuInfo.college);
@@ -210,10 +214,12 @@ class _GuideHomeState extends State<GuideHome> {
     prefs.setString('nowDate', DateInfo.nowDate);
     prefs.setInt('nowWeek', DateInfo.nowWeek);
     prefs.setInt('totalWeek', DateInfo.totalWeek);
-    prefs.setString('courseData', jsonEncode(courseData));
+    // if (courseData != null) {
+    //   prefs.setString('courseData', jsonEncode(courseData));
+    // }
   }
 
-  Future<String> _initData(bool isDate, bool isStu, bool isCourse) async {
+  _initData(bool isDate, bool isStu) {
     if (isDate) {
       DateInfo.nowTerm = prefs.getString('nowTerm') ?? '';
       DateInfo.totalWeek = prefs.getInt('totalWeek') ?? 0;
@@ -231,6 +237,8 @@ class _GuideHomeState extends State<GuideHome> {
       } else {
         DateInfo.nowWeek = -1;
       }
+      Provider.of<CourseTermProvider>(context, listen: false)
+          .setNowTerm(DateInfo.nowTerm);
     }
     if (isStu) {
       StuInfo.name = prefs.getString('name') ?? '';
@@ -240,11 +248,11 @@ class _GuideHomeState extends State<GuideHome> {
       StuInfo.className = prefs.getString('className') ?? '';
       StuInfo.avatar = prefs.getString('avatar') ?? '';
     }
-    String courseData = '';
-    if (isCourse) {
-      courseData = prefs.getString('courseData') ?? '';
-    }
-    return courseData;
+    // String courseData = '';
+    // if (isCourse) {
+    //   courseData = prefs.getString('courseData') ?? '';
+    // }
+    // return courseData;
   }
 
   Text _guideText(String text) {
@@ -255,22 +263,21 @@ class _GuideHomeState extends State<GuideHome> {
             fontStyle: FontStyle.italic));
   }
 
-  _loginWithException(bool isDate, bool isStu, bool isCourse) async {
-    String list = await _initData(isDate, isStu, isCourse);
-    List data = [];
-    try {
-       data = json.decode(list);
-    } on FormatException {
-      // SmartDialog.compatible.show(
-      //     widget: const HintDialog(
-      //         title: '提示', subTitle: '教务系统异常且暂未保存课程表，请稍后再试'));
-      SmartDialog.compatible.showToast('', widget: const CustomToast('获取课表出错了'));
-    }
-    print("登录异常: isDate:$isDate  isStu:$isStu  isCourse:$isCourse");
-
+  _loginWithException(bool isDate, bool isStu) async {
+    _initData(isDate, isStu);
+    // List data = [];
+    // try {
+    //    data = json.decode(list);
+    // } on FormatException {
+    //   // SmartDialog.compatible.show(
+    //   //     widget: const HintDialog(
+    //   //         title: '提示', subTitle: '教务系统异常且暂未保存课程表，请稍后再试'));
+    //   SmartDialog.compatible.showToast('', widget: const CustomToast('获取课表出错了'));
+    // }
+    print("登录异常: isDate:$isDate  isStu:$isStu");
     Future.delayed(const Duration(milliseconds: 1000), () {
       Navigator.of(context).pushReplacement(PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: const Duration(milliseconds: 300),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return ScaleTransition(
               scale: Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -279,7 +286,7 @@ class _GuideHomeState extends State<GuideHome> {
             );
           },
           pageBuilder: (context, animation, secondaryAnimation) =>
-              BottomTabHome(data)));
+              const BottomTabHome()));
     });
   }
 }

@@ -40,10 +40,13 @@ class _SchoolPageState extends State<SchoolPage> {
     'assets/images/school5.jpeg',
   ];
 
+  List _bannerList = [];
+
   @override
   void initState() {
     super.initState();
     _initNoticeList();
+    _getBannerImg();
   }
 
 
@@ -108,22 +111,29 @@ class _SchoolPageState extends State<SchoolPage> {
                 autoplay: true,
                 autoplayDelay: 5000,
                 itemBuilder: (BuildContext context, int index) {
-                  return Image.asset(
+                  return _bannerList.isEmpty ? Image.asset(
                     _imgList[index],
+                    fit: BoxFit.fill,
+                  ) : Image.network(
+                    _bannerList[index]['url'],
                     fit: BoxFit.fill,
                   );
                 },
-                itemCount: _imgList.length,
+                itemCount: _bannerList.isEmpty ? _imgList.length : _bannerList.length,
                 onTap: (i) {
                   Navigator.of(context).push(FadeRoute(
                       page: PhotoViewGallery.builder(
                         pageController: PageController(initialPage: i),
-                        itemCount: _imgList.length,
+                        itemCount:  _bannerList.isEmpty ? _imgList.length : _bannerList.length,
                         builder: (BuildContext context,int index) {
-                          return PhotoViewGalleryPageOptions(
-                            imageProvider: AssetImage(_imgList[index]),
+                          return _bannerList.isEmpty ?PhotoViewGalleryPageOptions(
+                            imageProvider: AssetImage(_imgList[index]) ,
                             // initialScale: PhotoViewComputedScale.contained *
                             //     0.95,
+                          ) : PhotoViewGalleryPageOptions(
+                          imageProvider: NetworkImage(_bannerList[index]['detailUrl']) ,
+                          // initialScale: PhotoViewComputedScale.contained *
+                          //     0.95,
                           );
                         },)));
                 },
@@ -280,7 +290,7 @@ class _SchoolPageState extends State<SchoolPage> {
     await HttpManager().getNoticeList(StuInfo.cookie, StuInfo.token);
     if (response.isNotEmpty) {
       if (response['code'] == 200) {
-        print(response);
+        // print(response);
         List<Widget> result = [];
         for (var notice in response['data']) {
           if (notice['ggid'] != null) {
@@ -299,6 +309,28 @@ class _SchoolPageState extends State<SchoolPage> {
             '', widget: CustomToast(response['msg']));
       }
     }
+  }
+
+  _getBannerImg() {
+    HttpManager().getBannerImg(StuInfo.token).then((value){
+      if (value.isNotEmpty) {
+        print(value);
+        if (value['code'] == 200) {
+          setState(() {
+            _bannerList = value['data'];
+          });
+        } else {
+          SmartDialog.compatible.showToast(
+              '', widget: CustomToast(value['msg']));
+        }
+      } else {
+        SmartDialog.compatible
+            .showToast('', widget: const CustomToast('出现异常了'));
+      }
+    }, onError: (_){
+      SmartDialog.compatible
+          .showToast('', widget: const CustomToast('出现异常了'));
+    });
   }
 
   Widget _noticeItem(String ggid, String title, String time) {

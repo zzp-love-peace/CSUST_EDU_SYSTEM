@@ -1,6 +1,6 @@
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
-import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/Picker.dart';

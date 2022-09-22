@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/detail_home.dart';
-import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -17,7 +17,8 @@ class ForumItem extends StatefulWidget {
   final Forum forum;
   final Function(Forum) deleteCallback;
 
-  const ForumItem({Key? key, required this.forum, required this.deleteCallback}) : super(key: key);
+  const ForumItem({Key? key, required this.forum, required this.deleteCallback})
+      : super(key: key);
 
   @override
   State<ForumItem> createState() => _ForumItemState();
@@ -212,8 +213,11 @@ class _ForumItemState extends State<ForumItem> {
           itemCount: widget.forum.images.length,
           builder: (BuildContext context, int index) {
             return PhotoViewGalleryPageOptions(
-              imageProvider:
-                  NetworkImage(addPrefixToUrl(widget.forum.images[index])),
+              onTapUp: (context, details, controllerValue) {
+                Navigator.pop(context);
+              },
+              imageProvider: CachedNetworkImageProvider(
+                  addPrefixToUrl(widget.forum.images[index])),
               // initialScale: PhotoViewComputedScale.contained *
               //     0.95,
               errorBuilder: (context, error, stackTrace) {

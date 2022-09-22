@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/theme_home.dart';
-import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/utils/course_util.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
@@ -18,6 +18,7 @@ import '../data/course_model.dart';
 import '../database/db_manager.dart';
 import '../homes/course_info_home.dart';
 import '../homes/notification_home.dart';
+import '../network/edu_system_manager.dart';
 import '../provider/course_term_provider.dart';
 import '../widgets/hint_dialog.dart';
 
@@ -57,6 +58,8 @@ class _CoursePageState extends State<CoursePage> {
       }
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -143,20 +146,20 @@ class _CoursePageState extends State<CoursePage> {
             if (queryValue.isNotEmpty) {
               if (queryValue['code'] == 200) {
                 String content = jsonEncode(queryValue['data']);
-                var dbValue = await DBManager.db.containsCourse(_term, _weekNum);
+                var dbValue =
+                    await DBManager.db.containsCourse(_term, _weekNum);
                 if (dbValue == null) {
                   var insertValue = await DBManager.db
                       .insertCourse(CourseModel(_term, _weekNum, content));
-
                 } else {
-                  var updateValue = await DBManager.db
-                      .updateCourse(content, dbValue.id);
+                  var updateValue =
+                      await DBManager.db.updateCourse(content, dbValue.id);
                 }
                 SmartDialog.compatible.show(
                     widget: const HintDialog(
-                      title: '提示',
-                      subTitle: '刷新成功，下次打开app时生效',
-                    ));
+                  title: '提示',
+                  subTitle: '刷新成功，下次打开app时生效',
+                ));
               } else {
                 SmartDialog.compatible
                     .showToast('', widget: CustomToast(queryValue['msg']));
@@ -733,10 +736,94 @@ class _CourseLayoutState extends State<_CourseLayout> {
   Widget _getCourseData(int index, int courseDataIndex) {
     if (index % 8 == 0) {
       int t = (index ~/ 8) * 2 + 1;
+      String startTime1 = '';
+      String endTime1 = '';
+      String startTime2 = '';
+      String endTime2 = '';
+      switch (t) {
+        case 1:
+          startTime1 = '8:00';
+          endTime1 = '8:45';
+          startTime2 = '8:55';
+          endTime2 = '9:40';
+          break;
+        case 3:
+          startTime1 = '10:10';
+          endTime1 = '10:55';
+          startTime2 = '11:05';
+          endTime2 = '11:50';
+          break;
+        case 5:
+          startTime1 = '14:00';
+          endTime1 = '14:45';
+          startTime2 = '14:55';
+          endTime2 = '15:40';
+          break;
+        case 7:
+          startTime1 = '16:10';
+          endTime1 = '16:55';
+          startTime2 = '17:05';
+          endTime2 = '17:50';
+          break;
+        case 9:
+          startTime1 = '19:30';
+          endTime1 = '20:15';
+          startTime2 = '20:25';
+          endTime2 = '21:10';
+          break;
+      }
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [Text(t.toString()), Text((t + 1).toString())],
+          // children: [Text(t.toString()), Text((t + 1).toString())],
+          children: [
+            Column(
+              children: [
+                Text(
+                  t.toString(),
+                  style: const TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: 2,),
+                Text(
+                  startTime1,
+                  style: TextStyle(
+                      fontSize: 12, color: Theme.of(context).primaryColor),
+                ),
+                const SizedBox(height: 2,),
+                Text(
+                  endTime1,
+                  style: TextStyle(
+                      fontSize: 12, color: Theme.of(context).primaryColor),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Text(
+                  (t + 1).toString(),
+                  style: const TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: 2,),
+                Text(
+                  startTime2,
+                  style: TextStyle(
+                      fontSize: 12, color: Theme.of(context).primaryColor),
+                ),
+                const SizedBox(height: 2,),
+                Text(
+                  endTime2,
+                  style: TextStyle(
+                      fontSize: 12, color: Theme.of(context).primaryColor),
+                ),
+              ],
+            ),
+            // Text(
+            //   startTime,
+            //   style: const TextStyle(fontSize: 12),
+            // ),
+            // const Text('|', style: TextStyle(fontSize: 12)),
+            // Text(endTime, style: const TextStyle(fontSize: 12))
+          ],
         ),
       );
     }

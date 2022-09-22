@@ -13,7 +13,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../data/stu_info.dart';
-import '../network/network.dart';
+import '../network/http_manager.dart';
 import '../provider/theme_color_provider.dart';
 
 class BottomTabHome extends StatefulWidget {

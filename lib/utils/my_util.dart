@@ -4,11 +4,11 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../data/stu_info.dart';
-import '../network/network.dart';
+import '../network/http_manager.dart';
 import '../widgets/custom_toast.dart';
 import '../widgets/select_dialog.dart';
 
-const String version = 'v1.8.0';
+const String version = 'v1.8.2';
 const String appName = '新长理教务';
 
 MaterialColor createMaterialColor(Color color) {
@@ -69,6 +69,7 @@ checkVersion({bool isBegin = false}) {
   }
   HttpManager().getLastVersion(StuInfo.token, form).then((value) {
     if (value.isNotEmpty) {
+      print('version $value');
       if (value['code'] == 200) {
         String appPath = value['data']['apkPath'];
         var string = appPath.split(appName);

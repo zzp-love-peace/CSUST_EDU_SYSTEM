@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/data/poem_data.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/association_home.dart';
@@ -9,7 +10,7 @@ import 'package:csust_edu_system/homes/exam_home.dart';
 import 'package:csust_edu_system/homes/grade_home.dart';
 import 'package:csust_edu_system/homes/notice_home.dart';
 import 'package:csust_edu_system/homes/recruit_home.dart';
-import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/route/fade_route.dart';
 import 'package:csust_edu_system/widgets/none_lottie.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,7 +50,6 @@ class _SchoolPageState extends State<SchoolPage> {
     _getBannerImg();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,9 +64,15 @@ class _SchoolPageState extends State<SchoolPage> {
             ),
           ),
           actions: [
-            if (_noticeList.isEmpty) IconButton(onPressed: (){
-              _initNoticeList();
-            }, icon: const Icon(Icons.refresh, color: Colors.white,))
+            if (_noticeList.isEmpty)
+              IconButton(
+                  onPressed: () {
+                    _initNoticeList();
+                  },
+                  icon: const Icon(
+                    Icons.refresh,
+                    color: Colors.white,
+                  ))
           ],
         ),
         body: ListView(
@@ -83,14 +89,18 @@ class _SchoolPageState extends State<SchoolPage> {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            _noticeList.isNotEmpty ? Column(
-              children: _noticeList,
-            ) : Column(
-              children: const [
-                NoneLottie(hint: '教务异常...'),
-                SizedBox(height: 80,),
-              ],
-            )
+            _noticeList.isNotEmpty
+                ? Column(
+                    children: _noticeList,
+                  )
+                : Column(
+                    children: const [
+                      NoneLottie(hint: '教务异常...'),
+                      SizedBox(
+                        height: 80,
+                      ),
+                    ],
+                  )
           ],
         ));
   }
@@ -111,31 +121,46 @@ class _SchoolPageState extends State<SchoolPage> {
                 autoplay: true,
                 autoplayDelay: 5000,
                 itemBuilder: (BuildContext context, int index) {
-                  return _bannerList.isEmpty ? Image.asset(
-                    _imgList[index],
-                    fit: BoxFit.fill,
-                  ) : Image.network(
-                    _bannerList[index]['url'],
-                    fit: BoxFit.fill,
-                  );
+                  return _bannerList.isEmpty
+                      ? Image.asset(
+                          _imgList[index],
+                          fit: BoxFit.fill,
+                        )
+                      : Image.network(
+                          _bannerList[index]['url'],
+                          fit: BoxFit.fill,
+                        );
                 },
-                itemCount: _bannerList.isEmpty ? _imgList.length : _bannerList.length,
+                itemCount:
+                    _bannerList.isEmpty ? _imgList.length : _bannerList.length,
                 onTap: (i) {
                   Navigator.of(context).push(FadeRoute(
                       page: PhotoViewGallery.builder(
-                        pageController: PageController(initialPage: i),
-                        itemCount:  _bannerList.isEmpty ? _imgList.length : _bannerList.length,
-                        builder: (BuildContext context,int index) {
-                          return _bannerList.isEmpty ?PhotoViewGalleryPageOptions(
-                            imageProvider: AssetImage(_imgList[index]) ,
-                            // initialScale: PhotoViewComputedScale.contained *
-                            //     0.95,
-                          ) : PhotoViewGalleryPageOptions(
-                          imageProvider: NetworkImage(_bannerList[index]['detailUrl']) ,
-                          // initialScale: PhotoViewComputedScale.contained *
-                          //     0.95,
-                          );
-                        },)));
+                    pageController: PageController(initialPage: i),
+                    itemCount: _bannerList.isEmpty
+                        ? _imgList.length
+                        : _bannerList.length,
+                    builder: (BuildContext context, int index) {
+                      return _bannerList.isEmpty
+                          ? PhotoViewGalleryPageOptions(
+                              onTapUp: (context, details, controllerValue) {
+                                Navigator.pop(context);
+                              },
+                              imageProvider: AssetImage(_imgList[index]),
+                              // initialScale: PhotoViewComputedScale.contained *
+                              //     0.95,
+                            )
+                          : PhotoViewGalleryPageOptions(
+                              onTapUp: (context, details, controllerValue) {
+                                Navigator.pop(context);
+                              },
+                              imageProvider: CachedNetworkImageProvider(
+                                  _bannerList[index]['detailUrl']),
+                              // initialScale: PhotoViewComputedScale.contained *
+                              //     0.95,
+                            );
+                    },
+                  )));
                 },
               ),
             ),
@@ -154,7 +179,8 @@ class _SchoolPageState extends State<SchoolPage> {
                     RotateAnimatedText(_welcomeString(),
                         alignment: Alignment.centerLeft,
                         duration: const Duration(milliseconds: 4000)),
-                    RotateAnimatedText(poemList[Random().nextInt(poemList.length)],
+                    RotateAnimatedText(
+                        poemList[Random().nextInt(poemList.length)],
                         alignment: Alignment.centerLeft,
                         duration: const Duration(milliseconds: 4000)),
                   ],
@@ -214,24 +240,31 @@ class _SchoolPageState extends State<SchoolPage> {
           Row(
             children: [
               _functionItem('校园地图', 'assets/images/img_map.png', () {
-                var mapImages = ['assets/images/school_map1.jpg','assets/images/school_map2.jpg'];
+                var mapImages = [
+                  'assets/images/school_map1.jpg',
+                  'assets/images/school_map2.jpg'
+                ];
                 Navigator.of(context).push(FadeRoute(
                     page: PhotoViewGallery.builder(
-                      itemCount: mapImages.length,
-                      builder: (BuildContext context,int index) {
-                        return PhotoViewGalleryPageOptions(
-                          imageProvider: AssetImage(mapImages[index]),
-                        );
-                      },)));
+                  itemCount: mapImages.length,
+                  builder: (BuildContext context, int index) {
+                    return PhotoViewGalleryPageOptions(
+                      onTapUp: (context, details, controllerValue) {
+                        Navigator.pop(context);
+                      },
+                      imageProvider: AssetImage(mapImages[index]),
+                    );
+                  },
+                )));
               }),
               _functionItem('长理社团', 'assets/images/img_group.png', () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const AssociationHome()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const AssociationHome()));
               }),
               // _functionItem('综测竞赛', 'assets/images/img_final_test.png', () {}),
               _functionItem('兼职资讯', 'assets/images/img_work.png', () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const RecruitHome()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const RecruitHome()));
               }),
             ],
           ),
@@ -253,7 +286,11 @@ class _SchoolPageState extends State<SchoolPage> {
               const SizedBox(
                 height: 8,
               ),
-              Image.asset(path, width: 24, height: 24,),
+              Image.asset(
+                path,
+                width: 24,
+                height: 24,
+              ),
               const SizedBox(
                 height: 3,
               ),
@@ -287,7 +324,7 @@ class _SchoolPageState extends State<SchoolPage> {
 
   _initNoticeList() async {
     var response =
-    await HttpManager().getNoticeList(StuInfo.cookie, StuInfo.token);
+        await HttpManager().getNoticeList(StuInfo.cookie, StuInfo.token);
     if (response.isNotEmpty) {
       if (response['code'] == 200) {
         // print(response);
@@ -305,14 +342,14 @@ class _SchoolPageState extends State<SchoolPage> {
         setState(() {
           _noticeList = [];
         });
-        SmartDialog.compatible.showToast(
-            '', widget: CustomToast(response['msg']));
+        SmartDialog.compatible
+            .showToast('', widget: CustomToast(response['msg']));
       }
     }
   }
 
   _getBannerImg() {
-    HttpManager().getBannerImg(StuInfo.token).then((value){
+    HttpManager().getBannerImg(StuInfo.token).then((value) {
       if (value.isNotEmpty) {
         print(value);
         if (value['code'] == 200) {
@@ -320,16 +357,15 @@ class _SchoolPageState extends State<SchoolPage> {
             _bannerList = value['data'];
           });
         } else {
-          SmartDialog.compatible.showToast(
-              '', widget: CustomToast(value['msg']));
+          SmartDialog.compatible
+              .showToast('', widget: CustomToast(value['msg']));
         }
       } else {
         SmartDialog.compatible
             .showToast('', widget: const CustomToast('出现异常了'));
       }
-    }, onError: (_){
-      SmartDialog.compatible
-          .showToast('', widget: const CustomToast('出现异常了'));
+    }, onError: (_) {
+      SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
     });
   }
 
@@ -361,13 +397,13 @@ class _SchoolPageState extends State<SchoolPage> {
                     ),
                     Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 10, 12),
-                          child: Text(
-                            title,
-                            style:
+                      padding: const EdgeInsets.fromLTRB(0, 0, 10, 12),
+                      child: Text(
+                        title,
+                        style:
                             const TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                        )),
+                      ),
+                    )),
                   ],
                 ),
                 Padding(

@@ -1,7 +1,7 @@
 import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
-import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/widgets/forum_item.dart';
 import 'package:csust_edu_system/widgets/none_lottie.dart';

@@ -10,7 +10,7 @@ import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../network/network.dart';
+import '../network/http_manager.dart';
 import '../utils/grade_util.dart';
 import '../widgets/custom_toast.dart';
 

@@ -1,7 +1,7 @@
 import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
-import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/utils/my_util.dart';
 import 'package:csust_edu_system/widgets/forum_item.dart';
@@ -267,8 +267,12 @@ class _DetailHomeState extends State<DetailHome> {
           itemCount: widget.forum.images.length,
           builder: (BuildContext context, int index) {
             return PhotoViewGalleryPageOptions(
+              onTapUp: (context, details, controllerValue){
+                Navigator.pop(context);
+              },
               imageProvider:
-                  NetworkImage(addPrefixToUrl(widget.forum.images[index])),
+              CachedNetworkImageProvider(addPrefixToUrl(widget.forum.images[index]),),
+                  // NetworkImage(addPrefixToUrl(widget.forum.images[index])),
               // initialScale: PhotoViewComputedScale.contained *
               //     0.95,
               errorBuilder: (context, error, stackTrace) {

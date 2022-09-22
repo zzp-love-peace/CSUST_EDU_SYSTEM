@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
-import '../network/network.dart';
+import '../network/http_manager.dart';
 import '../utils/my_util.dart';
 import '../widgets/custom_toast.dart';
 

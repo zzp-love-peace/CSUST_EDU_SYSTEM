@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:csust_edu_system/data/stu_info.dart';
-import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/select_dialog.dart';
 import 'package:flutter/material.dart';

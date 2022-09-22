@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:csust_edu_system/data/stu_info.dart';
-import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/hint_dialog.dart';
 import 'package:dio/dio.dart';
@@ -21,7 +21,11 @@ class WriteForumHome extends StatefulWidget {
   final List<int> tabsId;
   final Function(Forum, int) callback;
 
-  const WriteForumHome({Key? key, required this.tabs, required this.tabsId, required this.callback})
+  const WriteForumHome(
+      {Key? key,
+      required this.tabs,
+      required this.tabsId,
+      required this.callback})
       : super(key: key);
 
   @override
@@ -275,15 +279,19 @@ class _WriteForumHomeState extends State<WriteForumHome> {
       onTap: () {
         Navigator.of(context).push(FadeRoute(
             page: PhotoViewGallery.builder(
-              pageController: PageController(initialPage: _imgPaths.indexOf(path)),
-              itemCount: _imgPaths.length,
-              builder: (BuildContext context,int index) {
-                return PhotoViewGalleryPageOptions(
-                  imageProvider: FileImage(File(_imgPaths[index])),
-                  // initialScale: PhotoViewComputedScale.contained *
-                  //     0.95,
-                );
-              },)));
+          pageController: PageController(initialPage: _imgPaths.indexOf(path)),
+          itemCount: _imgPaths.length,
+          builder: (BuildContext context, int index) {
+            return PhotoViewGalleryPageOptions(
+              onTapUp: (context, details, controllerValue) {
+                Navigator.pop(context);
+              },
+              imageProvider: FileImage(File(_imgPaths[index])),
+              // initialScale: PhotoViewComputedScale.contained *
+              //     0.95,
+            );
+          },
+        )));
       },
       child: Stack(
         alignment: Alignment.topRight,
@@ -342,17 +350,22 @@ class _WriteForumHomeState extends State<WriteForumHome> {
         SmartDialog.dismiss();
         if (value['code'] == 200) {
           Forum forum = Forum.fromJson(value['data']);
-          SmartDialog.compatible.showToast('', widget: const CustomToast('上传成功'));
+          SmartDialog.compatible
+              .showToast('', widget: const CustomToast('上传成功'));
           Navigator.of(context).pop();
           widget.callback(forum, themeId);
-        } else if(value['code']== 701) {
-          SmartDialog.compatible.show(widget: HintDialog(title: '提示', subTitle: value['msg']), clickBgDismissTemp: false);
+        } else if (value['code'] == 701) {
+          SmartDialog.compatible.show(
+              widget: HintDialog(title: '提示', subTitle: value['msg']),
+              clickBgDismissTemp: false);
         } else {
-          SmartDialog.compatible.showToast('', widget: CustomToast(value['msg']));
+          SmartDialog.compatible
+              .showToast('', widget: CustomToast(value['msg']));
         }
       } else {
         SmartDialog.dismiss();
-        SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
+        SmartDialog.compatible
+            .showToast('', widget: const CustomToast('出现异常了'));
       }
     }, onError: (_) {
       SmartDialog.dismiss();

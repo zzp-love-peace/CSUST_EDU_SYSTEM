@@ -10,7 +10,7 @@ import 'package:csust_edu_system/homes/my_collect_home.dart';
 import 'package:csust_edu_system/homes/my_forum_home.dart';
 import 'package:csust_edu_system/homes/theme_home.dart';
 import 'package:csust_edu_system/homes/setting_home.dart';
-import 'package:csust_edu_system/network/network.dart';
+import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/utils/grade_util.dart';
 import 'package:csust_edu_system/utils/my_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';

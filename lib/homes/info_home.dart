@@ -454,19 +454,28 @@ class _HeadImageRowState extends State<_HeadImageRow> {
                           width: 60,
                           height: 60,
                           fit: BoxFit.cover,
-                          imageUrl: addPrefixToUrl(_avatar),
+                          imageUrl: '$_avatar/webp',
                           progressIndicatorBuilder:
                               (context, url, downloadProgress) =>
                                   CircularProgressIndicator(
                                       value: downloadProgress.progress),
-                          errorWidget: (context, url, error) => Container(
+                          errorWidget: (context, url, error) => CachedNetworkImage(
                               width: 60,
                               height: 60,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
-                                borderRadius:
+                              fit: BoxFit.cover,
+                              imageUrl: _avatar,
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) =>
+                                  CircularProgressIndicator(
+                                      value: downloadProgress.progress),
+                              errorWidget: (context, url, error) => Container(
+                                  width: 60,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius:
                                     const BorderRadius.all(Radius.circular(40)),
-                              )))
+                                  ))))
                       : Image.file(File(_imagePath),
                           width: 60, height: 60, fit: BoxFit.cover)))
         ],

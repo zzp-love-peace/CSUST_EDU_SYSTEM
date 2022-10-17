@@ -110,7 +110,7 @@ class _DetailHomeState extends State<DetailHome> {
                                   physics: const NeverScrollableScrollPhysics(),
                                   crossAxisCount: 3,
                                   children: widget.forum.images
-                                      .map((url) => _imgView(url))
+                                      .map((url) => _imgView(url, widget.forum.images))
                                       .toList(),
                                 ),
                               ),
@@ -239,7 +239,7 @@ class _DetailHomeState extends State<DetailHome> {
                 width: 64,
                 height: 64,
                 fit: BoxFit.cover,
-                imageUrl: addPrefixToUrl(widget.forum.avatar),
+                imageUrl: '${widget.forum.avatar}/webp',
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
                     CircularProgressIndicator(value: downloadProgress.progress),
                 errorWidget: (context, url, error) => Container(
@@ -257,51 +257,17 @@ class _DetailHomeState extends State<DetailHome> {
     );
   }
 
-  Widget _imgView(String url) {
+  Widget _imgView(String url, List images) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(FadeRoute(
-            page: PhotoViewGallery.builder(
-          pageController: PageController(
-              initialPage: widget.forum.images.indexOf(addPrefixToUrl(url))),
-          itemCount: widget.forum.images.length,
-          builder: (BuildContext context, int index) {
-            return PhotoViewGalleryPageOptions(
-              onTapUp: (context, details, controllerValue){
-                Navigator.pop(context);
-              },
-              imageProvider:
-              CachedNetworkImageProvider(addPrefixToUrl(widget.forum.images[index]),),
-                  // NetworkImage(addPrefixToUrl(widget.forum.images[index])),
-              // initialScale: PhotoViewComputedScale.contained *
-              //     0.95,
-              errorBuilder: (context, error, stackTrace) {
-                return const Center(
-                    child: Icon(
-                  Icons.question_mark,
-                  color: Colors.white,
-                ));
-              },
-            );
-          },
-          loadingBuilder: (context, event) => Center(
-            child: SizedBox(
-              width: 20.0,
-              height: 20.0,
-              child: CircularProgressIndicator(
-                value: event == null
-                    ? 0
-                    : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
-              ),
-            ),
-          ),
-        )));
+            page: ForumItemImages(images: images, url: url)));
       },
       child: CachedNetworkImage(
           width: double.infinity,
           height: double.infinity,
           fit: BoxFit.cover,
-          imageUrl: addPrefixToUrl(url),
+          imageUrl: '$url/thumb',
           progressIndicatorBuilder: (context, url, downloadProgress) =>
               CircularProgressIndicator(value: downloadProgress.progress),
           errorWidget: (context, url, error) => Container(

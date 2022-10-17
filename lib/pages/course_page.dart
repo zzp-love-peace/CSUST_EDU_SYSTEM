@@ -112,6 +112,7 @@ class _CoursePageState extends State<CoursePage> {
   AppBar _coursePageAppBar() {
     return AppBar(
       elevation: 0,
+      // foregroundColor: Colors.white,
       bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40.0),
           child: Container(
@@ -171,7 +172,6 @@ class _CoursePageState extends State<CoursePage> {
           },
           icon: const Icon(
             Icons.refresh,
-            color: Colors.white,
           ),
         ),
         IconButton(
@@ -181,7 +181,6 @@ class _CoursePageState extends State<CoursePage> {
           },
           icon: const Icon(
             Icons.color_lens,
-            color: Colors.white,
           ),
         )
       ],
@@ -192,7 +191,6 @@ class _CoursePageState extends State<CoursePage> {
         },
         icon: const Icon(
           Icons.notifications,
-          color: Colors.white,
         ),
       ),
     );

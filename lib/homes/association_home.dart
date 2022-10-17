@@ -124,6 +124,7 @@ class _AssListState extends State<_AssList> {
   }
 
   Widget _assItem(AssInfo assInfo) {
+    print(assInfo.icon);
     return Ink(
       color: Colors.white,
       child: InkWell(
@@ -140,15 +141,25 @@ class _AssListState extends State<_AssList> {
                     width: 45,
                     height: 45,
                     fit: BoxFit.cover,
-                    imageUrl: addPrefixToUrl(assInfo.icon),
+                    imageUrl: '${assInfo.icon}/webp',
                     progressIndicatorBuilder:
                         (context, url, downloadProgress) =>
                             CircularProgressIndicator(
                                 value: downloadProgress.progress),
-                    errorWidget: (context, url, error) => Container(
+                    errorWidget: (context, url, error) => CachedNetworkImage(
                         width: 45,
                         height: 45,
-                        color: Theme.of(context).primaryColor)),
+                        fit: BoxFit.cover,
+                        imageUrl: assInfo.icon,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                                value: downloadProgress.progress),
+                        errorWidget: (context, url, error) => Container(
+                            width: 45,
+                            height: 45,
+                            color: Theme.of(context).primaryColor)),
+                ),
               ),
             ),
             Text(

@@ -36,15 +36,24 @@ class AssInfoHome extends StatelessWidget {
                     width: 80,
                     height: 80,
                     fit: BoxFit.cover,
-                    imageUrl: addPrefixToUrl(assInfo.icon),
+                    imageUrl: '${assInfo.icon}/webp',
                     progressIndicatorBuilder:
                         (context, url, downloadProgress) =>
                             CircularProgressIndicator(
                                 value: downloadProgress.progress),
-                    errorWidget: (context, url, error) => Container(
+                    errorWidget: (context, url, error) => CachedNetworkImage(
                         width: 80,
                         height: 80,
-                        color: Theme.of(context).primaryColor)),
+                        fit: BoxFit.cover,
+                        imageUrl: assInfo.icon,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                                value: downloadProgress.progress),
+                        errorWidget: (context, url, error) => Container(
+                            width: 80,
+                            height: 80,
+                            color: Theme.of(context).primaryColor)),),
               ),
               const SizedBox(
                 height: 10,

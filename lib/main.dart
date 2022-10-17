@@ -40,12 +40,18 @@ class MyApp extends StatelessWidget {
           primarySwatch: themeColorMap[colorKey] ?? Colors.blue,
           brightness: Brightness.light,
           cupertinoOverrideTheme:
-              const CupertinoThemeData(brightness: Brightness.light),
+          const CupertinoThemeData(brightness: Brightness.light),
         ),
         home: const GuideHome(),
         navigatorObservers: [FlutterSmartDialog.observer],
-        builder: FlutterSmartDialog.init(),
+        builder: FlutterSmartDialog.init(builder: (context, widget) {
+          return MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              child: widget!);
+        },),
+
       );
     });
   }
 }
+

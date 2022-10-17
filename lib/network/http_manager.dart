@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:csust_edu_system/utils/my_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -8,11 +9,8 @@ class HttpManager {
   static final HttpManager _instance = HttpManager._internal();
 
   static const _baseUrl = 'http://finalab.cn:8989';
-
   // static const _baseUrl = 'http://47.97.205.5:8989';
 
-  // static const _baseUrl = 'http://1.117.154.123:8081';
-  // static const _baseUrl = 'http://101.34.59.239:8081';
   Dio? _dio;
 
   factory HttpManager() => _instance;
@@ -158,6 +156,30 @@ class HttpManager {
               {'content': content, 'phone': phone, 'name': name}),
           headers: {"token": token});
 
+  Future<Map> getCourseByHtml(String token, String html) async =>
+      await _post('http://47.97.205.5:8989/parse/courseHtml',
+          params: FormData.fromMap(
+              {'html': html}),
+          headers: {"token": token});
+
+  Future<Map> getExamByHtml(String token, String html) async =>
+      await _post('http://47.97.205.5:8989/parse/ksapHtml',
+          params: FormData.fromMap(
+              {'html': html}),
+          headers: {"token": token});
+
+  Future<Map> getScoreByHtml(String token, String html) async =>
+      await _post('http://47.97.205.5:8989/parse/scoreHtml',
+          params: FormData.fromMap(
+              {'html': html}),
+          headers: {"token": token});
+
+  Future<Map> getScoreInfoByHtml(String token, String html) async =>
+      await _post('http://47.97.205.5:8989/parse/pscjHtml',
+          params: FormData.fromMap(
+              {'html': html}),
+          headers: {"token": token});
+
   /*/
   论坛
    */
@@ -274,6 +296,11 @@ class HttpManager {
       await _post('/getCourse',
           params: FormData.fromMap({'cookie': cookie, 'xueqi': term, 'zc': 0}), headers: {"token": token});
 
+  Future<Uint8List> imageToBytes(String imgUrl) async {
+    var response = await _dio?.get(imgUrl, options: Options(responseType: ResponseType.bytes));
+    return Uint8List.fromList(response?.data);
+  }
+
   // 并行获取所有周的课程表
   // Future<List> getAllCourse(String token, String cookie, String term,
   //     int totalWeek) async {
@@ -304,34 +331,4 @@ class HttpManager {
   //   }
   //   return result;
   // }
-
-// 串行获取所有周的课程表
-// Future<List> getAllCourse(
-//     String token, String cookie, String term, int totalWeek) async {
-//   List result = [];
-//   // List<Future> futures = [];
-//   print(totalWeek);
-//   for (int i = 1; i <= totalWeek; i++) {
-//     var value =
-//         await HttpManager().queryCourse(token, cookie, term, i.toString());
-//     await Future.delayed(const Duration(milliseconds: 1500));
-//     if (value.isNotEmpty) {
-//       print(i);
-//       if (value['code'] == 200) {
-//         result.add(value['data']);
-//       } else {
-//         if (kDebugMode) {
-//           print('出异常了');
-//         }
-//         throw Exception('获取课表出错了');
-//       }
-//     } else {
-//       if (kDebugMode) {
-//         print('出异常了');
-//       }
-//       throw Exception('获取课表出错了');
-//     }
-//   }
-//   return result;
-// }
 }

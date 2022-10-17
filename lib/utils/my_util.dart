@@ -8,7 +8,7 @@ import '../network/http_manager.dart';
 import '../widgets/custom_toast.dart';
 import '../widgets/select_dialog.dart';
 
-const String version = 'v1.8.2';
+const String version = 'v1.8.3';
 const String appName = '新长理教务';
 
 MaterialColor createMaterialColor(Color color) {

@@ -299,19 +299,28 @@ class _MineHeaderState extends State<_MineHeader> {
                             width: 64,
                             height: 64,
                             fit: BoxFit.cover,
-                            imageUrl: addPrefixToUrl(StuInfo.avatar),
+                            imageUrl: '${StuInfo.avatar}/webp',
                             progressIndicatorBuilder:
                                 (context, url, downloadProgress) =>
                                 CircularProgressIndicator(
                                     value: downloadProgress.progress),
-                            errorWidget: (context, url, error) => Container(
+                            errorWidget: (context, url, error) =>  CachedNetworkImage(
                                 width: 64,
                                 height: 64,
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).primaryColor,
-                                  borderRadius:
-                                  const BorderRadius.all(Radius.circular(40)),
-                                )))),
+                                fit: BoxFit.cover,
+                                imageUrl: StuInfo.avatar,
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) =>
+                                    CircularProgressIndicator(
+                                        value: downloadProgress.progress),
+                                errorWidget: (context, url, error) => Container(
+                                    width: 64,
+                                    height: 64,
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).primaryColor,
+                                      borderRadius:
+                                      const BorderRadius.all(Radius.circular(40)),
+                                    ))))),
                   ),
                   const SizedBox(
                     height: 5,

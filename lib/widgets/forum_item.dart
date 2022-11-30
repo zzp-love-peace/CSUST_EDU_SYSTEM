@@ -321,7 +321,7 @@ class _ForumItemImagesState extends State<ForumItemImages> {
             });
           },
           pageController: PageController(
-              initialPage: widget.images.indexOf(addPrefixToUrl(widget.url))),
+              initialPage: widget.images.indexOf(widget.url)),
           itemCount: widget.images.length,
           builder: (BuildContext context, int index) {
             return PhotoViewGalleryPageOptions(
@@ -329,7 +329,7 @@ class _ForumItemImagesState extends State<ForumItemImages> {
                 Navigator.pop(context);
               },
               imageProvider: CachedNetworkImageProvider(
-                  addPrefixToUrl(widget.images[index])),
+                  widget.images[index]),
               // initialScale: PhotoViewComputedScale.contained *
               //     0.95,
               errorBuilder: (context, error, stackTrace) {

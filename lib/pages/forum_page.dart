@@ -41,7 +41,7 @@ class _ForumPageState extends State<ForumPage> {
         length: _tabList.length,
         child: Scaffold(
             appBar: AppBar(
-              // foregroundColor: Colors.white,
+              foregroundColor: Colors.white,
               elevation: 0,
               centerTitle: true,
               title: const Text(
@@ -52,7 +52,7 @@ class _ForumPageState extends State<ForumPage> {
                 ),
               ),
               bottom: TabBar(
-                // labelColor: Colors.white,
+                labelColor: Colors.white,
                 labelStyle: const TextStyle(fontSize: 16),
                 tabs: _tabList,
                 isScrollable: true,
@@ -61,7 +61,7 @@ class _ForumPageState extends State<ForumPage> {
             body: TabBarView(children: _tabPages),
             floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
             floatingActionButton: FloatingActionButton(
-              // foregroundColor: Colors.white,
+              foregroundColor: Colors.white,
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => WriteForumHome(

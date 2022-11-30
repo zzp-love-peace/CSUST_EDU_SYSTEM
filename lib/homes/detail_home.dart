@@ -613,15 +613,24 @@ class _CommentItemState extends State<_CommentItem> {
                         width: 40,
                         height: 40,
                         fit: BoxFit.cover,
-                        imageUrl: addPrefixToUrl(widget.comment.avatar),
+                        imageUrl: '${widget.comment.avatar}/webp',
                         progressIndicatorBuilder:
                             (context, url, downloadProgress) =>
                                 CircularProgressIndicator(
                                     value: downloadProgress.progress),
-                        errorWidget: (context, url, error) => Container(
+                        errorWidget: (context, url, error) => CachedNetworkImage(
                             width: 40,
                             height: 40,
-                            color: Theme.of(context).primaryColor)),
+                            fit: BoxFit.cover,
+                            imageUrl: widget.comment.avatar,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                CircularProgressIndicator(
+                                    value: downloadProgress.progress),
+                            errorWidget: (context, url, error) => Container(
+                                width: 40,
+                                height: 40,
+                                color: Theme.of(context).primaryColor)),),
                   ),
                   const SizedBox(
                     width: 10,
@@ -856,15 +865,24 @@ class _CommentItemState extends State<_CommentItem> {
                         width: 30,
                         height: 30,
                         fit: BoxFit.cover,
-                        imageUrl: addPrefixToUrl(reply.avatar),
+                        imageUrl: '${reply.avatar}/webp',
                         progressIndicatorBuilder:
                             (context, url, downloadProgress) =>
                             CircularProgressIndicator(
                                 value: downloadProgress.progress),
-                        errorWidget: (context, url, error) => Container(
+                        errorWidget: (context, url, error) => CachedNetworkImage(
                             width: 30,
                             height: 30,
-                            color: Theme.of(context).primaryColor)),
+                            fit: BoxFit.cover,
+                            imageUrl: reply.avatar,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                CircularProgressIndicator(
+                                    value: downloadProgress.progress),
+                            errorWidget: (context, url, error) => Container(
+                                width: 30,
+                                height: 30,
+                                color: Theme.of(context).primaryColor)),),
                   ),
                   const SizedBox(
                     width: 3,

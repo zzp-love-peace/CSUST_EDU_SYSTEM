@@ -143,15 +143,24 @@ class _MessageHomeState extends State<MessageHome> {
                     width: 45,
                     height: 45,
                     fit: BoxFit.cover,
-                    imageUrl: addPrefixToUrl(msg.avatar),
+                    imageUrl: '${msg.avatar}/webp',
                     progressIndicatorBuilder:
                         (context, url, downloadProgress) =>
                             CircularProgressIndicator(
                                 value: downloadProgress.progress),
-                    errorWidget: (context, url, error) => Container(
+                    errorWidget: (context, url, error) => CachedNetworkImage(
                         width: 45,
                         height: 45,
-                        color: Theme.of(context).primaryColor)),
+                        fit: BoxFit.cover,
+                        imageUrl: msg.avatar,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                                value: downloadProgress.progress),
+                        errorWidget: (context, url, error) => Container(
+                            width: 45,
+                            height: 45,
+                            color: Theme.of(context).primaryColor)),),
               ),
             ),
             Expanded(

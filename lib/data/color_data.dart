@@ -8,12 +8,17 @@ Map<String, MaterialColor> themeColorMap = {
   '草绿': Colors.green,
   '湖绿': Colors.teal,
   '葱油鸡': createMaterialColor(const Color(0xFF338277)),
+  '橄榄': createMaterialColor(const Color(0xFFBDB76B)),
   '小麦': createMaterialColor(const Color(0xFFF4A460)),
   '夏日柑橘': Colors.orange,
+  '巧克力': createMaterialColor(const Color(0xFFD2691E)),
   '薰衣草': createMaterialColor(const Color(0xFFDDA0DD)),
   '紫罗兰': createMaterialColor(const Color(0xFFBA55D3)),
   '樱花': createMaterialColor(const Color(0xFFEEB4B4)),
-  '水蜜桃': createMaterialColor(const Color(0xFFF08080)),
   '五花肉': createMaterialColor(const Color(0xFFFF8C69)),
+  '水蜜桃': createMaterialColor(const Color(0xFFF08080)),
+  '番茄': createMaterialColor(const Color(0xFFFF6347)),
   '朱砂': createMaterialColor(const Color(0xFFCD5C5C)),
+
+
 };

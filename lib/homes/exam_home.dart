@@ -176,26 +176,11 @@ class _ExamHomeState extends State<ExamHome> {
               _saveExam();
             }
           });
-        } else if (value['code'] == 401 && DateInfo.nowTerm == term) {
-          if (DateInfo.nowWeek != -1) {
-            setState(() {
-              _examList = json.decode(_initExam());
-            });
-          } else {
-            setState(() {
-              _examList = [];
-              _saveExam();
-            });
-          }
-        } else if (value['code'] == 501) {
+        } else {
           SmartDialog.compatible
               .showToast('', widget: CustomToast(value['msg']));
           setState(() {
             _examList = json.decode(_initExam());
-          });
-        } else {
-          setState(() {
-            _examList = [];
           });
         }
       } else {

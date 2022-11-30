@@ -112,7 +112,7 @@ class _CoursePageState extends State<CoursePage> {
   AppBar _coursePageAppBar() {
     return AppBar(
       elevation: 0,
-      // foregroundColor: Colors.white,
+      foregroundColor: Colors.white,
       bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40.0),
           child: Container(

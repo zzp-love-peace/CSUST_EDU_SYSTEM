@@ -8,7 +8,7 @@ import '../network/http_manager.dart';
 import '../widgets/custom_toast.dart';
 import '../widgets/select_dialog.dart';
 
-const String version = 'v1.8.3';
+const String version = 'v1.8.5';
 const String appName = '新长理教务';
 
 MaterialColor createMaterialColor(Color color) {
@@ -39,6 +39,7 @@ String getAppSuffix() {
   return result;
 }
 
+@Deprecated('暂时废弃')
 String addPrefixToUrl(String url) {
   var urlPrefix = 'http://qiniu.finalab.cn/';
   return url.startsWith('http') ? url : urlPrefix + url;
@@ -90,8 +91,8 @@ checkVersion({bool isBegin = false}) {
                     String url = form == 'apk'
                         ? appPath
                         : 'https://apps.apple.com/cn/app/%E9%95%BF%E7%90%86%E6%95%99%E5%8A%A1/id1619946564';
-                    if (await canLaunch(url)) {
-                      await launch(url);
+                    if (await canLaunchUrl(Uri.parse(url))) {
+                      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
                     }
                     else {
                       SmartDialog.compatible.showToast(

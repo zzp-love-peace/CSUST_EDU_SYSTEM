@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/hint_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,6 +15,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 import '../route/fade_route.dart';
+import '../utils/my_util.dart';
 import '../widgets/forum_item.dart';
 import '../widgets/select_dialog.dart';
 
@@ -36,8 +39,7 @@ class _WriteForumHomeState extends State<WriteForumHome> {
   String _tab = '';
   List<int> _pickerIndex = [0];
 
-  List<Widget> _imgList = [];
-  final List<String> _imgPaths = [];
+  final List<String> _imgPaths = [''];
 
   bool _isAnonymous = false;
 
@@ -48,9 +50,6 @@ class _WriteForumHomeState extends State<WriteForumHome> {
   @override
   void initState() {
     super.initState();
-    _imgList.add(_AddImgButton(
-      callback: _imgButtonCallback,
-    ));
   }
 
   @override
@@ -164,49 +163,65 @@ class _WriteForumHomeState extends State<WriteForumHome> {
                     ],
                   ),
                 )),
-            Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Container(
-                    height: ((MediaQuery.of(context).size.width - 48) / 3) + 24,
-                    margin: const EdgeInsets.all(12),
-                    // padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(12))),
+            Container(
+              width: double.infinity,
+              height: ((MediaQuery.of(context).size.width - 48) / 3) + 24,
+              margin: const EdgeInsets.all(12),
+              // padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(12))),
+              child: Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  AnimatedOpacity(
+                    opacity: _imgPaths.length == 1 ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 300),
                     child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: GridView.count(
-                        reverse: true,
-                        crossAxisSpacing: 3,
-                        physics: const NeverScrollableScrollPhysics(),
-                        crossAxisCount: 3,
-                        children: _imgList,
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width / 2.1),
+                      child: Wrap(
+                        direction: Axis.vertical,
+                        children: const [
+                          Text(
+                            '最多上传3张图片',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            '请勿上传违规图片！',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            '否则将被禁言并通报',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
                       ),
-                    )),
-                if (_imgList.length == 1)
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width / 2.1),
-                    child: Wrap(
-                      direction: Axis.vertical,
-                      children: const [
-                        Text(
-                          '最多上传3张图片',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        Text(
-                          '请勿上传违规图片！',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        Text(
-                          '否则将被禁言并通报',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
                     ),
                   ),
-              ],
+                  Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: ImplicitlyAnimatedList<String>(
+                        // reverse: true,
+                        updateDuration: const Duration(milliseconds: 300),
+                        insertDuration: const Duration(milliseconds: 300),
+                        removeDuration: const Duration(milliseconds: 300),
+                        items: _imgPaths,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        physics: const NeverScrollableScrollPhysics(),
+                        areItemsTheSame: (a, b) => a == b,
+                        itemBuilder: (context, animation, item, index) {
+                          return buildFadeWidgetHorizontal(
+                              _imgView(item), animation);
+                        },
+                        removeItemBuilder: (context, animation, oldItem) {
+                          return buildFadeWidgetHorizontal(
+                              _imgView(oldItem), animation);
+                        },
+                      )),
+                ],
+              ),
             ),
             Container(
               margin: const EdgeInsets.all(12),
@@ -249,7 +264,7 @@ class _WriteForumHomeState extends State<WriteForumHome> {
   }
 
   Future<bool> _isExit() {
-    if (_contentController.text.isNotEmpty || _imgPaths.isNotEmpty) {
+    if (_contentController.text.isNotEmpty || _imgPaths.length > 1) {
       SmartDialog.compatible.show(
           widget: SelectDialog(
             title: '提示',
@@ -266,64 +281,64 @@ class _WriteForumHomeState extends State<WriteForumHome> {
   }
 
   _imgButtonCallback(String path) {
-    _imgPaths.insert(0, path);
-    _imgList = _imgList.reversed.toList();
-    _imgList.add(_imgView(path));
     setState(() {
-      _imgList = _imgList.reversed.toList();
+      _imgPaths.insert(0, path);
     });
   }
 
   _imgView(String path) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(FadeRoute(
-            page: PhotoViewGallery.builder(
-          pageController: PageController(initialPage: _imgPaths.indexOf(path)),
-          itemCount: _imgPaths.length,
-          builder: (BuildContext context, int index) {
-            return PhotoViewGalleryPageOptions(
-              onTapUp: (context, details, controllerValue) {
-                Navigator.pop(context);
+    if (path.isEmpty) return _AddImgButton(callback: _imgButtonCallback);
+    return Hero(
+        tag: path + _imgPaths.indexOf(path).toString(),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PhotoViewGallery.builder(
+              pageController:
+              PageController(initialPage: _imgPaths.indexOf(path)),
+              itemCount: _imgPaths.length,
+              builder: (BuildContext context, int index) {
+                return PhotoViewGalleryPageOptions(
+                  onTapUp: (context, details, controllerValue) {
+                    Navigator.pop(context);
+                  },
+                  heroAttributes: PhotoViewHeroAttributes(
+                      tag: _imgPaths[index] + index.toString()),
+                  imageProvider: FileImage(File(_imgPaths[index])),
+                  // initialScale: PhotoViewComputedScale.contained *
+                  //     0.95,
+                );
               },
-              imageProvider: FileImage(File(_imgPaths[index])),
-              // initialScale: PhotoViewComputedScale.contained *
-              //     0.95,
-            );
+            )));
           },
-        )));
-      },
-      child: Stack(
-        alignment: Alignment.topRight,
-        children: [
-          Image.file(
-            File(path),
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-          ),
-          GestureDetector(
-            onTap: () {
-              _imgList.removeAt(_imgPaths.indexOf(path));
-              _imgPaths.remove(path);
-              _imgList = _imgList.reversed.toList();
-              setState(() {
-                _imgList = _imgList.reversed.toList();
-              });
-            },
-            child: Container(
-              width: 24,
-              height: 24,
-              color: Colors.black54,
-              child: const Icon(
-                Icons.clear,
-                color: Colors.white,
+          child: Stack(
+            alignment: Alignment.topRight,
+            children: [
+              Image.file(
+                File(path),
+                fit: BoxFit.cover,
+                // width: double.infinity,
+                // height: double.infinity,
+                width: (MediaQuery.of(context).size.width - 48) / 3,
               ),
-            ),
-          )
-        ],
-      ),
-    );
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _imgPaths.remove(path);
+                  });
+                },
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  color: Colors.black54,
+                  child: const Icon(
+                    Icons.clear,
+                    color: Colors.white,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 
   _postForum() async {
@@ -341,7 +356,9 @@ class _WriteForumHomeState extends State<WriteForumHome> {
     // print("themeId: $themeId === content: $content");
     List<MultipartFile> images = [];
     for (var imgPath in _imgPaths) {
-      images.add(await MultipartFile.fromFile(imgPath));
+      if (imgPath.isNotEmpty) {
+        images.add(await MultipartFile.fromFile(imgPath));
+      }
     }
     HttpManager()
         .postForum(StuInfo.token, themeId, content, _isAnonymous, images)
@@ -387,6 +404,7 @@ class _AddImgButton extends StatelessWidget {
           _showBottomSheet(context);
         },
         child: Container(
+          width: (MediaQuery.of(context).size.width - 48) / 3,
           color: Colors.grey.withOpacity(0.3),
           child: const Center(
             child: Icon(

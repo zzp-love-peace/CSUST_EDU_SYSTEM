@@ -20,8 +20,6 @@ class MyForumHome extends StatefulWidget {
 class _MyForumHomeState extends State<MyForumHome> {
   List<Forum> _forumList = [];
 
-  // final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-
   @override
   void initState() {
     super.initState();
@@ -60,10 +58,10 @@ class _MyForumHomeState extends State<MyForumHome> {
                     physics: const NeverScrollableScrollPhysics(),
                     areItemsTheSame: (a, b) => a.id == b.id,
                     itemBuilder: (context, animation, item, index) {
-                      return buildFadeWidget(_getForumItem(item), animation);
+                      return buildFadeWidgetVertical(_getForumItem(item), animation);
                     },
                     removeItemBuilder: (context, animation, oldItem) {
-                      return buildFadeWidget(_getForumItem(oldItem), animation);
+                      return buildFadeWidgetVertical(_getForumItem(oldItem), animation);
                     },
                   )
                 // AnimatedList(

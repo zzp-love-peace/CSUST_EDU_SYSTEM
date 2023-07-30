@@ -8,7 +8,7 @@ import '../network/http_manager.dart';
 import '../widgets/custom_toast.dart';
 import '../widgets/select_dialog.dart';
 
-const String version = 'v1.8.5';
+const String version = 'v1.8.6';
 const String appName = '新长理教务';
 
 MaterialColor createMaterialColor(Color color) {
@@ -45,7 +45,7 @@ String addPrefixToUrl(String url) {
   return url.startsWith('http') ? url : urlPrefix + url;
 }
 
-Widget buildFadeWidget(
+Widget buildFadeWidgetVertical(
     Widget child,
     Animation<double> animation,
     ) {
@@ -57,6 +57,20 @@ Widget buildFadeWidget(
           opacity: animation,
           child: SizeTransition(
               axis: Axis.vertical, sizeFactor: animation, child: child)));
+}
+
+Widget buildFadeWidgetHorizontal(
+    Widget child,
+    Animation<double> animation,
+    ) {
+  return SlideTransition(
+      position:
+      Tween<Offset>(begin: const Offset(-1, 0), end: const Offset(0, 0))
+          .animate(animation),
+      child: FadeTransition(
+          opacity: animation,
+          child: SizeTransition(
+              axis: Axis.horizontal, sizeFactor: animation, child: child)));
 }
 
 checkVersion({bool isBegin = false}) {

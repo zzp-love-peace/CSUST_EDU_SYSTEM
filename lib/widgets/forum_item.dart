@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:like_button/like_button.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -52,41 +53,43 @@ class _ForumItemState extends State<ForumItem> {
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: ClipOval(
-                        child: CachedNetworkImage(
-                          width: 42,
-                          height: 42,
-                          fit: BoxFit.cover,
-                          imageUrl: '${widget.forum.avatar}/webp',
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) =>
-                                  CircularProgressIndicator(
-                                      value: downloadProgress.progress),
-                          errorWidget: (context, url, error) =>
-                              CachedNetworkImage(
-                                  width: 42,
-                                  height: 42,
-                                  fit: BoxFit.cover,
-                                  imageUrl: widget.forum.avatar,
-                                  progressIndicatorBuilder:
-                                      (context, url, downloadProgress) =>
+                        padding: const EdgeInsets.all(10),
+                        child: Hero(
+                          tag: widget.forum.avatar + widget.forum.id.toString(),
+                          child: ClipOval(
+                            child: CachedNetworkImage(
+                              width: 42,
+                              height: 42,
+                              fit: BoxFit.cover,
+                              imageUrl: '${widget.forum.avatar}/webp',
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) =>
+                                      CircularProgressIndicator(
+                                          value: downloadProgress.progress),
+                              errorWidget: (context, url, error) =>
+                                  CachedNetworkImage(
+                                      width: 42,
+                                      height: 42,
+                                      fit: BoxFit.cover,
+                                      imageUrl: widget.forum.avatar,
+                                      progressIndicatorBuilder: (context, url,
+                                              downloadProgress) =>
                                           CircularProgressIndicator(
                                               value: downloadProgress.progress),
-                                  errorWidget: (context, url, error) =>
-                                      Container(
-                                          width: 42,
-                                          height: 42,
-                                          decoration: BoxDecoration(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(30)),
-                                          ))),
-                        ),
-                      ),
-                    ),
+                                      errorWidget: (context, url, error) =>
+                                          Container(
+                                              width: 42,
+                                              height: 42,
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(30)),
+                                              ))),
+                            ),
+                          ),
+                        )),
                     const SizedBox(
                       width: 10,
                     ),
@@ -94,34 +97,44 @@ class _ForumItemState extends State<ForumItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          widget.forum.username,
-                          style: const TextStyle(
-                              fontSize: 14, color: Colors.black),
+                        Hero(
+                          tag: widget.forum.username +
+                              widget.forum.id.toString(),
+                          child: Text(
+                            widget.forum.username,
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.black),
+                          ),
                         ),
                         const SizedBox(
                           height: 5,
                         ),
-                        Text(
-                          getForumDateString(widget.forum.createTime),
-                          style: const TextStyle(fontSize: 12),
-                        )
+                        Hero(
+                            tag: widget.forum.createTime +
+                                widget.forum.id.toString(),
+                            child: Text(
+                              getForumDateString(widget.forum.createTime),
+                              style: const TextStyle(fontSize: 12),
+                            ))
                       ],
                     )
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-                  child: Text(
-                    widget.forum.content,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 4,
-                    style: const TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                ),
+                    padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                    child: Hero(
+                      tag: widget.forum.content + widget.forum.id.toString(),
+                      child: Text(
+                        widget.forum.content,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 4,
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.black),
+                      ),
+                    )),
                 if (widget.forum.images.isNotEmpty)
                   SizedBox(
-                    height: ((MediaQuery.of(context).size.width - 48) / 3),
+                    height: ((MediaQuery.of(context).size.width - 24) / 3),
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                       child: GridView.count(
@@ -143,22 +156,37 @@ class _ForumItemState extends State<ForumItem> {
   }
 
   _navigatorToDetailHome() {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => DetailHome(
-              forum: widget.forum,
-              deleteCallback: widget.deleteCallback,
-              stateCallback: (isLike, isCollect) {
-                setState(() {
-                  if (widget.forum.isLike && !isLike) {
-                    widget.forum.likeNum--;
-                  } else if (!widget.forum.isLike && isLike) {
-                    widget.forum.likeNum++;
-                  }
-                  widget.forum.isLike = isLike;
-                  widget.forum.isEnshrine = isCollect;
-                });
-              },
-            )));
+    Navigator.of(context).push(FadeRoute(page: DetailHome(
+      forum: widget.forum,
+      deleteCallback: widget.deleteCallback,
+      stateCallback: (isLike, isCollect) {
+        setState(() {
+          if (widget.forum.isLike && !isLike) {
+            widget.forum.likeNum--;
+          } else if (!widget.forum.isLike && isLike) {
+            widget.forum.likeNum++;
+          }
+          widget.forum.isLike = isLike;
+          widget.forum.isEnshrine = isCollect;
+        });
+      },
+    )));
+    // Navigator.of(context).push(MaterialPageRoute(
+    //     builder: (context) => DetailHome(
+    //           forum: widget.forum,
+    //           deleteCallback: widget.deleteCallback,
+    //           stateCallback: (isLike, isCollect) {
+    //             setState(() {
+    //               if (widget.forum.isLike && !isLike) {
+    //                 widget.forum.likeNum--;
+    //               } else if (!widget.forum.isLike && isLike) {
+    //                 widget.forum.likeNum++;
+    //               }
+    //               widget.forum.isLike = isLike;
+    //               widget.forum.isEnshrine = isCollect;
+    //             });
+    //           },
+    //         )));
   }
 
   Widget _controlRow() {
@@ -167,17 +195,20 @@ class _ForumItemState extends State<ForumItem> {
       children: [
         Expanded(
           flex: 1,
-          child: LikeButton(
-            likeBuilder: (bool isLiked) {
-              return Icon(
-                Icons.star,
-                color: isLiked ? Colors.amberAccent : Colors.grey,
-                size: 24,
-              );
-            },
-            isLiked: widget.forum.isEnshrine,
-            likeCount: null,
-            onTap: onCollectButtonTapped,
+          child: Hero(
+            tag: 'collect${widget.forum.id}',
+            child: LikeButton(
+              likeBuilder: (bool isLiked) {
+                return Icon(
+                  Icons.star,
+                  color: isLiked ? Colors.amberAccent : Colors.grey,
+                  size: 24,
+                );
+              },
+              isLiked: widget.forum.isEnshrine,
+              likeCount: null,
+              onTap: onCollectButtonTapped,
+            ),
           ),
         ),
         Expanded(
@@ -206,47 +237,60 @@ class _ForumItemState extends State<ForumItem> {
           ),
         ),
         Expanded(
-          flex: 1,
-          child: LikeButton(
-            likeCount: widget.forum.likeNum > 0 ? widget.forum.likeNum : null,
-            onTap: onPraiseButtonTapped,
-            size: 24,
-            isLiked: widget.forum.isLike,
-          ),
-        ),
+            flex: 1,
+            child: Hero(
+              tag: 'like${widget.forum.id}',
+              child: LikeButton(
+                likeCount:
+                    widget.forum.likeNum > 0 ? widget.forum.likeNum : null,
+                onTap: onPraiseButtonTapped,
+                size: 24,
+                isLiked: widget.forum.isLike,
+              ),
+            )),
       ],
     );
   }
 
   Widget _imgView(String url, List images) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(FadeRoute(
-            page: ForumItemImages(
-          images: images,
-          url: url,
-        )));
-      },
-      child: CachedNetworkImage(
-        width: double.infinity,
-        height: double.infinity,
-        fit: BoxFit.cover,
-        imageUrl: '$url/thumb',
-        progressIndicatorBuilder: (context, url, downloadProgress) =>
-            CircularProgressIndicator(value: downloadProgress.progress),
-        errorWidget: (context, newUrl, error) => CachedNetworkImage(
+    return Hero(
+        tag: url,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(FadeRoute(
+                page: ForumItemImages(
+              images: images,
+              url: url,
+            )));
+            // Navigator.of(context)
+            //     .push(MaterialPageRoute(builder: (BuildContext context) {
+            //   return ForumItemImages(
+            //     images: images,
+            //     url: url,
+            //   );
+            // }));
+          },
+          child: CachedNetworkImage(
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.cover,
-            imageUrl: url,
+            imageUrl: '$url/thumb',
+            // imageUrl: '$url/webp',
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 CircularProgressIndicator(value: downloadProgress.progress),
-            errorWidget: (context, url, error) => Container(
+            errorWidget: (context, newUrl, error) => CachedNetworkImage(
                 width: double.infinity,
                 height: double.infinity,
-                color: Theme.of(context).primaryColor)),
-      ),
-    );
+                fit: BoxFit.cover,
+                imageUrl: url,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(value: downloadProgress.progress),
+                errorWidget: (context, url, error) => Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    color: Theme.of(context).primaryColor)),
+          ),
+        ));
   }
 
   Future<bool> onPraiseButtonTapped(bool isLiked) async {
@@ -311,91 +355,97 @@ class _ForumItemImagesState extends State<ForumItemImages> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(flex: 1,
-          child: PhotoViewGallery.builder(
-          onPageChanged: (index) {
-            setState(() {
-              imgIndex = index;
-            });
-          },
-          pageController: PageController(
-              initialPage: widget.images.indexOf(widget.url)),
-          itemCount: widget.images.length,
-          builder: (BuildContext context, int index) {
-            return PhotoViewGalleryPageOptions(
-              onTapUp: (context, details, controllerValue) {
-                Navigator.pop(context);
-              },
-              imageProvider: CachedNetworkImageProvider(
-                  widget.images[index]),
-              // initialScale: PhotoViewComputedScale.contained *
-              //     0.95,
-              errorBuilder: (context, error, stackTrace) {
-                return const Center(
-                    child: Icon(
-                      Icons.question_mark,
-                      color: Colors.white,
-                    ));
-              },
-            );
-          },
-          loadingBuilder: (context, event) => Center(
-            child: SizedBox(
-              width: 20.0,
-              height: 20.0,
-              child: CircularProgressIndicator(
-                value: event == null
-                    ? 0
-                    : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
-              ),
-            ),
-          ),
-        ),),
-        // Align(
-        //     alignment: Alignment.bottomCenter,
-        //     child:
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  const Text(
-                    '图片',
-                    style: TextStyle(fontSize: 15, color: Colors.white),
-                  ),
-                  Text(
-                    '${imgIndex + 1}/${widget.images.length}',
-                    style: const TextStyle(fontSize: 15, color: Colors.white),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.download, color: Colors.white,),
-                    onPressed: () async {
-                      String url = widget.images[imgIndex];
-                      var imgBytes = await HttpManager().imageToBytes(url);
-                      var result = await ImageGallerySaver.saveImage(imgBytes, quality: 100);
-                      if (result['isSuccess'] == true) {
-                        SmartDialog.compatible
-                            .showToast('', widget: const CustomToast('下载成功'));
-                      } else {
-                        SmartDialog.compatible
-                            .showToast('', widget: CustomToast(result['errorMessage']));
-                      }
-                      print("result ==> $result");
+    return PhotoViewGallery.builder(
+      onPageChanged: (index) {
+        setState(() {
+          imgIndex = index;
+        });
+      },
+      pageController:
+          PageController(initialPage: widget.images.indexOf(widget.url)),
+      itemCount: widget.images.length,
+      builder: (BuildContext context, int index) {
+        return PhotoViewGalleryPageOptions.customChild(
+          child: Column(
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: CachedNetworkImage(
+                    // imageUrl: '${widget.images[index]}/thumb',
+                    imageUrl: '${widget.images[index]}/webp',
+                    progressIndicatorBuilder: (context, url, downloadProgress) {
+                      return Center(
+                        child: SizedBox(
+                          height: 150,
+                          width: 150,
+                          child: CircularProgressIndicator(
+                            value: downloadProgress.progress,
+                          ),
+                        ),
+                      );
                     },
-                  ),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                ],
-              ),
-            )
-                  // ),
-      ],
+                    errorWidget: (context, error, stackTrace) {
+                      return const Center(
+                          child: Icon(
+                        Icons.question_mark,
+                        color: Colors.white,
+                      ));
+                    },
+                  )),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 0, 10),
+                child: Row(
+                  children: [
+                    const Text(
+                      '图片',
+                      style: TextStyle(fontSize: 15, color: Colors.white),
+                    ),
+                    Text(
+                      '${imgIndex + 1}/${widget.images.length}',
+                      style: const TextStyle(fontSize: 15, color: Colors.white),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.download,
+                        color: Colors.white,
+                      ),
+                      onPressed: () async {
+                        String url = widget.images[imgIndex];
+                        var imgBytes = await HttpManager().imageToBytes(url);
+                        var result = await ImageGallerySaver.saveImage(imgBytes,
+                            quality: 100);
+                        if (result['isSuccess'] == true) {
+                          SmartDialog.compatible
+                              .showToast('', widget: const CustomToast('下载成功'));
+                        } else {
+                          SmartDialog.compatible.showToast('',
+                              widget: CustomToast(result['errorMessage']));
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+          onTapUp: (context, details, controllerValue) {
+            Navigator.pop(context);
+          },
+          heroAttributes: PhotoViewHeroAttributes(tag: widget.images[index]),
+        );
+      },
+      loadingBuilder: (context, event) => Center(
+        child: SizedBox(
+          width: 20.0,
+          height: 20.0,
+          child: CircularProgressIndicator(
+            value: event == null
+                ? 0
+                : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -23,7 +23,7 @@ class HintDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
@@ -34,7 +34,7 @@ class HintDialog extends StatelessWidget {
                               fontWeight: FontWeight.bold)),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      padding: const EdgeInsets.fromLTRB(20, 8, 20, 18),
                       child: Text(subTitle,
                           textAlign: TextAlign.center,
                           style: const TextStyle(color: Colors.black)),

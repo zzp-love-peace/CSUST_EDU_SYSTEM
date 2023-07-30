@@ -66,7 +66,6 @@ class DBManager {
     if (courseResult.isEmpty) {
       return null;
     } else if (courseResult.length == 1) {
-      ;
       return CourseModel.fromMap(courseResult[0]);
     } else {
       throw Exception('数据库课程数据重复');

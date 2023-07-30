@@ -17,7 +17,6 @@ import '../network/http_manager.dart';
 import '../provider/theme_color_provider.dart';
 
 class BottomTabHome extends StatefulWidget {
-
   const BottomTabHome({Key? key}) : super(key: key);
 
   @override
@@ -50,52 +49,65 @@ class _BottomTabHomeState extends State<BottomTabHome> {
             index: _currentIndex,
             children: _pages,
           ),
-          bottomNavigationBar: Consumer<UnreadMsgProvider>(builder: (context, appInfo, _)=> BottomNavigationBar(
-            showUnselectedLabels: false,
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            items:  [
-              const BottomNavigationBarItem(
-                  icon: Icon(Icons.assignment_outlined),
-                  activeIcon: Icon(Icons.assignment),
-                  label: '课程表'),
-              const BottomNavigationBarItem(
-                  icon: Icon(Icons.home_work_outlined),
-                  activeIcon: Icon(Icons.home_work),
-                  label: '校园'),
-              const BottomNavigationBarItem(
-                  icon: Icon(Icons.forum_outlined),
-                  activeIcon: Icon(Icons.forum),
-                  label: '圈子'),
-              BottomNavigationBarItem(
-                  // icon: Icon(
-                  //   Icons.person_outline,
-                  // ),
-                  icon: Stack(
-                    alignment: Alignment.topRight,
-                    children:   [
-                      const Icon(Icons.person_outline,),
-                      if (appInfo.hasNewMsg)const Icon(Icons.circle, color: Colors.red, size: 9,)
-                    ],
-                  ),
-                  activeIcon:
-                  // Icon(Icons.person),
-                  Stack(
-                    alignment: Alignment.topRight,
-                    children: [
-                      const Icon(Icons.person,),
-                      if (appInfo.hasNewMsg) const Icon(Icons.circle, color: Colors.red, size: 9,)
-                    ],
-                  ),
-                  label: '我的'),
-            ],
-          ),
-        ),),
+          bottomNavigationBar: Consumer<UnreadMsgProvider>(
+              builder: (context, appInfo, _) =>
+                  BottomNavigationBar(
+                showUnselectedLabels: false,
+                type: BottomNavigationBarType.fixed,
+                currentIndex: _currentIndex,
+                onTap: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                items: [
+                  const BottomNavigationBarItem(
+                      icon: Icon(Icons.assignment_outlined),
+                      activeIcon: Icon(Icons.assignment),
+                      label: '课程表'),
+                  const BottomNavigationBarItem(
+                      icon: Icon(Icons.home_work_outlined),
+                      activeIcon: Icon(Icons.home_work),
+                      label: '校园'),
+                  const BottomNavigationBarItem(
+                      icon: Icon(Icons.forum_outlined),
+                      activeIcon: Icon(Icons.forum),
+                      label: '圈子'),
+                  BottomNavigationBarItem(
+                      icon: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          const Icon(
+                            Icons.person_outline,
+                          ),
+                          if (appInfo.hasNewMsg)
+                            const Icon(
+                              Icons.circle,
+                              color: Colors.red,
+                              size: 9,
+                            )
+                        ],
+                      ),
+                      activeIcon:
+                          Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          const Icon(
+                            Icons.person,
+                          ),
+                          if (appInfo.hasNewMsg)
+                            const Icon(
+                              Icons.circle,
+                              color: Colors.red,
+                              size: 9,
+                            )
+                        ],
+                      ),
+                      label: '我的'),
+                ],
+              ),
+              ),
+        ),
         onWillPop: _isExit);
   }
 
@@ -104,7 +116,8 @@ class _BottomTabHomeState extends State<BottomTabHome> {
         DateTime.now().difference(_lastTime!) >
             const Duration(milliseconds: 2500)) {
       _lastTime = DateTime.now();
-      SmartDialog.compatible.showToast('', widget: const CustomToast('再次点击退出应用'));
+      SmartDialog.compatible
+          .showToast('', widget: const CustomToast('再次点击退出应用'));
       return Future.value(false);
     }
     return Future.value(true);

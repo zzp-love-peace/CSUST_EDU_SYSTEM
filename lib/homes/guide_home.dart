@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/login_home.dart';
+import 'package:csust_edu_system/network/edu_system_manager.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/provider/theme_color_provider.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
@@ -33,6 +34,7 @@ class _GuideHomeState extends State<GuideHome> {
   void initState() {
     super.initState();
     _preWork();
+
   }
 
   @override
@@ -113,6 +115,10 @@ class _GuideHomeState extends State<GuideHome> {
     var password = prefs.getString("password");
     var isRemember = prefs.getBool("isRemember") ?? false;
     if (username != null && password != null && isRemember) {
+
+      // var myCookie = await EduSystemManager().getHeaderFromJW(username, password);
+      // print('myCookie ==> $myCookie');
+
       var loginValue = await HttpManager().login(username, password);
       print('loginValue$loginValue');
       if (loginValue.isNotEmpty) {

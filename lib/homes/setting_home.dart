@@ -4,6 +4,7 @@ import 'package:csust_edu_system/homes/theme_home.dart';
 import 'package:csust_edu_system/widgets/hint_dialog.dart';
 import 'package:csust_edu_system/widgets/select_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 import 'login_home.dart';
@@ -17,6 +18,7 @@ class SettingHome extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         foregroundColor: Colors.white,
+        // systemOverlayStyle: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
         centerTitle: true,
         title: const Text(
           "设置",

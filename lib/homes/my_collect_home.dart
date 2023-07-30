@@ -77,10 +77,10 @@ class _MyCollectHomeState extends State<MyCollectHome> {
                   physics: const NeverScrollableScrollPhysics(),
                   areItemsTheSame: (a, b) => a.id == b.id,
                   itemBuilder: (context, animation, item, index) {
-                    return buildFadeWidget(_getForumItem(item), animation);
+                    return buildFadeWidgetVertical(_getForumItem(item), animation);
                   },
                   removeItemBuilder: (context, animation, oldItem) {
-                    return buildFadeWidget(_getForumItem(oldItem), animation);
+                    return buildFadeWidgetVertical(_getForumItem(oldItem), animation);
                   },
                 )
                 // AnimatedList(

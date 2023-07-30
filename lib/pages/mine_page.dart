@@ -176,6 +176,8 @@ class MinePage extends StatelessWidget {
   AppBar _minePageAppBar(context) {
     return AppBar(
       elevation: 0,
+      // systemOverlayStyle: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+      foregroundColor: Colors.white,
       actions: [
         IconButton(
           onPressed: () {

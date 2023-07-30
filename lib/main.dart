@@ -25,6 +25,8 @@ void main() {
   ));
 }
 
+
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -36,7 +38,6 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          // useMaterial3: true,
           primarySwatch: themeColorMap[colorKey] ?? Colors.blue,
           brightness: Brightness.light,
           cupertinoOverrideTheme:
@@ -49,7 +50,6 @@ class MyApp extends StatelessWidget {
               data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
               child: widget!);
         },),
-
       );
     });
   }

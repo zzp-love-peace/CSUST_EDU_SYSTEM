@@ -8,7 +8,9 @@ import 'package:csust_edu_system/utils/course_util.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/date_picker.dart';
+import 'package:csust_edu_system/widgets/progress_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
@@ -59,15 +61,14 @@ class _CoursePageState extends State<CoursePage> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: _coursePageAppBar(),
         body: PageView.builder(
             controller: _pageController,
-            itemCount: 20,
+            itemCount: DateInfo.totalWeek,
+            // itemCount: 20,
             itemBuilder: (context, index) {
               List<int> date = _getSunday(DateInfo.nowDate);
               List<int> d;
@@ -113,6 +114,7 @@ class _CoursePageState extends State<CoursePage> {
     return AppBar(
       elevation: 0,
       foregroundColor: Colors.white,
+      // systemOverlayStyle: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
       bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40.0),
           child: Container(
@@ -138,41 +140,34 @@ class _CoursePageState extends State<CoursePage> {
         ),
       ),
       actions: [
-        IconButton(
-          onPressed: () async {
-            // _getAllCourseOfTerm(_term);
-            // _getAllCourseOfTerm(DateInfo.nowTerm);
-            var queryValue = await HttpManager().queryCourse(
-                StuInfo.token, StuInfo.cookie, _term, _weekNum.toString());
-            if (queryValue.isNotEmpty) {
-              if (queryValue['code'] == 200) {
-                String content = jsonEncode(queryValue['data']);
-                var dbValue =
-                    await DBManager.db.containsCourse(_term, _weekNum);
-                if (dbValue == null) {
-                  var insertValue = await DBManager.db
-                      .insertCourse(CourseModel(_term, _weekNum, content));
-                } else {
-                  var updateValue =
-                      await DBManager.db.updateCourse(content, dbValue.id);
-                }
-                SmartDialog.compatible.show(
-                    widget: const HintDialog(
-                  title: '提示',
-                  subTitle: '刷新成功，下次打开app时生效',
-                ));
-              } else {
-                SmartDialog.compatible
-                    .showToast('', widget: CustomToast(queryValue['msg']));
-              }
-            } else {
-              SmartDialog.compatible
-                  .showToast('', widget: const CustomToast('出现异常了'));
+        PopupMenuButton(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0))),
+          icon: const Icon(Icons.refresh),
+          iconSize: 24,
+          tooltip: '',
+          onSelected: (value) {
+            switch (value) {
+              case 0:
+                _refreshWeekCourse(_weekNum);
+                break;
+              case 1:
+                _refreshTermCourse();
+                break;
             }
           },
-          icon: const Icon(
-            Icons.refresh,
-          ),
+          itemBuilder: (context) {
+            return <PopupMenuEntry>[
+              const PopupMenuItem(
+                value: 0,
+                child: Text('刷新本周'),
+              ),
+              const PopupMenuItem(
+                value: 1,
+                child: Text('刷新本学期'),
+              ),
+            ];
+          },
         ),
         IconButton(
           onPressed: () {
@@ -180,7 +175,7 @@ class _CoursePageState extends State<CoursePage> {
                 MaterialPageRoute(builder: (context) => const ThemeHome()));
           },
           icon: const Icon(
-            Icons.color_lens,
+            Icons.color_lens
           ),
         )
       ],
@@ -194,6 +189,49 @@ class _CoursePageState extends State<CoursePage> {
         ),
       ),
     );
+  }
+
+  Future<bool> _refreshWeekCourse(int wNum, {bool isDialog = true}) async {
+    try {
+      var queryValue = await HttpManager()
+          .queryCourse(StuInfo.token, StuInfo.cookie, _term, wNum.toString());
+      if (queryValue.isNotEmpty) {
+        if (queryValue['code'] == 200) {
+          String content = jsonEncode(queryValue['data']);
+          var dbValue = await DBManager.db.containsCourse(_term, wNum);
+          if (dbValue == null) {
+            var insertValue = await DBManager.db
+                .insertCourse(CourseModel(_term, wNum, content));
+          } else {
+            var updateValue =
+                await DBManager.db.updateCourse(content, dbValue.id);
+          }
+          if (isDialog) {
+            SmartDialog.compatible.show(
+                widget: const HintDialog(
+                  title: '提示',
+                  subTitle: '刷新成功，下次打开app时生效',
+                ));
+          }
+          return true;
+        } else {
+          SmartDialog.compatible
+              .showToast('', widget: CustomToast(queryValue['msg']));
+          return false;
+        }
+      } else {
+        SmartDialog.compatible
+            .showToast('', widget: const CustomToast('出现异常了'));
+        return false;
+      }
+    } catch (e) {
+      SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
+      return false;
+    }
+  }
+
+  _refreshTermCourse() async {
+    SmartDialog.compatible.show(widget: ProgressDialog(_refreshWeekCourse), clickBgDismissTemp: false);
   }
 
   Widget _weekBelowAppBar() {
@@ -781,13 +819,17 @@ class _CourseLayoutState extends State<_CourseLayout> {
                   t.toString(),
                   style: const TextStyle(fontSize: 14),
                 ),
-                const SizedBox(height: 2,),
+                const SizedBox(
+                  height: 2,
+                ),
                 Text(
                   startTime1,
                   style: TextStyle(
                       fontSize: 12, color: Theme.of(context).primaryColor),
                 ),
-                const SizedBox(height: 2,),
+                const SizedBox(
+                  height: 2,
+                ),
                 Text(
                   endTime1,
                   style: TextStyle(
@@ -801,13 +843,17 @@ class _CourseLayoutState extends State<_CourseLayout> {
                   (t + 1).toString(),
                   style: const TextStyle(fontSize: 14),
                 ),
-                const SizedBox(height: 2,),
+                const SizedBox(
+                  height: 2,
+                ),
                 Text(
                   startTime2,
                   style: TextStyle(
                       fontSize: 12, color: Theme.of(context).primaryColor),
                 ),
-                const SizedBox(height: 2,),
+                const SizedBox(
+                  height: 2,
+                ),
                 Text(
                   endTime2,
                   style: TextStyle(

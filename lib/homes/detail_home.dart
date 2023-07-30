@@ -41,8 +41,6 @@ class _DetailHomeState extends State<DetailHome> {
 
   List<_Comment> _commentList = [];
 
-  // final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-
   @override
   void initState() {
     super.initState();
@@ -76,31 +74,42 @@ class _DetailHomeState extends State<DetailHome> {
                     children: [
                       Column(
                         children: [
-                          _headImage(),
-                          Text(
-                            widget.forum.username,
-                            style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black54),
+                          Hero(
+                              tag: widget.forum.avatar +
+                                  widget.forum.id.toString(),
+                              child: _headImage()),
+                          Hero(
+                            tag: widget.forum.username +
+                                widget.forum.id.toString(),
+                            child: Text(
+                              widget.forum.username,
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54),
+                            ),
                           ),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(24, 20, 24, 20),
-                              child: SelectableText(
-                                widget.forum.content,
-                                style: const TextStyle(
-                                    fontSize: 17, color: Colors.black),
-                              ),
-                            ),
+                                padding:
+                                    const EdgeInsets.fromLTRB(24, 20, 24, 20),
+                                child: Hero(
+                                  tag: widget.forum.content +
+                                      widget.forum.id.toString(),
+                                  child: SelectableText(
+                                    widget.forum.content,
+                                    style: const TextStyle(
+                                        fontSize: 17, color: Colors.black),
+                                  ),
+                                )),
                           ),
                           if (widget.forum.images.isNotEmpty)
                             SizedBox(
                               height:
                                   ((MediaQuery.of(context).size.width - 24) /
-                                      3),
+                                          3) +
+                                      6,
                               child: Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(12, 0, 12, 10),
@@ -110,7 +119,8 @@ class _DetailHomeState extends State<DetailHome> {
                                   physics: const NeverScrollableScrollPhysics(),
                                   crossAxisCount: 3,
                                   children: widget.forum.images
-                                      .map((url) => _imgView(url, widget.forum.images))
+                                      .map((url) =>
+                                          _imgView(url, widget.forum.images))
                                       .toList(),
                                 ),
                               ),
@@ -118,53 +128,45 @@ class _DetailHomeState extends State<DetailHome> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 24),
-                              child: Text(
-                                getForumDateString(widget.forum.createTime),
-                                style: const TextStyle(
-                                    fontSize: 14, color: Colors.grey),
-                              ),
-                            ),
+                                padding: const EdgeInsets.only(right: 24),
+                                child: Hero(
+                                  tag: widget.forum.createTime +
+                                      widget.forum.id.toString(),
+                                  child: Text(
+                                    getForumDateString(widget.forum.createTime),
+                                    style: const TextStyle(
+                                        fontSize: 14, color: Colors.grey),
+                                  ),
+                                )),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
                           _likeAndCollectRow(),
-                          if (_commentList.isNotEmpty)
-                            ImplicitlyAnimatedList<_Comment>(
-                              items: _commentList,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              areItemsTheSame: (a, b) => a.id == b.id,
-                              itemBuilder: (context, animation, item, index) {
-                                return buildFadeWidget(
-                                    _CommentItem(
-                                        comment: item,
-                                        deleteCallback: _deleteCallback),
-                                    animation);
-                              },
-                              removeItemBuilder: (context, animation, oldItem) {
-                                return buildFadeWidget(
-                                    _CommentItem(
-                                        comment: oldItem,
-                                        deleteCallback: _deleteCallback),
-                                    animation);
-                              },
-                            )
-                          // AnimatedList(
-                          //     key: _listKey,
-                          //     shrinkWrap: true,
-                          //     physics: const NeverScrollableScrollPhysics(),
-                          //     initialItemCount: _commentList.length,
-                          //     itemBuilder: (context, index, animation) {
-                          //       return buildFadeWidget(
-                          //           _CommentItem(
-                          //             comment: _commentList[index],
-                          //             deleteCallback: _deleteCallback,
-                          //           ),
-                          //           animation);
-                          //     })
-                          else
+                          // if (_commentList.isNotEmpty)
+                          ImplicitlyAnimatedList<_Comment>(
+                            items: _commentList,
+                            shrinkWrap: true,
+                            updateDuration: const Duration(milliseconds: 300),
+                            insertDuration: const Duration(milliseconds: 300),
+                            physics: const NeverScrollableScrollPhysics(),
+                            areItemsTheSame: (a, b) => a.id == b.id,
+                            itemBuilder: (context, animation, item, index) {
+                              return buildFadeWidgetVertical(
+                                  _CommentItem(
+                                      comment: item,
+                                      deleteCallback: _deleteCallback),
+                                  animation);
+                            },
+                            removeItemBuilder: (context, animation, oldItem) {
+                              return buildFadeWidgetVertical(
+                                  _CommentItem(
+                                      comment: oldItem,
+                                      deleteCallback: _deleteCallback),
+                                  animation);
+                            },
+                          ),
+                          if (_commentList.isEmpty)
                             const NoneLottie(hint: '荒无人烟...')
                         ],
                       ),
@@ -180,7 +182,6 @@ class _DetailHomeState extends State<DetailHome> {
   }
 
   Future<bool> _onWillPop() {
-    // print('isLike$_isLike    isCollect$_isCollect');
     widget.stateCallback(_isLike, _isCollect);
     return Future.value(true);
   }
@@ -242,13 +243,20 @@ class _DetailHomeState extends State<DetailHome> {
                 imageUrl: '${widget.forum.avatar}/webp',
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
                     CircularProgressIndicator(value: downloadProgress.progress),
-                errorWidget: (context, url, error) => Container(
+                errorWidget: (context, url, error) => CachedNetworkImage(
                     width: 64,
                     height: 64,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(40)),
-                    )))),
+                    fit: BoxFit.cover,
+                    imageUrl: widget.forum.avatar,
+                    progressIndicatorBuilder: (context, url, downloadProgress) =>
+                        CircularProgressIndicator(value: downloadProgress.progress),
+                    errorWidget: (context, url, error) => Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: const BorderRadius.all(Radius.circular(40)),
+                        ))))),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white, width: 3),
           borderRadius: BorderRadius.circular(40),
@@ -258,23 +266,33 @@ class _DetailHomeState extends State<DetailHome> {
   }
 
   Widget _imgView(String url, List images) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(FadeRoute(
-            page: ForumItemImages(images: images, url: url)));
-      },
-      child: CachedNetworkImage(
-          width: double.infinity,
-          height: double.infinity,
-          fit: BoxFit.cover,
-          imageUrl: '$url/thumb',
-          progressIndicatorBuilder: (context, url, downloadProgress) =>
-              CircularProgressIndicator(value: downloadProgress.progress),
-          errorWidget: (context, url, error) => Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: Theme.of(context).primaryColor)),
-    );
+    return Hero(
+        tag: url,
+        child: GestureDetector(
+          onTap: () {
+            // Navigator.of(context).push(FadeRoute(
+            //     page: ForumItemImages(images: images, url: url)));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (BuildContext context) {
+              return ForumItemImages(
+                images: images,
+                url: url,
+              );
+            }));
+          },
+          child: CachedNetworkImage(
+              // width: double.infinity,
+              // height: double.infinity,
+              fit: BoxFit.cover,
+              imageUrl: '$url/thumb',
+              // imageUrl: '$url/webp',
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) => Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: Theme.of(context).primaryColor)),
+        ));
   }
 
   Widget _bottomCommentView() {
@@ -317,27 +335,32 @@ class _DetailHomeState extends State<DetailHome> {
           const SizedBox(
             width: 15,
           ),
-          LikeButton(
-            likeBuilder: (bool isLiked) {
-              return Icon(
-                Icons.star,
-                color: isLiked ? Colors.amberAccent : Colors.grey,
-                size: 24,
-              );
-            },
-            isLiked: widget.forum.isEnshrine,
-            likeCount: null,
-            onTap: onCollectButtonTapped,
-          ),
+          Hero(
+              tag: 'collect${widget.forum.id}',
+              child: LikeButton(
+                likeBuilder: (bool isLiked) {
+                  return Icon(
+                    Icons.star,
+                    color: isLiked ? Colors.amberAccent : Colors.grey,
+                    size: 24,
+                  );
+                },
+                isLiked: widget.forum.isEnshrine,
+                likeCount: null,
+                onTap: onCollectButtonTapped,
+              )),
           const SizedBox(
             width: 15,
           ),
-          LikeButton(
-            likeCount: null,
-            onTap: onPraiseButtonTapped,
-            size: 24,
-            isLiked: widget.forum.isLike,
-          ),
+          Hero(
+            tag: 'like${widget.forum.id}',
+            child: LikeButton(
+              likeCount: null,
+              onTap: onPraiseButtonTapped,
+              size: 24,
+              isLiked: widget.forum.isLike,
+            ),
+          )
         ],
       ),
     );
@@ -401,7 +424,7 @@ class _DetailHomeState extends State<DetailHome> {
   _getFormInfo(int id) {
     HttpManager().getForumInfo(StuInfo.token, id).then((value) {
       if (value.isNotEmpty) {
-        // print(value);
+        print(value);
         if (value['code'] == 200) {
           setState(() {
             widget.forum.isLike = value['data']['indexPost']['isLike'];
@@ -498,9 +521,6 @@ class _DetailHomeState extends State<DetailHome> {
       if (value.isNotEmpty) {
         // print('comment$value');
         if (value['code'] == 200) {
-          // _commentList.insert(0, _Comment.fromJson(value['data']));
-          // _listKey.currentState
-          //     ?.insertItem(0, duration: const Duration(milliseconds: 500));
           SmartDialog.dismiss();
           Navigator.pop(context);
           _contentController.clear();
@@ -509,6 +529,7 @@ class _DetailHomeState extends State<DetailHome> {
             widget.forum.commentNum++;
           });
         } else if (value['code'] == 701) {
+          //被禁言了
           SmartDialog.compatible.show(
               widget: HintDialog(title: '提示', subTitle: value['msg']),
               clickBgDismissTemp: false);
@@ -532,29 +553,23 @@ class _DetailHomeState extends State<DetailHome> {
       if (value.isNotEmpty) {
         if (value['code'] == 200) {
           SmartDialog.compatible.show(
-              widget: const HintDialog(
-                  title: '提示',
-                  subTitle: '您的举报已收到，我们将尽快核实并受理'),
+              widget:
+                  const HintDialog(title: '提示', subTitle: '您的举报已收到，我们将尽快核实并受理'),
               clickBgDismissTemp: false);
         } else {
-          SmartDialog.compatible.showToast('', widget: CustomToast(value['msg']));
+          SmartDialog.compatible
+              .showToast('', widget: CustomToast(value['msg']));
         }
       } else {
-        SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
+        SmartDialog.compatible
+            .showToast('', widget: const CustomToast('出现异常了'));
       }
-    },onError: (_){
+    }, onError: (_) {
       SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
     });
   }
 
   _deleteCallback(_Comment comment) {
-    // var index = _commentList.indexOf(comment);
-    // _listKey.currentState?.removeItem(
-    //     index,
-    //     (context, animation) => buildFadeWidget(
-    //         _CommentItem(comment: comment, deleteCallback: _deleteCallback),
-    //         animation),
-    //     duration: const Duration(milliseconds: 500));
     setState(() {
       widget.forum.commentNum--;
       _commentList.remove(comment);
@@ -577,9 +592,7 @@ class _CommentItem extends StatefulWidget {
 class _CommentItemState extends State<_CommentItem> {
   final _contentController = TextEditingController();
   bool _isExpanded = false;
-
-  // final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  // List<_Reply> _replyList = [];
+  final List<_Reply> _emptyList = [];
 
   @override
   void initState() {
@@ -594,22 +607,26 @@ class _CommentItemState extends State<_CommentItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Ink(
+    return Card(
       color: Colors.white,
-      child: InkWell(
-        onLongPress: () {
-          SmartDialog.compatible
-              .show(widget: _controlDialog(), isLoadingTemp: false);
-        },
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(15, 8, 15, 3),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  ClipOval(
-                    child: CachedNetworkImage(
+      elevation: 0,
+      margin: EdgeInsets.zero,
+      child: Ink(
+        // color: Colors.white,
+        child: InkWell(
+          onLongPress: () {
+            SmartDialog.compatible
+                .show(widget: _controlDialog(), isLoadingTemp: false);
+          },
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(15, 8, 15, 3),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    ClipOval(
+                      child: CachedNetworkImage(
                         width: 40,
                         height: 40,
                         fit: BoxFit.cover,
@@ -618,115 +635,106 @@ class _CommentItemState extends State<_CommentItem> {
                             (context, url, downloadProgress) =>
                                 CircularProgressIndicator(
                                     value: downloadProgress.progress),
-                        errorWidget: (context, url, error) => CachedNetworkImage(
-                            width: 40,
-                            height: 40,
-                            fit: BoxFit.cover,
-                            imageUrl: widget.comment.avatar,
-                            progressIndicatorBuilder:
-                                (context, url, downloadProgress) =>
-                                CircularProgressIndicator(
-                                    value: downloadProgress.progress),
-                            errorWidget: (context, url, error) => Container(
+                        errorWidget: (context, url, error) =>
+                            CachedNetworkImage(
                                 width: 40,
                                 height: 40,
-                                color: Theme.of(context).primaryColor)),),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    widget.comment.username,
-                    style: TextStyle(
-                        fontSize: 14, color: Theme.of(context).primaryColor),
-                  ),
-                ],
-              ),
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(50, 0, 8, 0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Text(
-                        widget.comment.content,
-                        style:
-                            const TextStyle(fontSize: 15, color: Colors.black),
-                      )),
-                    ],
-                  )),
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  Text(
-                    getForumDateString(widget.comment.createTime),
-                    style: const TextStyle(color: Colors.grey, fontSize: 12),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      _showCommentBottomSheet(
-                          context, _contentController, _postReply,
-                          hint: '回复给 ${widget.comment.username}:');
-                    },
-                    child: Text(
-                      '回复',
+                                fit: BoxFit.cover,
+                                imageUrl: widget.comment.avatar,
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) =>
+                                        CircularProgressIndicator(
+                                            value: downloadProgress.progress),
+                                errorWidget: (context, url, error) => Container(
+                                    width: 40,
+                                    height: 40,
+                                    color: Theme.of(context).primaryColor)),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      widget.comment.username,
                       style: TextStyle(
-                          fontSize: 12, color: Theme.of(context).primaryColor),
+                          fontSize: 14, color: Theme.of(context).primaryColor),
                     ),
-                  ),
-                ],
-              ),
-              if (_isExpanded)
+                  ],
+                ),
                 Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: ImplicitlyAnimatedList<_Reply>(
-                      items: widget.comment.replyList,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      areItemsTheSame: (a, b) => a.id == b.id,
-                      itemBuilder: (context, animation, item, index) {
-                        return buildFadeWidget(_replyItem(item), animation);
-                      },
-                      removeItemBuilder: (context, animation, oldItem) {
-                        return buildFadeWidget(_replyItem(oldItem), animation);
-                      },
-                    )
-                    // AnimatedList(
-                    //     key: _listKey,
-                    //     shrinkWrap: true,
-                    //     physics: const NeverScrollableScrollPhysics(),
-                    //     initialItemCount: widget.comment.replyList.length,
-                    //     itemBuilder: (context, index, animation) {
-                    //       return buildFadeWidget(
-                    //           _replyItem(widget.comment.replyList[index]),
-                    //           animation);
-                    //     }),
-                    ),
-              if (widget.comment.replyList.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(left: 50),
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _isExpanded = !_isExpanded;
-                      });
-                    },
+                    padding: const EdgeInsets.fromLTRB(50, 0, 8, 0),
                     child: Row(
                       children: [
-                        Text(
-                          _isExpanded ? '收起回复' : '展开回复',
+                        Expanded(
+                            child: Text(
+                          widget.comment.content,
                           style: const TextStyle(
-                              fontSize: 12, color: Colors.black),
-                        ),
-                        _isExpanded
-                            ? const Icon(Icons.arrow_drop_up)
-                            : const Icon(Icons.arrow_drop_down)
+                              fontSize: 15, color: Colors.black),
+                        )),
                       ],
+                    )),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 50,
+                    ),
+                    Text(
+                      getForumDateString(widget.comment.createTime),
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        _showCommentBottomSheet(
+                            context, _contentController, _postReply,
+                            hint: '回复给 ${widget.comment.username}:');
+                      },
+                      child: Text(
+                        '回复',
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: Theme.of(context).primaryColor),
+                      ),
+                    ),
+                  ],
+                ),
+                ImplicitlyAnimatedList<_Reply>(
+                  items: _isExpanded ? widget.comment.replyList : _emptyList,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  areItemsTheSame: (a, b) => a.id == b.id,
+                  itemBuilder: (context, animation, item, index) {
+                    return buildFadeWidgetVertical(_replyItem(item), animation);
+                  },
+                  removeItemBuilder: (context, animation, oldItem) {
+                    return buildFadeWidgetVertical(
+                        _replyItem(oldItem), animation);
+                  },
+                ),
+                if (widget.comment.replyList.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, top: 2),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _isExpanded = !_isExpanded;
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            _isExpanded ? '收起回复' : '展开回复',
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.black),
+                          ),
+                          _isExpanded
+                              ? const Icon(Icons.arrow_drop_up)
+                              : const Icon(Icons.arrow_drop_down)
+                        ],
+                      ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -851,72 +859,73 @@ class _CommentItemState extends State<_CommentItem> {
                 SmartDialog.compatible.show(
                     widget: _controlDialog(reply: reply), isLoadingTemp: false);
               },
-              onTap: (){
-                _showCommentBottomSheet(
-                    context, _contentController, _postReply,
-                    hint:
-                    '回复给 ${reply.username}:',
-                    replyId: reply.userId);
+              onTap: () {
+                _showCommentBottomSheet(context, _contentController, _postReply,
+                    hint: '回复给 ${reply.username}:', replyId: reply.userId);
               },
               child: Row(
                 children: [
                   ClipOval(
                     child: CachedNetworkImage(
-                        width: 30,
-                        height: 30,
-                        fit: BoxFit.cover,
-                        imageUrl: '${reply.avatar}/webp',
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) =>
-                            CircularProgressIndicator(
-                                value: downloadProgress.progress),
-                        errorWidget: (context, url, error) => CachedNetworkImage(
-                            width: 30,
-                            height: 30,
-                            fit: BoxFit.cover,
-                            imageUrl: reply.avatar,
-                            progressIndicatorBuilder:
-                                (context, url, downloadProgress) =>
-                                CircularProgressIndicator(
-                                    value: downloadProgress.progress),
-                            errorWidget: (context, url, error) => Container(
-                                width: 30,
-                                height: 30,
-                                color: Theme.of(context).primaryColor)),),
+                      width: 30,
+                      height: 30,
+                      fit: BoxFit.cover,
+                      imageUrl: '${reply.avatar}/webp',
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) =>
+                              CircularProgressIndicator(
+                                  value: downloadProgress.progress),
+                      errorWidget: (context, url, error) => CachedNetworkImage(
+                          width: 30,
+                          height: 30,
+                          fit: BoxFit.cover,
+                          imageUrl: reply.avatar,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  CircularProgressIndicator(
+                                      value: downloadProgress.progress),
+                          errorWidget: (context, url, error) => Container(
+                              width: 30,
+                              height: 30,
+                              color: Theme.of(context).primaryColor)),
+                    ),
                   ),
                   const SizedBox(
                     width: 3,
                   ),
                   Expanded(
                       child: RichText(
-                        text: TextSpan(
-                            text: reply.replyName == null
-                                ? '${reply.username}：'
-                                : reply.username,
-                            style: TextStyle(
-                                fontSize: 14, color: Theme.of(context).primaryColor),
-                            children: [
-                              if (reply.replyName != null)
-                                const TextSpan(
-                                  text: ' 回复 ',
-                                  style: TextStyle(fontSize: 14, color: Colors.black),
-                                ),
-                              if (reply.replyName != null)
-                                TextSpan(
-                                  text: '${reply.replyName}：',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Theme.of(context).primaryColor),
-                                ),
-                              TextSpan(
-                                text: reply.content,
-                                style: const TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                              ),
-                            ]),
-                      ))
+                    text: TextSpan(
+                        text: reply.replyName == null
+                            ? '${reply.username}：'
+                            : reply.username,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).primaryColor),
+                        children: [
+                          if (reply.replyName != null)
+                            const TextSpan(
+                              text: ' 回复 ',
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.black),
+                            ),
+                          if (reply.replyName != null)
+                            TextSpan(
+                              text: '${reply.replyName}：',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                          TextSpan(
+                            text: reply.content,
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.black),
+                          ),
+                        ]),
+                  ))
                 ],
-              )),color: Colors.white,
+              )),
+          color: Colors.white,
         ));
   }
 
@@ -926,16 +935,12 @@ class _CommentItemState extends State<_CommentItem> {
         .then((value) {
       if (value.isNotEmpty) {
         if (value['code'] == 200) {
-          // print('reply$value');
-          // int index = widget.comment.replyList.length;
           setState(() {
             widget.comment.replyList.add(_Reply.fromJson(value['data']));
             if (_isExpanded == false) {
               _isExpanded = true;
             }
           });
-          // _listKey.currentState
-          //     ?.insertItem(index, duration: const Duration(milliseconds: 500));
           SmartDialog.dismiss();
           Navigator.pop(context);
           _contentController.clear();
@@ -977,18 +982,10 @@ class _CommentItemState extends State<_CommentItem> {
   _deleteReply(_Reply reply) {
     HttpManager().deleteReply(StuInfo.token, reply.id).then((value) {
       if (value.isNotEmpty) {
-        // print(value);
         if (value['code'] == 200) {
-          // var index = widget.comment.replyList.indexOf(reply);
           setState(() {
             widget.comment.replyList.remove(reply);
           });
-          // _listKey.currentState?.removeItem(
-          //     index,
-          //     (context, animation) =>
-          //         buildFadeWidget(_replyItem(reply), animation),
-          //     duration: const Duration(milliseconds: 500));
-          // if (widget.comment.replyList.isEmpty) {}
         } else {
           SmartDialog.compatible
               .showToast('', widget: CustomToast(value['msg']));
@@ -1114,6 +1111,11 @@ class _Comment {
     createTime = value['createTime'];
     List replyInfo = value['replyInfos'];
     replyList = replyInfo.map((e) => _Reply.fromJson(e)).toList();
+  }
+
+  @override
+  String toString() {
+    return "{replyList->$replyList}";
   }
 }
 

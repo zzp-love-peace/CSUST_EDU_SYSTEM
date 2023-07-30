@@ -124,7 +124,6 @@ class _AssListState extends State<_AssList> {
   }
 
   Widget _assItem(AssInfo assInfo) {
-    print(assInfo.icon);
     return Ink(
       color: Colors.white,
       child: InkWell(

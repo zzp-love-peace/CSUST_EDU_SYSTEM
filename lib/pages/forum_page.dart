@@ -5,6 +5,7 @@ import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/forum_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:like_button/like_button.dart';
@@ -42,6 +43,7 @@ class _ForumPageState extends State<ForumPage> {
         child: Scaffold(
             appBar: AppBar(
               foregroundColor: Colors.white,
+              // systemOverlayStyle: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
               elevation: 0,
               centerTitle: true,
               title: const Text(
@@ -179,10 +181,10 @@ class _ForumListState extends State<_ForumList>
                 physics: const NeverScrollableScrollPhysics(),
                 areItemsTheSame: (a, b) => a.id == b.id,
                 itemBuilder: (context, animation, item, index) {
-                  return buildFadeWidget(_getForumItem(item), animation);
+                  return buildFadeWidgetVertical(_getForumItem(item), animation);
                 },
                 removeItemBuilder: (context, animation, oldItem) {
-                  return buildFadeWidget(_getForumItem(oldItem), animation);
+                  return buildFadeWidgetVertical(_getForumItem(oldItem), animation);
                 },
               )
             // AnimatedList(

@@ -94,7 +94,6 @@ class SelectDialog extends StatelessWidget {
               ],
             )),
       ],)
-
     );
   }
 }

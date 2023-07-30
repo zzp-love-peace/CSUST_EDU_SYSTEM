@@ -15,6 +15,7 @@ import 'package:csust_edu_system/route/fade_route.dart';
 import 'package:csust_edu_system/widgets/none_lottie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -56,6 +57,8 @@ class _SchoolPageState extends State<SchoolPage> {
         appBar: AppBar(
           elevation: 0,
           centerTitle: true,
+          foregroundColor: Colors.white,
+          // systemOverlayStyle: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
           title: const Text(
             "校园",
             style: TextStyle(
@@ -122,14 +125,18 @@ class _SchoolPageState extends State<SchoolPage> {
                 autoplayDelay: 5000,
                 itemBuilder: (BuildContext context, int index) {
                   return _bannerList.isEmpty
-                      ? Image.asset(
-                          _imgList[index],
-                          fit: BoxFit.fill,
-                        )
-                      : Image.network(
-                          _bannerList[index]['url'],
-                          fit: BoxFit.fill,
-                        );
+                      ? Hero(
+                          tag: _imgList[index],
+                          child: Image.asset(
+                            _imgList[index],
+                            fit: BoxFit.fill,
+                          ))
+                      : Hero(
+                          tag: _bannerList[index],
+                          child: Image.network(
+                            _bannerList[index]['url'],
+                            fit: BoxFit.fill,
+                          ));
                 },
                 itemCount:
                     _bannerList.isEmpty ? _imgList.length : _bannerList.length,
@@ -146,6 +153,7 @@ class _SchoolPageState extends State<SchoolPage> {
                               onTapUp: (context, details, controllerValue) {
                                 Navigator.pop(context);
                               },
+                              heroAttributes: PhotoViewHeroAttributes(tag: _imgList[index]),
                               imageProvider: AssetImage(_imgList[index]),
                               // initialScale: PhotoViewComputedScale.contained *
                               //     0.95,
@@ -154,6 +162,7 @@ class _SchoolPageState extends State<SchoolPage> {
                               onTapUp: (context, details, controllerValue) {
                                 Navigator.pop(context);
                               },
+                              heroAttributes: PhotoViewHeroAttributes(tag: _bannerList[index]),
                               imageProvider: CachedNetworkImageProvider(
                                   _bannerList[index]['detailUrl']),
                               // initialScale: PhotoViewComputedScale.contained *

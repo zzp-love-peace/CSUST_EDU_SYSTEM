@@ -185,7 +185,6 @@ class _GradeHomeState extends State<GradeHome> {
   }
 
   _queryScore(String term) async {
-    if (StuInfo.token.isEmpty && StuInfo.cookie.isEmpty) return;
     // var html = await EduSystemManager().getScoreHtml(StuInfo.cookie, term);
     // log("html${html.toString()}");
     // var value = await HttpManager().getScoreByHtml(StuInfo.token, html.toString());

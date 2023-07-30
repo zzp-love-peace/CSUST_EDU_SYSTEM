@@ -93,10 +93,10 @@ class _MessageHomeState extends State<MessageHome> {
                 physics: const NeverScrollableScrollPhysics(),
                 areItemsTheSame: (a, b) => a.id == b.id,
                 itemBuilder: (context, animation, item, index) {
-                  return buildFadeWidget(_msgItem(item, false), animation);
+                  return buildFadeWidgetVertical(_msgItem(item, false), animation);
                 },
                 removeItemBuilder: (context, animation, oldItem) {
-                  return buildFadeWidget(_msgItem(oldItem, true), animation);
+                  return buildFadeWidgetVertical(_msgItem(oldItem, true), animation);
                 },
               ) : const NoneLottie(hint: '空空如也...')
               // AnimatedList(

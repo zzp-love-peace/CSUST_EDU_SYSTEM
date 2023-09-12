@@ -117,7 +117,7 @@ class _WriteForumHomeState extends State<WriteForumHome> {
                         cancelText: '取消',
                         selecteds: _pickerIndex,
                         adapter:
-                            PickerDataAdapter<String>(pickerdata: widget.tabs),
+                            PickerDataAdapter<String>(pickerData: widget.tabs),
                         changeToFirst: true,
                         hideHeader: false,
                         onConfirm: (Picker picker, List value) {

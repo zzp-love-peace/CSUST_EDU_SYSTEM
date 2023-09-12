@@ -9,6 +9,7 @@ import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/hint_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +29,6 @@ class _LoginHomeState extends State<LoginHome> {
   final _passwordController = TextEditingController();
   bool _isRemember = false;
   late final SharedPreferences prefs;
-
   @override
   void initState() {
     super.initState();
@@ -44,6 +44,7 @@ class _LoginHomeState extends State<LoginHome> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Center(
         child: ListView(
@@ -65,12 +66,55 @@ class _LoginHomeState extends State<LoginHome> {
                     children: _rememberCheckBox())),
             Padding(
                 padding: const EdgeInsets.fromLTRB(50, 15, 50, 0),
-                child: _loginButton())
+                child: _loginButton()),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(100, 15, 100,0),
+                child: TextButton(
+                  child: Text(
+                    '登录异常？登录须知',
+                    style: TextStyle(
+                        fontSize: 14, color: Theme.of(context).primaryColor),
+                  ),
+                  onPressed: () {
+                       _alertDialog();
+                  },
+                ),
+            )
+
           ],
         ),
       ),
     );
   }
+  _alertDialog() async {
+    var result = await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("信息提示",style: TextStyle(
+                fontSize: 16, color: Colors.black),),
+            content: const Text("新生数据已经全部导入教务系统，网址: http"
+                "://xk.csust.edu.cn ，也可通过教务处官网通过链接进入教务系统，其初始密码为其8位出生日期。"
+                "一定要在官网修改完密码后再登录app哦。忘记密码的联系本班学委或辅导员，"
+                "密码要求是大小写字母+数字+特殊字符",style: TextStyle(fontSize: 15)),
+           shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15))
+          ),
+
+            actions: [
+              TextButton(
+                  child: Text("确定"),
+                  onPressed: () {
+                    print("确定");
+                    Navigator.pop(context, "Ok");
+                  })
+            ],
+          );
+        });
+
+    print(result);
+  }
+
 
   Text _loginText() {
     return const Text(
@@ -130,15 +174,18 @@ class _LoginHomeState extends State<LoginHome> {
       );
       var value = await HttpManager().login(username, password);
       if (value.isNotEmpty) {
-        print(value);
+
         if (value['code'] == 200) {
+          print(value);
           _saveData();
           StuInfo.token = value['data']['token'];
           StuInfo.cookie = value['data']['cookie'];
           var dateData =
               await HttpManager().getDateData(StuInfo.cookie, StuInfo.token);
           if (dateData.isNotEmpty) {
+            print('dateData$dateData');
             if (dateData['code'] == 200) {
+              print(dateData);
               DateInfo.initData(dateData['data']);
               var stuData =
                   await HttpManager().getStuInfo(StuInfo.cookie, StuInfo.token);
@@ -157,13 +204,35 @@ class _LoginHomeState extends State<LoginHome> {
                     .showToast('', widget: const CustomToast('登录异常'));
               }
             } else {
-              SmartDialog.compatible
-                  .showToast('', widget: const CustomToast('登录异常'));
+              DateInfo.totalWeek=20;
+              var stuData =
+              await HttpManager().getStuInfo(StuInfo.cookie, StuInfo.token);
+              if (stuData.isNotEmpty) {
+                if (stuData['code'] == 200) {
+                  StuInfo.initData(stuData['data']);
+                  _saveLoginData();
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => const BottomTabHome()));
+                } else {
+                  SmartDialog.compatible
+                      .showToast('', widget: const CustomToast('登录异常'));
+                }
+              } else {
+                SmartDialog.compatible
+                    .showToast('', widget: const CustomToast('登录异常'));
+              }
+
             }
+            String a=DateInfo.nowDate;
+            print('DateInfo.nowDate$a');
           } else {
+            DateInfo.totalWeek=20;
             SmartDialog.compatible
                 .showToast('', widget: const CustomToast('登录异常'));
+
           }
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const BottomTabHome()));
           // var allCourseData = await HttpManager().getAllCourse(StuInfo.token,
           //     StuInfo.cookie, DateInfo.nowTerm, DateInfo.totalWeek);
           // _saveLoginData(allCourseData);
@@ -250,8 +319,7 @@ class _LoginHomeState extends State<LoginHome> {
 
 class UsernameTextField extends StatefulWidget {
   final TextEditingController _controller;
-
-  const UsernameTextField(this._controller, {Key? key}) : super(key: key);
+  const UsernameTextField(this._controller,{Key? key}) : super(key: key);
 
   @override
   State<UsernameTextField> createState() => _UsernameTextFieldState();
@@ -270,6 +338,7 @@ class _UsernameTextFieldState extends State<UsernameTextField> {
             borderRadius: BorderRadius.all(Radius.circular(10))),
         labelText: "学号",
         errorText: null,
+        prefixIcon: Icon(Icons.account_box,)
       ),
     );
   }
@@ -303,6 +372,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
           labelText: "密码",
+          prefixIcon: const Icon(Icons.lock),
           suffixIcon: IconButton(
               onPressed: () {
                 setState(() {

@@ -35,11 +35,12 @@ class SchoolPage extends StatefulWidget {
 class _SchoolPageState extends State<SchoolPage> {
   List<Widget> _noticeList = [];
   final List<String> _imgList = [
+   'assets/images/school7.jpg',
     'assets/images/school1.jpg',
     'assets/images/school2.jpg',
     'assets/images/school3.jpg',
     'assets/images/school4.jpg',
-    'assets/images/school5.jpeg',
+    'assets/images/school6.jpg',
   ];
 
   List _bannerList = [];
@@ -360,7 +361,7 @@ class _SchoolPageState extends State<SchoolPage> {
   _getBannerImg() {
     HttpManager().getBannerImg(StuInfo.token).then((value) {
       if (value.isNotEmpty) {
-        print(value);
+       // print(value);
         if (value['code'] == 200) {
           setState(() {
             _bannerList = value['data'];

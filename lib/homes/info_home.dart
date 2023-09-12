@@ -132,7 +132,7 @@ class _InfoHomeState extends State<InfoHome> {
                     confirmText: '确定',
                     cancelText: '取消',
                     selecteds: _pickerIndex,
-                    adapter: PickerDataAdapter<String>(pickerdata: ['男', '女']),
+                    adapter: PickerDataAdapter<String>(pickerData: ['男', '女']),
                     changeToFirst: true,
                     hideHeader: false,
                     onConfirm: (Picker picker, List value) {

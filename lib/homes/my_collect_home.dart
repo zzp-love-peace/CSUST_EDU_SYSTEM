@@ -121,6 +121,7 @@ class _MyCollectHomeState extends State<MyCollectHome> {
     HttpManager().getMyCollects(StuInfo.token).then((value) {
       if (value.isNotEmpty) {
         if (value['code'] == 200) {
+          print(value);
           setState(() {
             List data = value['data'];
             _forumList = data.map((e) => Forum.fromJson(e)).toList();

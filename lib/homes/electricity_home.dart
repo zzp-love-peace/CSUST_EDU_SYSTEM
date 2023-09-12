@@ -183,7 +183,7 @@ class _ElectricityHomeState extends State<ElectricityHome> {
         ),
         confirmText: '确定',
         cancelText: '取消',
-        adapter: PickerDataAdapter<String>(pickerdata: pickerData),
+        adapter: PickerDataAdapter<String>(pickerData: pickerData),
         changeToFirst: true,
         hideHeader: false,
         onConfirm: (Picker picker, List value) {

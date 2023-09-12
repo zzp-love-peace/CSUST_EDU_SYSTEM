@@ -8,7 +8,7 @@ import '../network/http_manager.dart';
 import '../widgets/custom_toast.dart';
 import '../widgets/select_dialog.dart';
 
-const String version = 'v1.8.6';
+const String version = 'v1.8.7';
 const String appName = '新长理教务';
 
 MaterialColor createMaterialColor(Color color) {
@@ -85,8 +85,10 @@ checkVersion({bool isBegin = false}) {
   HttpManager().getLastVersion(StuInfo.token, form).then((value) {
     if (value.isNotEmpty) {
       print('version $value');
+     // value={"code": 200, "msg": "请求成功", "data": {"id": 34, "apkPath": "https://os3.eigeen.com/course-card/update/新长理教务v1.8.6.apk"," url": "https://os3.eigeen.com/course-card/update/新长理教务v1.8.7.apk", "info": "可以刷新整个学期课表了。圈子优化动画体验。", form: "apk", "flag": 2, "updateTime": "2023-08-12T16:51:48.000+00:00"}};
       if (value['code'] == 200) {
         String appPath = value['data']['apkPath'];
+       // String appPath=" https://os3.eigeen.com/course-card/update/新长理教务v1.8.7.apk";
         var string = appPath.split(appName);
         var lastVersion = string[1].substring(0, string[1].length - 4);
         if (version.compareTo(lastVersion) >= 0) {

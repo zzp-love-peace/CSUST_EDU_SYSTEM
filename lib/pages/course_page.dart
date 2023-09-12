@@ -63,6 +63,10 @@ class _CoursePageState extends State<CoursePage> {
 
   @override
   Widget build(BuildContext context) {
+    // if(DateInfo.totalWeek==0){
+    //   DateInfo.totalWeek=20;
+    // }
+
     return Scaffold(
         appBar: _coursePageAppBar(),
         body: PageView.builder(
@@ -71,6 +75,7 @@ class _CoursePageState extends State<CoursePage> {
             // itemCount: 20,
             itemBuilder: (context, index) {
               List<int> date = _getSunday(DateInfo.nowDate);
+
               List<int> d;
               int i = index + 1;
               if (i < DateInfo.nowWeek) {
@@ -94,6 +99,7 @@ class _CoursePageState extends State<CoursePage> {
             onPageChanged: (index) {
               _pickerIndex = [index];
               setState(() {
+                print("setState");
                 _weekNum = index + 1;
               });
             })
@@ -259,7 +265,7 @@ class _CoursePageState extends State<CoursePage> {
                     confirmText: '确定',
                     cancelText: '取消',
                     selecteds: _pickerIndex,
-                    adapter: PickerDataAdapter<String>(pickerdata: _weekList),
+                    adapter: PickerDataAdapter<String>(pickerData: _weekList),
                     changeToFirst: true,
                     hideHeader: false,
                     onConfirm: (Picker picker, List value) {
@@ -617,6 +623,8 @@ class _CourseLayoutState extends State<_CourseLayout> {
       if (dbValue == null) {
         var queryValue = await HttpManager().queryCourse(
             StuInfo.token, StuInfo.cookie, widget.term, weekNum.toString());
+
+        print(queryValue);
         if (queryValue.isNotEmpty) {
           if (queryValue['code'] == 200) {
             if (mounted) {
@@ -644,6 +652,7 @@ class _CourseLayoutState extends State<_CourseLayout> {
         }
       }
     } catch (e) {
+      print('eeeeeeeee$e');
       SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
     }
   }
@@ -653,6 +662,7 @@ class _CourseLayoutState extends State<_CourseLayout> {
     var itemWidth = (MediaQuery.of(context).size.width - 31) / 8;
     var itemHeight = 120.0;
     var childAspectRatio = itemWidth / itemHeight;
+
     return Column(
       children: [
         Container(

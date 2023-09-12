@@ -156,6 +156,9 @@ class _ForumItemState extends State<ForumItem> {
   }
 
   _navigatorToDetailHome() {
+    if(widget.forum.isAdvertise==true){
+      _clickAdvertise();
+    }
     Navigator.of(context).push(FadeRoute(page: DetailHome(
       forum: widget.forum,
       deleteCallback: widget.deleteCallback,
@@ -190,6 +193,7 @@ class _ForumItemState extends State<ForumItem> {
   }
 
   Widget _controlRow() {
+    if(widget.forum.isAdvertise==false) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -249,7 +253,8 @@ class _ForumItemState extends State<ForumItem> {
               ),
             )),
       ],
-    );
+    );}
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: const [SizedBox(height: 20,)],);
   }
 
   Widget _imgView(String url, List images) {
@@ -330,6 +335,22 @@ class _ForumItemState extends State<ForumItem> {
       SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
     }
     return !isLiked;
+  }
+  _clickAdvertise(){
+    HttpManager().clickAdvertise(StuInfo.token, widget.forum.id).then((value){
+      if (value.isNotEmpty) {
+        if (value['code'] == 200) {
+        } else {
+          SmartDialog.compatible
+              .showToast('', widget: CustomToast(value['msg']));
+        }
+      } else {
+        SmartDialog.compatible
+            .showToast('', widget: const CustomToast('出现异常了'));
+      }
+    }, onError: (_) {
+      SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
+    });
   }
 }
 
@@ -466,8 +487,10 @@ class Forum {
   late bool isEnshrine;
 
   late int commentNum;
+
   late String createTime;
   late List images;
+  late var isAdvertise;
 
   Forum.fromJson(Map value) {
     id = value['id'];
@@ -481,6 +504,8 @@ class Forum {
     isLike = value['isLike'];
     isEnshrine = value['isEnshrine'];
     images = value['images'];
+    isAdvertise=value['advertise'];
+
   }
 
   @override

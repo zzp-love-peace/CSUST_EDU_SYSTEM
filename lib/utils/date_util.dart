@@ -1,6 +1,9 @@
 class DateUtil {
   /// 将xxxx-xx-xx的日期格式分割成int
   static List<int> splitDate(String date) {
+    if(date.isEmpty){
+      date=(DateTime.now().toString()).split(' ')[0];
+    }
     List<String> dates = date.split('-');
     int year = int.parse(dates[0]);
     int month = int.parse(dates[1]);

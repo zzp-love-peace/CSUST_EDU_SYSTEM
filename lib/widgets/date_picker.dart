@@ -31,10 +31,15 @@ class _MyDatePickerState extends State<MyDatePicker> with AutomaticKeepAliveClie
     super.initState();
     HttpManager().getAllSemester(StuInfo.cookie, StuInfo.token).then((value) {
       if (value.isNotEmpty) {
-        print(value);
+        print('value$value');
         if (value['code'] == 200) {
+          print(value);
           setState(() {
             _allTerm = value['data'];
+            if(DateInfo.nowTerm.isEmpty){
+              DateInfo.nowTerm=_allTerm[_allTerm.length-2];
+              _nowTerm= DateInfo.nowTerm;
+            }
             _index = [_allTerm.indexOf(DateInfo.nowTerm)];
           });
         } else {
@@ -66,7 +71,7 @@ class _MyDatePickerState extends State<MyDatePicker> with AutomaticKeepAliveClie
             confirmText: '确定',
             cancelText: '取消',
             selecteds: _index,
-            adapter: PickerDataAdapter<String>(pickerdata: _allTerm),
+            adapter: PickerDataAdapter<String>(pickerData: _allTerm),
             changeToFirst: true,
             hideHeader: false,
             onConfirm: (Picker picker, List value) {

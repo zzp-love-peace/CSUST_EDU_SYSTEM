@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/about_home.dart';
@@ -32,6 +33,7 @@ class MinePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: _minePageAppBar(context),
       body: ListView(
@@ -139,9 +141,17 @@ class MinePage extends StatelessWidget {
                     ),
                     onTap: () {
                       Clipboard.setData(const ClipboardData(
-                          text: '955731766'));
+                          text: '493018572'));
                       SmartDialog.compatible
                           .showToast('', widget: const CustomToast('复制qq群号成功'));
+                      SmartDialog.compatible.show(widget: const AlertDialog(
+                      title: Text("信息提示",style: TextStyle(
+                      fontSize: 16, color: Colors.black),),
+                      content: Text("教务app交流1群：955731766"+'\n'+ "教务app交流2群：493018572",style: TextStyle(fontSize: 15),),
+                      shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15))
+                      ),),);
+
                     },
                   ),
                 ),
@@ -173,6 +183,8 @@ class MinePage extends StatelessWidget {
     );
   }
 
+
+
   AppBar _minePageAppBar(context) {
     return AppBar(
       elevation: 0,
@@ -199,6 +211,7 @@ class MinePage extends StatelessWidget {
         )
       ],
       centerTitle: true,
+
       title: const Text(
         "我的",
         style: TextStyle(
@@ -291,6 +304,7 @@ class _MineHeaderState extends State<_MineHeader> {
                    Container(
                     width: 64,
                     height: 64,
+                    //alignment: Alignment.topCenter,
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white, width: 3),
                         borderRadius: BorderRadius.circular(40),
@@ -339,3 +353,4 @@ class _MineHeaderState extends State<_MineHeader> {
     );
   }
 }
+

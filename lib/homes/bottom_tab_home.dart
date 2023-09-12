@@ -18,7 +18,6 @@ import '../provider/theme_color_provider.dart';
 
 class BottomTabHome extends StatefulWidget {
   const BottomTabHome({Key? key}) : super(key: key);
-
   @override
   State<BottomTabHome> createState() => _BottomTabHomeState();
 }

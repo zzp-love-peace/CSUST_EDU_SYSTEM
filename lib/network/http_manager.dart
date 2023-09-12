@@ -186,9 +186,11 @@ class HttpManager {
   Future<Map> getAllTab(String token) async =>
       await _get('/theme/all', header: token);
 
+//获取帖子
+  //post/index
   Future<Map> getFormListByTabId(String token, int tabId, int page,
       int rows) async =>
-      await _post('/post/index',
+      await _post('/getForumAdvertise',
           params: {'themeId': tabId, 'page': page, 'rows': rows},
           headers: {"token": token});
 
@@ -202,6 +204,14 @@ class HttpManager {
             'images': images
           }),
           headers: {"token": token});
+  //点击广告
+  Future<Map> clickAdvertise(String token , int id)  async=>
+      await _post('/clickAdvertise',params: FormData.fromMap({'id':id}),
+          headers: {"token":token});
+  //点赞广告
+  Future<Map> likeAdvertise(String token , int id)  async=>
+      await _post('/likeAdvertise',params: FormData.fromMap({'id':id}),
+          headers: {"token":token});
 
   Future<Map> likeForum(String token, int id) async =>
       await _get('/post/like', params: {'id': id}, header: token);

@@ -129,6 +129,7 @@ class _GuideHomeState extends State<GuideHome> {
           var dateData =
               await HttpManager().getDateData(StuInfo.cookie, StuInfo.token);
           if (dateData.isNotEmpty) {
+            print('guid_dateData$dateData');
             if (dateData['code'] == 200) {
               DateInfo.initData(dateData['data']);
               Provider.of<CourseTermProvider>(context, listen: false)
@@ -151,13 +152,52 @@ class _GuideHomeState extends State<GuideHome> {
                 _loginWithException(false, true);
               }
             } else {
-              SmartDialog.compatible
-                  .showToast('', widget: CustomToast(dateData['msg']));
+              DateInfo.totalWeek=20;
+              print(DateInfo.totalWeek);
+              // SmartDialog.compatible
+              //     .showToast('', widget: CustomToast(dateData['msg']));
+              var stuData =
+              await HttpManager().getStuInfo(StuInfo.cookie, StuInfo.token);
+              if (stuData.isNotEmpty) {
+
+                if (stuData['code'] == 200) {
+                  print('studData$stuData');
+                  StuInfo.initData(stuData['data']);
+                 // print(StuInfo.major);
+                } else {
+                  SmartDialog.compatible
+                      .showToast('', widget: CustomToast(stuData['msg']));
+                  _loginWithException(false, true);
+                }
+              } else {
+                SmartDialog.compatible
+                    .showToast('', widget: const CustomToast('登录异常'));
+                _loginWithException(false, true);
+              }
               _loginWithException(true, true);
+
             }
           } else {
+           // DateInfo.totalWeek=20;
             SmartDialog.compatible
                 .showToast('', widget: const CustomToast('登录异常'));
+            var stuData =
+            await HttpManager().getStuInfo(StuInfo.cookie, StuInfo.token);
+            print(stuData);
+            if (stuData.isNotEmpty) {
+              if (stuData['code'] == 200) {
+                print('studData$stuData');
+                StuInfo.initData(stuData['data']);
+              } else {
+                SmartDialog.compatible
+                    .showToast('', widget: CustomToast(stuData['msg']));
+                _loginWithException(false, true);
+              }
+            } else {
+              SmartDialog.compatible
+                  .showToast('', widget: const CustomToast('登录异常'));
+              _loginWithException(false, true);
+            }
             _loginWithException(true, true);
           }
           // _loginWithException(false, false);
@@ -210,6 +250,7 @@ class _GuideHomeState extends State<GuideHome> {
   }
 
   _saveData() {
+
     prefs.setString('name', StuInfo.name);
     prefs.setString('stuId', StuInfo.stuId);
     prefs.setString('college', StuInfo.college);
@@ -228,7 +269,9 @@ class _GuideHomeState extends State<GuideHome> {
   _initData(bool isDate, bool isStu) {
     if (isDate) {
       DateInfo.nowTerm = prefs.getString('nowTerm') ?? '';
+
       DateInfo.totalWeek = prefs.getInt('totalWeek') ?? 0;
+       print(StuInfo.college);
       int lastWeek = prefs.getInt('nowWeek') ?? -1;
       String lastDate = prefs.getString('nowDate') ?? '';
       DateInfo.nowDate = (DateTime.now().toString()).split(' ')[0];
@@ -245,6 +288,7 @@ class _GuideHomeState extends State<GuideHome> {
       }
       Provider.of<CourseTermProvider>(context, listen: false)
           .setNowTerm(DateInfo.nowTerm);
+
     }
     if (isStu) {
       StuInfo.name = prefs.getString('name') ?? '';
@@ -270,7 +314,10 @@ class _GuideHomeState extends State<GuideHome> {
   }
 
   _loginWithException(bool isDate, bool isStu) async {
+    print(StuInfo.major);
     _initData(isDate, isStu);
+
+  //  print(StuInfo);
     // List data = [];
     // try {
     //    data = json.decode(list);

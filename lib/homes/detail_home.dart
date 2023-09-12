@@ -47,6 +47,8 @@ class _DetailHomeState extends State<DetailHome> {
     _getFormInfo(widget.forum.id);
     _isLike = widget.forum.isLike;
     _isCollect = widget.forum.isEnshrine;
+    print(widget.forum.likeNum);
+
   }
 
   @override
@@ -306,8 +308,10 @@ class _DetailHomeState extends State<DetailHome> {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                _showCommentBottomSheet(
-                    context, _contentController, _postComment);
+                if(widget.forum.isAdvertise==false){
+                  _showCommentBottomSheet(
+                      context, _contentController, _postComment);
+                }
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -420,6 +424,24 @@ class _DetailHomeState extends State<DetailHome> {
       ),
     );
   }
+  _likeAdvertise(){
+    HttpManager().likeAdvertise(StuInfo.token, widget.forum.id).then((value){
+      if (value.isNotEmpty) {
+        if (value['code'] == 200) {
+          print("likeAdvertise");
+        } else {
+          SmartDialog.compatible
+              .showToast('', widget: CustomToast(value['msg']));
+        }
+      } else {
+        SmartDialog.compatible
+            .showToast('', widget: const CustomToast('出现异常了'));
+      }
+    }, onError: (_) {
+      SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
+    });
+    // widget.forum.likeNum++;
+  }
 
   _getFormInfo(int id) {
     HttpManager().getForumInfo(StuInfo.token, id).then((value) {
@@ -437,8 +459,16 @@ class _DetailHomeState extends State<DetailHome> {
             _commentList = comments.map((e) => _Comment.fromJson(e)).toList();
           });
         } else {
-          SmartDialog.compatible
-              .showToast('', widget: CustomToast(value['msg']));
+          if(widget.forum.isAdvertise==false){
+            SmartDialog.compatible
+                .showToast('', widget: CustomToast(value['msg']));
+          }else{
+            SmartDialog.compatible
+                .showToast('', widget: const CustomToast("( =•ω•= )m"));
+          }
+
+
+
         }
       } else {
         SmartDialog.compatible
@@ -474,20 +504,25 @@ class _DetailHomeState extends State<DetailHome> {
   }
 
   Future<bool> onPraiseButtonTapped(bool isLiked) async {
-    try {
-      var value = await HttpManager().likeForum(StuInfo.token, widget.forum.id);
-      if (value.isNotEmpty) {
-        if (value['code'] == 200) {
+    if(widget.forum.isAdvertise==false){
+      try {
+        var value = await HttpManager().likeForum(StuInfo.token, widget.forum.id);
+        if (value.isNotEmpty) {
+          if (value['code'] == 200) {
+          } else {
+            SmartDialog.compatible
+                .showToast('', widget: CustomToast(value['msg']));
+          }
         } else {
           SmartDialog.compatible
-              .showToast('', widget: CustomToast(value['msg']));
+              .showToast('', widget: const CustomToast('出现异常了'));
         }
-      } else {
-        SmartDialog.compatible
-            .showToast('', widget: const CustomToast('出现异常了'));
-      }
-    } on Exception {
-      SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
+      } on Exception {
+        SmartDialog.compatible.showToast('', widget: const CustomToast('出现异常了'));
+      }}
+    else{
+      _likeAdvertise();
+
     }
     _isLike = !isLiked;
     return !isLiked;
@@ -498,6 +533,7 @@ class _DetailHomeState extends State<DetailHome> {
       var value =
           await HttpManager().collectForum(StuInfo.token, widget.forum.id);
       if (value.isNotEmpty) {
+         print(value);
         if (value['code'] == 200) {
         } else {
           SmartDialog.compatible

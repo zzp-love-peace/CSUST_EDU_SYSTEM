@@ -15,10 +15,10 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.8.7+1
+version: 1.8.8+1
 
 environment:
-  sdk: ">=2.15.1 <3.0.6"
+  sdk: ">=2.17.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -34,50 +34,52 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   # http网络库
-  dio: ^4.0.6
+  dio: ^5.3.2
   # toast 和 dialog
-  flutter_smart_dialog: ^4.5.4+2
+  flutter_smart_dialog: ^4.9.4
   # 键值对存储
-  shared_preferences: ^2.0.13
+  shared_preferences: ^2.2.1
   # 底部选择器
-  flutter_picker: ^2.0.3
+  flutter_picker: ^2.1.0
   # 全局状态管理器
   provider: ^6.0.3
   # 点赞动画按钮
-  like_button: ^2.0.4
+  like_button: ^2.0.5
   # 上拉刷新 下滑加载
   flutter_easyrefresh: ^2.2.2
   # 轮播图
   flutter_swiper_view: ^1.1.8
   # 液体效果容器
-  liquid_progress_indicator: ^0.4.0
+  liquid_progress_indicator_v2: ^0.5.0
   # 带动画的text
   animated_text_kit: ^4.2.2
   # 加载html的组件
-  flutter_widget_from_html_core: ^0.8.5+3
+  flutter_widget_from_html_core: ^0.10.5
   # 图片选择器
-  image_picker: ^0.8.5+3
+  image_picker: ^1.0.4
   # lottie动画
-  lottie: ^1.4.1
+  lottie: ^2.6.0
   # 图片预览
   photo_view: ^0.14.0
   # 网络图片缓存加载
-  cached_network_image: ^3.2.1
+  cached_network_image: ^3.2.3
   # 数据源改变自带动画的列表
-  animated_list_plus: ^0.4.3
+  animated_list_plus: ^0.5.2
   # url跳转
-  url_launcher: ^6.1.6
+  url_launcher: ^6.1.14
   # 带动画的searchBar
-  animated_search_bar: ^2.3.0
+  animated_search_bar: ^2.6.0
   # 数据库
-  sqflite: ^2.0.3+1
+  sqflite: ^2.3.0
   # 图片下载
-  image_gallery_saver: ^1.7.1
+  image_gallery_saver: ^2.0.3
+  # log库
+  logger: ^2.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.9.2"
+  flutter_launcher_icons: ^0.13.1
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

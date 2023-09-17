@@ -17,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bottom_tab_home.dart';
 
+@Deprecated('废弃')
 class LoginHome extends StatefulWidget {
   const LoginHome({Key? key}) : super(key: key);
 

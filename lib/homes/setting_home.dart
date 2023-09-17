@@ -1,13 +1,12 @@
 import 'package:csust_edu_system/homes/about_home.dart';
 import 'package:csust_edu_system/homes/advice_home.dart';
 import 'package:csust_edu_system/homes/theme_home.dart';
+import 'package:csust_edu_system/ui/login/view/login_page.dart';
 import 'package:csust_edu_system/widgets/hint_dialog.dart';
 import 'package:csust_edu_system/widgets/select_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-
-import 'login_home.dart';
 
 class SettingHome extends StatelessWidget {
   const SettingHome({Key? key}) : super(key: key);
@@ -151,7 +150,7 @@ class SettingHome extends StatelessWidget {
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => const LoginHome()),
+                                      builder: (_) => const LoginPage()),
                                   (Route router) => false);
                             },
                           ),

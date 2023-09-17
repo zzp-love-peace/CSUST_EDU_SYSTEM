@@ -2,27 +2,23 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
-import 'package:csust_edu_system/homes/about_home.dart';
-import 'package:csust_edu_system/homes/electricity_home.dart';
 import 'package:csust_edu_system/homes/info_home.dart';
-import 'package:csust_edu_system/homes/login_home.dart';
 import 'package:csust_edu_system/homes/message_home.dart';
 import 'package:csust_edu_system/homes/my_collect_home.dart';
 import 'package:csust_edu_system/homes/my_forum_home.dart';
 import 'package:csust_edu_system/homes/theme_home.dart';
 import 'package:csust_edu_system/homes/setting_home.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
+import 'package:csust_edu_system/ui/login/view/login_page.dart';
 import 'package:csust_edu_system/utils/grade_util.dart';
 import 'package:csust_edu_system/utils/my_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/hint_dialog.dart';
 import 'package:csust_edu_system/widgets/select_dialog.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/theme_color_provider.dart';
@@ -199,7 +195,7 @@ class MinePage extends StatelessWidget {
                   subTitle: '确定要退出登录吗？',
                   callback: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const LoginHome()));
+                        builder: (context) => const LoginPage()));
                   },
                 ),
                 clickBgDismissTemp: false);

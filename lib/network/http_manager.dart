@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 import 'package:csust_edu_system/utils/my_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -17,7 +16,7 @@ class HttpManager {
 
   ///通用全局单例，第一次使用时初始化
   HttpManager._internal() {
-    _dio ??= Dio(BaseOptions(baseUrl: _baseUrl, connectTimeout: 8000));
+    _dio ??= Dio(BaseOptions(baseUrl: _baseUrl, connectTimeout: const Duration(milliseconds: 8000)));
     // _dio ??= Dio(BaseOptions(baseUrl: _baseUrl, connectTimeout: 8000));
   }
 

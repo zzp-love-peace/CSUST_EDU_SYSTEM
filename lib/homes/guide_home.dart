@@ -7,7 +7,9 @@ import 'package:csust_edu_system/homes/login_home.dart';
 import 'package:csust_edu_system/network/edu_system_manager.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/provider/theme_color_provider.dart';
+import 'package:csust_edu_system/ui/login/view/login_page.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
+import 'package:csust_edu_system/utils/sp/sp_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -34,7 +36,7 @@ class _GuideHomeState extends State<GuideHome> {
   void initState() {
     super.initState();
     _preWork();
-
+    SpUtil.init();
   }
 
   @override
@@ -235,7 +237,7 @@ class _GuideHomeState extends State<GuideHome> {
                 );
               },
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  const LoginHome()));
+                  const LoginPage()));
         }
       } else {
         SmartDialog.compatible.showToast('', widget: const CustomToast('登录异常'));
@@ -244,7 +246,7 @@ class _GuideHomeState extends State<GuideHome> {
     } else {
       Future.delayed(const Duration(milliseconds: 1800), () {
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const LoginHome()));
+            MaterialPageRoute(builder: (context) => const LoginPage()));
       });
     }
   }

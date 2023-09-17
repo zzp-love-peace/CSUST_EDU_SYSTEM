@@ -7,12 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:like_button/like_button.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-
 import '../route/fade_route.dart';
-import '../utils/my_util.dart';
 import 'custom_toast.dart';
 
 class ForumItem extends StatefulWidget {

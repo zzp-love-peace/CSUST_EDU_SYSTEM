@@ -16,7 +16,7 @@ class EduSystemManager {
 
   ///通用全局单例，第一次使用时初始化
   EduSystemManager._internal() {
-    _dio ??= Dio(BaseOptions(baseUrl: _baseUrl, connectTimeout: 8000));
+    _dio ??= Dio(BaseOptions(baseUrl: _baseUrl, connectTimeout: const Duration(microseconds: 8000)));
   }
 
   static EduSystemManager getInstance() => _instance;

@@ -1,30 +1,27 @@
+import 'package:csust_edu_system/utils/extension_uitl.dart';
+
+import '../ass/key_assets.dart';
+import '../ass/string_assets.dart';
+import '../utils/sp/sp_util.dart';
+
 class StuInfo {
   static String token = "";
   static String cookie = "";
-
   static int id = -1;
-
   // 姓名
   static String name = "";
-
   // 学号
   static String stuId = "";
-
   // 学院
   static String college = "";
-
   // 专业
   static String major = "";
-
   // 班级
   static String className = "";
-
   // 昵称
   static String username = "";
-
   // 性别 false为女 true为男
   static bool sex = true;
-
   // 头像
   static String avatar = "";
 
@@ -40,5 +37,25 @@ class StuInfo {
     college = stuData['college'] ?? '';
     major = stuData['major'] ?? '';
     className = stuData['className'] ?? '';
+  }
+
+  /// 保存数据
+  static void saveData() {
+    SpUtil.put(KeyAssets.name, StuInfo.name);
+    SpUtil.put(KeyAssets.stuId, StuInfo.stuId);
+    SpUtil.put(KeyAssets.college, StuInfo.college);
+    SpUtil.put(KeyAssets.major, StuInfo.major);
+    SpUtil.put(KeyAssets.className, StuInfo.className);
+    SpUtil.put(KeyAssets.avatar, StuInfo.avatar);
+  }
+
+  /// 从SharedPreferences中初始化数据
+  static void initDataFromSp() {
+    StuInfo.name = SpUtil.get<String>(KeyAssets.name).orEmpty();
+    StuInfo.stuId = SpUtil.get<String>(KeyAssets.stuId).orEmpty();
+    StuInfo.college = SpUtil.get<String>(KeyAssets.college).orEmpty();
+    StuInfo.major = SpUtil.get<String>(KeyAssets.major).orEmpty();
+    StuInfo.className = SpUtil.get<String>(KeyAssets.className).orEmpty();
+    StuInfo.avatar = SpUtil.get<String>(KeyAssets.avatar).orEmpty();
   }
 }

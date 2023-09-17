@@ -32,7 +32,7 @@
             <data android:mimeType="*/*" />
         </intent>
     </queries>
-   <application
+    <application
         android:label="长理教务"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"

@@ -1,4 +1,4 @@
-/// 密码输入框Bean类
+/// 密码输入框Model类
 ///
 /// @author zzp
 /// @since 2023/9/12

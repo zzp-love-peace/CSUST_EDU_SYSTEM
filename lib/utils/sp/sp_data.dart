@@ -1,4 +1,3 @@
-import 'package:csust_edu_system/utils/log.dart';
 import 'package:csust_edu_system/utils/sp/sp_util.dart';
 
 /// SharedPreferences数据类

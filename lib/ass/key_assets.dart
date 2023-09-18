@@ -15,6 +15,10 @@ class KeyAssets {
   static const String password = 'password';
   /// key-是否记住密码
   static const String isRemember = 'isRemember';
+  /// key-版本
+  static const String version = 'version';
+  /// key-学号
+  static const String stuNum = 'stuNum';
   /// key-主题色
   static const String color = 'color';
   /// key-名字

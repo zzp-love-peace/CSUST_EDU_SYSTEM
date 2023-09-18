@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// 登录页Bean类
+/// 登录页Model类
 ///
 /// @author zzp
 /// @since 2023/9/12

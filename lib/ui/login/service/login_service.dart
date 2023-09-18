@@ -1,4 +1,6 @@
 import 'package:csust_edu_system/arch/baseservice/base_service.dart';
+import 'package:csust_edu_system/ass/key_assets.dart';
+import 'package:csust_edu_system/ass/url_assets.dart';
 import 'package:csust_edu_system/utils/typedef_util.dart';
 import 'package:dio/dio.dart';
 import '../../../utils/my_util.dart';
@@ -20,10 +22,10 @@ class LoginService extends BaseService {
   void login(String username, String password, {required OnDataSuccess<KeyMap> onDataSuccess,
     OnDataFail? onDataFail, OnPrepare? onPrepare, OnFinish? onFinish}) {
     var params = FormData.fromMap({
-      'stuNum': username,
-      'password': password,
-      'version': '$appName$version${getAppSuffix()}'});
-    post('/login', params: params, onPrepare: onPrepare, onDataSuccess: onDataSuccess,
+      KeyAssets.stuNum: username,
+      KeyAssets.password: password,
+      KeyAssets.version: '$appName$version${getAppSuffix()}'});
+    post(UrlAssets.login, params: params, onPrepare: onPrepare, onDataSuccess: onDataSuccess,
         onDataFail: onDataFail, onFinish: onFinish);
   }
 
@@ -34,7 +36,7 @@ class LoginService extends BaseService {
   /// [onDataFail] 获取数据失败回调
   void getDateData(String cookie, {required OnDataSuccess<KeyMap> onDataSuccess,
     OnDataFail? onDataFail}) {
-    post('/getBasicData', params: FormData.fromMap({'cookie': cookie}),
+    post(UrlAssets.getBasicData, params: FormData.fromMap({KeyAssets.cookie: cookie}),
         onDataSuccess: onDataSuccess, onDataFail: onDataFail);
   }
 
@@ -45,7 +47,7 @@ class LoginService extends BaseService {
   /// [onDataFail] 获取数据失败回调
   void getStuInfo(String cookie, {required OnDataSuccess<KeyMap> onDataSuccess,
     OnDataFail? onDataFail}) {
-    post('/getStuInfo', params: FormData.fromMap({'cookie': cookie}),
+    post(UrlAssets.getStuInfo, params: FormData.fromMap({KeyAssets.cookie: cookie}),
         onDataSuccess: onDataSuccess, onDataFail: onDataFail);
   }
 }

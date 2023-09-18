@@ -28,7 +28,7 @@ class _ConsumerViewState<T extends ChangeNotifier>
   @override
   void initState() {
     super.initState();
-    widget.onInit?.call();
+    WidgetsBinding.instance.addPostFrameCallback((_) => widget.onInit?.call());
   }
 
   @override

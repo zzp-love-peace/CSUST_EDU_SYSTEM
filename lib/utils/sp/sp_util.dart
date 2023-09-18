@@ -1,8 +1,6 @@
 import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../log.dart';
-
 /// SharedPreferences工具类
 ///
 /// @author zzp

@@ -4,6 +4,7 @@ import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/theme_home.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
+import 'package:csust_edu_system/ui/notification/page/notification_page.dart';
 import 'package:csust_edu_system/utils/course_util.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
@@ -19,7 +20,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/course_model.dart';
 import '../database/db_manager.dart';
 import '../homes/course_info_home.dart';
-import '../homes/notification_home.dart';
 import '../network/edu_system_manager.dart';
 import '../provider/course_term_provider.dart';
 import '../widgets/hint_dialog.dart';
@@ -188,7 +188,7 @@ class _CoursePageState extends State<CoursePage> {
       leading: IconButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const NotificationHome()));
+              builder: (context) => const NotificationPage())); //重构后替换至NotificationPage
         },
         icon: const Icon(
           Icons.notifications,

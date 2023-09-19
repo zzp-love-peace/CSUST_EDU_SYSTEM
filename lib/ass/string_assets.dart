@@ -44,4 +44,8 @@ class StringAssets {
   static const String forum = '圈子';
   /// 我的
   static const String mine = '我的';
+  /// 通知页面标题
+  static const String notificationPageTitle = '通知';
+  /// 通知页面暂无通知
+  static const String notificationPageNoContent = '暂无通知...';
 }

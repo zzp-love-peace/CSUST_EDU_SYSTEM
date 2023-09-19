@@ -25,6 +25,7 @@ abstract class BaseService {
   void get<T>(String path, {Map<String, dynamic>? params, OnPrepare? onPrepare,
     required OnDataSuccess<T> onDataSuccess, OnDataFail? onDataFail, OnFail? onFail,
     OnError? onError, OnFinish? onFinish}) {
+    var isSuccess = false;
     onPrepare?.call();
     HttpHelper().get(path, params).then((response) {
       switch (response.status) {
@@ -32,49 +33,7 @@ abstract class BaseService {
           var responseData = HttpResponseData.fromJson(response.data);
           if (responseData.code == HttpResponseCode.success) {
             onDataSuccess.call(responseData.data, responseData.msg);
-          } else {
-            onDataFail?.call(responseData.code, responseData.msg);
-          }
-          break;
-        case ResponseStatus.fail:
-          if (onFail == null) {
-            _doFail(response.data);
-          } else {
-            onFail(response.data);
-          }
-          break;
-        case ResponseStatus.error:
-          if (onError == null) {
-            _doError(response.data);
-          } else {
-            onError(response.data);
-          }
-          break;
-      }
-      onFinish?.call();
-    });
-  }
-
-  /// post请求封装
-  ///
-  /// [path] 路径
-  /// [params] 参数
-  /// [contentType] 内容格式
-  /// [onPrepare] 请求前回调
-  /// [OnSuccess] 请求成功回调
-  /// [OnFail] 请求失败回调
-  /// [OnError] 请求异常回调
-  /// [OnFinish] 请求结束回调
-  void post<T>(String path, {params, String? contentType, OnPrepare? onPrepare,
-    required OnDataSuccess<T> onDataSuccess, OnDataFail? onDataFail, OnFail? onFail,
-    OnError? onError, OnFinish? onFinish}) {
-    onPrepare?.call();
-    HttpHelper().post(path, params, contentType).then((response) {
-      switch (response.status) {
-        case ResponseStatus.success:
-          var responseData = HttpResponseData.fromJson(response.data);
-          if (responseData.code == HttpResponseCode.success) {
-            onDataSuccess.call(responseData.data, responseData.msg);
+            isSuccess = true;
           } else {
             if (onDataFail == null) {
               _doDataFail(responseData.msg);
@@ -98,7 +57,56 @@ abstract class BaseService {
           }
           break;
       }
-      onFinish?.call();
+      onFinish?.call(isSuccess);
+    });
+  }
+
+  /// post请求封装
+  ///
+  /// [path] 路径
+  /// [params] 参数
+  /// [contentType] 内容格式
+  /// [onPrepare] 请求前回调
+  /// [OnSuccess] 请求成功回调
+  /// [OnFail] 请求失败回调
+  /// [OnError] 请求异常回调
+  /// [OnFinish] 请求结束回调
+  void post<T>(String path, {params, String? contentType, OnPrepare? onPrepare,
+    required OnDataSuccess<T> onDataSuccess, OnDataFail? onDataFail, OnFail? onFail,
+    OnError? onError, OnFinish? onFinish}) {
+    var isSuccess = false;
+    onPrepare?.call();
+    HttpHelper().post(path, params, contentType).then((response) {
+      switch (response.status) {
+        case ResponseStatus.success:
+          var responseData = HttpResponseData.fromJson(response.data);
+          if (responseData.code == HttpResponseCode.success) {
+            onDataSuccess.call(responseData.data, responseData.msg);
+            isSuccess = true;
+          } else {
+            if (onDataFail == null) {
+              _doDataFail(responseData.msg);
+            } else {
+              onDataFail.call(responseData.code, responseData.msg);
+            }
+          }
+          break;
+        case ResponseStatus.fail:
+          if (onFail == null) {
+            _doFail(response.data);
+          } else {
+            onFail(response.data);
+          }
+          break;
+        case ResponseStatus.error:
+          if (onError == null) {
+            _doError(response.data);
+          } else {
+            onError(response.data);
+          }
+          break;
+      }
+      onFinish?.call(isSuccess);
     });
   }
 

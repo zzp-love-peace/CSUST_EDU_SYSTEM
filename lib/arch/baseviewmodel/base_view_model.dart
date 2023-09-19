@@ -6,6 +6,15 @@ abstract class BaseViewModel<T> extends ChangeNotifier {
 
   /// model数据
   T model;
+  /// View的context
+  late BuildContext context;
+
+  /// 注入context
+  ///
+  /// [context] context
+  void injectContext(BuildContext context) {
+    this.context = context;
+  }
 
   /// 设置model并更新
   /// [newModel] 新model

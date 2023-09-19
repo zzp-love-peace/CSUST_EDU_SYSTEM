@@ -34,10 +34,11 @@ class LoginService extends BaseService {
   /// [cookie] cookie字符串
   /// [onDataSuccess] 获取数据成功回调
   /// [onDataFail] 获取数据失败回调
+  /// [onFinish] 请求结束回调
   void getDateData(String cookie, {required OnDataSuccess<KeyMap> onDataSuccess,
-    OnDataFail? onDataFail}) {
+    OnDataFail? onDataFail, OnFinish? onFinish}) {
     post(UrlAssets.getBasicData, params: FormData.fromMap({KeyAssets.cookie: cookie}),
-        onDataSuccess: onDataSuccess, onDataFail: onDataFail);
+        onDataSuccess: onDataSuccess, onDataFail: onDataFail, onFinish: onFinish);
   }
 
   /// 获取学生详细信息

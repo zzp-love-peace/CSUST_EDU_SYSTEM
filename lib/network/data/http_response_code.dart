@@ -7,4 +7,8 @@ class HttpResponseCode {
   static const success = 200;
   /// 被禁言了
   static const bannedOfSpeaking = 701;
+  /// 系统错误
+  static const systemError = 501;
+  /// 教务系统错误
+  static const schoolSystemError = 502;
 }

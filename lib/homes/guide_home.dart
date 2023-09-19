@@ -22,6 +22,7 @@ import '../provider/course_term_provider.dart';
 import '../widgets/hint_dialog.dart';
 import 'bottom_tab_home.dart';
 
+@Deprecated('废弃')
 class GuideHome extends StatefulWidget {
   const GuideHome({Key? key}) : super(key: key);
 

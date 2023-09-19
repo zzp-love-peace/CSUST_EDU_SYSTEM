@@ -1,6 +1,4 @@
 import 'package:csust_edu_system/ass/string_assets.dart';
-import 'package:csust_edu_system/utils/extension_uitl.dart';
-
 import '../ass/key_assets.dart';
 import '../utils/sp/sp_util.dart';
 
@@ -34,9 +32,9 @@ class DateInfo {
 
   /// 从SharedPreferences中初始化数据
   static void initDataFromSp() {
-    DateInfo.nowTerm = SpUtil.get<String>(KeyAssets.nowTerm).orEmpty();
-    DateInfo.nowDate = SpUtil.get<String>(KeyAssets.nowDate).orEmpty();
-    DateInfo.nowWeek = SpUtil.get<int>(KeyAssets.nowWeek) ?? -1;
-    DateInfo.totalWeek = SpUtil.get<int>(KeyAssets.totalWeek) ?? 20;
+    DateInfo.nowTerm = SpUtil.get<String>(KeyAssets.nowTerm, StringAssets.emptyStr);
+    DateInfo.nowDate = SpUtil.get<String>(KeyAssets.nowDate, StringAssets.emptyStr);
+    DateInfo.nowWeek = SpUtil.get<int>(KeyAssets.nowWeek, -1);
+    DateInfo.totalWeek = SpUtil.get<int>(KeyAssets.totalWeek, 20);
   }
 }

@@ -7,6 +7,7 @@ import 'package:csust_edu_system/ui/login/view/remember_checkbox_view.dart';
 import 'package:csust_edu_system/ui/login/view/username_edittext_view.dart';
 import 'package:csust_edu_system/ui/login/viewmodel/login_viewmodel.dart';
 import 'package:csust_edu_system/ui/login/viewmodel/password_edittext_viewmodel.dart';
+import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -47,9 +48,9 @@ class _LoginHomeState extends State<LoginHome> {
   @override
   void initState() {
     super.initState();
-    _loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
+    _loginViewModel = context.getViewModel<LoginViewModel>();
     WidgetsBinding.instance
-        .addPostFrameCallback((_) => _loginViewModel.initLoginPageData(context));
+        .addPostFrameCallback((_) => _loginViewModel.initLoginPageData());
   }
 
   @override

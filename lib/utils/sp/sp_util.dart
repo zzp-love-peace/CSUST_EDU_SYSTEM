@@ -11,7 +11,7 @@ class SpUtil {
   static SharedPreferences? _prefs;
   
   /// 初始化
-  static init() async {
+  static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
   }
   
@@ -39,7 +39,7 @@ class SpUtil {
   /// 获取
   ///
   /// [key] 键
-  static T? get<T>(String key) {
+  static T get<T>(String key, T defaultValue) {
     if (_prefs == null) {
       throw SpUtilNotInitException();
     }
@@ -53,7 +53,7 @@ class SpUtil {
     } else if (T == List<String>) {
       res = _prefs!.getStringList(key) as T?;
     }
-    return res;
+    return res ?? defaultValue;
   }
 
   /// 删除

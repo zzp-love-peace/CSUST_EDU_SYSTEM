@@ -8,11 +8,9 @@ import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:csust_edu_system/utils/sp/sp_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:provider/provider.dart';
 import '../../../data/date_info.dart';
 import '../../../data/stu_info.dart';
 import '../../../homes/bottom_tab_home.dart';
-import '../../../provider/theme_color_provider.dart';
 import '../../../utils/log.dart';
 import '../../../widgets/hint_dialog.dart';
 
@@ -24,7 +22,7 @@ class LoginViewModel extends BaseViewModel<LoginModel> {
   LoginViewModel({required super.model});
 
   /// 登录Service
-  final LoginService service = LoginService();
+  final LoginService _service = LoginService();
   /// sp-用户名
   final SpData<String> _spUsername =
       SpData(key: KeyAssets.username, defaultValue: StringAssets.emptyStr);
@@ -34,9 +32,6 @@ class LoginViewModel extends BaseViewModel<LoginModel> {
   /// sp-是否记住密码
   final SpData<bool> _spIsRemember =
       SpData(key: KeyAssets.isRemember, defaultValue: false);
-  /// sp-颜色
-  final SpData<String> _spColor =
-      SpData(key: KeyAssets.color, defaultValue: StringAssets.blue);
 
   /// 设置是否记住密码
   ///
@@ -49,12 +44,8 @@ class LoginViewModel extends BaseViewModel<LoginModel> {
   /// 初始化登录页数据
   ///
   /// [context] context
-  void initLoginPageData(BuildContext context) {
-    var themeColorProvider = Provider.of<ThemeColorProvider>(context, listen: false);
-    if (themeColorProvider.themeColor != _spColor.get()) {
-      // 设置初始化主题颜色
-      themeColorProvider.setTheme(_spColor.get());
-    }
+  void initLoginPageData() {
+    context.initThemeColor();
     model.isRemember = _spIsRemember.get();
     if (_spUsername.get().isNotEmpty) {
       model.usernameController.text = _spUsername.get();
@@ -72,7 +63,7 @@ class LoginViewModel extends BaseViewModel<LoginModel> {
   /// [password] 密码
   void doLogin(BuildContext context, String username, String password) {
     if ([username, password].isAllNotBlank()) {
-      service.login(username, password, onPrepare: () {
+      _service.login(username, password, onPrepare: () {
         SmartDialog.showLoading(
             msg: StringAssets.loginLoading, backDismiss: false);
       }, onDataSuccess: (data, msg) {
@@ -82,14 +73,13 @@ class LoginViewModel extends BaseViewModel<LoginModel> {
         StuInfo.cookie = loginBean.cookie;
         _getDateInfo(loginBean.cookie);
         _getStuInfo(loginBean.cookie);
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const BottomTabHome()));
+        context.pushReplacement(const BottomTabHome());
       }, onDataFail: (code, msg) {
         SmartDialog.show(
             builder: (_) =>
                 HintDialog(title: StringAssets.tips, subTitle: msg));
         Log.e('code=>$code, msg=>$msg');
-      }, onFinish: () {
+      }, onFinish: (_) {
         SmartDialog.dismiss();
       });
     } else {
@@ -101,7 +91,7 @@ class LoginViewModel extends BaseViewModel<LoginModel> {
   ///
   /// [cookie] cookie
   void _getDateInfo(String cookie) {
-    service.getDateData(
+    _service.getDateData(
       cookie,
       onDataSuccess: (data, msg) {
         DateInfo.initData(data);
@@ -117,7 +107,7 @@ class LoginViewModel extends BaseViewModel<LoginModel> {
   ///
   /// [cookie] cookie
   void _getStuInfo(String cookie) {
-    service.getStuInfo(
+    _service.getStuInfo(
         cookie,
         onDataSuccess: (data, msg) {
           StuInfo.initData(data);

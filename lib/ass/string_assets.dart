@@ -5,6 +5,12 @@
 class StringAssets {
   /// 空字符串
   static const String emptyStr = '';
+  /// app名「长理教务」
+  static const String appName = '长理教务';
+  /// 校训上半句
+  static const String schoolMotto1 = '博学 力行';
+  /// 校训下半句
+  static const String schoolMotto2 = '守正 拓新';
   /// 登录
   static const String login = '登录';
   /// 学号

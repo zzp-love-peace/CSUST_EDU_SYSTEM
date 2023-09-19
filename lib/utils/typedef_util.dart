@@ -9,6 +9,6 @@ typedef OnFail = void Function(String?);
 /// 请求异常回调
 typedef OnError = void Function(Exception);
 /// 请求结束回调
-typedef OnFinish = void Function();
+typedef OnFinish = void Function(bool);
 /// 键值对
 typedef KeyMap = Map<String, dynamic>;

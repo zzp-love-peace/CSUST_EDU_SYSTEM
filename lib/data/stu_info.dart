@@ -1,5 +1,3 @@
-import 'package:csust_edu_system/utils/extension_uitl.dart';
-
 import '../ass/key_assets.dart';
 import '../ass/string_assets.dart';
 import '../utils/sp/sp_util.dart';
@@ -51,11 +49,11 @@ class StuInfo {
 
   /// 从SharedPreferences中初始化数据
   static void initDataFromSp() {
-    StuInfo.name = SpUtil.get<String>(KeyAssets.name).orEmpty();
-    StuInfo.stuId = SpUtil.get<String>(KeyAssets.stuId).orEmpty();
-    StuInfo.college = SpUtil.get<String>(KeyAssets.college).orEmpty();
-    StuInfo.major = SpUtil.get<String>(KeyAssets.major).orEmpty();
-    StuInfo.className = SpUtil.get<String>(KeyAssets.className).orEmpty();
-    StuInfo.avatar = SpUtil.get<String>(KeyAssets.avatar).orEmpty();
+    StuInfo.name = SpUtil.get<String>(KeyAssets.name, StringAssets.emptyStr);
+    StuInfo.stuId = SpUtil.get<String>(KeyAssets.stuId, StringAssets.emptyStr);
+    StuInfo.college = SpUtil.get<String>(KeyAssets.college, StringAssets.emptyStr);
+    StuInfo.major = SpUtil.get<String>(KeyAssets.major, StringAssets.emptyStr);
+    StuInfo.className = SpUtil.get<String>(KeyAssets.className, StringAssets.emptyStr);
+    StuInfo.avatar = SpUtil.get<String>(KeyAssets.avatar, StringAssets.emptyStr);
   }
 }

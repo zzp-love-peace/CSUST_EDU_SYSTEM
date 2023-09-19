@@ -14,12 +14,7 @@ class SpData<T> {
 
   /// 获取
   T get() {
-    T? value = SpUtil.get(key);
-    if (value == null) {
-      return defaultValue;
-    } else {
-      return value;
-    }
+    return SpUtil.get(key, defaultValue);
   }
 
   /// 保存

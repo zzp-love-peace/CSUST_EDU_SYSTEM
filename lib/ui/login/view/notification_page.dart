@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../widgets/none_lottie.dart';
-
+/// 系统通知Page
+///
+/// @Author: Orcas_Liu
+/// @version: 1.8.8
+/// @Since: 2023.9.19
 class NotificationPage extends StatelessWidget{
   const NotificationPage({super.key});
 

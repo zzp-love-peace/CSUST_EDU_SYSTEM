@@ -1,8 +1,3 @@
-/// Url资源类
-///
-/// @author zzp
-/// @since 2023/9/15
-/// @version v1.8.8
 class UrlAssets {
   /// url-登录接口
   static const login = '/login';
@@ -12,4 +7,7 @@ class UrlAssets {
   static const getStuInfo = '/getStuInfo';
   /// url-获取未读消息接口
   static const getUnreadMsg = '/message/unread';
+  /// url-获取通知接口
+  /// 这里的notice并非学校官方的通告，而是教务系统的通知，后端应考虑改为notification以保持和前端组件一致
+  static const getNotifications = '/notice/get';
 }

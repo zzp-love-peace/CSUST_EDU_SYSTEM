@@ -12,6 +12,7 @@ const Duration constTimeOut = Duration(seconds: 8);
 ///
 /// @author zzp
 /// @since 2023/9/14
+/// @version v1.8.8
 class HttpHelper {
   /// 唯一单例对象
   static final HttpHelper _instance = HttpHelper._internal();

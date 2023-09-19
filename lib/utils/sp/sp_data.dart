@@ -4,6 +4,7 @@ import 'package:csust_edu_system/utils/sp/sp_util.dart';
 ///
 /// @author zzp
 /// @since 2023/9/17
+/// @version v1.8.8
 class SpData<T> {
   SpData({required this.key, required this.defaultValue});
 

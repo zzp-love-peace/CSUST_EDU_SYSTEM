@@ -5,6 +5,7 @@ import 'package:csust_edu_system/ui/login/model/password_edittext_model.dart';
 ///
 /// @author zzp
 /// @since 2023/9/12
+/// @version v1.8.8
 class PasswordEditTextViewModel extends BaseViewModel<PasswordEditTextModel> {
   PasswordEditTextViewModel({required super.model});
 

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 ///
 /// @author zzp
 /// @since 2023/9/17
+/// @version v1.8.8
 class SpUtil {
 
   /// SharedPreferences对象
@@ -26,6 +27,8 @@ class SpUtil {
     bool res = false;
     if (value is String && value.isNotBlank()) {
       res = await _prefs!.setString(key, value);
+    } else if (value is int) {
+      res = await _prefs!.setInt(key, value);
     } else if (value is double) {
       res = await _prefs!.setDouble(key, value);
     } else if (value is bool) {
@@ -46,6 +49,8 @@ class SpUtil {
     T? res;
     if (T == String) {
       res = _prefs!.getString(key) as T?;
+    } else if (T == int) {
+      res = _prefs!.getInt(key) as T?;
     } else if (T == double) {
       res = _prefs!.getDouble(key) as T?;
     } else if (T == bool) {

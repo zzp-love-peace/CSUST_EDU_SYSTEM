@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 ///
 /// @author zzp
 /// @since 2023/9/12
+/// @version v1.8.8
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 

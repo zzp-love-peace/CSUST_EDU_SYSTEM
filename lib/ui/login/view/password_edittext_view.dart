@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 ///
 /// @author zzp
 /// @since 2023/9/12
+/// @version v1.8.8
 class PasswordEditTextView extends StatelessWidget {
   const PasswordEditTextView({super.key, required this.controller});
 

@@ -12,3 +12,5 @@ typedef OnError = void Function(Exception);
 typedef OnFinish = void Function(bool);
 /// 键值对
 typedef KeyMap = Map<String, dynamic>;
+/// 列表
+typedef KeyList = List<dynamic>;

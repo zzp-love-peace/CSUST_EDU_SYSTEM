@@ -10,14 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import '../../../data/date_info.dart';
 import '../../../data/stu_info.dart';
-import '../../../homes/bottom_tab_home.dart';
 import '../../../utils/log.dart';
 import '../../../widgets/hint_dialog.dart';
+import '../../bottomtab/page/bottom_tab_page.dart';
 
 /// 登录ViewModel
 ///
 /// @author zzp
 /// @since 2023/9/12
+/// @version v1.8.8
 class LoginViewModel extends BaseViewModel<LoginModel> {
   LoginViewModel({required super.model});
 
@@ -73,7 +74,7 @@ class LoginViewModel extends BaseViewModel<LoginModel> {
         StuInfo.cookie = loginBean.cookie;
         _getDateInfo(loginBean.cookie);
         _getStuInfo(loginBean.cookie);
-        context.pushReplacement(const BottomTabHome());
+        context.pushReplacement(const BottomTabPage());
       }, onDataFail: (code, msg) {
         SmartDialog.show(
             builder: (_) =>

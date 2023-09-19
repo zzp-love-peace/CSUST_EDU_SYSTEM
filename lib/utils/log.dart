@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 ///
 /// @author zzp
 /// @since 2023/9/14
+/// @version v1.8.8
 class Log {
 
   /// 私有logger变量

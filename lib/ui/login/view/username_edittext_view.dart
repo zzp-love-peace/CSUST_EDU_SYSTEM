@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 ///
 /// @author zzp
 /// @since 2023/9/12
+/// @version v1.8.8
 class UsernameEditTextView extends StatelessWidget {
   const UsernameEditTextView({super.key, required this.controller});
 

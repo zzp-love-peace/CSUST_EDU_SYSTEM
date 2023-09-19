@@ -1,19 +1,22 @@
 import 'package:csust_edu_system/arch/basedata/empty_model.dart';
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
 import 'package:csust_edu_system/ass/key_assets.dart';
+import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/network/data/http_response_code.dart';
 import 'package:csust_edu_system/ui/login/service/login_service.dart';
-import 'package:csust_edu_system/ui/login/view/login_page.dart';
+import 'package:csust_edu_system/ui/login/page/login_page.dart';
 import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:csust_edu_system/utils/sp/sp_util.dart';
+import 'package:csust_edu_system/widgets/hint_dialog.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 import '../../../data/date_info.dart';
 import '../../../data/stu_info.dart';
-import '../../../homes/bottom_tab_home.dart';
 import '../../../jsonbean/login_bean.dart';
 import '../../../provider/course_term_provider.dart';
 import '../../../utils/date_util.dart';
 import '../../../utils/log.dart';
+import '../../bottomtab/page/bottom_tab_page.dart';
 
 /// 开屏引导默认展示时间
 const int guideTimeMill = 1800;
@@ -22,9 +25,11 @@ const int guideTimeMill = 1800;
 ///
 /// @author zzp
 /// @since 2023/9/18
+/// @version v1.8.8
 class GuideViewModel extends BaseViewModel<EmptyModel> {
   GuideViewModel({required super.model});
 
+  /// 登录Service
   final LoginService _service = LoginService();
 
   /// 准备工作
@@ -59,16 +64,19 @@ class GuideViewModel extends BaseViewModel<EmptyModel> {
         _getDateInfo(loginBean.cookie);
       },
       onDataFail: (code, msg) {
-        if (code == HttpResponseCode.systemError
-            || code == HttpResponseCode.schoolSystemError) {
-          _doOnLoginDataFail();
+        if (code == HttpResponseCode.stuIdOrPasswordWrong) {
+          SmartDialog.show(builder: (_) => HintDialog(title: StringAssets.tips, subTitle: msg));
+        } else {
+          msg.showToast();
         }
-        msg.showToast();
         Log.e('code=>$code, msg=>$msg');
       },
       onFinish: (isSuccess) {
         if (!isSuccess) {
-          context.pushReplacement( const BottomTabHome());
+          _doOnLoginDataFail();
+          Provider.of<CourseTermProvider>(context, listen: false)
+              .setNowTerm(DateInfo.nowTerm);
+          context.pushReplacement( const BottomTabPage());
         }
       },
     );
@@ -82,14 +90,14 @@ class GuideViewModel extends BaseViewModel<EmptyModel> {
       onDataSuccess: (data, msg) {
         DateInfo.initData(data);
       },
-      onDataFail: (code, msg) {
-        DateInfo.initDataFromSp();
-        computeNowWeek();
-      },
-      onFinish: (_) {
+      onFinish: (isSuccess) {
+        if (!isSuccess) {
+          DateInfo.initDataFromSp();
+          _computeNowWeek();
+        }
         Provider.of<CourseTermProvider>(context, listen: false)
             .setNowTerm(DateInfo.nowTerm);
-        context.pushReplacement( const BottomTabHome());
+        context.pushReplacement( const BottomTabPage());
       }
     );
   }
@@ -112,11 +120,11 @@ class GuideViewModel extends BaseViewModel<EmptyModel> {
   void _doOnLoginDataFail() {
     DateInfo.initDataFromSp();
     StuInfo.initDataFromSp();
-    computeNowWeek();
+    _computeNowWeek();
   }
 
   /// 计算当前周数
-  void computeNowWeek() {
+  void _computeNowWeek() {
     int lastWeek = DateInfo.nowWeek;
     String lastDate = DateInfo.nowDate;
     DateInfo.nowDate = (DateTime.now().toString()).split(' ')[0];

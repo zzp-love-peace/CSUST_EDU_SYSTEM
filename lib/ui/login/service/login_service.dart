@@ -9,6 +9,7 @@ import '../../../utils/my_util.dart';
 ///
 /// @author zzp
 /// @since 2023/9/13
+/// @version v1.8.8
 class LoginService extends BaseService {
 
   /// 登录

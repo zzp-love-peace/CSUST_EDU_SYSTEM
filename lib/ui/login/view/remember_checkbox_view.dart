@@ -2,12 +2,12 @@ import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/ui/login/viewmodel/login_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 /// 记住密码单选框
 ///
 /// @author zzp
 /// @since 2023/9/12
+/// @version v1.8.8
 class RememberCheckBox extends StatelessWidget {
   const RememberCheckBox({super.key});
 

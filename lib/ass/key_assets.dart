@@ -1,3 +1,8 @@
+/// Key资源类
+///
+/// @author zzp
+/// @since 2023/9/15
+/// @version v1.8.8
 class KeyAssets {
   /// key-状态码
   static const String code = 'code';

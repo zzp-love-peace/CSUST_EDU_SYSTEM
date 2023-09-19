@@ -12,6 +12,7 @@ import '../../../utils/sp/sp_util.dart';
 ///
 /// @author zzp
 /// @since 2023/9/18
+/// @version v1.8.8
 class GuidePage extends StatelessWidget {
   const GuidePage({super.key});
 

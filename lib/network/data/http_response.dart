@@ -4,6 +4,7 @@ import 'package:csust_edu_system/network/data/response_status.dart';
 ///
 /// @author zzp
 /// @since 2023/9/14
+/// @version v1.8.8
 class HttpResponse<T> {
   HttpResponse(this.status, this.data);
   /// 请求状态

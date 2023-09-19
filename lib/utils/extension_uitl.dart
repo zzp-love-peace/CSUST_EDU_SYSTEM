@@ -11,6 +11,7 @@ import '../provider/theme_color_provider.dart';
 ///
 /// @author zzp
 /// @since 2023/9/16
+/// @version v1.8.8
 extension StringExtension on String {
 
   /// toast

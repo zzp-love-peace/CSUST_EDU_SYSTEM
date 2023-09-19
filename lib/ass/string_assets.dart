@@ -2,6 +2,7 @@
 ///
 /// @author zzp
 /// @since 2023/9/13
+/// @version v1.8.8
 class StringAssets {
   /// 空字符串
   static const String emptyStr = '';
@@ -33,4 +34,14 @@ class StringAssets {
   static const String tips = '提示';
   /// blue
   static const String blue = 'blue';
+  /// 再次点击退出应用
+  static const String backAgain = '再次点击退出应用';
+  /// 课程表
+  static const String classSchedule = '课程表';
+  /// 校园
+  static const String campus = '校园';
+  /// 圈子（论坛）
+  static const String forum = '圈子';
+  /// 我的
+  static const String mine = '我的';
 }

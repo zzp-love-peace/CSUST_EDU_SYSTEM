@@ -9,6 +9,7 @@ import 'package:csust_edu_system/ass/key_assets.dart';
 ///
 /// @author zzp
 /// @since 2023/9/15
+/// @version v1.8.8
 class HttpResponseData<T> implements BaseJsonBean {
   HttpResponseData(this.code, this.msg, this.data);
 

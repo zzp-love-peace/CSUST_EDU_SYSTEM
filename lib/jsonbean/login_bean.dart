@@ -4,6 +4,7 @@ import 'package:csust_edu_system/ass/key_assets.dart';
 ///
 /// @author zzp
 /// @since 2023/9/16
+/// @version v1.8.8
 class LoginBean {
   LoginBean.fromJson(Map<String, dynamic> json):
         token = json[KeyAssets.token], cookie = json[KeyAssets.cookie];

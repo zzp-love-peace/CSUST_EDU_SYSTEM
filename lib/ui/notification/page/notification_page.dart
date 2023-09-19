@@ -1,5 +1,5 @@
-import 'package:csust_edu_system/ui/login/model/notification_model.dart';
-import 'package:csust_edu_system/ui/login/viewmodel/notification_viewmodel.dart';
+import 'package:csust_edu_system/ui/notification/model/notification_model.dart';
+import 'package:csust_edu_system/ui/notification/viewmodel/notification_viewmodel.dart';
 import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

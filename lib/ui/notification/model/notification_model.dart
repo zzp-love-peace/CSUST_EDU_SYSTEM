@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+
 /// 系统通知Model
 ///
 /// @Author: Orcas_Liu

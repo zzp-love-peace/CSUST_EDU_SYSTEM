@@ -1,10 +1,10 @@
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
 import 'package:csust_edu_system/jsonbean/notification_bean.dart';
-import 'package:csust_edu_system/ui/login/model/notification_model.dart';
-import 'package:csust_edu_system/ui/login/service/notification_service.dart';
+import 'package:csust_edu_system/ui/notification/model/notification_model.dart';
+import 'package:csust_edu_system/ui/notification/service/notification_service.dart';
 import 'package:flutter/material.dart';
-
 import '../../../utils/date_util.dart';
+
 /// 系统通知View model
 ///
 /// @Author: Orcas_Liu

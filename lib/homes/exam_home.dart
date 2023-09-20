@@ -4,6 +4,7 @@ import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/provider/theme_color_provider.dart';
+import 'package:csust_edu_system/ui/termpicker/view/common_term_picker_view.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/date_picker.dart';
 import 'package:csust_edu_system/widgets/none_lottie.dart';
@@ -45,7 +46,9 @@ class _ExamHomeState extends State<ExamHome> {
           child: Container(
               color: Colors.white,
               height: 40,
-              child: MyDatePicker(callBack: (term) {
+              child: CommonTermPickerView(
+                  nowTerm: _term,
+                  callBack: (term) {
                 _queryExam(term);
                 _term = term;
               }))),

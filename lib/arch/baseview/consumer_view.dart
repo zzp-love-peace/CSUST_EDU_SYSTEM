@@ -15,9 +15,9 @@ class ConsumerView<T extends ChangeNotifier> extends StatefulWidget {
   /// 子view
   final Widget? child;
   /// 初始化时
-  final Function()? onInit;
+  final Function(BuildContext)? onInit;
   /// 销毁时
-  final Function()? onDispose;
+  final Function(BuildContext)? onDispose;
 
   @override
   State<ConsumerView> createState() => _ConsumerViewState<T>();
@@ -28,13 +28,13 @@ class _ConsumerViewState<T extends ChangeNotifier>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => widget.onInit?.call());
+    WidgetsBinding.instance.addPostFrameCallback((_) => widget.onInit?.call(context));
   }
 
   @override
   void dispose() {
     super.dispose();
-    widget.onDispose?.call();
+    widget.onDispose?.call(context);
   }
 
   @override

@@ -7,6 +7,7 @@ import 'package:flutter_picker/picker.dart';
 
 typedef DateCallBack = void Function(String term);
 
+@Deprecated('废弃')
 class MyDatePicker extends StatefulWidget {
 
   final DateCallBack callBack;

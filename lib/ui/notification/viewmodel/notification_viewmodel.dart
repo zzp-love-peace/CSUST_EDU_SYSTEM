@@ -39,7 +39,7 @@ class NotificationViewModel extends BaseViewModel<NotificationModel> {
                   ),
                 )));
         }
-      notifyListeners();
+        notifyListeners();
       }
     });
   }

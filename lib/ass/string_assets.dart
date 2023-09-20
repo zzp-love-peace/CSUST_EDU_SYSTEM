@@ -48,4 +48,10 @@ class StringAssets {
   static const String notificationPageTitle = '通知';
   /// 通知页面暂无通知
   static const String notificationPageNoContent = '暂无通知...';
+  /// 选择学期
+  static const String selectTerm = '选择学期';
+  /// 确认
+  static const String ok = '确认';
+  /// 取消
+  static const String cancel = '取消';
 }

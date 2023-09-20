@@ -14,3 +14,5 @@ typedef OnFinish = void Function(bool);
 typedef KeyMap = Map<String, dynamic>;
 /// 列表
 typedef KeyList = List<dynamic>;
+/// 日期选择器回调
+typedef DatePickerCallBack = void Function(String term);

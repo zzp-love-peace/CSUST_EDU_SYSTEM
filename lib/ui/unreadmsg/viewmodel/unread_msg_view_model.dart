@@ -7,15 +7,15 @@ import 'package:csust_edu_system/ui/unreadmsg/service/unread_msg_service.dart';
 /// @author zzp
 /// @since 2023/9/19
 /// @version v1.8.8
-class UnreadMsgViewModel extends BaseViewModel<UnreadMsgModel> {
+class UnreadMsgViewModel extends BaseViewModel<UnreadMsgModel, UnreadMsgService> {
   UnreadMsgViewModel({required super.model});
 
-  /// 未读消息Service
-  final UnreadMsgService service = UnreadMsgService();
+  @override
+  UnreadMsgService? createService() => UnreadMsgService();
 
   /// 获取未读消息
   void getUnreadMsg() {
-    service.getUnreadMsg(onDataSuccess: (data, msg) {
+    service?.getUnreadMsg(onDataSuccess: (data, msg) {
       setHasUnreadMsg(data.isNotEmpty);
     });
   }

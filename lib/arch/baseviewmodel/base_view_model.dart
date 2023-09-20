@@ -1,7 +1,12 @@
+import 'package:csust_edu_system/arch/baseservice/base_service.dart';
 import 'package:flutter/material.dart';
 
 /// 所有ViewModel基类
-abstract class BaseViewModel<T> extends ChangeNotifier {
+///
+/// @author zzp
+/// @since 2023/9/12
+/// @version v1.8.8
+abstract class BaseViewModel<T, W extends BaseService> extends ChangeNotifier {
   BaseViewModel({required this.model});
 
   /// model数据
@@ -10,6 +15,8 @@ abstract class BaseViewModel<T> extends ChangeNotifier {
   late final BuildContext context = _context!;
   /// 实际的context
   BuildContext? _context;
+  /// 用与网络请求的Service
+  late W? service = createService();
 
   /// 注入context
   ///
@@ -17,6 +24,9 @@ abstract class BaseViewModel<T> extends ChangeNotifier {
   void injectContext(BuildContext context) {
     _context ??= context;
   }
+
+  /// 创建Service
+  W? createService() => null;
 
   /// 设置model并更新
   /// [newModel] 新model

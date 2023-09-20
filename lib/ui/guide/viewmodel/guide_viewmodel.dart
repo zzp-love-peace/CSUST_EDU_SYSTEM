@@ -26,11 +26,11 @@ const int guideTimeMill = 1800;
 /// @author zzp
 /// @since 2023/9/18
 /// @version v1.8.8
-class GuideViewModel extends BaseViewModel<EmptyModel> {
+class GuideViewModel extends BaseViewModel<EmptyModel, LoginService> {
   GuideViewModel({required super.model});
 
-  /// 登录Service
-  final LoginService _service = LoginService();
+  @override
+  LoginService? createService() => LoginService();
 
   /// 准备工作
   /// 1、初始化主题色
@@ -38,8 +38,8 @@ class GuideViewModel extends BaseViewModel<EmptyModel> {
   /// 3、登录等操作
   void doPreWork() {
     context.initThemeColor();
-    var username = SpUtil.get(KeyAssets.username, '');
-    var password = SpUtil.get(KeyAssets.password, '');
+    var username = SpUtil.get(KeyAssets.username, StringAssets.emptyStr);
+    var password = SpUtil.get(KeyAssets.password, StringAssets.emptyStr);
     var isRemember = SpUtil.get(KeyAssets.isRemember, false);
     if (isRemember && [username, password].isAllNotBlank()) {
       _login(username, password);
@@ -55,7 +55,7 @@ class GuideViewModel extends BaseViewModel<EmptyModel> {
   /// [username] 用户名
   /// [password] 密码
   void _login(String username, String password) {
-    _service.login(username, password,
+    service?.login(username, password,
       onDataSuccess: (data, msg) {
         var loginBean = LoginBean.fromJson(data);
         StuInfo.token = loginBean.token;
@@ -86,7 +86,7 @@ class GuideViewModel extends BaseViewModel<EmptyModel> {
   ///
   /// [cookie] cookie
   void _getDateInfo(String cookie) {
-    _service.getDateData(cookie,
+    service?.getDateData(cookie,
       onDataSuccess: (data, msg) {
         DateInfo.initData(data);
       },
@@ -106,7 +106,7 @@ class GuideViewModel extends BaseViewModel<EmptyModel> {
   ///
   /// [cookie] cookie
   void _getStuInfo(String cookie) {
-    _service.getStuInfo(cookie,
+    service?.getStuInfo(cookie,
       onDataSuccess: (data, msg) {
         StuInfo.initData(data);
       },

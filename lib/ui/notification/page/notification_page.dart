@@ -37,8 +37,8 @@ class NotificationHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConsumerView<NotificationViewModel>(
-        onInit: () {
-          context.read<NotificationViewModel>().initNotificationPageData();
+        onInit: (innerContext) {
+          innerContext.getViewModel<NotificationViewModel>().initNotificationPageData();
         },
         builder: (context, viewModel, _) {
           List<Widget> _notificationList =

@@ -3,6 +3,7 @@ import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/edu_system_manager.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
+import 'package:csust_edu_system/ui/termpicker/view/common_term_picker_view.dart';
 import 'package:csust_edu_system/utils/grade_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/date_picker.dart';
@@ -51,7 +52,9 @@ class _GradeHomeState extends State<GradeHome> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MyDatePicker(callBack: (term) {
+                  CommonTermPickerView(
+                    nowTerm: _term,
+                      callBack: (term) {
                     _queryScore(term);
                     _term = term;
                   }),

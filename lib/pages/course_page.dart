@@ -5,6 +5,7 @@ import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/theme_home.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/ui/notification/page/notification_page.dart';
+import 'package:csust_edu_system/ui/termpicker/view/common_term_picker_view.dart';
 import 'package:csust_edu_system/utils/course_util.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
@@ -130,8 +131,9 @@ class _CoursePageState extends State<CoursePage> {
                 children: [
                   Expanded(
                     flex: 5,
-                    child: MyDatePicker(
-                      callBack: _datePickerCallback,
+                    child: CommonTermPickerView(
+                      nowTerm: _term,
+                      callBack: _datePickerCallback
                     ),
                   ),
                   Expanded(flex: 4, child: _weekBelowAppBar())

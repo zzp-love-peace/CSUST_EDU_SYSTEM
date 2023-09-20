@@ -26,48 +26,41 @@ class NotificationPage extends StatelessWidget {
   }
 }
 
-class NotificationHome extends StatefulWidget {
-  const NotificationHome({Key? key}) : super(key: key);
-
-  @override
-  State<NotificationHome> createState() => _NotificationHomeState();
-}
-
-class _NotificationHomeState extends State<NotificationHome> {
-  late NotificationViewModel _notificationViewModel;
-
-  @override
-  void initState() {
-    super.initState();
-    _notificationViewModel = context.getViewModel<NotificationViewModel>();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _notificationViewModel.initNotificationPageData());
-  }
+/// 系统通知页Home
+///
+/// @Author: Orcas_Liu
+/// @version: 1.8.8
+/// @Since: 2023.9.19
+class NotificationHome extends StatelessWidget {
+  const NotificationHome({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _notificationList =
-        _notificationViewModel.model.notificationList;
     return ConsumerView<NotificationViewModel>(
+        onInit: () {
+          context.read<NotificationViewModel>().initNotificationPageData();
+        },
         builder: (context, viewModel, _) {
-      return Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            foregroundColor: Colors.white,
-            centerTitle: true,
-            title: const Text(
-              StringAssets.notificationPageTitle,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+          List<Widget> _notificationList =
+              viewModel.model.notificationList;
+          return Scaffold(
+              appBar: AppBar(
+                elevation: 0,
+                foregroundColor: Colors.white,
+                centerTitle: true,
+                title: const Text(
+                  StringAssets.notificationPageTitle,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
-          ),
-          body: _notificationList.isNotEmpty
-              ? ListView(
-                  children: _notificationList,
-                )
-              : const NoneLottie(hint: StringAssets.notificationPageNoContent));
-    });
+              body: _notificationList.isNotEmpty
+                  ? ListView(
+                children: _notificationList,
+              )
+                  : const NoneLottie(hint: StringAssets.notificationPageNoContent));
+        });
   }
 }

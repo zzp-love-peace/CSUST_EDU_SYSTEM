@@ -6,7 +6,7 @@ import 'package:csust_edu_system/utils/my_util.dart';
 import 'package:csust_edu_system/widgets/edit_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_picker/Picker.dart';
+import 'package:flutter_picker/picker.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 

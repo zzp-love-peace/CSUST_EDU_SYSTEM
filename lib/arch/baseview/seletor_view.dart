@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 /// 选择性监听model中某一属性的view
+///
+/// @author zzp
+/// @since 2023/9/12
+/// @version v1.8.8
 class SelectorView<T extends ChangeNotifier, K> extends StatefulWidget {
   const SelectorView(
       {super.key,

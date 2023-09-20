@@ -1,3 +1,4 @@
+import 'package:csust_edu_system/arch/baseservice/empty_service.dart';
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/ui/bottomtab/model/bottom_tab_model.dart';
@@ -8,12 +9,11 @@ import 'package:csust_edu_system/utils/extension_uitl.dart';
 /// @author zzp
 /// @since 2023/9/19
 /// @version v1.8.8
-class BottomTabViewModel extends BaseViewModel<BottomTabModel> {
+class BottomTabViewModel extends BaseViewModel<BottomTabModel, EmptyService> {
   BottomTabViewModel({required super.model});
 
   /// 上一次back触发时间
   DateTime? _lastBackTime;
-
 
   /// 改变页面index
   ///

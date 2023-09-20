@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 /// 监听整个model变化的view
+///
+/// @author zzp
+/// @since 2023/9/12
+/// @version v1.8.8
 class ConsumerView<T extends ChangeNotifier> extends StatefulWidget {
   const ConsumerView(
       {super.key,

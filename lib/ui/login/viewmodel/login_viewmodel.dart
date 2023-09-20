@@ -19,11 +19,9 @@ import '../../bottomtab/page/bottom_tab_page.dart';
 /// @author zzp
 /// @since 2023/9/12
 /// @version v1.8.8
-class LoginViewModel extends BaseViewModel<LoginModel> {
+class LoginViewModel extends BaseViewModel<LoginModel, LoginService> {
   LoginViewModel({required super.model});
 
-  /// 登录Service
-  final LoginService _service = LoginService();
   /// sp-用户名
   final SpData<String> _spUsername =
       SpData(key: KeyAssets.username, defaultValue: StringAssets.emptyStr);
@@ -33,6 +31,9 @@ class LoginViewModel extends BaseViewModel<LoginModel> {
   /// sp-是否记住密码
   final SpData<bool> _spIsRemember =
       SpData(key: KeyAssets.isRemember, defaultValue: false);
+
+  @override
+  LoginService? createService() => LoginService();
 
   /// 设置是否记住密码
   ///
@@ -64,7 +65,7 @@ class LoginViewModel extends BaseViewModel<LoginModel> {
   /// [password] 密码
   void doLogin(BuildContext context, String username, String password) {
     if ([username, password].isAllNotBlank()) {
-      _service.login(username, password, onPrepare: () {
+      service?.login(username, password, onPrepare: () {
         SmartDialog.showLoading(
             msg: StringAssets.loginLoading, backDismiss: false);
       }, onDataSuccess: (data, msg) {
@@ -92,7 +93,7 @@ class LoginViewModel extends BaseViewModel<LoginModel> {
   ///
   /// [cookie] cookie
   void _getDateInfo(String cookie) {
-    _service.getDateData(
+    service?.getDateData(
       cookie,
       onDataSuccess: (data, msg) {
         DateInfo.initData(data);
@@ -108,7 +109,7 @@ class LoginViewModel extends BaseViewModel<LoginModel> {
   ///
   /// [cookie] cookie
   void _getStuInfo(String cookie) {
-    _service.getStuInfo(
+    service?.getStuInfo(
         cookie,
         onDataSuccess: (data, msg) {
           StuInfo.initData(data);

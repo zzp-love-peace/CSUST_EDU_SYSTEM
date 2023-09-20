@@ -11,13 +11,15 @@ import '../../../utils/date_util.dart';
 /// @Author: Orcas_Liu
 /// @version: 1.8.8
 /// @Since: 2023.9.19
-class NotificationViewModel extends BaseViewModel<NotificationModel> {
+class NotificationViewModel extends BaseViewModel<NotificationModel, NotificationService> {
   NotificationViewModel({required super.model});
-  // 通知Service
-  final NotificationService _service = NotificationService();
-  // 初始化通知页面数据 -> 抓取信息，生成通知item并装入List
+
+  @override
+  NotificationService? createService() => NotificationService();
+
+  /// 初始化通知页面数据 -> 抓取信息，生成通知item并装入List
   void initNotificationPageData() {
-    _service.getNotifications(onDataSuccess: (data, msg) {
+    service?.getNotifications(onDataSuccess: (data, msg) {
       List notifications = data;
       if (notifications.isNotEmpty) {
           for (var notification in notifications) {

@@ -9,11 +9,11 @@ import '../../../data/date_info.dart';
 /// @author zzp
 /// @since 2023/9/20
 /// @version v1.8.8
-class CommonTermPickerViewModel extends BaseViewModel<CommonTermPickerModel> {
+class CommonTermPickerViewModel extends BaseViewModel<CommonTermPickerModel, CommonTermPickerService> {
   CommonTermPickerViewModel({required super.model});
 
-  /// 通用学期选择器Service
-  final CommonTermPickerService _service = CommonTermPickerService();
+  @override
+  CommonTermPickerService? createService() => CommonTermPickerService();
 
   /// 设置当前学期
   ///
@@ -28,7 +28,7 @@ class CommonTermPickerViewModel extends BaseViewModel<CommonTermPickerModel> {
   /// [cookie] cookie
   /// [onDataSuccess] 获取数据成功回调
   void getAllTerm(String cookie) {
-    _service.getAllTerm(cookie: cookie,
+    service?.getAllTerm(cookie: cookie,
         onDataSuccess: (data, msg) {
           model.allTerm = data;
           //逻辑待考察

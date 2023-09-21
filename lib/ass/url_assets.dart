@@ -12,4 +12,6 @@ class UrlAssets {
   static const getNotifications = '/notice/get';
   /// url-获取全部学期
   static const getAllTerm = '/getAllSemester';
+  /// url-获取某一周课程表
+  static const getWeekClassSchedule = '/getCourse';
 }

@@ -10,7 +10,7 @@ import 'package:csust_edu_system/ass/key_assets.dart';
 /// @author zzp
 /// @since 2023/9/15
 /// @version v1.8.8
-class HttpResponseData<T> implements BaseJsonBean {
+class HttpResponseData<T> extends BaseJsonBean {
   HttpResponseData(this.code, this.msg, this.data);
 
   HttpResponseData.fromJson(Map<String, dynamic> json):
@@ -32,11 +32,5 @@ class HttpResponseData<T> implements BaseJsonBean {
     json[KeyAssets.msg] = msg;
     json[KeyAssets.data] = data;
     return json;
-  }
-
-  @override
-  String toJsonString() {
-    var json = this.toJson();
-    return jsonEncode(json);
   }
 }

@@ -54,4 +54,17 @@ class StringAssets {
   static const String ok = '确认';
   /// 取消
   static const String cancel = '取消';
+  /// 本周
+  static const String thisWeek = '本周';
+  /// 非本周
+  static const String notThisWeek = '非本周';
+  /// 刷新本周
+  static const String refreshNowWeek = '刷新本周';
+  /// 刷新本学期
+  static const String refreshNowTerm = '刷新本学期';
+  /// 刷新成功
+  static const String refreshSuccess = '刷新成功';
+  /// 选择周数
+  static const String selectWeekNum = '选择周数';
+
 }

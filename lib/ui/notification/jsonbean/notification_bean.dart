@@ -8,6 +8,9 @@ import 'package:csust_edu_system/ass/key_assets.dart';
 class NotificationBean{
   NotificationBean.fromJson(Map<String,dynamic> json):
       content = json[KeyAssets.notificationContent], createTime = json[KeyAssets.createTime];
+
+  /// 内容
   String content;
+  /// 创建时间
   String createTime;
 }

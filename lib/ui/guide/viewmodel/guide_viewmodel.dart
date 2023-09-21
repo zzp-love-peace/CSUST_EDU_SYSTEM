@@ -3,20 +3,21 @@ import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
 import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/network/data/http_response_code.dart';
-import 'package:csust_edu_system/ui/login/service/login_service.dart';
 import 'package:csust_edu_system/ui/login/page/login_page.dart';
+import 'package:csust_edu_system/ui/login/service/login_service.dart';
 import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:csust_edu_system/utils/sp/sp_util.dart';
 import 'package:csust_edu_system/widgets/hint_dialog.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
+
 import '../../../data/date_info.dart';
 import '../../../data/stu_info.dart';
-import '../../../jsonbean/login_bean.dart';
 import '../../../provider/course_term_provider.dart';
 import '../../../utils/date_util.dart';
 import '../../../utils/log.dart';
 import '../../bottomtab/page/bottom_tab_page.dart';
+import '../../login/jsonbean/login_bean.dart';
 
 /// 开屏引导默认展示时间
 const int guideTimeMill = 1800;

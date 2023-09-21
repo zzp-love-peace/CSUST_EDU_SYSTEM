@@ -4,6 +4,7 @@ import 'package:csust_edu_system/network/data/http_response_data.dart';
 import 'package:csust_edu_system/network/http_helper.dart';
 import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:csust_edu_system/utils/log.dart';
+
 import '../../network/data/response_status.dart';
 import '../../utils/typedef_util.dart';
 
@@ -19,7 +20,8 @@ abstract class BaseService {
   /// [path] 路径
   /// [params] 参数
   /// [onPrepare] 请求前回调
-  /// [OnSuccess] 请求成功回调
+  /// [onDataSuccess] 获取数据成功回调
+  /// [OnDataFail] 获取数据失败回调
   /// [OnFail] 请求失败回调
   /// [OnError] 请求异常回调
   /// [OnFinish] 请求结束回调
@@ -68,7 +70,8 @@ abstract class BaseService {
   /// [params] 参数
   /// [contentType] 内容格式
   /// [onPrepare] 请求前回调
-  /// [OnSuccess] 请求成功回调
+  /// [onDataSuccess] 获取数据成功回调
+  /// [OnDataFail] 获取数据失败回调
   /// [OnFail] 请求失败回调
   /// [OnError] 请求异常回调
   /// [OnFinish] 请求结束回调

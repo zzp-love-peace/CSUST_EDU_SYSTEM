@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:csust_edu_system/ui/notification/jsonbean/notification_bean.dart';
 
 /// 系统通知Model
 ///
@@ -6,5 +6,7 @@ import 'package:flutter/cupertino.dart';
 /// @version: 1.8.8
 /// @Since: 2023.9.19
 class NotificationModel{
-  List<Widget> notificationList = [];//这里装的是container，包含每个通知item
+
+  /// 通知列表
+  List<NotificationBean> notificationList = [];//这里装的是bean，包含每个通知item
 }

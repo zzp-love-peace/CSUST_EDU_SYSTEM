@@ -1,3 +1,5 @@
+import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
+import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,7 +8,7 @@ import 'package:provider/provider.dart';
 /// @author zzp
 /// @since 2023/9/12
 /// @version v1.8.8
-class ConsumerView<T extends ChangeNotifier> extends StatefulWidget {
+class ConsumerView<T extends BaseViewModel> extends StatefulWidget {
   const ConsumerView(
       {super.key,
       required this.builder,
@@ -19,26 +21,29 @@ class ConsumerView<T extends ChangeNotifier> extends StatefulWidget {
   /// 子view
   final Widget? child;
   /// 初始化时
-  final Function(BuildContext)? onInit;
+  final Function(T)? onInit;
   /// 销毁时
-  final Function(BuildContext)? onDispose;
+  final Function(T)? onDispose;
 
   @override
   State<ConsumerView> createState() => _ConsumerViewState<T>();
 }
 
-class _ConsumerViewState<T extends ChangeNotifier>
+class _ConsumerViewState<T extends BaseViewModel>
     extends State<ConsumerView<T>> {
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => widget.onInit?.call(context));
+    T viewModel = context.readViewModel<T>();
+    WidgetsBinding.instance.addPostFrameCallback((_) => widget.onInit?.call(viewModel));
   }
 
   @override
   void dispose() {
     super.dispose();
-    widget.onDispose?.call(context);
+    T viewModel = context.read<T>();
+    widget.onDispose?.call(viewModel);
   }
 
   @override

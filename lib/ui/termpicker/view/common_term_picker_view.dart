@@ -2,7 +2,6 @@ import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/ui/termpicker/model/common_term_picker_model.dart';
 import 'package:csust_edu_system/ui/termpicker/viewmodel/common_term_picker_view_model.dart';
-import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:csust_edu_system/utils/typedef_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/picker.dart';
@@ -35,8 +34,8 @@ class CommonTermPickerView extends StatelessWidget {
             CommonTermPickerViewModel(
                 model: CommonTermPickerModel(nowTerm: nowTerm)),
         child: ConsumerView<CommonTermPickerViewModel>(
-            onInit: (innerContext) {
-              innerContext.getViewModel<CommonTermPickerViewModel>().getAllTerm(StuInfo.cookie);
+            onInit: (viewModel) {
+              viewModel.getAllTerm(StuInfo.cookie);
             },
             builder: (ctx, viewModel, _) {
               return GestureDetector(

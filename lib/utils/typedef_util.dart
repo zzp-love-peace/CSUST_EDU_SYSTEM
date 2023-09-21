@@ -1,18 +1,40 @@
 /// 请求前回调
 typedef OnPrepare = void Function();
+
 /// 获取数据成功回调
-typedef OnDataSuccess<T> = void Function(T, String);
+///
+/// [data] 数据
+/// [msg] 成功信息
+typedef OnDataSuccess<T> = void Function(T data, String msg);
+
 /// 获取数据失败回调
-typedef OnDataFail = void Function(int, String);
+///
+/// [code] 错误码
+/// [msg] 错误信息
+typedef OnDataFail = void Function(int code, String msg);
+
 /// 请求失败回调
-typedef OnFail = void Function(String?);
+///
+/// [msg] 错误信息
+typedef OnFail = void Function(String? msg);
+
 /// 请求异常回调
-typedef OnError = void Function(Exception);
+///
+/// [exception] 异常
+typedef OnError = void Function(Exception exception);
+
 /// 请求结束回调
-typedef OnFinish = void Function(bool);
+///
+/// [isSuccess] 获取数据是否成功
+typedef OnFinish = void Function(bool isSuccess);
+
 /// 键值对
 typedef KeyMap = Map<String, dynamic>;
+
 /// 列表
 typedef KeyList = List<dynamic>;
-/// 日期选择器回调
+
+/// 学期选择器回调
+///
+/// [term] 学期
 typedef DatePickerCallBack = void Function(String term);

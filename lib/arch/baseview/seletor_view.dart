@@ -1,3 +1,5 @@
+import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
+import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,7 +8,7 @@ import 'package:provider/provider.dart';
 /// @author zzp
 /// @since 2023/9/12
 /// @version v1.8.8
-class SelectorView<T extends ChangeNotifier, K> extends StatefulWidget {
+class SelectorView<T extends BaseViewModel, K> extends StatefulWidget {
   const SelectorView(
       {super.key,
         required this.selector,
@@ -22,26 +24,29 @@ class SelectorView<T extends ChangeNotifier, K> extends StatefulWidget {
   /// 子view
   final Widget? child;
   /// 初始化时
-  final Function()? onInit;
+  final Function(T)? onInit;
   /// 销毁时
-  final Function()? onDispose;
+  final Function(T)? onDispose;
 
   @override
   State<SelectorView> createState() => _SelectorViewState<T, K>();
 }
 
-class _SelectorViewState<T extends ChangeNotifier, K>
+class _SelectorViewState<T extends BaseViewModel, K>
     extends State<SelectorView<T, K>> {
+
   @override
   void initState() {
     super.initState();
-    widget.onInit?.call();
+    T viewModel = context.readViewModel<T>();
+    WidgetsBinding.instance.addPostFrameCallback((_) => widget.onInit?.call(viewModel));
   }
 
   @override
   void dispose() {
     super.dispose();
-    widget.onDispose?.call();
+    T viewModel = context.read<T>();
+    widget.onDispose?.call(viewModel);
   }
 
   @override

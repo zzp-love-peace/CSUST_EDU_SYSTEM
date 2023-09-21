@@ -3,6 +3,7 @@ import 'package:csust_edu_system/utils/sp/sp_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
+
 import '../arch/baseviewmodel/base_view_model.dart';
 import '../ass/key_assets.dart';
 import '../provider/theme_color_provider.dart';
@@ -76,8 +77,15 @@ extension BuildContextExtension on BuildContext {
   }
 
   /// 获取ViewModel
-  T getViewModel<T extends BaseViewModel>() {
+  T readViewModel<T extends BaseViewModel>() {
     T res = read<T>();
+    res.injectContext(this);
+    return res;
+  }
+
+  /// 获取ViewModel，并使得该context监听model变化
+  T watchViewModel<T extends BaseViewModel>() {
+    T res = watch<T>();
     res.injectContext(this);
     return res;
   }

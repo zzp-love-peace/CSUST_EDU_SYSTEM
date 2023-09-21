@@ -43,7 +43,7 @@ class _GuideHomeState extends State<GuideHome> {
   void initState() {
     super.initState();
     SpUtil.init().then((_) {
-      _guideViewModel = context.getViewModel<GuideViewModel>();
+      _guideViewModel = context.readViewModel<GuideViewModel>();
       WidgetsBinding.instance
           .addPostFrameCallback((_) => _guideViewModel.doPreWork());
     });

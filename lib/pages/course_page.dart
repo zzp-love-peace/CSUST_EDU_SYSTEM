@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/theme_home.dart';
@@ -9,10 +10,8 @@ import 'package:csust_edu_system/ui/termpicker/view/common_term_picker_view.dart
 import 'package:csust_edu_system/utils/course_util.dart';
 import 'package:csust_edu_system/utils/date_util.dart';
 import 'package:csust_edu_system/widgets/custom_toast.dart';
-import 'package:csust_edu_system/widgets/date_picker.dart';
 import 'package:csust_edu_system/widgets/progress_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_picker/picker.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +20,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/course_model.dart';
 import '../database/db_manager.dart';
 import '../homes/course_info_home.dart';
-import '../network/edu_system_manager.dart';
 import '../provider/course_term_provider.dart';
 import '../widgets/hint_dialog.dart';
 
@@ -64,10 +62,9 @@ class _CoursePageState extends State<CoursePage> {
 
   @override
   Widget build(BuildContext context) {
-    // if(DateInfo.totalWeek==0){
-    //   DateInfo.totalWeek=20;
+    // if (DateInfo.totalWeek == 0){
+    //   DateInfo.totalWeek = 20;
     // }
-
     return Scaffold(
         appBar: _coursePageAppBar(),
         body: PageView.builder(
@@ -250,6 +247,7 @@ class _CoursePageState extends State<CoursePage> {
             child: InkWell(
               child: Wrap(
                 direction: Axis.horizontal,
+                alignment: WrapAlignment.center,
                 children: [
                   Text(
                     '第$_weekNum周',
@@ -1324,7 +1322,7 @@ class MyCourse {
       this.weekNum, this.term);
 
   MyCourse.fromJson(Map json) {
-    name = json['name'];
+    name = json[KeyAssets.name];
     place = json['place'];
     teacher = json['teacher'];
     time = json['time'];

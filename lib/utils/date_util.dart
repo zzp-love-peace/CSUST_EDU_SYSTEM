@@ -29,6 +29,13 @@ class DateUtil {
     return w;
   }
 
+  /// 传入今天的日期 格式为xxx-xx-xx 返回本周日的年月日
+  static List<int> getSunday(String nowDate) {
+    var date = DateUtil.splitDate(nowDate);
+    int dateOfWeek = DateUtil.date2Week(nowDate);
+    return DateUtil.minusDay(date[0], date[1], date[2], dateOfWeek);
+  }
+
   static List<int> minusDay(int year, int month, int day, int num) {
     int n = 0;
     day -= num;

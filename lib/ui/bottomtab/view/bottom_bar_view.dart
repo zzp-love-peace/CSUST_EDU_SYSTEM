@@ -1,6 +1,4 @@
-import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../arch/baseview/consumer_view.dart';
 import '../../../ass/string_assets.dart';
@@ -22,8 +20,8 @@ class BottomBarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConsumerView<UnreadMsgViewModel>(
-      onInit: (innerContext) {
-        innerContext.getViewModel<UnreadMsgViewModel>().getUnreadMsg();
+      onInit: (viewModel) {
+        viewModel.getUnreadMsg();
       },
       builder: (context, unreadMsgViewModel, _) => BottomNavigationBar(
         showUnselectedLabels: false,

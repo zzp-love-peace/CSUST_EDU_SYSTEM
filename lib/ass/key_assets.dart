@@ -62,4 +62,7 @@ class KeyAssets {
   static const String weekNum = 'weekNum';
   /// key-学期
   static const String term = 'term';
+  /// key-ggid
+  static const String ggid = 'ggid';
+
 }

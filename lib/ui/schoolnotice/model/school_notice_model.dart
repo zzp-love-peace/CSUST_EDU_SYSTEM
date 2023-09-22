@@ -4,8 +4,8 @@
 /// @since 2023/9/22
 /// @version v1.8.8
 class SchoolNoticeModel {
-  SchoolNoticeModel({this.html=""});
+  SchoolNoticeModel({this.html = ""});
 
   ///学校通知data
-   String html ;
+  String html;
 }

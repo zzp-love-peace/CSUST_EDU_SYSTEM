@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 /// @version v1.8.8
 
 class SchoolNoticePage extends StatelessWidget {
+  /// 学校通知id
   final String ggid;
 
   const SchoolNoticePage(this.ggid, {Key? key}) : super(key: key);
@@ -35,6 +36,7 @@ class SchoolNoticePage extends StatelessWidget {
 /// @version v1.8.8
 
 class SchoolNoticeHome extends StatelessWidget {
+  /// 学校通知id
   final String ggid;
 
   const SchoolNoticeHome(this.ggid, {Key? key}) : super(key: key);
@@ -42,23 +44,28 @@ class SchoolNoticeHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          foregroundColor: Colors.white,
-          title: const Text(
-            StringAssets.schoolNotice,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        foregroundColor: Colors.white,
+        title: const Text(
+          StringAssets.schoolNotice,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        body: SingleChildScrollView(
-            child: ConsumerView<SchoolNoticeViewModel>(onInit: (viewModel) {
-          viewModel.initSchoolNoticePageData(StuInfo.cookie, ggid);
-        }, builder: (context, viewModel, _) {
-          return HtmlWidget(viewModel.model.html);
-        })));
+      ),
+      body: SingleChildScrollView(
+        child: ConsumerView<SchoolNoticeViewModel>(
+          onInit: (viewModel) {
+            viewModel.initSchoolNoticePageData(StuInfo.cookie, ggid);
+          },
+          builder: (context, viewModel, _) {
+            return HtmlWidget(viewModel.model.html);
+          },
+        ),
+      ),
+    );
   }
 }

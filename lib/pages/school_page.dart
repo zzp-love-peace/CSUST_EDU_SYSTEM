@@ -8,21 +8,17 @@ import 'package:csust_edu_system/homes/association_home.dart';
 import 'package:csust_edu_system/homes/electricity_home.dart';
 import 'package:csust_edu_system/homes/exam_home.dart';
 import 'package:csust_edu_system/homes/grade_home.dart';
-import 'package:csust_edu_system/homes/notice_home.dart';
 import 'package:csust_edu_system/homes/recruit_home.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/route/fade_route.dart';
+import 'package:csust_edu_system/ui/schoolnotice/page/shcool_notice_page.dart';
 import 'package:csust_edu_system/widgets/none_lottie.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-import '../utils/date_util.dart';
 import '../widgets/custom_toast.dart';
 
 class SchoolPage extends StatefulWidget {
@@ -392,7 +388,7 @@ class _SchoolPageState extends State<SchoolPage> {
             borderRadius: const BorderRadius.all(Radius.circular(12)),
             onTap: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => NoticeHome(ggid)));
+                  MaterialPageRoute(builder: (context) => SchoolNoticePage(ggid)));
             },
             child: Stack(
               alignment: Alignment.bottomRight,

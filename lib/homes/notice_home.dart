@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-
 import '../data/stu_info.dart';
 import '../widgets/custom_toast.dart';
 

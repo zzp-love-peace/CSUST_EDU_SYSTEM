@@ -9,6 +9,6 @@ class SchoolNoticeBean {
   SchoolNoticeBean.fromJson(Map<String, dynamic> json)
       : htmlData = json[KeyAssets.data];
 
-  /// 数据
+  /// html数据
   String htmlData;
 }

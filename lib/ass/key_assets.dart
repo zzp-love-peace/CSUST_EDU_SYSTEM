@@ -72,19 +72,25 @@ class KeyAssets {
 
   /// key-创建时间
   static const String createTime = 'createTime';
+
   /// key-地点
   static const String place = 'place';
+
   /// key-老师
   static const String teacher = 'teacher';
+
   /// key-时间
   static const String time = 'time';
+
   /// key-下标索引
   static const String index = 'index';
+
   /// key-周数
   static const String weekNum = 'weekNum';
+
   /// key-学期
   static const String term = 'term';
+
   /// key-ggid
   static const String ggid = 'ggid';
-
 }

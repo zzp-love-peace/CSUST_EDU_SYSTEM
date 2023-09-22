@@ -34,19 +34,21 @@ class SelectorView<T extends BaseViewModel, K> extends StatefulWidget {
 
 class _SelectorViewState<T extends BaseViewModel, K>
     extends State<SelectorView<T, K>> {
+  /// viewModel实例
+  late T viewModel;
 
   @override
   void initState() {
     super.initState();
-    T viewModel = context.readViewModel<T>();
-    WidgetsBinding.instance.addPostFrameCallback((_) => widget.onInit?.call(viewModel));
+    viewModel = context.readViewModel<T>();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => widget.onInit?.call(viewModel));
   }
 
   @override
   void dispose() {
-    super.dispose();
-    T viewModel = context.read<T>();
     widget.onDispose?.call(viewModel);
+    super.dispose();
   }
 
   @override

@@ -31,26 +31,28 @@ class ConsumerView<T extends BaseViewModel> extends StatefulWidget {
 
 class _ConsumerViewState<T extends BaseViewModel>
     extends State<ConsumerView<T>> {
+  /// viewModel实例
+  late T viewModel;
 
   @override
   void initState() {
     super.initState();
-    T viewModel = context.readViewModel<T>();
-    WidgetsBinding.instance.addPostFrameCallback((_) => widget.onInit?.call(viewModel));
+    viewModel = context.readViewModel<T>();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => widget.onInit?.call(viewModel));
   }
 
   @override
   void dispose() {
-    super.dispose();
-    T viewModel = context.read<T>();
     widget.onDispose?.call(viewModel);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<T>(
-        builder: widget.builder,
-        child: widget.child,
+      builder: widget.builder,
+      child: widget.child,
     );
   }
 }

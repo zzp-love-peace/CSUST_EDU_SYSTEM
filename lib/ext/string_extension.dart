@@ -11,7 +11,18 @@ import '../common/dialog/custom_toast.dart';
 extension StringExtension on String {
   /// toast
   void showToast() {
-    SmartDialog.showToast(this, builder: (_) => CustomToast(this));
+    var nowDateTime = DateTime.now();
+    if (_StringToastHelper.lastToastDateTime == null ||
+        this != _StringToastHelper.lastToast ||
+        (this == _StringToastHelper.lastToast &&
+            nowDateTime
+                    .difference(_StringToastHelper.lastToastDateTime!)
+                    .inSeconds >=
+                5)) {
+      SmartDialog.showToast(this, builder: (_) => CustomToast(this));
+      _StringToastHelper.lastToast = this;
+      _StringToastHelper.lastToastDateTime = nowDateTime;
+    }
   }
 
   /// 内容是否为空
@@ -52,4 +63,17 @@ extension StringList on List<String> {
     }
     return true;
   }
+}
+
+/// 字符串Toast辅助类
+///
+/// @author zzp
+/// @since 2023/9/24
+/// @version v1.8.8
+class _StringToastHelper {
+  /// 最近一次Toast的字符串
+  static String lastToast = StringAssets.emptyStr;
+
+  /// 最近一次Toast的时间
+  static DateTime? lastToastDateTime;
 }

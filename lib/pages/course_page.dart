@@ -17,7 +17,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../data/course_model.dart';
+import '../data/old_course_model.dart';
 import '../database/db_manager.dart';
 import '../homes/course_info_home.dart';
 import '../provider/course_term_provider.dart';
@@ -26,6 +26,7 @@ import '../widgets/hint_dialog.dart';
 List<MyCourse> myCourseList = [];
 late SharedPreferences prefs;
 
+@Deprecated('废弃')
 class CoursePage extends StatefulWidget {
   const CoursePage({Key? key}) : super(key: key);
 
@@ -206,7 +207,7 @@ class _CoursePageState extends State<CoursePage> {
           var dbValue = await DBManager.db.containsCourse(_term, wNum);
           if (dbValue == null) {
             var insertValue = await DBManager.db
-                .insertCourse(CourseModel(_term, wNum, content));
+                .insertCourse(OldCourseModel(_term, wNum, content));
           } else {
             var updateValue =
                 await DBManager.db.updateCourse(content, dbValue.id);
@@ -634,7 +635,7 @@ class _CourseLayoutState extends State<_CourseLayout> {
             }
             String content = jsonEncode(queryValue['data']);
             var insertValue = await DBManager.db
-                .insertCourse(CourseModel(widget.term, weekNum, content));
+                .insertCourse(OldCourseModel(widget.term, weekNum, content));
           } else {
             SmartDialog.compatible
                 .showToast('', widget: CustomToast(queryValue['msg']));

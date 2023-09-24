@@ -29,21 +29,22 @@ class BottomBarView extends StatelessWidget {
         currentIndex: currentIndex,
         onTap: onTap,
         items: [
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.assignment_outlined),
-              activeIcon: Icon(Icons.assignment),
-              label: StringAssets.classSchedule),
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.home_work_outlined),
-              activeIcon: Icon(Icons.home_work),
-              label: StringAssets.campus),
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.forum_outlined),
-              activeIcon: Icon(Icons.forum),
-              label: StringAssets.forum),
-          BottomNavigationBarItem(
-              icon: _getMineIcon(false, unreadMsgViewModel.model.hasUnreadMsg),
-              activeIcon: _getMineIcon(true, unreadMsgViewModel.model.hasUnreadMsg),
+                  const BottomNavigationBarItem(
+                      icon: Icon(Icons.assignment_outlined),
+                      activeIcon: Icon(Icons.assignment),
+                      label: StringAssets.Course),
+                  const BottomNavigationBarItem(
+                      icon: Icon(Icons.home_work_outlined),
+                      activeIcon: Icon(Icons.home_work),
+                      label: StringAssets.campus),
+                  const BottomNavigationBarItem(
+                      icon: Icon(Icons.forum_outlined),
+                      activeIcon: Icon(Icons.forum),
+                      label: StringAssets.forum),
+                  BottomNavigationBarItem(
+                      icon: _getMineIcon(
+                          false, unreadMsgViewModel.model.hasUnreadMsg),
+                      activeIcon: _getMineIcon(true, unreadMsgViewModel.model.hasUnreadMsg),
               label: StringAssets.mine)
         ]
       )

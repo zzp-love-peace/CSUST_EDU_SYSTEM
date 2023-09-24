@@ -71,4 +71,19 @@ class KeyAssets {
 
   /// key-ggid
   static const String ggid = 'ggid';
+
+  /// key-自定义课程数据
+  static const String myCourseData = 'myCourseData';
+
+  /// key-内容
+  static const String content = 'content';
+
+  /// key-id
+  static const String id = 'id';
+
+  /// key-课程名称
+  static const String courseName = 'courseName';
+
+  /// key-地址
+  static const String address = 'address';
 }

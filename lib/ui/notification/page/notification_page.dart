@@ -1,5 +1,6 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/ui/appbar/common_app_bar.dart';
 import 'package:csust_edu_system/ui/notification/jsonbean/notification_bean.dart';
 import 'package:csust_edu_system/ui/notification/model/notification_model.dart';
 import 'package:csust_edu_system/ui/notification/viewmodel/notification_viewmodel.dart';
@@ -39,29 +40,17 @@ class NotificationHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          foregroundColor: Colors.white,
-          centerTitle: true,
-          title: const Text(
-            StringAssets.notificationPageTitle,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        body: ConsumerView<NotificationViewModel>(
-            onInit: (viewModel) {
-              viewModel.initNotificationPageData();
-             },
-            builder: (context, viewModel, _) {
-          List<NotificationBean> _notificationList = viewModel.model.notificationList;
+        appBar: CommonAppBar.create(StringAssets.notificationPageTitle),
+        body: ConsumerView<NotificationViewModel>(onInit: (viewModel) {
+          viewModel.initNotificationPageData();
+        }, builder: (context, viewModel, _) {
+          List<NotificationBean> _notificationList =
+              viewModel.model.notificationList;
           return _notificationList.isNotEmpty
               ? ListView.builder(
-            itemCount: _notificationList.length,
-            itemBuilder: (ctx, index) {
-              return Container(
+                  itemCount: _notificationList.length,
+                  itemBuilder: (ctx, index) {
+                    return Container(
                   color: Colors.white,
                   child: ListTile(
                     leading: ClipOval(

@@ -1,4 +1,5 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
+import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/ui/login/viewmodel/password_edittext_viewmodel.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class PasswordEditTextView extends StatelessWidget {
             decoration: InputDecoration(
                 border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                labelText: "密码",
+                labelText: StringAssets.password,
                 suffixIcon: IconButton(
                     onPressed: () {
                       viewModel.changePasswordVisible();

@@ -1,5 +1,7 @@
+import 'package:csust_edu_system/arch/basedata/page_result_bean.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/utils/sp/sp_util.dart';
+import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +19,7 @@ extension StringExtension on String {
 
   /// toast
   void showToast() {
-   SmartDialog.showToast(this, maskColor: Colors.black45);
+    SmartDialog.showToast(this, builder: (_) => CustomToast(this));
   }
 
   /// 内容是否为空
@@ -35,6 +37,7 @@ extension StringExtension on String {
 ///
 /// @author zzp
 /// @since 2023/9/17
+/// @version v1.8.8
 extension StringNullExtension on String? {
 
   /// 若为null则返回空字符串
@@ -47,6 +50,7 @@ extension StringNullExtension on String? {
 ///
 /// @author zzp
 /// @since 2023/9/17
+/// @version v1.8.8
 extension StringList on List<String> {
 
   /// 是否数组内所有字符串内容都为空
@@ -64,6 +68,7 @@ extension StringList on List<String> {
 ///
 /// @author zzp
 /// @since 2023/9/19
+/// @version v1.8.8
 extension BuildContextExtension on BuildContext {
 
   /// 初始化主题色
@@ -100,7 +105,15 @@ extension BuildContextExtension on BuildContext {
   /// 跳转
   ///
   /// [page] 页面
-  void push(Widget page) {
-    Navigator.of(this).push(MaterialPageRoute(builder: (_) => page));
+  Future<PageResultBean<T>?> push<T>(Widget page) {
+    return Navigator.of(this)
+        .push<PageResultBean<T>>(MaterialPageRoute(builder: (_) => page));
+  }
+
+  /// 回退页面
+  ///
+  /// [result] 返回值
+  void pop<T>({PageResultBean<T>? result}) {
+    Navigator.pop(this, result);
   }
 }

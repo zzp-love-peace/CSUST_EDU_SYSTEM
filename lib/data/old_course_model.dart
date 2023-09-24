@@ -1,4 +1,4 @@
-class CourseModel {
+class OldCourseModel {
   late int id;
   late String term;
   late int weekNum;
@@ -14,11 +14,11 @@ class CourseModel {
     return map;
   }
 
-  CourseModel(this.term, this.weekNum, this.content, {int? id}) {
+  OldCourseModel(this.term, this.weekNum, this.content, {int? id}) {
     this.id = id ?? -1;
   }
 
-  CourseModel.fromMap(Map map) {
+  OldCourseModel.fromMap(Map map) {
     id = map['id'];
     term = map['term'];
     weekNum = map['weekNum'];

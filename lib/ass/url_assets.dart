@@ -19,7 +19,7 @@ class UrlAssets {
   static const getAllTerm = '/getAllSemester';
 
   /// url-获取某一周课程表
-  static const getWeekClassSchedule = '/getCourse';
+  static const getWeekCourse = '/getCourse';
 
   /// url-获取学校通知详情接口
   static const getNoticeDetail = '/getNoticeDetail';

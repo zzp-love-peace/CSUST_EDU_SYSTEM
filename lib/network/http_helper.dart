@@ -1,7 +1,9 @@
 import 'dart:io';
+
 import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:dio/dio.dart';
+
 import 'data/http_response.dart';
 import 'data/response_status.dart';
 
@@ -26,8 +28,7 @@ class HttpHelper {
 
   /// 通用全局单例，第一次使用时初始化
   HttpHelper._internal() {
-    _dio ??= Dio(BaseOptions(baseUrl: _baseUrl, connectTimeout: constTimeOut,
-        receiveTimeout: constTimeOut, sendTimeout: constTimeOut));
+    _dio ??= Dio(BaseOptions(baseUrl: _baseUrl, connectTimeout: constTimeOut));
     _dio?.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       if (StuInfo.token.isNotEmpty) {
         options.headers[KeyAssets.token] = StuInfo.token;

@@ -1,9 +1,10 @@
 import 'package:csust_edu_system/arch/baseservice/base_service.dart';
 import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/ass/url_assets.dart';
-import 'package:csust_edu_system/utils/typedef_util.dart';
+import 'package:csust_edu_system/util/typedef_util.dart';
 import 'package:dio/dio.dart';
-import '../../../utils/my_util.dart';
+
+import '../../../util/my_util.dart';
 
 /// 登录Service
 ///

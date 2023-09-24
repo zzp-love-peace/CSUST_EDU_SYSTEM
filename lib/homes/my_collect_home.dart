@@ -1,14 +1,14 @@
 import 'package:animated_list_plus/animated_list_plus.dart';
+import 'package:csust_edu_system/common/lottie/none_lottie.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/widgets/forum_item.dart';
-import 'package:csust_edu_system/widgets/none_lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
+import '../common/dialog/custom_toast.dart';
 import '../network/http_manager.dart';
-import '../utils/my_util.dart';
-import '../widgets/custom_toast.dart';
+import '../util/my_util.dart';
 
 class MyCollectHome extends StatefulWidget {
   const MyCollectHome({Key? key}) : super(key: key);
@@ -18,7 +18,6 @@ class MyCollectHome extends StatefulWidget {
 }
 
 class _MyCollectHomeState extends State<MyCollectHome> {
-
   List<Forum> _forumList = [];
   // final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 

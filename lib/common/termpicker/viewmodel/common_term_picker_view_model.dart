@@ -1,6 +1,6 @@
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
-import 'package:csust_edu_system/ui/termpicker/model/common_term_picker_model.dart';
-import 'package:csust_edu_system/ui/termpicker/service/common_term_picker_service.dart';
+import 'package:csust_edu_system/common/termpicker/model/common_term_picker_model.dart';
+import 'package:csust_edu_system/common/termpicker/service/common_term_picker_service.dart';
 
 import '../../../data/date_info.dart';
 
@@ -9,7 +9,8 @@ import '../../../data/date_info.dart';
 /// @author zzp
 /// @since 2023/9/20
 /// @version v1.8.8
-class CommonTermPickerViewModel extends BaseViewModel<CommonTermPickerModel, CommonTermPickerService> {
+class CommonTermPickerViewModel
+    extends BaseViewModel<CommonTermPickerModel, CommonTermPickerService> {
   CommonTermPickerViewModel({required super.model});
 
   @override

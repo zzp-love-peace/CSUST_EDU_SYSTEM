@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
+import '../common/dialog/custom_toast.dart';
+import '../common/lottie/none_lottie.dart';
 import '../network/http_manager.dart';
-import '../utils/my_util.dart';
-import '../widgets/custom_toast.dart';
+import '../util/my_util.dart';
 import '../widgets/forum_item.dart';
-import '../widgets/none_lottie.dart';
 
 class MyForumHome extends StatefulWidget {
   const MyForumHome({Key? key}) : super(key: key);

@@ -1,22 +1,20 @@
 import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:csust_edu_system/common/dialog/select_dialog.dart';
+import 'package:csust_edu_system/common/lottie/none_lottie.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
-import 'package:csust_edu_system/utils/date_util.dart';
-import 'package:csust_edu_system/utils/my_util.dart';
+import 'package:csust_edu_system/util/date_util.dart';
+import 'package:csust_edu_system/util/my_util.dart';
 import 'package:csust_edu_system/widgets/forum_item.dart';
-import 'package:csust_edu_system/widgets/none_lottie.dart';
-import 'package:csust_edu_system/widgets/select_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:like_button/like_button.dart';
-import 'package:photo_view/photo_view_gallery.dart';
 
-import '../route/fade_route.dart';
-import '../widgets/custom_toast.dart';
-import '../widgets/hint_dialog.dart';
+import '../common/dialog/custom_toast.dart';
+import '../common/dialog/hint_dialog.dart';
 
 class DetailHome extends StatefulWidget {
   final Forum forum;

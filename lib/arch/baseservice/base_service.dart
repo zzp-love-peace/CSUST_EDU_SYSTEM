@@ -1,12 +1,12 @@
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/network/data/http_response_code.dart';
 import 'package:csust_edu_system/network/data/http_response_data.dart';
 import 'package:csust_edu_system/network/http_helper.dart';
-import 'package:csust_edu_system/utils/extension_uitl.dart';
-import 'package:csust_edu_system/utils/log.dart';
+import 'package:csust_edu_system/util/log.dart';
 
 import '../../network/data/response_status.dart';
-import '../../utils/typedef_util.dart';
+import '../../util/typedef_util.dart';
 
 /// 所有Service的基类
 /// 

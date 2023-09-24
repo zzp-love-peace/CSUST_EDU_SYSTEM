@@ -1,6 +1,6 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
-import 'package:csust_edu_system/ui/appbar/common_app_bar.dart';
+import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
 import 'package:csust_edu_system/ui/notification/jsonbean/notification_bean.dart';
 import 'package:csust_edu_system/ui/notification/model/notification_model.dart';
 import 'package:csust_edu_system/ui/notification/viewmodel/notification_viewmodel.dart';
@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ass/image_assets.dart';
-import '../../../utils/date_util.dart';
-import '../../../widgets/none_lottie.dart';
+import '../../../common/lottie/none_lottie.dart';
+import '../../../util/date_util.dart';
 
 /// 系统通知Page
 ///

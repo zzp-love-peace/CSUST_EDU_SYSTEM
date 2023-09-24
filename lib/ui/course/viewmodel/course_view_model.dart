@@ -8,13 +8,13 @@ import 'package:csust_edu_system/ui/course/jsonbean/custom_course_bean.dart';
 import 'package:csust_edu_system/ui/course/jsonbean/db_course_bean.dart';
 import 'package:csust_edu_system/ui/course/model/course_model.dart';
 import 'package:csust_edu_system/ui/course/service/course_service.dart';
-import 'package:csust_edu_system/utils/sp/sp_util.dart';
+import 'package:csust_edu_system/util/sp/sp_util.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
+import '../../../common/dialog/hint_dialog.dart';
 import '../../../data/date_info.dart';
-import '../../../widgets/hint_dialog.dart';
 
 /// 课程表ViewModel
 ///

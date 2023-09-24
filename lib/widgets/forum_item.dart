@@ -2,15 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/detail_home.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
-import 'package:csust_edu_system/utils/date_util.dart';
+import 'package:csust_edu_system/util/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:like_button/like_button.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+
+import '../common/dialog/custom_toast.dart';
 import '../route/fade_route.dart';
-import 'custom_toast.dart';
 
 class ForumItem extends StatefulWidget {
   final Forum forum;

@@ -2,8 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/homes/association_home.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/my_util.dart';
-
 class AssInfoHome extends StatelessWidget {
   final AssInfo assInfo;
 

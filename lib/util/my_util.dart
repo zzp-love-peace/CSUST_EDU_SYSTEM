@@ -1,12 +1,13 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../common/dialog/custom_toast.dart';
+import '../common/dialog/select_dialog.dart';
 import '../data/stu_info.dart';
 import '../network/http_manager.dart';
-import '../widgets/custom_toast.dart';
-import '../widgets/select_dialog.dart';
 
 const String version = 'v1.8.8';
 const String appName = '新长理教务';

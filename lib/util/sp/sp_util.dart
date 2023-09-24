@@ -1,4 +1,4 @@
-import 'package:csust_edu_system/utils/extension_uitl.dart';
+import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// SharedPreferences工具类

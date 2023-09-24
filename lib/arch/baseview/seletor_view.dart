@@ -1,5 +1,5 @@
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
-import 'package:csust_edu_system/utils/extension_uitl.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

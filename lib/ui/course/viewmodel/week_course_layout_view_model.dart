@@ -5,7 +5,7 @@ import 'package:csust_edu_system/ui/course/model/week_course_layout_model.dart';
 
 import '../../../data/old_course_model.dart';
 import '../../../database/db_manager.dart';
-import '../../../utils/course_util.dart';
+import '../../../util/course_util.dart';
 import '../service/course_service.dart';
 
 /// 周课程表组件ViewModel

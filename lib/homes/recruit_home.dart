@@ -2,12 +2,11 @@ import 'package:animated_search_bar/animated_search_bar.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/rec_info_home.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
-import '../widgets/custom_toast.dart';
-import '../widgets/none_lottie.dart';
+import '../common/dialog/custom_toast.dart';
+import '../common/lottie/none_lottie.dart';
 
 class RecruitHome extends StatefulWidget {
   const RecruitHome({Key? key}) : super(key: key);

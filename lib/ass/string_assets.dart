@@ -73,8 +73,8 @@ class StringAssets {
   /// 选择学期
   static const String selectTerm = '选择学期';
 
-  /// 确认
-  static const String ok = '确认';
+  /// 确定
+  static const String ok = '确定';
 
   /// 取消
   static const String cancel = '取消';
@@ -207,4 +207,7 @@ class StringAssets {
 
   /// 确定要删除该课程吗
   static const String confirmDeleteCourse = '确定要删除该课程吗';
+
+  /// 不能为空
+  static const String cannotEmpty = '不能为空';
 }

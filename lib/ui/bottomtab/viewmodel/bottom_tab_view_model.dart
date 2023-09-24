@@ -1,8 +1,8 @@
 import 'package:csust_edu_system/arch/baseservice/empty_service.dart';
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/bottomtab/model/bottom_tab_model.dart';
-import 'package:csust_edu_system/utils/extension_uitl.dart';
 
 /// 底部导航栏ViewModel类
 ///

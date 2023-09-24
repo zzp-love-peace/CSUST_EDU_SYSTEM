@@ -1,23 +1,21 @@
 import 'dart:io';
 
 import 'package:animated_list_plus/animated_list_plus.dart';
+import 'package:csust_edu_system/common/dialog/custom_toast.dart';
+import 'package:csust_edu_system/common/dialog/hint_dialog.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
-import 'package:csust_edu_system/widgets/custom_toast.dart';
-import 'package:csust_edu_system/widgets/hint_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_picker/picker.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-import '../route/fade_route.dart';
-import '../utils/my_util.dart';
+import '../common/dialog/select_dialog.dart';
+import '../util/my_util.dart';
 import '../widgets/forum_item.dart';
-import '../widgets/select_dialog.dart';
 
 class WriteForumHome extends StatefulWidget {
   final List<String> tabs;

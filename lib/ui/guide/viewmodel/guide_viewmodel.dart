@@ -10,11 +10,9 @@ import 'package:csust_edu_system/ui/login/page/login_page.dart';
 import 'package:csust_edu_system/ui/login/service/login_service.dart';
 import 'package:csust_edu_system/util/sp/sp_util.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:provider/provider.dart';
 
 import '../../../data/date_info.dart';
 import '../../../data/stu_info.dart';
-import '../../../provider/course_term_provider.dart';
 import '../../../util/date_util.dart';
 import '../../../util/log.dart';
 import '../../bottomtab/page/bottom_tab_page.dart';
@@ -76,8 +74,6 @@ class GuideViewModel extends BaseViewModel<EmptyModel, LoginService> {
       onFinish: (isSuccess) {
         if (!isSuccess) {
           _doOnLoginDataFail();
-          Provider.of<CourseTermProvider>(context, listen: false)
-              .setNowTerm(DateInfo.nowTerm);
           context.pushReplacement( const BottomTabPage());
         }
       },
@@ -97,8 +93,6 @@ class GuideViewModel extends BaseViewModel<EmptyModel, LoginService> {
           DateInfo.initDataFromSp();
           _computeNowWeek();
         }
-        Provider.of<CourseTermProvider>(context, listen: false)
-            .setNowTerm(DateInfo.nowTerm);
         context.pushReplacement( const BottomTabPage());
       }
     );

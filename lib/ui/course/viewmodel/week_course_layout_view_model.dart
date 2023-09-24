@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
+import 'package:csust_edu_system/ui/course/db/course_db_manager.dart';
+import 'package:csust_edu_system/ui/course/jsonbean/db_course_bean.dart';
 import 'package:csust_edu_system/ui/course/model/week_course_layout_model.dart';
 
-import '../../../data/old_course_model.dart';
-import '../../../database/db_manager.dart';
 import '../../../util/course_util.dart';
 import '../service/course_service.dart';
 
@@ -26,7 +26,7 @@ class WeekCourseLayoutViewModel
   /// [term] 学期
   /// [weekNum] 周数
   void getWeekCourse(String cookie, String term, int weekNum) {
-    DBManager.db.containsCourse(term, weekNum).then((dbValue) {
+    CourseDBManager.db.containsCourse(term, weekNum).then((dbValue) {
       if (dbValue == null) {
         service?.getWeekCourse(
           cookie: cookie,
@@ -35,7 +35,8 @@ class WeekCourseLayoutViewModel
           onDataSuccess: (data, msg) {
             model.courseList = CourseUtil.changeList(data);
             String content = jsonEncode(data);
-            DBManager.db.insertCourse(OldCourseModel(term, weekNum, content));
+            CourseDBManager.db
+                .insertCourse(DBCourseBean(term, weekNum, content));
           },
         );
       } else {

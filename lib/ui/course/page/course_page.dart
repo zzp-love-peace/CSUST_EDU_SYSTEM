@@ -145,6 +145,7 @@ class _CourseHomeState extends State<CourseHome> {
                       StuInfo.cookie, courseModel.term, courseModel.weekNum);
                   break;
                 case 1:
+                  /// todo:刷新整个学期课表
                   // _refreshTermCourse();
                   break;
               }

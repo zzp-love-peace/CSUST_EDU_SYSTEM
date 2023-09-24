@@ -46,7 +46,6 @@ class CourseItemViewModel extends BaseViewModel<CourseItemModel, EmptyService> {
                 courseBean.weekNum == course.weekNum) {
               course.place = courseBean.place;
               course.teacher = courseBean.teacher;
-              course.time = courseBean.time;
               course.name = courseBean.name;
               break;
             }

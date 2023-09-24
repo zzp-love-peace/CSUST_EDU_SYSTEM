@@ -1,12 +1,10 @@
-import 'package:csust_edu_system/widgets/custom_toast.dart';
-import 'package:csust_edu_system/widgets/select_dialog.dart';
-import 'package:flutter/foundation.dart';
+import 'package:csust_edu_system/common/dialog/custom_toast.dart';
+import 'package:csust_edu_system/common/dialog/select_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../pages/course_page.dart';
-import '../utils/date_util.dart';
+import '../util/date_util.dart';
 
 class CourseInfoHome extends StatelessWidget {
   final int weekNum;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../arch/baseview/consumer_view.dart';
 import '../../../ass/string_assets.dart';
-import '../../unreadmsg/viewmodel/unread_msg_view_model.dart';
+import '../../../common/unreadmsg/viewmodel/unread_msg_view_model.dart';
 
 /// 底部导航栏View
 ///

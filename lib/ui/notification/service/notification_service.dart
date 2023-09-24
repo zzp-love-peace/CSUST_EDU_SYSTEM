@@ -1,7 +1,8 @@
 import 'package:csust_edu_system/arch/baseservice/base_service.dart';
 import 'package:csust_edu_system/ass/url_assets.dart';
 
-import '../../../utils/typedef_util.dart';
+import '../../../util/typedef_util.dart';
+
 /// 系统通知Service
 ///
 /// @Author: Orcas_Liu

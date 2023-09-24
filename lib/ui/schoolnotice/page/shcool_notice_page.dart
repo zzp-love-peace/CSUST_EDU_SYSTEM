@@ -1,7 +1,7 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
-import 'package:csust_edu_system/ui/appbar/common_app_bar.dart';
 import 'package:csust_edu_system/ui/schoolnotice/model/school_notice_model.dart';
 import 'package:csust_edu_system/ui/schoolnotice/viewmodel/school_notice_viewmodel.dart';
 import 'package:flutter/material.dart';

@@ -1,18 +1,15 @@
 import 'package:animated_list_plus/animated_list_plus.dart';
+import 'package:csust_edu_system/common/dialog/custom_toast.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/write_forum_home.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
-import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:csust_edu_system/widgets/forum_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:like_button/like_button.dart';
-import 'package:lottie/lottie.dart';
 
-import '../utils/my_util.dart';
-import '../widgets/none_lottie.dart';
+import '../common/lottie/none_lottie.dart';
+import '../util/my_util.dart';
 
 class ForumPage extends StatefulWidget {
   const ForumPage({Key? key}) : super(key: key);

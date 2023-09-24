@@ -1,8 +1,8 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
-import 'package:csust_edu_system/ui/termpicker/model/common_term_picker_model.dart';
-import 'package:csust_edu_system/ui/termpicker/viewmodel/common_term_picker_view_model.dart';
-import 'package:csust_edu_system/utils/typedef_util.dart';
+import 'package:csust_edu_system/common/termpicker/model/common_term_picker_model.dart';
+import 'package:csust_edu_system/common/termpicker/viewmodel/common_term_picker_view_model.dart';
+import 'package:csust_edu_system/util/typedef_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/picker.dart';
 import 'package:provider/provider.dart';

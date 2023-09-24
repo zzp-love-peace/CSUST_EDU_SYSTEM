@@ -3,7 +3,7 @@ import 'package:csust_edu_system/ass/url_assets.dart';
 import 'package:dio/dio.dart';
 
 import '../../../ass/key_assets.dart';
-import '../../../utils/typedef_util.dart';
+import '../../../util/typedef_util.dart';
 
 /// 学校通知Service
 ///

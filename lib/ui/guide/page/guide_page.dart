@@ -1,12 +1,12 @@
 import 'package:csust_edu_system/arch/basedata/empty_model.dart';
 import 'package:csust_edu_system/ass/image_assets.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/guide/viewmodel/guide_viewmodel.dart';
-import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../utils/sp/sp_util.dart';
+import '../../../util/sp/sp_util.dart';
 
 /// 开屏引导页
 ///

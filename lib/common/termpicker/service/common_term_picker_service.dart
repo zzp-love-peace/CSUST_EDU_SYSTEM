@@ -1,7 +1,7 @@
 import 'package:csust_edu_system/arch/baseservice/base_service.dart';
 import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/ass/url_assets.dart';
-import 'package:csust_edu_system/utils/typedef_util.dart';
+import 'package:csust_edu_system/util/typedef_util.dart';
 import 'package:dio/dio.dart';
 
 /// 通用学期选择器Service

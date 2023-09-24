@@ -1,4 +1,5 @@
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/login/model/login_model.dart';
 import 'package:csust_edu_system/ui/login/model/password_edittext_model.dart';
 import 'package:csust_edu_system/ui/login/view/login_button_view.dart';
@@ -7,7 +8,6 @@ import 'package:csust_edu_system/ui/login/view/remember_checkbox_view.dart';
 import 'package:csust_edu_system/ui/login/view/username_edittext_view.dart';
 import 'package:csust_edu_system/ui/login/viewmodel/login_viewmodel.dart';
 import 'package:csust_edu_system/ui/login/viewmodel/password_edittext_viewmodel.dart';
-import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

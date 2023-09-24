@@ -1,19 +1,19 @@
 import 'package:csust_edu_system/arch/baseview/seletor_view.dart';
+import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
+import 'package:csust_edu_system/common/termpicker/view/common_term_picker_view.dart';
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
-import 'package:csust_edu_system/ui/appbar/common_app_bar.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/course/model/course_model.dart';
 import 'package:csust_edu_system/ui/course/view/week_below_app_bar_view.dart';
 import 'package:csust_edu_system/ui/course/view/week_course_layout_view.dart';
 import 'package:csust_edu_system/ui/course/viewmodel/course_view_model.dart';
-import 'package:csust_edu_system/ui/termpicker/view/common_term_picker_view.dart';
-import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ass/string_assets.dart';
 import '../../../homes/theme_home.dart';
-import '../../../utils/date_util.dart';
+import '../../../util/date_util.dart';
 import '../../notification/page/notification_page.dart';
 
 /// 课程表页

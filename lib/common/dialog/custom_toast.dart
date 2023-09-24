@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
+/// 通用Toast
+///
+/// @author zzp
+/// @since 2023/9/24
 class CustomToast extends StatelessWidget {
   const CustomToast(this.msg, {Key? key}) : super(key: key);
 
+  /// toast消息
   final String msg;
 
   @override

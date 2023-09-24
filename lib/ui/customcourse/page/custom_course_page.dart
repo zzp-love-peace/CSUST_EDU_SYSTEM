@@ -1,19 +1,20 @@
 import 'package:csust_edu_system/arch/basedata/page_result_bean.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/data/page_result_code.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
+import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/course/jsonbean/custom_course_bean.dart';
 import 'package:csust_edu_system/ui/customCourse/model/custom_course_model.dart';
 import 'package:csust_edu_system/ui/customcourse/view/custom_course_edittext_view.dart';
 import 'package:csust_edu_system/ui/customcourse/view/custom_course_text_view.dart';
 import 'package:csust_edu_system/ui/customcourse/view/save_button_view.dart';
 import 'package:csust_edu_system/ui/customcourse/viewmodel/custom_course_view_model.dart';
-import 'package:csust_edu_system/utils/extension_uitl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 
-import '../../../utils/date_util.dart';
-import '../../../widgets/select_dialog.dart';
+import '../../../common/dialog/select_dialog.dart';
+import '../../../util/date_util.dart';
 
 /// 自定义课程表页
 ///

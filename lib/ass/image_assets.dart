@@ -6,4 +6,7 @@
 class ImageAssets {
   /// 引导页logo图片路径
   static const String logo = 'assets/images/logo.png';
+
+  /// 占位lottie json文件路径
+  static const String lottieLogo = 'assets/lotties/lottieLogo.json';
 }

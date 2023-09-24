@@ -1,15 +1,6 @@
-import 'dart:io';
-
-import 'package:csust_edu_system/data/stu_info.dart';
-import 'package:csust_edu_system/network/http_manager.dart';
-import 'package:csust_edu_system/widgets/custom_toast.dart';
-import 'package:csust_edu_system/widgets/select_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import '../utils/my_util.dart';
+import '../util/my_util.dart';
 
 class AboutHome extends StatelessWidget {
   const AboutHome({Key? key}) : super(key: key);

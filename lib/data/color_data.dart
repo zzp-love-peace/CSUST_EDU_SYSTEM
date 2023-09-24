@@ -1,4 +1,4 @@
-import 'package:csust_edu_system/utils/my_util.dart';
+import 'package:csust_edu_system/util/my_util.dart';
 import 'package:flutter/material.dart';
 
 Map<String, MaterialColor> themeColorMap = {

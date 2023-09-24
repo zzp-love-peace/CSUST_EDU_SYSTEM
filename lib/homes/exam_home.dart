@@ -1,16 +1,13 @@
 import 'dart:convert';
 
+import 'package:csust_edu_system/common/dialog/custom_toast.dart';
+import 'package:csust_edu_system/common/lottie/none_lottie.dart';
+import 'package:csust_edu_system/common/termpicker/view/common_term_picker_view.dart';
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
-import 'package:csust_edu_system/provider/theme_color_provider.dart';
-import 'package:csust_edu_system/ui/termpicker/view/common_term_picker_view.dart';
-import 'package:csust_edu_system/widgets/custom_toast.dart';
-import 'package:csust_edu_system/widgets/date_picker.dart';
-import 'package:csust_edu_system/widgets/none_lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ExamHome extends StatefulWidget {

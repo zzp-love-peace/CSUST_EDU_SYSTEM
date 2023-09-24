@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
+import '../common/dialog/hint_dialog.dart';
 import '../data/date_info.dart';
-import 'hint_dialog.dart';
 
 class ProgressDialog extends StatefulWidget {
   final Function progressFun;

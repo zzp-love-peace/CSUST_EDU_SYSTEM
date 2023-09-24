@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/date_info.dart';
-import '../../../utils/date_util.dart';
+import '../../../util/date_util.dart';
 import 'date_and_week_item_view.dart';
 
 /// 周课程表组件View

@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:csust_edu_system/utils/my_util.dart';
+
+import 'package:csust_edu_system/util/my_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 

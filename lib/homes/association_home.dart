@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:csust_edu_system/common/dialog/custom_toast.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/ass_info_home.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
-import 'package:csust_edu_system/widgets/custom_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-
-import '../utils/my_util.dart';
 
 class AssociationHome extends StatefulWidget {
   const AssociationHome({Key? key}) : super(key: key);

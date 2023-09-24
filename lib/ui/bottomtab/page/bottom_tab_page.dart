@@ -1,11 +1,12 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
+import 'package:csust_edu_system/common/unreadmsg/model/unread_msg_model.dart';
+import 'package:csust_edu_system/common/unreadmsg/viewmodel/unread_msg_view_model.dart';
 import 'package:csust_edu_system/ui/bottomtab/model/bottom_tab_model.dart';
 import 'package:csust_edu_system/ui/bottomtab/view/bottom_bar_view.dart';
 import 'package:csust_edu_system/ui/bottomtab/viewmodel/bottom_tab_view_model.dart';
-import 'package:csust_edu_system/ui/unreadmsg/model/unread_msg_model.dart';
-import 'package:csust_edu_system/ui/unreadmsg/viewmodel/unread_msg_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../pages/forum_page.dart';
 import '../../../pages/mine_page.dart';
 import '../../../pages/school_page.dart';

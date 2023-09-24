@@ -1,18 +1,19 @@
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
 import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
+import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/login/jsonbean/login_bean.dart';
 import 'package:csust_edu_system/ui/login/model/login_model.dart';
 import 'package:csust_edu_system/ui/login/service/login_service.dart';
-import 'package:csust_edu_system/utils/extension_uitl.dart';
-import 'package:csust_edu_system/utils/sp/sp_data.dart';
+import 'package:csust_edu_system/util/sp/sp_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
+import '../../../common/dialog/hint_dialog.dart';
 import '../../../data/date_info.dart';
 import '../../../data/stu_info.dart';
-import '../../../utils/log.dart';
-import '../../../widgets/hint_dialog.dart';
+import '../../../util/log.dart';
 import '../../bottomtab/page/bottom_tab_page.dart';
 
 /// 登录ViewModel

@@ -6,10 +6,10 @@ import 'package:csust_edu_system/ui/unreadmsg/model/unread_msg_model.dart';
 import 'package:csust_edu_system/ui/unreadmsg/viewmodel/unread_msg_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../pages/course_page.dart';
 import '../../../pages/forum_page.dart';
 import '../../../pages/mine_page.dart';
 import '../../../pages/school_page.dart';
+import '../../course/page/course_page.dart';
 
 /// 底部导航栏页面
 ///
@@ -22,6 +22,7 @@ class BottomTabPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var pageList = [
+      // const CoursePage(),
       const CoursePage(),
       const SchoolPage(),
       const ForumPage(),

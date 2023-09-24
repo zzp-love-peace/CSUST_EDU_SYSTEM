@@ -41,13 +41,24 @@ class CommonTermPickerView extends StatelessWidget {
               return GestureDetector(
                 child: Row(
                   children: [
-                    const SizedBox(width: 15,),
-                    const Icon(Icons.date_range,),
-                    const SizedBox(width: 5,),
-                    Text(nowTerm, style: const TextStyle(fontSize: 17),),
-                    const SizedBox(width: 5,),
-                    const Icon(Icons.arrow_drop_down)
-                  ],
+                const SizedBox(
+                  width: 15,
+                ),
+                const Icon(
+                  Icons.date_range,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  viewModel.model.nowTerm,
+                  style: const TextStyle(fontSize: 17),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                const Icon(Icons.arrow_drop_down)
+              ],
                 ),
                 onTap: () {
                   if (StuInfo.cookie.isEmpty) return;

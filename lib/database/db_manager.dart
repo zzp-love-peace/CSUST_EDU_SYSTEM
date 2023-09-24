@@ -1,11 +1,7 @@
-import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../data/course_model.dart';
+import '../data/old_course_model.dart';
 
 class DBManager {
   Database? myDatabase;
@@ -35,7 +31,7 @@ class DBManager {
     final Database? databaseDB = await getCheckDatabase();
     List res = await databaseDB!.rawQuery(
         "select * from $tableName where term=? order by weekNum", [term]);
-    return res.map((e) => CourseModel.fromMap(e)).toList();
+    return res.map((e) => OldCourseModel.fromMap(e)).toList();
   }
 
   // Future<CourseModel> insertCourse(CourseModel course) async {
@@ -44,7 +40,7 @@ class DBManager {
   //   return course;
   // }
 
-  Future<CourseModel> insertCourse(CourseModel course) async {
+  Future<OldCourseModel> insertCourse(OldCourseModel course) async {
     final Database? databaseDB = await getCheckDatabase();
     course.id = await databaseDB!.rawInsert(
         'insert into $tableName (term, weekNum, content) values (?, ? ,?)',
@@ -59,14 +55,14 @@ class DBManager {
         [content, id]);
   }
 
-  Future<CourseModel?> containsCourse(String term, int weekNum) async {
+  Future<OldCourseModel?> containsCourse(String term, int weekNum) async {
     final Database? databaseDB = await getCheckDatabase();
     List courseResult = await databaseDB!.rawQuery(
         'select * from $tableName where term=? and weekNum=?', [term, weekNum]);
     if (courseResult.isEmpty) {
       return null;
     } else if (courseResult.length == 1) {
-      return CourseModel.fromMap(courseResult[0]);
+      return OldCourseModel.fromMap(courseResult[0]);
     } else {
       throw Exception('数据库课程数据重复');
     }

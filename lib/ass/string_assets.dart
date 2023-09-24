@@ -53,7 +53,7 @@ class StringAssets {
   static const String backAgain = '再次点击退出应用';
 
   /// 课程表
-  static const String classSchedule = '课程表';
+  static const String Course = '课程表';
 
   /// 校园
   static const String campus = '校园';
@@ -99,4 +99,112 @@ class StringAssets {
 
   /// 教务通知
   static const String schoolNotice = '教务通知';
+
+  /// 自定义课表
+  static const String customCourse = '自定义课表';
+
+  /// 课程名称
+  static const String courseName = '课程名称';
+
+  /// 授课老师
+  static const String courseTeacher = '授课老师';
+
+  /// 上课地点
+  static const String coursePlace = '上课地点';
+
+  /// 保存
+  static const String save = '保存';
+
+  /// 月
+  static const String month = '月';
+
+  /// 周一
+  static const String Monday = '周一';
+
+  /// 周二
+  static const String Tuesday = '周二';
+
+  /// 周三
+  static const String Wednesday = '周三';
+
+  /// 周四
+  static const String Thursday = '周四';
+
+  /// 周五
+  static const String Friday = '周五';
+
+  /// 周六
+  static const String Saturday = '周六';
+
+  /// 周日
+  static const String Sunday = '周日';
+
+  /// 8:00
+  static const String time_8_00 = '8:00';
+
+  /// 8:45
+  static const String time_8_45 = '8:45';
+
+  /// 8:55
+  static const String time_8_55 = '8:55';
+
+  /// 9:40
+  static const String time_9_40 = '9:40';
+
+  /// 10:10
+  static const String time_10_10 = '10:10';
+
+  /// 10:55
+  static const String time_10_55 = '10:55';
+
+  /// 11:05
+  static const String time_11_05 = '11:05';
+
+  /// 11:50
+  static const String time_11_50 = '11:50';
+
+  /// 14:00
+  static const String time_14_00 = '14:00';
+
+  /// 14:45
+  static const String time_14_45 = '14:45';
+
+  /// 14:55
+  static const String time_14_55 = '14:55';
+
+  /// 15:40
+  static const String time_15_40 = '15:40';
+
+  /// 16:10
+  static const String time_16_10 = '16:10';
+
+  /// 16:55
+  static const String time_16_55 = '16:55';
+
+  /// 17:05
+  static const String time_17_05 = '17:05';
+
+  /// 17:50
+  static const String time_17_50 = '17:50';
+
+  /// 19:30
+  static const String time_19_30 = '19:30';
+
+  /// 20:15
+  static const String time_20_15 = '20:15';
+
+  /// 20:25
+  static const String time_20_25 = '20:25';
+
+  /// 21:10
+  static const String time_21_10 = '21:10';
+
+  /// 数据库课程数据重复
+  static const String dbCourseDuplicated = '数据库课程数据重复';
+
+  /// 课程名称不能为空
+  static const String courseNameCannotEmpty = '课程名称不能为空';
+
+  /// 确定要删除该课程吗
+  static const String confirmDeleteCourse = '确定要删除该课程吗';
 }

@@ -15,6 +15,7 @@ import '../provider/unread_msg_provider.dart';
 import '../util/my_util.dart';
 import 'detail_home.dart';
 
+@Deprecated('已废弃的页面，详情看重构之后的message包')
 class MessageHome extends StatefulWidget {
   const MessageHome({Key? key}) : super(key: key);
 
@@ -281,7 +282,8 @@ class _MessageHomeState extends State<MessageHome> {
                         _setMsgRead(msg);
                       }
                     },
-                  )));
+                  ))
+          );
         } else {
           SmartDialog.compatible
               .showToast('', widget: CustomToast(value['msg']));

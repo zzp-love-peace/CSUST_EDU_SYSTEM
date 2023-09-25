@@ -303,4 +303,10 @@ class StringAssets {
 
   /// 清理成功！
   static const String cleanSuccess = '清理成功！';
+
+  static const String myMessage = "我的消息";
+
+  static const String readAll = '全部已读';
+
+  static const String messageEmpty = '空空如也...';
 }

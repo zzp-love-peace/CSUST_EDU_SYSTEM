@@ -23,4 +23,16 @@ class UrlAssets {
 
   /// url-获取学校通知详情接口
   static const getNoticeDetail = '/getNoticeDetail';
+
+  ///url-获取已读消息接口
+  static const getReadMsg = '/message/hasRead';
+
+  ///url-设置消息已读
+  static const setMsgRead='/message/setRead';
+
+  ///url-设置全部消息已读
+  static const setAllMsgRead='/message/setAllRead';
+  ///url-获取帖子详情信息
+  static const getForumInfo = '/post/detail';
+
 }

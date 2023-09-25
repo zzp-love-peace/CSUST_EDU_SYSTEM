@@ -210,4 +210,10 @@ class StringAssets {
 
   /// 不能为空
   static const String cannotEmpty = '不能为空';
+
+  static const String myMessage = "我的消息";
+
+  static const String readAll = '全部已读';
+
+  static const String messageEmpty = '空空如也...';
 }

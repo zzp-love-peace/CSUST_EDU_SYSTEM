@@ -1,17 +1,15 @@
 import 'package:animated_list_plus/animated_list_plus.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
-import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/message/viewmodel/message_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:provider/provider.dart';
 import '../../../common/lottie/none_lottie.dart';
-import '../../../util/date_util.dart';
 import '../jsonbean/message_bean.dart';
 import '../model/message_model.dart';
+import '../view/msgItem_view.dart';
 
 /// 消息通知Page
 ///
@@ -87,10 +85,14 @@ class MessageHome extends StatelessWidget{
                   physics: const NeverScrollableScrollPhysics(),
                   areItemsTheSame: (a, b) => a.id == b.id,
                   itemBuilder: (context, animation, item, index) {
-                    return buildFadeWidgetVertical(msgItem(context,item, false), animation);
+                    return buildFadeWidgetVertical(MsgItemView(
+                        msg: item,
+                        isRead: true), animation);
                   },
                   removeItemBuilder: (context, animation, oldItem) {
-                    return buildFadeWidgetVertical(msgItem(context,oldItem, true), animation);
+                    return buildFadeWidgetVertical(MsgItemView(
+                        msg: oldItem,
+                        isRead: true), animation);
                   },
                 ) : const NoneLottie(hint: StringAssets.messageEmpty)
 
@@ -102,7 +104,7 @@ class MessageHome extends StatelessWidget{
               //     initialItemCount: _unreadMsgList.length,
               //     itemBuilder: (context, index, animation) {
               //       return buildFadeWidget(
-              //           _msgItem(_unreadMsgList[index], false), animation);
+              //           _MsgItemView(_unreadMsgList[index], false), animation);
               //     }),
             );
           }),
@@ -117,7 +119,9 @@ class MessageHome extends StatelessWidget{
                     itemCount: viewModel.model.readMsgList.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      return msgItem(context,viewModel.model.readMsgList[index], true);
+                      return MsgItemView(
+                          msg: viewModel.model.readMsgList[index],
+                          isRead: true);
                     }) : const NoneLottie(hint: StringAssets.messageEmpty)
             );
           })
@@ -127,93 +131,6 @@ class MessageHome extends StatelessWidget{
 
   }
 
-}
-Widget msgItem(BuildContext context ,Msg msg, bool isRead) {
-  return Ink(
-    color: Colors.white,
-    child: InkWell(
-      onTap: () {
-        context.readViewModel<MessageViewModel>().pushDetail(msg, isRead);
-      },
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: ClipOval(
-              child: CachedNetworkImage(
-                width: 45,
-                height: 45,
-                fit: BoxFit.cover,
-                imageUrl: '${msg.avatar}/webp',
-                progressIndicatorBuilder:
-                    (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                        value: downloadProgress.progress),
-                errorWidget: (context, url, error) => CachedNetworkImage(
-                    width: 45,
-                    height: 45,
-                    fit: BoxFit.cover,
-                    imageUrl: msg.avatar,
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) =>
-                        CircularProgressIndicator(
-                            value: downloadProgress.progress),
-                    errorWidget: (context, url, error) => Container(
-                        width: 45,
-                        height: 45,
-                        color: Theme.of(context).primaryColor)),),
-            ),
-          ),
-          Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    msg.username,
-                    style: const TextStyle(fontSize: 14, color: Colors.black),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 3, 15, 5),
-                    child: msg.type == 0
-                        ? Text(
-                      '评论：${msg.content}',
-                      style: const TextStyle(
-                          fontSize: 14, color: Colors.black54),
-                    )
-                        : Text(
-                      '回复：${msg.content}',
-                      style: const TextStyle(
-                          fontSize: 14, color: Colors.black54),
-                    ),
-                  ),
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 15, bottom: 8),
-                        child: Text(
-                          getForumDateString(msg.createTime),
-                          style:
-                          const TextStyle(fontSize: 12, color: Colors.black),
-                        ),
-                      ))
-                ],
-              )),
-          if (!isRead)
-            const Padding(
-              padding: EdgeInsets.only(right: 12),
-              child: Icon(
-                Icons.circle,
-                size: 10,
-                color: Colors.red,
-              ),
-            )
-        ],
-      ),
-    ),
-  );
 }
 
 Widget buildFadeWidgetVertical(

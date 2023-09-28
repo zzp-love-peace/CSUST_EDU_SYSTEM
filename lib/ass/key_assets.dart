@@ -86,4 +86,25 @@ class KeyAssets {
 
   /// key-地址
   static const String address = 'address';
+
+  /// key-校区
+  static const String school = 'school';
+
+  /// key-套餐
+  static const String package = 'package';
+
+  /// key-联系电话
+  static const String phoneNumber = 'phoneNumber';
+
+  /// key-电话卡姓名
+  static const String phoneName = 'phoneName';
+
+  /// key-卡号
+  static const String mobile = 'mobile';
+
+  /// key-records
+  static const String records = 'records';
+
+  /// key-kindName
+  static const String kindName = 'kindName';
 }

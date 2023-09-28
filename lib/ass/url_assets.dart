@@ -23,4 +23,7 @@ class UrlAssets {
 
   /// url-获取学校通知详情接口
   static const getNoticeDetail = '/getNoticeDetail';
+
+  /// url-根据套餐校区获取卡号
+  static const getCardByKind = '/sCard/getCardByKind/50/1';
 }

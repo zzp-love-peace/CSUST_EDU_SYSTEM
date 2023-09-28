@@ -38,3 +38,8 @@ typedef KeyList = List<dynamic>;
 ///
 /// [term] 学期
 typedef DatePickerCallBack = void Function(String term);
+
+/// 电话卡选择器回调
+///
+/// [text] 文字
+typedef ShowPickerCallBack = void Function(String text);

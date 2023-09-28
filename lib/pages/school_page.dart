@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:csust_edu_system/common/lottie/none_lottie.dart';
 import 'package:csust_edu_system/data/poem_data.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/homes/association_home.dart';
@@ -13,13 +12,15 @@ import 'package:csust_edu_system/homes/recruit_home.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/route/fade_route.dart';
 import 'package:csust_edu_system/ui/schoolnotice/page/shcool_notice_page.dart';
+import 'package:csust_edu_system/ui/telephonecard/page/telephone_page.dart';
+import 'package:csust_edu_system/widgets/none_lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-import '../common/dialog/custom_toast.dart';
+import '../widgets/custom_toast.dart';
 
 class SchoolPage extends StatefulWidget {
   const SchoolPage({Key? key}) : super(key: key);
@@ -270,7 +271,7 @@ class _SchoolPageState extends State<SchoolPage> {
               // _functionItem('综测竞赛', 'assets/images/img_final_test.png', () {}),
               _functionItem('兼职资讯', 'assets/images/img_work.png', () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const RecruitHome()));
+                    builder: (context) => const TelephonePage()));
               }),
             ],
           ),

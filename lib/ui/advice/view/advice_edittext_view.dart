@@ -11,7 +11,7 @@ import '../viewmodel/advice_viewmodel.dart';
 class AdviceEdittextView extends StatelessWidget {
   const AdviceEdittextView({super.key, required this.controller});
 
-  //控制器
+  /// 控制器
   final TextEditingController controller;
 
   @override
@@ -33,7 +33,7 @@ class AdviceEdittextView extends StatelessWidget {
                 errorText: null,
               ),
               onChanged: (value) {
-                viewModel.chageEnable();
+                viewModel.changeEnable();
               }),
         ),
       ]),

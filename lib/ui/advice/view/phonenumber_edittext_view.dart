@@ -1,7 +1,6 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ui/advice/viewmodel/advice_viewmodel.dart';
 import 'package:flutter/material.dart';
-
 import '../../../ass/string_assets.dart';
 
 /// 手机号填写框
@@ -12,7 +11,7 @@ import '../../../ass/string_assets.dart';
 class PhoneNumEdittextView extends StatelessWidget {
   const PhoneNumEdittextView({super.key, required this.controller});
 
-  //控制器
+  /// 控制器
   final TextEditingController controller;
 
   @override
@@ -31,10 +30,10 @@ class PhoneNumEdittextView extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 labelText: StringAssets.phone,
-                errorText: viewModel.checkPhoneNum(controller.text),
+                errorText: viewModel.model.error,
               ),
               onChanged: (value) {
-                viewModel.chageEnable();
+                viewModel.changeEnable();
               }),
         ),
       ]),

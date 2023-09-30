@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 /// @author bmc
 /// @since 2023/9/22
 /// @version v1.8.8
-
 class AdviceModel {
   AdviceModel();
 
@@ -16,7 +15,7 @@ class AdviceModel {
   String? error;
 
   /// 手机号码输入控制器
-  final phonenumController = TextEditingController();
+  final phoneNumController = TextEditingController();
 
   /// 建议或反馈输入控制器
   final adviceController = TextEditingController();

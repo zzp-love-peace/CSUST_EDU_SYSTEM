@@ -21,34 +21,33 @@ class AdviceViewModel extends BaseViewModel<AdviceModel, AdviceService> {
   AdviceService? createService() => AdviceService();
 
   /// 发送建议到服务器
-  ///
-  /// [advice] 要发送的建议
-  /// [phone] 发送者手机号
-  void addAdvice(String advice, String phone) {
-    Log.d('service=>$service');
-    service?.postAdvice(advice, phone, StuInfo.name,
-        onDataSuccess: (data, msg) {
-      Log.e('code=>$data, msg=>$msg, model=>$model');
-      StringAssets.submitSuccess.showToast();
-      Future.delayed(const Duration(milliseconds: 1000), () {
-        Navigator.of(context).pop();
+  void addAdvice() {
+    if (checkPhoneNum()) {
+      service?.postAdvice(
+          model.adviceController.text,
+          model.phoneNumController.text,
+          StuInfo.name, onDataSuccess: (data, msg) {
+        StringAssets.submitSuccess.showToast();
+        Future.delayed(const Duration(milliseconds: 1000), () {
+          Navigator.of(context).pop();
+        });
+      }, onDataFail: (code, msg) {
+        SmartDialog.show(
+            builder: (_) => HintDialog(title: StringAssets.tips, subTitle: msg));
+        Log.e('code=>$code, msg=>$msg');
+      }, onFinish: (_) {
+        SmartDialog.dismiss();
       });
-    }, onDataFail: (code, msg) {
-      SmartDialog.show(
-          builder: (_) => HintDialog(title: StringAssets.tips, subTitle: msg));
-      Log.e('code=>$code, msg=>$msg');
-    }, onFinish: (_) {
-      SmartDialog.dismiss();
-    });
-    notifyListeners();
+      notifyListeners();
+    }
   }
 
   /// 改变submitButton的enable属性
   /// @author bmc
   /// @since 2023/9/30
   /// @version v1.8.8
-  void chageEnable() {
-    if (model.phonenumController.text.isNotEmpty &&
+  void changeEnable() {
+    if (model.phoneNumController.text.isNotEmpty &&
         model.adviceController.text.isNotEmpty) {
       model.enable = true;
     } else {
@@ -58,18 +57,18 @@ class AdviceViewModel extends BaseViewModel<AdviceModel, AdviceService> {
   }
 
   /// 检查手机号格式是否正确
-  /// [phoneNum] 被检查的手机号
-  String? checkPhoneNum(String phoneNum) {
+  bool checkPhoneNum() {
+    String phoneNum = model.phoneNumController.text;
     if (model.enable) {
       RegExp exp =
-      RegExp(r'^((13\d)|(14\d)|(15\d)|(16\d)|(17\d)|(18\d)|(19\d))\d{8}$');
+          RegExp(r'^((13\d)|(14\d)|(15\d)|(16\d)|(17\d)|(18\d)|(19\d))\d{8}$');
       bool matched = exp.hasMatch(phoneNum);
-      if (matched) {
-        return null;
-      } else {
-        return StringAssets.phoneNumFormatWrong;
+      if (!matched) {
+        model.error =  StringAssets.phoneNumFormatWrong;
+        notifyListeners();
+        return false;
       }
     }
-    return null;
+    return true;
   }
 }

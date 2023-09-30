@@ -3,7 +3,6 @@ import 'package:csust_edu_system/ui/advice/model/advice_model.dart';
 import 'package:csust_edu_system/ui/advice/view/advice_edittext_view.dart';
 import 'package:csust_edu_system/ui/advice/view/phonenumber_edittext_view.dart';
 import 'package:csust_edu_system/ui/advice/view/submit_button_view.dart';
-import 'package:csust_edu_system/util/log.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../ass/string_assets.dart';
@@ -51,7 +50,7 @@ class _AdviceHomeState extends State<AdviceHome> {
   void dispose() {
     super.dispose();
     _adviceViewModel.model.adviceController.dispose();
-    _adviceViewModel.model.phonenumController.dispose();
+    _adviceViewModel.model.phoneNumController.dispose();
   }
 
   @override
@@ -78,7 +77,7 @@ class _AdviceHomeState extends State<AdviceHome> {
             Padding(
                 padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
                 child: PhoneNumEdittextView(
-                  controller: _adviceViewModel.model.phonenumController,
+                  controller: _adviceViewModel.model.phoneNumController,
                 )),
             Padding(
                 padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
@@ -87,10 +86,7 @@ class _AdviceHomeState extends State<AdviceHome> {
             Padding(
                 padding: const EdgeInsets.fromLTRB(50, 15, 50, 0),
                 child: SubmitButtonView(onPress: () {
-                  var phone = _adviceViewModel.model.phonenumController.text;
-                  var advice = _adviceViewModel.model.adviceController.text;
-                  Log.d('phone=>$phone, advice=>$advice');
-                  _adviceViewModel.addAdvice(advice, phone);
+                  _adviceViewModel.addAdvice();
                 }))
           ],
         ),

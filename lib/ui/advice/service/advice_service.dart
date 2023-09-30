@@ -2,7 +2,6 @@ import 'package:csust_edu_system/arch/baseservice/base_service.dart';
 import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/ass/url_assets.dart';
 import 'package:dio/dio.dart';
-import '../../../util/log.dart';
 import '../../../util/typedef_util.dart';
 
 /// 反馈建议Service
@@ -31,13 +30,11 @@ class AdviceService extends BaseService {
       KeyAssets.phone: phone,
       KeyAssets.name: name,
     });
-    Log.d('advice=>$advice,phone=>$phone,name=>$name');
     post(UrlAssets.postAdvice,
         params: params,
         onPrepare: onPrepare,
         onDataSuccess: onDataSuccess,
         onDataFail: onDataFail,
         onFinish: onFinish);
-    Log.d('执行postAdvice');
   }
 }

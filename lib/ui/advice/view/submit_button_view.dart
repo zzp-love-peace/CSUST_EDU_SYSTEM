@@ -1,7 +1,6 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ui/advice/viewmodel/advice_viewmodel.dart';
 import 'package:flutter/material.dart';
-
 import '../../../ass/string_assets.dart';
 
 /// 提交反馈按钮
@@ -39,6 +38,7 @@ class SubmitButtonView extends StatelessWidget {
           ),
           onPressed: () {
             onPress.call();
+            viewModel.checkPhoneNum();
           },
         ),
       ),

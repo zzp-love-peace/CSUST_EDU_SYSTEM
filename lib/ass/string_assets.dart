@@ -218,7 +218,7 @@ class StringAssets {
   static const String phone = '手机号';
 
   /// 手机号格式错误
-  static const String phoneNumFormatWrong = '手机号';
+  static const String phoneNumFormatWrong = '手机号格式错误';
 
   /// 提交
   static const String submit = '提交';

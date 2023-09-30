@@ -1,11 +1,13 @@
 import 'package:csust_edu_system/common/dialog/hint_dialog.dart';
 import 'package:csust_edu_system/common/dialog/select_dialog.dart';
 import 'package:csust_edu_system/homes/about_home.dart';
-import 'package:csust_edu_system/homes/advice_home.dart';
+// import 'package:csust_edu_system/homes/advice_home.dart';
 import 'package:csust_edu_system/homes/theme_home.dart';
 import 'package:csust_edu_system/ui/login/page/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+
+import '../ui/advice/page/advice_page.dart';
 
 class SettingHome extends StatelessWidget {
   const SettingHome({Key? key}) : super(key: key);
@@ -170,7 +172,7 @@ class SettingHome extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const AdviceHome()));
+                    builder: (context) => const AdvicePage()));
               },
             ),
           ),

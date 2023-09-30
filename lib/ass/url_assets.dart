@@ -23,4 +23,6 @@ class UrlAssets {
 
   /// url-获取学校通知详情接口
   static const getNoticeDetail = '/getNoticeDetail';
+  /// url-发送意见或建议
+  static const postAdvice = '/advice/add';
 }

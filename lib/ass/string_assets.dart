@@ -210,4 +210,19 @@ class StringAssets {
 
   /// 不能为空
   static const String cannotEmpty = '不能为空';
+
+  /// 意见或建议
+  static const String advice = '意见或建议';
+
+  /// 手机号
+  static const String phone = '手机号';
+
+  /// 手机号格式错误
+  static const String phoneNumFormatWrong = '手机号';
+
+  /// 提交
+  static const String submit = '提交';
+
+  /// 提交成功
+  static const String submitSuccess = '提交成功';
 }

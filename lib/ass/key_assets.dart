@@ -86,4 +86,6 @@ class KeyAssets {
 
   /// key-地址
   static const String address = 'address';
+  /// key-手机号
+  static const String phone = 'phone';
 }

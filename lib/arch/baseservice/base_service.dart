@@ -85,6 +85,7 @@ abstract class BaseService {
         case ResponseStatus.success:
           var responseData = HttpResponseData.fromJson(response.data);
           if (responseData.code == HttpResponseCode.success) {
+            Log.d('responsedate=>${responseData.data}');
             onDataSuccess.call(responseData.data, responseData.msg);
             isSuccess = true;
           } else {

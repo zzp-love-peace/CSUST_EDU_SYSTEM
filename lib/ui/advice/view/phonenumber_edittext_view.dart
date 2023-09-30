@@ -17,23 +17,21 @@ class PhoneNumEdittextView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConsumerView<AdviceViewModel>(
-      builder: (context, viewModel, _) => Column(children: [
-        TextField(
-            controller: controller,
-            keyboardType: TextInputType.phone,
-            maxLines: 1,
-            maxLength: 11,
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              labelText: StringAssets.phone,
-              errorText: viewModel.model.error,
+      builder: (context, viewModel, _) => TextField(
+          controller: controller,
+          keyboardType: TextInputType.phone,
+          maxLines: 1,
+          maxLength: 11,
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
-            onChanged: (value) {
-              viewModel.changeEnable();
-            }),
-      ]),
+            labelText: StringAssets.phone,
+            errorText: viewModel.model.error,
+          ),
+          onChanged: (value) {
+            viewModel.changeEnable();
+          }),
     );
   }
 }

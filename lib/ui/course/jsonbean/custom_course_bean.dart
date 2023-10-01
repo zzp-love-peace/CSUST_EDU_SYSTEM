@@ -30,7 +30,7 @@ class CustomCourseBean extends BaseJsonBean {
   /// 上课地点
   String place;
 
-  /// 授课老鼠
+  /// 授课老师
   String teacher;
 
   /// 上课时间（例如01-02节）

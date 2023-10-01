@@ -13,35 +13,35 @@ class Log {
   /// debug打印
   ///
   /// [msg] 信息
-  static void d(String? msg) {
-    _logger.d(msg);
+  static void d(Object? msg) {
+    _logger.d(msg.toString());
   }
 
   /// error/exception打印
   ///
   /// [msg] 信息
-  static void e(String? msg) {
-    _logger.e(msg);
+  static void e(Object? msg) {
+    _logger.e(msg.toString());
   }
 
   /// warning打印
   ///
   /// [msg] 信息
-  static void w(String? msg) {
-    _logger.w(msg);
+  static void w(Object? msg) {
+    _logger.w(msg.toString());
   }
 
   /// info打印
   ///
   /// [msg] 信息
-  static void i(String? msg) {
-    _logger.i(msg);
+  static void i(Object? msg) {
+    _logger.i(msg.toString());
   }
 
   /// trace打印
   ///
   /// [msg] 信息
-  static void t(String? msg) {
-    _logger.t(msg);
+  static void t(Object? msg) {
+    _logger.t(msg.toString());
   }
 }

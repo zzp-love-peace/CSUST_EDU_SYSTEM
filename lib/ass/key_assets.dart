@@ -108,4 +108,13 @@ class KeyAssets {
 
   /// key-地址
   static const String address = 'address';
+
+  /// key-标题
+  static const String title = 'title';
+
+  /// key-url
+  static const String url = 'url';
+
+  /// key-详情url
+  static const String detailUrl = 'detailUrl';
 }

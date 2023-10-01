@@ -53,7 +53,7 @@ class StringAssets {
   static const String backAgain = '再次点击退出应用';
 
   /// 课程表
-  static const String Course = '课程表';
+  static const String course = '课程表';
 
   /// 校园
   static const String campus = '校园';
@@ -210,4 +210,46 @@ class StringAssets {
 
   /// 不能为空
   static const String cannotEmpty = '不能为空';
+
+  /// 校园
+  static const String school = '校园';
+
+  /// 教务公告
+  static const String schoolAnnouncement = '教务公告';
+
+  /// 教务异常
+  static const String schoolError = '教务异常...';
+
+  /// 上午好
+  static const String goodMorning = '上午好';
+
+  /// 中午好
+  static const String goodNoon = '中午好';
+
+  /// 下午好
+  static const String goodAfternoon = '下午好';
+
+  /// 晚上好
+  static const String goodEvening = '晚上好';
+
+  /// 成绩查询
+  static const String queryGrade = '成绩查询';
+
+  /// 考试安排
+  static const String examArrangement = '考试安排';
+
+  /// 电费查询
+  static const String queryElectricity = '电费查询';
+
+  /// 校园地图
+  static const String schoolMap = '校园地图';
+
+  /// 长理社团
+  static const String schoolGroup = '长理社团';
+
+  /// 兼职资讯
+  static const String workInformation = '兼职资讯';
+
+  /// 主要功能
+  static const String mainFunction = '主要功能';
 }

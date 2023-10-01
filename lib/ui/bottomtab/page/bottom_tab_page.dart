@@ -9,8 +9,8 @@ import 'package:provider/provider.dart';
 
 import '../../../pages/forum_page.dart';
 import '../../../pages/mine_page.dart';
-import '../../../pages/school_page.dart';
 import '../../course/page/course_page.dart';
+import '../../school/page/school_page.dart';
 
 /// 底部导航栏页面
 ///
@@ -23,7 +23,6 @@ class BottomTabPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var pageList = [
-      // const CoursePage(),
       const CoursePage(),
       const SchoolPage(),
       const ForumPage(),

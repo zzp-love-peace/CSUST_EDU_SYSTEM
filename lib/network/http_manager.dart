@@ -66,6 +66,7 @@ class HttpManager {
     return response?.data;
   }
 
+  @Deprecated('废弃')
   Future<Map> login(String username, String password) async =>
       await _post('/login',
           params: FormData.fromMap({
@@ -74,11 +75,13 @@ class HttpManager {
             'version': '$appName$version${getAppSuffix()}'
           }));
 
+  @Deprecated('废弃')
   Future<Map> getDateData(String cookie, String token) async =>
       await _post('/getBasicData',
           params: FormData.fromMap({'cookie': cookie}),
           headers: {"token": token});
 
+  @Deprecated('废弃')
   Future<Map> getStuInfo(String cookie, String token) async =>
       await _post('/getStuInfo',
           params: FormData.fromMap({'cookie': cookie}),
@@ -111,6 +114,7 @@ class HttpManager {
           params: FormData.fromMap({'cookie': cookie}),
           headers: {"token": token});
 
+  @Deprecated('废弃')
   Future<Map> getAllSemester(String cookie, String token) async =>
       await _post('/getAllSemester',
           params: FormData.fromMap({'cookie': cookie}),
@@ -131,6 +135,7 @@ class HttpManager {
           params: FormData.fromMap({'cookie': cookie, 'pscjUrl': url}),
           headers: {"token": token});
 
+  @Deprecated('废弃')
   Future<Map> queryCourse(String token, String cookie, String term,
       String weekNum) async =>
       await _post('/getCourse',
@@ -138,12 +143,14 @@ class HttpManager {
               {'cookie': cookie, 'xueqi': term, 'zc': weekNum}),
           headers: {"token": token});
 
+  @Deprecated('废弃')
   // 获取教务通知列表
   Future<Map> getNoticeList(String cookie, String token) async =>
       await _post('/getNoticeList',
           params: FormData.fromMap({'cookie': cookie}),
           headers: {"token": token});
 
+  @Deprecated('废弃')
   Future<Map> getNoticeDetail(String cookie, String token, String ggid) async =>
       await _post('/getNoticeDetail',
           params: FormData.fromMap({'cookie': cookie, 'ggid': ggid}),
@@ -156,24 +163,28 @@ class HttpManager {
               {'content': content, 'phone': phone, 'name': name}),
           headers: {"token": token});
 
+  @Deprecated('废弃')
   Future<Map> getCourseByHtml(String token, String html) async =>
       await _post('http://47.97.205.5:8989/parse/courseHtml',
           params: FormData.fromMap(
               {'html': html}),
           headers: {"token": token});
 
+  @Deprecated('废弃')
   Future<Map> getExamByHtml(String token, String html) async =>
       await _post('http://47.97.205.5:8989/parse/ksapHtml',
           params: FormData.fromMap(
               {'html': html}),
           headers: {"token": token});
 
+  @Deprecated('废弃')
   Future<Map> getScoreByHtml(String token, String html) async =>
       await _post('http://47.97.205.5:8989/parse/scoreHtml',
           params: FormData.fromMap(
               {'html': html}),
           headers: {"token": token});
 
+  @Deprecated('废弃')
   Future<Map> getScoreInfoByHtml(String token, String html) async =>
       await _post('http://47.97.205.5:8989/parse/pscjHtml',
           params: FormData.fromMap(
@@ -289,6 +300,7 @@ class HttpManager {
   Future<Map> getRecruitInfoByTitle(String token, String title) async =>
       await _get('/recruitInfo/getByTitle', params: {'name': title}, header: token);
 
+  @Deprecated('废弃')
   Future<Map> getBannerImg(String token) async =>
       await _get('/loopImg/getAll', header: token);
 

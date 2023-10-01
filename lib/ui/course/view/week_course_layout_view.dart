@@ -238,7 +238,6 @@ class WeekCourseLayoutView extends StatelessWidget {
     String endTime1 = StringAssets.emptyStr;
     String startTime2 = StringAssets.emptyStr;
     String endTime2 = StringAssets.emptyStr;
-    // 太多了，懒得拆分到StringAssets里了，就都放这吧
     switch (t) {
       case 1:
         startTime1 = StringAssets.time_8_00;

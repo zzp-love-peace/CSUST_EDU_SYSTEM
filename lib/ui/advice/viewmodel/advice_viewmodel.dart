@@ -1,11 +1,11 @@
 import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+
 import '../../../arch/baseviewmodel/base_view_model.dart';
 import '../../../ass/string_assets.dart';
 import '../../../common/dialog/hint_dialog.dart';
 import '../../../data/stu_info.dart';
-import '../../../util/log.dart';
 import '../model/advice_model.dart';
 import '../service/advice_service.dart';
 
@@ -32,9 +32,7 @@ class AdviceViewModel extends BaseViewModel<AdviceModel, AdviceService> {
           Navigator.of(context).pop();
         });
       }, onDataFail: (code, msg) {
-        SmartDialog.show(
-            builder: (_) => HintDialog(title: StringAssets.tips, subTitle: msg));
-        Log.e('code=>$code, msg=>$msg');
+        HintDialog(title: StringAssets.tips, subTitle: msg).showDialog();
       }, onFinish: (_) {
         SmartDialog.dismiss();
       });
@@ -64,7 +62,7 @@ class AdviceViewModel extends BaseViewModel<AdviceModel, AdviceService> {
           RegExp(r'^((13\d)|(14\d)|(15\d)|(16\d)|(17\d)|(18\d)|(19\d))\d{8}$');
       bool matched = exp.hasMatch(phoneNum);
       if (!matched) {
-        model.error =  StringAssets.phoneNumFormatWrong;
+        model.error = StringAssets.phoneNumFormatWrong;
         notifyListeners();
         return false;
       }

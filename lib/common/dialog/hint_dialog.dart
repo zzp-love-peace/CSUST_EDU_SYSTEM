@@ -2,12 +2,14 @@ import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
+import 'base_dialog.dart';
+
 /// 提示Dialog
 ///
 /// @author zzp
 /// @since 2023/9/24
 /// @version v1.8.8
-class HintDialog extends StatelessWidget {
+class HintDialog extends StatelessWidget with BaseDialog {
   const HintDialog({Key? key, required this.title, required this.subTitle})
       : super(key: key);
 

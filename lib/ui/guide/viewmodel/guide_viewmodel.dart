@@ -9,12 +9,10 @@ import 'package:csust_edu_system/network/data/http_response_code.dart';
 import 'package:csust_edu_system/ui/login/page/login_page.dart';
 import 'package:csust_edu_system/ui/login/service/login_service.dart';
 import 'package:csust_edu_system/util/sp/sp_util.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 import '../../../data/date_info.dart';
 import '../../../data/stu_info.dart';
 import '../../../util/date_util.dart';
-import '../../../util/log.dart';
 import '../../bottomtab/page/bottom_tab_page.dart';
 import '../../login/jsonbean/login_bean.dart';
 
@@ -65,11 +63,10 @@ class GuideViewModel extends BaseViewModel<EmptyModel, LoginService> {
       },
       onDataFail: (code, msg) {
         if (code == HttpResponseCode.stuIdOrPasswordWrong) {
-          SmartDialog.show(builder: (_) => HintDialog(title: StringAssets.tips, subTitle: msg));
+          HintDialog(title: StringAssets.tips, subTitle: msg).showDialog();
         } else {
           msg.showToast();
         }
-        Log.e('code=>$code, msg=>$msg');
       },
       onFinish: (isSuccess) {
         if (!isSuccess) {

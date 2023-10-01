@@ -75,7 +75,8 @@ class CourseItemView extends StatelessWidget {
                   SmartDialog.show(
                       builder: (_) => _courseDialog(viewModel.model.courseName,
                           viewModel.model.place, viewModel.model.teacher, time),
-                      animationType: SmartAnimationType.scale);
+                      animationType: SmartAnimationType.scale,
+                      clickMaskDismiss: false);
                 }
               },
               child: Padding(

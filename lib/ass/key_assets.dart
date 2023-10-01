@@ -119,4 +119,10 @@ class KeyAssets {
 
   /// key-详情url
   static const String detailUrl = 'detailUrl';
+
+  /// key-学期
+  static const String xueqi = 'xueqi';
+
+  /// key-周数
+  static const String zc = 'zc';
 }

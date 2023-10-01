@@ -267,4 +267,10 @@ class StringAssets {
 
   /// 主要功能
   static const String mainFunction = '主要功能';
+
+  /// 刷新成功，下次打开app时生效
+  static const String refreshSuccessNextTime = '刷新成功，下次打开app时生效';
+
+  /// 加载中
+  static const String loading = '加载中';
 }

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
+
 import 'data/color_data.dart';
 
 void main() {
@@ -27,7 +28,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SmartDialog.compatible.config.maskColor = Colors.black45;
     return Consumer<ThemeColorProvider>(builder: (context, appInfo, _) {
       String colorKey = appInfo.themeColor;
       return MaterialApp(

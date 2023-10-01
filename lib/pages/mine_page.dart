@@ -2,12 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/common/dialog/custom_toast.dart';
 import 'package:csust_edu_system/common/dialog/select_dialog.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/homes/info_home.dart';
 import 'package:csust_edu_system/homes/message_home.dart';
 import 'package:csust_edu_system/homes/my_collect_home.dart';
 import 'package:csust_edu_system/homes/my_forum_home.dart';
-import 'package:csust_edu_system/homes/setting_home.dart';
 import 'package:csust_edu_system/ui/login/page/login_page.dart';
+import 'package:csust_edu_system/ui/setting/page/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -155,8 +156,7 @@ class MinePage extends StatelessWidget {
                       color: Colors.black,
                     ),
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SettingHome()));
+                      context.push(const SettingPage());
                     },
                   ),
                 ),

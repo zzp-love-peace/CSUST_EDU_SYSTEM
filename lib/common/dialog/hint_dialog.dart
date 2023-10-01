@@ -32,7 +32,6 @@ class HintDialog extends StatelessWidget with BaseDialog {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 20),

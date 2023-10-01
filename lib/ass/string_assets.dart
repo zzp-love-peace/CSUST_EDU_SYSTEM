@@ -273,4 +273,34 @@ class StringAssets {
 
   /// 加载中
   static const String loading = '加载中';
+
+  /// 设置
+  static const String setting = '设置';
+
+  /// 有问题或建议？
+  static const String haveQuestionOrAdvice = '有问题或建议？';
+
+  /// 通用
+  static const String common = '通用';
+
+  /// 更换主题
+  static const String changeTheme = '更换主题';
+
+  /// 退出登录
+  static const String exitLogin = '退出登录';
+
+  /// 确定要退出登录吗
+  static const String sureExitLogin = '确定要退出登录吗';
+
+  /// 其他
+  static const String other = '其他';
+
+  /// 关于我们
+  static const String aboutUs = '关于我们';
+
+  /// 清理应用缓存
+  static const String cleanAppCache = '清理应用缓存';
+
+  /// 清理成功！
+  static const String cleanSuccess = '清理成功！';
 }

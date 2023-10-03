@@ -14,7 +14,7 @@ import '../viewmodel/show_picker_viewmodel.dart';
 /// @since 2023/9/25
 /// @version v1.8.8
 class ShowPickerView extends StatelessWidget {
-  const ShowPickerView({
+   ShowPickerView({
     super.key,
     required this.title,
     required this.text,

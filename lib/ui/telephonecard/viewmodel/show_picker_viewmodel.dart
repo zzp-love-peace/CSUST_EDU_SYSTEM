@@ -17,4 +17,9 @@ class ShowPickerViewModel extends BaseViewModel<ShowPickerModel, EmptyService> {
     model.text = text;
     notifyListeners();
   }
+
+  void setPickerData(List list) {
+    model.pickerData = list;
+    notifyListeners();
+  }
 }

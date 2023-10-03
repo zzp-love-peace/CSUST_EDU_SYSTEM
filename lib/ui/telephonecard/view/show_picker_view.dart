@@ -27,10 +27,10 @@ class ShowPickerView extends StatelessWidget {
   final String title;
 
   /// 选择器的值
-  final String text;
+  String text;
 
   /// 选择器列表
-  final List<dynamic> pickerData;
+  List pickerData;
 
   /// 选择器padding左边距size
   final double size;
@@ -70,6 +70,7 @@ class ShowPickerView extends StatelessWidget {
                   ],
                 )),
             onTap: () {
+              viewModel.setPickerData(pickerData);
               Picker(
                   title: Text(
                     viewModel.model.title,
@@ -77,7 +78,8 @@ class ShowPickerView extends StatelessWidget {
                   ),
                   confirmText: StringAssets.ok,
                   cancelText: StringAssets.cancel,
-                  adapter: PickerDataAdapter<dynamic>(pickerData: pickerData),
+                  adapter: PickerDataAdapter<dynamic>(
+                      pickerData: viewModel.model.pickerData),
                   changeToFirst: true,
                   hideHeader: false,
                   onConfirm: (Picker picker, List value) {

@@ -7,9 +7,17 @@ import '../../../ass/key_assets.dart';
 /// @version v1.8.8
 class CardNumberBean {
   CardNumberBean.fromJson(Map<String, dynamic> json)
-      : id = json[KeyAssets.id],
-        mobile = json[KeyAssets.mobile];
+      : mobile = json[KeyAssets.mobile],
+        id = json[KeyAssets.id];
 
+  /// 卡号
   String mobile;
+
+  /// 卡号id
   int id;
+
+  @override
+  String toString() {
+    return mobile;
+  }
 }

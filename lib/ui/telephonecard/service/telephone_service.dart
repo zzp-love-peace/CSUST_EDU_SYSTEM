@@ -23,7 +23,6 @@ class TelephoneService extends BaseService {
     post(UrlAssets.getCardByKind,
         params: params, onDataSuccess: onDataSuccess, onDataFail: onDataFail);
   }
-
   /// 提交电话卡订单
   ///
   /// [name] 姓名

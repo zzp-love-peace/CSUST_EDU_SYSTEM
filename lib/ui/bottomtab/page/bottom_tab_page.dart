@@ -1,6 +1,4 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
-import 'package:csust_edu_system/common/unreadmsg/model/unread_msg_model.dart';
-import 'package:csust_edu_system/common/unreadmsg/viewmodel/unread_msg_view_model.dart';
 import 'package:csust_edu_system/ui/bottomtab/model/bottom_tab_model.dart';
 import 'package:csust_edu_system/ui/bottomtab/view/bottom_bar_view.dart';
 import 'package:csust_edu_system/ui/bottomtab/viewmodel/bottom_tab_view_model.dart';
@@ -32,9 +30,6 @@ class BottomTabPage extends StatelessWidget {
       ChangeNotifierProvider(
           create: (_) =>
               BottomTabViewModel(model: BottomTabModel(pages: pageList))),
-      ChangeNotifierProvider(
-          create: (_) =>
-              UnreadMsgViewModel(model: UnreadMsgModel())),
     ], child: const BottomTabHome());
   }
 }

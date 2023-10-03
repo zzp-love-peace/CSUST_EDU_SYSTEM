@@ -26,7 +26,7 @@ class ImageAssets {
   static const String school4 = 'assets/images/school4.jpg';
 
   /// 校园轮播图5
-  static const String school5 = 'assets/images/school5.jpg';
+  static const String school5 = 'assets/images/school5.jpeg';
 
   /// 校园轮播图6
   static const String school6 = 'assets/images/school6.jpg';

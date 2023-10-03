@@ -5,7 +5,10 @@ import 'package:csust_edu_system/ui/message/jsonbean/message_bean.dart';
 /// @Author: Orcas_Liu
 /// @version: 1.8.8
 /// @Since: 2023.9.25
-class MessageModel{
-  late List<Msg> unReadMsgList;
-  late List<Msg> readMsgList;
+class MessageModel {
+  /// 未读消息list
+  List<MsgBean> unReadMsgList = [];
+
+  /// 已读消息list
+  List<MsgBean> readMsgList = [];
 }

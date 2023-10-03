@@ -125,4 +125,19 @@ class KeyAssets {
 
   /// key-周数
   static const String zc = 'zc';
+
+  /// key-用户信息
+  static const String userInfo = 'userInfo';
+
+  /// key-用户id
+  static const String userId = 'userId';
+
+  /// key-帖子id
+  static const String postId = 'postId';
+
+  /// key-类型
+  static const String type = 'type';
+
+  /// key-帖子
+  static const String indexPost = 'indexPost';
 }

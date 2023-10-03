@@ -1,57 +1,71 @@
-/// Msg类，这块可能后续会重构
-/// 但这块没有做重构，就是直接从home中拉过来的
+import 'package:csust_edu_system/ass/key_assets.dart';
+
+/// MsgBean类
 ///
 /// @Author: Orcas_Liu
 /// @version: 1.8.8
 /// @Since: 2023.9.23
 
-class Msg{
-  late int id;
-  late String avatar;
-  late String username;
-  late int userId;
-  late String content;
-  late String createTime;
-  late int postId;
-  late int type; // 0是评论 1是回复
+class MsgBean {
+  /// 消息id
+  int id;
 
+  /// 消息发送者头像
+  String avatar;
 
-  Msg.fromJson(Map value) {
-  id = value['id'];
-  avatar = value['userInfo']['avatar'];
-  username = value['userInfo']['username'];
-  userId = value['userInfo']['userId'];
-  content = value['content'];
-  createTime = value['createTime'];
-  postId = value['postId'];
-  type = value['type'];
-  }
+  /// 消息发送者用户名
+  String username;
+
+  /// 消息发送者用户id
+  int userId;
+
+  /// 消息内容
+  String content;
+
+  /// 消息创建时间
+  String createTime;
+
+  /// 消息对应的帖子id
+  int postId;
+
+  /// 消息类别: 0是评论 1是回复
+  int type;
+
+  MsgBean.fromJson(Map value)
+      : id = value[KeyAssets.id],
+        avatar = value[KeyAssets.userInfo][KeyAssets.avatar],
+        username = value[KeyAssets.userInfo][KeyAssets.username],
+        userId = value[KeyAssets.userInfo][KeyAssets.userId],
+        content = value[KeyAssets.content],
+        createTime = value[KeyAssets.createTime],
+        postId = value[KeyAssets.postId],
+        type = value[KeyAssets.type];
 
   @override
   bool operator ==(Object other) =>
-  identical(this, other) ||
-  other is Msg &&
-  runtimeType == other.runtimeType &&
-  id == other.id &&
-  avatar == other.avatar &&
-  username == other.username &&
-  userId == other.userId &&
-  content == other.content &&
-  createTime == other.createTime &&
-  postId == other.postId &&
-  type == other.type;
+      identical(this, other) ||
+      other is MsgBean &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          avatar == other.avatar &&
+          username == other.username &&
+          userId == other.userId &&
+          content == other.content &&
+          createTime == other.createTime &&
+          postId == other.postId &&
+          type == other.type;
 
   @override
   int get hashCode {
-  var result = 17;
-  result = 37 * result + id.hashCode;
-  result = 37 * result + avatar.hashCode;
-  result = 37 * result + username.hashCode;
-  result = 37 * result + userId.hashCode;
-  result = 37 * result + content.hashCode;
-  result = 37 * result + createTime.hashCode;
-  result = 37 * result + postId.hashCode;
-  result = 37 * result + type.hashCode;
-  return result;
+    var result = 17;
+    result = 37 * result + id.hashCode;
+    result = 37 * result + avatar.hashCode;
+    result = 37 * result + username.hashCode;
+    result = 37 * result + userId.hashCode;
+    result = 37 * result + content.hashCode;
+    result = 37 * result + createTime.hashCode;
+    result = 37 * result + postId.hashCode;
+    result = 37 * result + type.hashCode;
+    return result;
   }
 }

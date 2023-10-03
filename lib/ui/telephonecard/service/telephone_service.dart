@@ -23,4 +23,24 @@ class TelephoneService extends BaseService {
     post(UrlAssets.getCardByKind,
         params: params, onDataSuccess: onDataSuccess, onDataFail: onDataFail);
   }
+
+  /// 提交电话卡订单
+  ///
+  /// [name] 姓名
+  /// [mobile] 联系电话
+  /// [dormitory] 详细地址
+  /// [freeDate] 空闲时间
+  void createOder(
+      int cardId, String name, String mobile, String dormitory, String freeDate,
+      {required OnDataSuccess<KeyMap> onDataSuccess, OnDataFail? onDataFail}) {
+    var params = {
+      KeyAssets.cardId: cardId,
+      KeyAssets.name: name,
+      KeyAssets.mobile: mobile,
+      KeyAssets.dormitory: dormitory,
+      KeyAssets.freeDate: freeDate,
+    };
+    post(UrlAssets.createOder,
+        params: params, onDataSuccess: onDataSuccess, onDataFail: onDataFail);
+  }
 }

@@ -2,14 +2,12 @@ import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
-import 'package:csust_edu_system/ui/telephonecard/model/function_list_model.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/banner_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/function_bar_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/show_picker_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_add_wechat_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_button_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_edit_view.dart';
-import 'package:csust_edu_system/ui/telephonecard/viewmodel/function_list_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +19,6 @@ import '../viewmodel/telephone_viewmodel.dart';
 /// @author wk
 /// @since 2023/9/25
 /// @version v1.8.8
-
 class TelephonePage extends StatelessWidget {
   const TelephonePage({super.key});
 
@@ -30,8 +27,6 @@ class TelephonePage extends StatelessWidget {
     return MultiProvider(providers: [
       ChangeNotifierProvider(
           create: (_) => TelephoneViewModel(model: TelephoneModel())),
-      ChangeNotifierProvider(
-          create: (_) => FunctionListViewModel(model: FunctionListModel())),
     ], child: const TelephoneHome());
   }
 }
@@ -229,7 +224,7 @@ class TelephoneHomeState extends State<TelephoneHome> {
               const Padding(
                 padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
                 child: Text(
-                  StringAssets.prompt,
+                  StringAssets.promptTelePhone,
                   style: TextStyle(color: Colors.black),
                 ),
               ),
@@ -242,8 +237,18 @@ class TelephoneHomeState extends State<TelephoneHome> {
               ),
               Padding(
                   padding: const EdgeInsets.fromLTRB(50, 15, 50, 80),
-                  child: TelephoneButtonView(
-                      onPress: _telephoneViewModel.saveTelephonePageData))
+                  child: TelephoneButtonView(onPress: () {
+                    int id = _telephoneViewModel.model.cardId;
+                    String name = _telephoneViewModel.model.nameController.text;
+                    String mobile =
+                        _telephoneViewModel.model.phoneNumberController.text;
+                    String dormitory =
+                        _telephoneViewModel.model.addressController.text;
+                    String freeDate = _telephoneViewModel.model.time;
+                    String school = _telephoneViewModel.model.school;
+                    _telephoneViewModel.createOder(
+                        id, name, mobile, dormitory, freeDate, school);
+                  }))
             ],
           ),
         ));

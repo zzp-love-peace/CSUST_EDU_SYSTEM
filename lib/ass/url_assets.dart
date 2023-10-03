@@ -26,4 +26,13 @@ class UrlAssets {
 
   /// url-根据套餐校区获取卡号
   static const getCardByKind = '/sCard/getCardByKind/50/1';
+
+  /// url-创建订单
+  static const createOder = '/sCard/createOrder';
+
+  /// url-用户获取订单
+  static const getOrderList = '/sCard/selectOrderList/50/1';
+
+  /// url-用户删除订单
+  static const deleteOrder = '/sCard/deleteOrder';
 }

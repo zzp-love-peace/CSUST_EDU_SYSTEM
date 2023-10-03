@@ -32,4 +32,10 @@ class ImageAssets {
 
   /// 校园网链接海报路径
   static const String equity2 = 'assets/images/equity2.jpg';
+
+  /// 订单查询图标路径
+  static const String order = 'assets/images/order.png';
+
+  /// 线上营业厅轮播图图片路径
+  static const String telephoneHall = 'assets/images/telephone_hall1.jpg';
 }

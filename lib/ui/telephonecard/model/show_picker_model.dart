@@ -14,5 +14,5 @@ class ShowPickerModel {
   String text;
 
   /// 选择器列表
-  List<String> pickerData;
+  List<dynamic> pickerData;
 }

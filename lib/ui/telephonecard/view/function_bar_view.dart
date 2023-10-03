@@ -1,11 +1,12 @@
 import 'package:csust_edu_system/ass/image_assets.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
+import 'package:csust_edu_system/ui/telephonecard/page/order_page.dart';
 import 'package:csust_edu_system/ui/telephonecard/page/package_page.dart';
 import 'package:csust_edu_system/ui/telephonecard/page/service_page.dart';
 import 'package:csust_edu_system/ui/telephonecard/page/teach_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../ass/string_assets.dart';
-import '../../../homes/grade_home.dart';
 import 'function_item_view.dart';
 
 /// 功能BarView
@@ -45,32 +46,28 @@ class FunctionBarView extends StatelessWidget {
                   label: StringAssets.packageDetail,
                   path: ImageAssets.package,
                   tapCallback: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const PackagePage()));
+                    context.push(const PackagePage());
                   },
                 ),
                 FunctionItemView(
                   label: StringAssets.teach,
                   path: ImageAssets.teach,
                   tapCallback: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const TeachPage()));
+                    context.push(const TeachPage());
                   },
                 ),
                 FunctionItemView(
-                  label: '订单查询',
-                  path: 'assets/images/order.png',
+                  label: StringAssets.order,
+                  path: ImageAssets.order,
                   tapCallback: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const GradeHome()));
+                    context.push(const OrderPage());
                   },
                 ),
                 FunctionItemView(
                   label: StringAssets.serviceDetail,
                   path: ImageAssets.service,
                   tapCallback: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ServicePage()));
+                    context.push(const ServicePage());
                   },
                 ),
               ],

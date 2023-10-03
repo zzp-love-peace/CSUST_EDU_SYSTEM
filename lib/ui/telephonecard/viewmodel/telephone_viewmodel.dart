@@ -13,7 +13,6 @@ import '../service/telephone_service.dart';
 /// @author wk
 /// @since 2023/9/25
 /// @version v1.8.8
-
 class TelephoneViewModel
     extends BaseViewModel<TelephoneModel, TelephoneService> {
   TelephoneViewModel({required super.model});
@@ -42,25 +41,27 @@ class TelephoneViewModel
       SpData(key: KeyAssets.address, defaultValue: StringAssets.emptyStr);
 
   /// 校区选择器回调
-  void schoolCallBack(String school) {
+  void schoolCallBack(dynamic school) {
     model.school = school;
     notifyListeners();
   }
 
   /// 卡号选择器回调
-  void numberCallBack(String number) {
-    model.number = number;
+  void numberCallBack(dynamic number) {
+    CardNumberBean cardNumberBean = number;
+    model.number = cardNumberBean.mobile;
+    model.cardId = cardNumberBean.id;
     notifyListeners();
   }
 
   /// 套餐选择器回调
-  void packageCallBack(String package) {
+  void packageCallBack(dynamic package) {
     model.package = package;
     notifyListeners();
   }
 
   /// 收卡时间选择器回调
-  void timeCallBack(String time) {
+  void timeCallBack(dynamic time) {
     model.time = time;
     notifyListeners();
   }
@@ -83,7 +84,6 @@ class TelephoneViewModel
       model.addressController.text = _spAddress.get();
     }
     _initTimeList();
-    // notifyListeners();
   }
 
   /// 初始化收卡时间列表
@@ -108,14 +108,14 @@ class TelephoneViewModel
     _spName.set(model.nameController.text);
     _spPhoneNumber.set(model.phoneNumberController.text);
     _spAddress.set(model.addressController.text);
+    notifyListeners();
   }
 
   /// 根据套餐，校区获取卡号列表
-  List<String> getNumberList(String school, String package) {
-    List<String> numberList = [];
+  List<CardNumberBean> getNumberList(String school, String package) {
+    List<CardNumberBean> numberList = [];
     if (school.startsWith(StringAssets.clickSelect) ||
         package.startsWith(StringAssets.clickSelect)) {
-      '校区或套餐未选择'.showToast();
     } else {
       if (package == StringAssets.package59) {
         package = '59';
@@ -127,13 +127,45 @@ class TelephoneViewModel
         List records = data[KeyAssets.records];
         if (records.isNotEmpty) {
           for (var record in records) {
-            var cardNumberBean = CarDNumberBean.fromJson(record);
-            numberList.add(cardNumberBean.mobile);
+            var cardNumberBean = CardNumberBean.fromJson(record);
+            numberList.add(cardNumberBean);
           }
         }
       });
     }
     notifyListeners();
     return numberList;
+  }
+
+  /// 提交电话卡订单
+  void createOder(int cardId, String name, String mobile, String dormitory,
+      String freeDate, String school) {
+    if (cardId != -1 &&
+        name.isNotEmpty &&
+        mobile.isNotEmpty &&
+        dormitory.isNotEmpty &&
+        !freeDate.startsWith(StringAssets.clickSelect)) {
+      service?.createOder(cardId, name, mobile, dormitory, freeDate,
+          onDataSuccess: (data, msg) {
+        StringAssets.createOrder.showToast();
+      }, onDataFail: (code, msg) {
+        msg.showToast();
+      });
+      saveTelephonePageData();
+    } else if (cardId != -1 &&
+        name.isNotEmpty &&
+        mobile.isNotEmpty &&
+        dormitory.isNotEmpty &&
+        school == StringAssets.school3) {
+      service?.createOder(cardId, name, mobile, dormitory, freeDate,
+          onDataSuccess: (data, msg) {
+        StringAssets.createOrder.showToast();
+      }, onDataFail: (code, msg) {
+        msg.showToast();
+      });
+      saveTelephonePageData();
+    } else {
+      StringAssets.addFullMsg.showToast();
+    }
   }
 }

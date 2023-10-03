@@ -1,5 +1,5 @@
-import 'package:csust_edu_system/ass/image_assets.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/ui/telephonecard/data/telephone_data.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,17 +9,9 @@ import 'package:flutter/material.dart';
 /// @author wk
 /// @since 2023/9/25
 /// @version v1.8.8
-
 class TelephoneModel {
   /// 电话卡轮播图列表
-  final List<String> imgList = [
-    ImageAssets.school1,
-    ImageAssets.school2,
-    ImageAssets.school3,
-    ImageAssets.school4,
-    ImageAssets.school5,
-    ImageAssets.school6,
-  ];
+  final List<String> imgList = telephoneImgList;
 
   /// 创建日期格式对象
 
@@ -39,17 +31,10 @@ class TelephoneModel {
   List<String> timeList = [];
 
   /// 选择校区列表
-  final List<String> schoolList = [
-    StringAssets.school1,
-    StringAssets.school2,
-    StringAssets.school3,
-  ];
+  final List<String> schoolList = telephoneSchoolList;
 
   /// 套餐列表
-  final List<String> packageList = [
-    StringAssets.package59,
-    StringAssets.package28,
-  ];
+  final List<String> packageList = telephonePackageList;
 
   /// 卡号列表
   final List<String> numberList = [];
@@ -62,6 +47,9 @@ class TelephoneModel {
 
   /// 卡号
   String number = StringAssets.number;
+
+  /// 卡号id
+  int cardId = -1;
 
   /// 选卡时间
   String time = StringAssets.time;

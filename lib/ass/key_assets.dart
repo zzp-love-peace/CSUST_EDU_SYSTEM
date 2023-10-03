@@ -107,4 +107,19 @@ class KeyAssets {
 
   /// key-kindName
   static const String kindName = 'kindName';
+
+  /// key-dormitory
+  static const String dormitory = 'dormitory';
+
+  /// key-freeDate
+  static const String freeDate = 'freeDate';
+
+  /// key-cardId
+  static const String cardId = 'cardId';
+
+  /// key-card
+  static const String card = 'card';
+
+  /// key-order
+  static const String order = 'order';
 }

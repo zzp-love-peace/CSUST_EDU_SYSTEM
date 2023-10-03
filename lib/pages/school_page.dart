@@ -8,19 +8,18 @@ import 'package:csust_edu_system/homes/association_home.dart';
 import 'package:csust_edu_system/homes/electricity_home.dart';
 import 'package:csust_edu_system/homes/exam_home.dart';
 import 'package:csust_edu_system/homes/grade_home.dart';
-import 'package:csust_edu_system/homes/recruit_home.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/route/fade_route.dart';
 import 'package:csust_edu_system/ui/schoolnotice/page/shcool_notice_page.dart';
 import 'package:csust_edu_system/ui/telephonecard/page/telephone_page.dart';
-import 'package:csust_edu_system/widgets/none_lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-import '../widgets/custom_toast.dart';
+import '../common/dialog/custom_toast.dart';
+import '../common/lottie/none_lottie.dart';
 
 class SchoolPage extends StatefulWidget {
   const SchoolPage({Key? key}) : super(key: key);

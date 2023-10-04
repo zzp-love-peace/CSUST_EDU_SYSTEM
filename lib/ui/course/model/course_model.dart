@@ -1,3 +1,4 @@
+import 'package:csust_edu_system/common/picker/common_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../jsonbean/custom_course_bean.dart';
@@ -16,8 +17,7 @@ class CourseModel {
   /// 学期
   String term;
 
-  /// 周数选择器index
-  final List<int> weekSelectedIndex = [];
+  final CommonPicker<String> picker = CommonPicker<String>();
 
   /// 自定义课程表list
   final List<CustomCourseBean> customCourseList = [];

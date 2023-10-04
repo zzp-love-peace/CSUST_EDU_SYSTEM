@@ -35,4 +35,7 @@ class BottomTabViewModel extends BaseViewModel<BottomTabModel, EmptyService> {
     }
     return Future.value(true);
   }
+
+  @override
+  EmptyService? createService() => null;
 }

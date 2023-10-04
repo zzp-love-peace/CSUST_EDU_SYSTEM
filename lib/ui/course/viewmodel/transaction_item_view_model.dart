@@ -62,4 +62,7 @@ class TransactionItemViewModel
       },
     );
   }
+
+  @override
+  EmptyService? createService() => null;
 }

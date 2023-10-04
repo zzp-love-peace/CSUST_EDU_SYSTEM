@@ -31,4 +31,7 @@ class EmptyCourseItemViewModel
       }
     }
   }
+
+  @override
+  EmptyService? createService() => null;
 }

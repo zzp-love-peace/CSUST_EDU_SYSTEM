@@ -5,7 +5,6 @@ import 'package:csust_edu_system/ui/telephonecard/model/telephone_model.dart';
 import '../../../ass/key_assets.dart';
 import '../../../ass/string_assets.dart';
 import '../../../util/sp/sp_data.dart';
-import '../jsonbean/card_number_bean.dart';
 import '../service/telephone_service.dart';
 
 /// 电话卡ViewModel
@@ -40,13 +39,6 @@ class TelephoneViewModel
   final SpData<String> _spAddress =
       SpData(key: KeyAssets.address, defaultValue: StringAssets.emptyStr);
 
-  /// 卡号选择器回调
-  void numberCallBack(dynamic number) {
-    CardNumberBean cardNumberBean = number;
-    model.number = cardNumberBean.mobile;
-    model.cardId = cardNumberBean.id;
-  }
-
   /// 初始化电话卡页数据
   void initTelephonePageData() {
     if (_spSchool.get().isNotEmpty) {
@@ -66,7 +58,6 @@ class TelephoneViewModel
     }
   }
 
-
   /// 保存电话卡页数据
   void saveTelephonePageData() {
     _spSchool.set(model.school);
@@ -74,7 +65,6 @@ class TelephoneViewModel
     _spName.set(model.nameController.text);
     _spPhoneNumber.set(model.phoneNumberController.text);
     _spAddress.set(model.addressController.text);
-    notifyListeners();
   }
 
   /// 提交电话卡订单
@@ -100,5 +90,12 @@ class TelephoneViewModel
     } else {
       StringAssets.addFullMsg.showToast();
     }
+  }
+
+  /// 销毁controller
+  void disposeController() {
+    model.nameController.dispose();
+    model.phoneNumberController.dispose();
+    model.addressController.dispose();
   }
 }

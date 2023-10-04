@@ -32,6 +32,11 @@ class TelephonePage extends StatelessWidget {
   }
 }
 
+/// 电话卡办理页Home
+///
+/// @author wk
+/// @since 2023/9/25
+/// @version v1.8.8
 class TelephoneHome extends StatefulWidget {
   const TelephoneHome({super.key});
 
@@ -51,10 +56,8 @@ class TelephoneHomeState extends State<TelephoneHome> {
 
   @override
   void dispose() {
+    _telephoneViewModel.disposeController();
     super.dispose();
-    _telephoneViewModel.model.nameController.dispose();
-    _telephoneViewModel.model.phoneNumberController.dispose();
-    _telephoneViewModel.model.addressController.dispose();
   }
 
   @override

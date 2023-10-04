@@ -50,8 +50,7 @@ class _LoginHomeState extends State<LoginHome> {
   void initState() {
     super.initState();
     _loginViewModel = context.readViewModel<LoginViewModel>();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _loginViewModel.initLoginPageData());
+    _loginViewModel.initLoginPageData();
   }
 
   @override

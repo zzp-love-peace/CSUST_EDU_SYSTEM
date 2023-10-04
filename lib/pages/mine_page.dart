@@ -1,20 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:csust_edu_system/common/dialog/custom_toast.dart';
+import 'package:csust_edu_system/common/dialog/select_dialog.dart';
+import 'package:csust_edu_system/common/unreadmsg/viewmodel/unread_msg_view_model.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/homes/info_home.dart';
-import 'package:csust_edu_system/homes/message_home.dart';
 import 'package:csust_edu_system/homes/my_collect_home.dart';
 import 'package:csust_edu_system/homes/my_forum_home.dart';
-import 'package:csust_edu_system/homes/setting_home.dart';
 import 'package:csust_edu_system/ui/login/page/login_page.dart';
+import 'package:csust_edu_system/ui/message/page/message_page.dart';
+import 'package:csust_edu_system/ui/setting/page/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:provider/provider.dart';
-
-import '../common/dialog/custom_toast.dart';
-import '../common/dialog/select_dialog.dart';
-import '../provider/unread_msg_provider.dart';
 
 class MinePage extends StatelessWidget {
   const MinePage({Key? key}) : super(key: key);
@@ -96,22 +96,32 @@ class MinePage extends StatelessWidget {
                         // color: Theme.of(context).primaryColor
                         color: Colors.green),
                     title: const Text('我的消息'),
-                    trailing: Consumer<UnreadMsgProvider>(builder: (context, appInfo, _)=>Stack(
-                      alignment: Alignment.centerLeft,
-                      children:  [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 30),
-                          child: Icon(
-                            Icons.navigate_next,
-                            color: Colors.black,
+                    trailing: Consumer<UnreadMsgViewModel>(
+                      builder: (context, appInfo, _) => Stack(
+                        alignment: Alignment.centerLeft,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 30),
+                            child: Icon(
+                              Icons.navigate_next,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                        if (appInfo.hasNewMsg) const Padding(padding: EdgeInsets.only(right: 30), child: Icon(Icons.circle, color: Colors.red, size: 9,),)
-                      ],
-                    ),),
+                          if (appInfo.model.hasUnreadMsg)
+                            const Padding(
+                              padding: EdgeInsets.only(right: 30),
+                              child: Icon(
+                                Icons.circle,
+                                color: Colors.red,
+                                size: 9,
+                              ),
+                            )
+                        ],
+                      ),
+                    ),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MessageHome()));
+                          builder: (context) => const MessagePage()));
                     },
                   ),
                 ),
@@ -162,8 +172,7 @@ class MinePage extends StatelessWidget {
                       color: Colors.black,
                     ),
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SettingHome()));
+                      context.push(const SettingPage());
                     },
                   ),
                 ),
@@ -177,7 +186,6 @@ class MinePage extends StatelessWidget {
       ),
     );
   }
-
 
   AppBar _minePageAppBar(context) {
     return AppBar(
@@ -284,9 +292,7 @@ class _MineHeaderState extends State<_MineHeader> {
               borderWidth: 0,
               // backgroundColor: Colors.white10,
               valueColor:
-              AlwaysStoppedAnimation(Theme
-                  .of(context)
-                  .primaryColor),
+                  AlwaysStoppedAnimation(Theme.of(context).primaryColor),
               direction: Axis.vertical,
               center: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
@@ -311,25 +317,29 @@ class _MineHeaderState extends State<_MineHeader> {
                             imageUrl: '${StuInfo.avatar}/webp',
                             progressIndicatorBuilder:
                                 (context, url, downloadProgress) =>
-                                CircularProgressIndicator(
-                                    value: downloadProgress.progress),
-                            errorWidget: (context, url, error) =>  CachedNetworkImage(
-                                width: 64,
-                                height: 64,
-                                fit: BoxFit.cover,
-                                imageUrl: StuInfo.avatar,
-                                progressIndicatorBuilder:
-                                    (context, url, downloadProgress) =>
                                     CircularProgressIndicator(
                                         value: downloadProgress.progress),
-                                errorWidget: (context, url, error) => Container(
+                            errorWidget: (context, url, error) =>
+                                CachedNetworkImage(
                                     width: 64,
                                     height: 64,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).primaryColor,
-                                      borderRadius:
-                                      const BorderRadius.all(Radius.circular(40)),
-                                    ))))),
+                                    fit: BoxFit.cover,
+                                    imageUrl: StuInfo.avatar,
+                                    progressIndicatorBuilder: (context, url,
+                                            downloadProgress) =>
+                                        CircularProgressIndicator(
+                                            value: downloadProgress.progress),
+                                    errorWidget: (context, url, error) =>
+                                        Container(
+                                            width: 64,
+                                            height: 64,
+                                            decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(40)),
+                                            ))))),
                   ),
                   const SizedBox(
                     height: 5,
@@ -346,4 +356,3 @@ class _MineHeaderState extends State<_MineHeader> {
     );
   }
 }
-

@@ -37,7 +37,6 @@ class ShowPickerView extends StatelessWidget {
 
   /// 选择器回调
   final ShowPickerCallBack callBack;
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

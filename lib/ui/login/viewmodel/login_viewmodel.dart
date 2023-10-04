@@ -13,7 +13,6 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import '../../../common/dialog/hint_dialog.dart';
 import '../../../data/date_info.dart';
 import '../../../data/stu_info.dart';
-import '../../../util/log.dart';
 import '../../bottomtab/page/bottom_tab_page.dart';
 
 /// 登录ViewModel
@@ -27,9 +26,11 @@ class LoginViewModel extends BaseViewModel<LoginModel, LoginService> {
   /// sp-用户名
   final SpData<String> _spUsername =
       SpData(key: KeyAssets.username, defaultValue: StringAssets.emptyStr);
+
   /// sp-密码
   final SpData<String> _spPassword =
       SpData(key: KeyAssets.password, defaultValue: StringAssets.emptyStr);
+
   /// sp-是否记住密码
   final SpData<bool> _spIsRemember =
       SpData(key: KeyAssets.isRemember, defaultValue: false);
@@ -67,25 +68,29 @@ class LoginViewModel extends BaseViewModel<LoginModel, LoginService> {
   /// [password] 密码
   void doLogin(BuildContext context, String username, String password) {
     if ([username, password].isAllNotBlank()) {
-      service?.login(username, password, onPrepare: () {
-        SmartDialog.showLoading(
-            msg: StringAssets.loginLoading, backDismiss: false);
-      }, onDataSuccess: (data, msg) {
-        var loginBean = LoginBean.fromJson(data);
-        _saveLoginPageData();
-        StuInfo.token = loginBean.token;
-        StuInfo.cookie = loginBean.cookie;
-        _getDateInfo(loginBean.cookie);
-        _getStuInfo(loginBean.cookie);
-        context.pushReplacement(const BottomTabPage());
-      }, onDataFail: (code, msg) {
-        SmartDialog.show(
-            builder: (_) =>
-                HintDialog(title: StringAssets.tips, subTitle: msg));
-        Log.e('code=>$code, msg=>$msg');
-      }, onFinish: (_) {
-        SmartDialog.dismiss();
-      });
+      service?.login(
+        username,
+        password,
+        onPrepare: () {
+          SmartDialog.showLoading(
+              msg: StringAssets.loginLoading, backDismiss: false);
+        },
+        onDataSuccess: (data, msg) {
+          var loginBean = LoginBean.fromJson(data);
+          _saveLoginPageData();
+          StuInfo.token = loginBean.token;
+          StuInfo.cookie = loginBean.cookie;
+          _getDateInfo(loginBean.cookie);
+          _getStuInfo(loginBean.cookie);
+          context.pushReplacement(const BottomTabPage());
+        },
+        onDataFail: (code, msg) {
+          HintDialog(title: StringAssets.tips, subTitle: msg).showDialog();
+        },
+        onFinish: (_) {
+          SmartDialog.dismiss();
+        },
+      );
     } else {
       StringAssets.usernameAndPasswordIsEmpty.showToast();
     }
@@ -103,7 +108,7 @@ class LoginViewModel extends BaseViewModel<LoginModel, LoginService> {
       },
       onDataFail: (code, msg) {
         DateInfo.initDataFromSp();
-      }
+      },
     );
   }
 
@@ -112,14 +117,14 @@ class LoginViewModel extends BaseViewModel<LoginModel, LoginService> {
   /// [cookie] cookie
   void _getStuInfo(String cookie) {
     service?.getStuInfo(
-        cookie,
-        onDataSuccess: (data, msg) {
-          StuInfo.initData(data);
-          StuInfo.saveData();
-        },
-        onDataFail: (code, msg) {
-          StuInfo.initDataFromSp();
-        }
+      cookie,
+      onDataSuccess: (data, msg) {
+        StuInfo.initData(data);
+        StuInfo.saveData();
+      },
+      onDataFail: (code, msg) {
+        StuInfo.initDataFromSp();
+      },
     );
   }
 

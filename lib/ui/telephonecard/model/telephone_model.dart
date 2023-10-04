@@ -40,7 +40,7 @@ class TelephoneModel {
   final List<String> numberList = [];
 
   /// 校区
-  String school = StringAssets.school;
+  String school = StringAssets.clickSelectSchool;
 
   /// 套餐
   String package = StringAssets.package;

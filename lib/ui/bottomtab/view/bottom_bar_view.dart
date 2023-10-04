@@ -32,7 +32,7 @@ class BottomBarView extends StatelessWidget {
                   const BottomNavigationBarItem(
                       icon: Icon(Icons.assignment_outlined),
                       activeIcon: Icon(Icons.assignment),
-                      label: StringAssets.Course),
+                      label: StringAssets.course),
                   const BottomNavigationBarItem(
                       icon: Icon(Icons.home_work_outlined),
                       activeIcon: Icon(Icons.home_work),

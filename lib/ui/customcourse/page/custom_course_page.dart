@@ -10,7 +10,6 @@ import 'package:csust_edu_system/ui/customcourse/view/custom_course_text_view.da
 import 'package:csust_edu_system/ui/customcourse/view/save_button_view.dart';
 import 'package:csust_edu_system/ui/customcourse/viewmodel/custom_course_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/dialog/select_dialog.dart';
@@ -154,17 +153,15 @@ class _CustomCourseHomeState extends State<CustomCourseHome> {
           if (widget.courseName.isNotEmpty)
             IconButton(
                 onPressed: () {
-                  SmartDialog.show(
-                    builder: (_) => SelectDialog(
-                      title: StringAssets.tips,
-                      subTitle: StringAssets.confirmDeleteCourse,
-                      callback: () {
-                        context.pop(
-                            result: PageResultBean(
-                                PageResultCode.customCourseDelete, null));
-                      },
-                    ),
-                  );
+                  SelectDialog(
+                    title: StringAssets.tips,
+                    subTitle: StringAssets.confirmDeleteCourse,
+                    callback: () {
+                      context.pop(
+                          result: PageResultBean(
+                              PageResultCode.customCourseDelete, null));
+                    },
+                  ).showDialog();
                 },
                 icon: const Icon(Icons.delete, color: Colors.white))
         ],

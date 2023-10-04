@@ -1,4 +1,5 @@
 import 'package:csust_edu_system/arch/baseservice/base_service.dart';
+import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/util/typedef_util.dart';
 import 'package:dio/dio.dart';
 
@@ -22,8 +23,11 @@ class CourseService extends BaseService {
       required int weekNum,
       required OnDataSuccess onDataSuccess}) {
     post(UrlAssets.getWeekCourse,
-        params: FormData.fromMap(
-            {'cookie': cookie, 'xueqi': term, 'zc': weekNum.toString()}),
+        params: FormData.fromMap({
+          KeyAssets.cookie: cookie,
+          KeyAssets.xueqi: term,
+          KeyAssets.zc: weekNum.toString()
+        }),
         onDataSuccess: onDataSuccess);
   }
 }

@@ -3,6 +3,7 @@ import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/telephonecard/model/order_model.dart';
 import 'package:csust_edu_system/ui/telephonecard/service/order_service.dart';
+import 'package:csust_edu_system/util/log.dart';
 
 import '../../../ass/key_assets.dart';
 import '../jsonbean/order_bean.dart';
@@ -26,6 +27,7 @@ class OrderViewModel extends BaseViewModel<OrderModel, OrderService> {
           var orderBean = OrderBean.fromJson(record);
           orderBean.init();
           model.orderList.add(orderBean);
+          Log.d(orderBean.toString());
         }
       }
       notifyListeners();

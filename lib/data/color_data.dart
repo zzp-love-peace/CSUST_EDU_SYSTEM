@@ -27,6 +27,4 @@ Map<String, MaterialColor> themeColorMap = {
   '草莓': createMaterialColor(const Color(0xFFD65757)),
   '番茄': createMaterialColor(const Color(0xFFFF6347)),
   '朱砂': createMaterialColor(const Color(0xFFCD5C5C)),
-
-
 };

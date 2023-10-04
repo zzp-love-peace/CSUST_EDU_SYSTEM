@@ -13,7 +13,7 @@ class OrderBean {
         name = json[KeyAssets.order][KeyAssets.name],
         mobile = json[KeyAssets.order][KeyAssets.mobile],
         address = json[KeyAssets.order][KeyAssets.dormitory],
-        createTime = json[KeyAssets.order][KeyAssets.createTime],
+        createTime = json[KeyAssets.createTime],
         number = json[KeyAssets.card][KeyAssets.mobile],
         package = json[KeyAssets.card][KeyAssets.kindName],
         school = json[KeyAssets.card][KeyAssets.school];

@@ -90,7 +90,7 @@ class OrderListItemView extends StatelessWidget {
           height: 450,
           width: double.infinity,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

@@ -1,31 +1,27 @@
-import 'package:csust_edu_system/common/dialog/hint_dialog.dart';
-import 'package:csust_edu_system/common/dialog/select_dialog.dart';
-import 'package:csust_edu_system/homes/about_home.dart';
-import 'package:csust_edu_system/homes/advice_home.dart';
-import 'package:csust_edu_system/homes/theme_home.dart';
-import 'package:csust_edu_system/ui/login/page/login_page.dart';
+import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
-class SettingHome extends StatelessWidget {
-  const SettingHome({Key? key}) : super(key: key);
+import '../../../ass/string_assets.dart';
+import '../../../common/dialog/hint_dialog.dart';
+import '../../../common/dialog/select_dialog.dart';
+import '../../../homes/about_home.dart';
+import '../../../homes/theme_home.dart';
+import '../../advice/page/advice_page.dart';
+import '../../login/page/login_page.dart';
+
+/// 设置页
+///
+/// @author zzp
+/// @since 2023/10/1
+/// @version v1.8.8
+class SettingPage extends StatelessWidget {
+  const SettingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        foregroundColor: Colors.white,
-        // systemOverlayStyle: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
-        centerTitle: true,
-        title: const Text(
-          "设置",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      appBar: CommonAppBar.create(StringAssets.setting),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -35,7 +31,7 @@ class SettingHome extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.only(left: 18),
             child: Text(
-              '通用',
+              StringAssets.common,
               style: TextStyle(color: Colors.grey, fontSize: 15),
             ),
           ),
@@ -56,14 +52,13 @@ class SettingHome extends StatelessWidget {
                       Icons.color_lens,
                       color: Theme.of(context).primaryColor,
                     ),
-                    title: const Text('更换主题'),
+                    title: const Text(StringAssets.changeTheme),
                     trailing: const Icon(
                       Icons.navigate_next,
                       color: Colors.black,
                     ),
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ThemeHome()));
+                      context.push(const ThemeHome());
                     },
                   ),
                 ),
@@ -72,15 +67,16 @@ class SettingHome extends StatelessWidget {
                   child: ListTile(
                     leading: Icon(Icons.cleaning_services,
                         color: Theme.of(context).primaryColor),
-                    title: const Text('清理应用缓存'),
+                    title: const Text(StringAssets.cleanAppCache),
                     trailing: const Icon(
                       Icons.navigate_next,
                       color: Colors.black,
                     ),
                     onTap: () {
-                      SmartDialog.compatible.show(
-                          widget:
-                              const HintDialog(title: '提示', subTitle: '清理成功！'));
+                      const HintDialog(
+                              title: StringAssets.tips,
+                              subTitle: StringAssets.cleanSuccess)
+                          .showDialog();
                     },
                   ),
                 ),
@@ -96,7 +92,7 @@ class SettingHome extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.only(left: 18),
             child: Text(
-              '其他',
+              StringAssets.other,
               style: TextStyle(color: Colors.grey, fontSize: 15),
             ),
           ),
@@ -117,15 +113,13 @@ class SettingHome extends StatelessWidget {
                       Icons.people,
                       color: Theme.of(context).primaryColor,
                     ),
-                    title: const Text('关于我们'),
+                    title: const Text(StringAssets.aboutUs),
                     trailing: const Icon(
                       Icons.navigate_next,
                       color: Colors.black,
                     ),
                     onTap: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(
-                          builder: (context) => const AboutHome()));
+                      context.push(const AboutHome());
                     },
                   ),
                 ),
@@ -134,26 +128,24 @@ class SettingHome extends StatelessWidget {
                   child: ListTile(
                     leading: Icon(Icons.exit_to_app,
                         color: Theme.of(context).primaryColor),
-                    title: const Text('退出登录'),
+                    title: const Text(StringAssets.exitLogin),
                     trailing: const Icon(
                       Icons.navigate_next,
                       color: Colors.black,
                     ),
                     onTap: () {
-                      SmartDialog.compatible.show(
-                          widget: SelectDialog(
-                            title: '提示',
-                            subTitle: '确定要退出登录吗？',
-                            callback: () {
-                              // 移除全部
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const LoginPage()),
-                                  (Route router) => false);
-                            },
-                          ),
-                          clickBgDismissTemp: false);
+                      SelectDialog(
+                        title: StringAssets.tips,
+                        subTitle: StringAssets.sureExitLogin,
+                        callback: () {
+                          // 移除全部
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const LoginPage()),
+                              (Route router) => false);
+                        },
+                      ).showDialog();
                     },
                   ),
                 ),
@@ -164,13 +156,12 @@ class SettingHome extends StatelessWidget {
           Center(
             child: TextButton(
               child: Text(
-                '有问题或建议？',
+                StringAssets.haveQuestionOrAdvice,
                 style: TextStyle(
                     fontSize: 14, color: Theme.of(context).primaryColor),
               ),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const AdviceHome()));
+                context.push(const AdvicePage());
               },
             ),
           ),

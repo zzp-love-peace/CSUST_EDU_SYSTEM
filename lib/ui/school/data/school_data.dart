@@ -1,4 +1,7 @@
-List<String> poemList = [
+import '../../../ass/image_assets.dart';
+
+/// 校园页轮播图诗词list
+const List<String> poemList = [
   '今天这一杯是KeyL敬Kong，给你的回信已封上信封',
   '指尖燃起的火，喉头咽下的涩，墨绿色的星辰在坠落',
   '我挥一挥衣袖，不带走一片云彩',
@@ -18,4 +21,15 @@ List<String> poemList = [
   '我轻轻的招手，作别西天的云彩',
   '落霞与孤鹜齐飞，秋水共长天一色',
   '云销雨霁，彩彻区明'
+];
+
+/// 默认轮播图url list
+const List<String> schoolImgList = [
+  ImageAssets.school7,
+  ImageAssets.school1,
+  ImageAssets.school2,
+  ImageAssets.school3,
+  ImageAssets.school4,
+  ImageAssets.school5,
+  ImageAssets.school6,
 ];

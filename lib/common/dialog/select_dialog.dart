@@ -1,4 +1,5 @@
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/common/dialog/base_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
@@ -7,7 +8,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 /// @author zzp
 /// @since 2023/9/24
 /// @version v1.8.8
-class SelectDialog extends StatelessWidget {
+class SelectDialog extends StatelessWidget with BaseDialog {
   const SelectDialog(
       {Key? key,
       required this.title,

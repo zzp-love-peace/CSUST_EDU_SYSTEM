@@ -53,7 +53,7 @@ class StringAssets {
   static const String backAgain = '再次点击退出应用';
 
   /// 课程表
-  static const String Course = '课程表';
+  static const String course = '课程表';
 
   /// 校园
   static const String campus = '校园';
@@ -211,6 +211,114 @@ class StringAssets {
   /// 不能为空
   static const String cannotEmpty = '不能为空';
 
+  /// 意见或建议
+  static const String advice = '意见或建议';
+
+  /// 手机号
+  static const String phone = '手机号';
+
+  /// 手机号格式错误
+  static const String phoneNumFormatWrong = '手机号格式错误';
+
+  /// 提交
+  static const String submit = '提交';
+
+  /// 提交成功
+  static const String submitSuccess = '提交成功';
+
+  /// 校园
+  static const String school = '校园';
+
+  /// 教务公告
+  static const String schoolAnnouncement = '教务公告';
+
+  /// 教务异常
+  static const String schoolError = '教务异常...';
+
+  /// 上午好
+  static const String goodMorning = '上午好';
+
+  /// 中午好
+  static const String goodNoon = '中午好';
+
+  /// 下午好
+  static const String goodAfternoon = '下午好';
+
+  /// 晚上好
+  static const String goodEvening = '晚上好';
+
+  /// 成绩查询
+  static const String queryGrade = '成绩查询';
+
+  /// 考试安排
+  static const String examArrangement = '考试安排';
+
+  /// 电费查询
+  static const String queryElectricity = '电费查询';
+
+  /// 校园地图
+  static const String schoolMap = '校园地图';
+
+  /// 长理社团
+  static const String schoolGroup = '长理社团';
+
+  /// 兼职资讯
+  static const String workInformation = '兼职资讯';
+
+  /// 主要功能
+  static const String mainFunction = '主要功能';
+
+  /// 刷新成功，下次打开app时生效
+  static const String refreshSuccessNextTime = '刷新成功，下次打开app时生效';
+
+  /// 加载中
+  static const String loading = '加载中';
+
+  /// 设置
+  static const String setting = '设置';
+
+  /// 有问题或建议？
+  static const String haveQuestionOrAdvice = '有问题或建议？';
+
+  /// 通用
+  static const String common = '通用';
+
+  /// 更换主题
+  static const String changeTheme = '更换主题';
+
+  /// 退出登录
+  static const String exitLogin = '退出登录';
+
+  /// 确定要退出登录吗
+  static const String sureExitLogin = '确定要退出登录吗';
+
+  /// 其他
+  static const String other = '其他';
+
+  /// 关于我们
+  static const String aboutUs = '关于我们';
+
+  /// 清理应用缓存
+  static const String cleanAppCache = '清理应用缓存';
+
+  /// 清理成功！
+  static const String cleanSuccess = '清理成功！';
+
+  /// 我的消息
+  static const String myMessage = "我的消息";
+
+  /// 全部已读
+  static const String readAll = '全部已读';
+
+  /// 空空如也
+  static const String messageEmpty = '空空如也...';
+
+  /// 已读
+  static const String read = '已读';
+
+  /// 未读
+  static const String unread = '未读';
+
   /// 提交
   static const String commit = '提交';
 
@@ -251,7 +359,7 @@ class StringAssets {
   static const String selectArea = '选择校区';
 
   /// 点击选择校区
-  static const String school = '点击选择校区';
+  static const String clickSelectSchool = '点击选择校区';
 
   /// 套餐
   static const String package0 = '套餐';

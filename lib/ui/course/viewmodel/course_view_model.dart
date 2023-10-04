@@ -11,7 +11,6 @@ import 'package:csust_edu_system/ui/course/service/course_service.dart';
 import 'package:csust_edu_system/util/sp/sp_util.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 import '../../../common/dialog/hint_dialog.dart';
 import '../../../data/date_info.dart';
@@ -89,25 +88,30 @@ class CourseViewModel extends BaseViewModel<CourseModel, CourseService> {
   /// [weekNum] 周数
   void getWeekCourseToDB(String cookie, String term, int weekNum) {
     service?.getWeekCourse(
-        cookie: cookie,
-        term: term,
-        weekNum: weekNum,
-        onDataSuccess: (data, msg) async {
-          String content = jsonEncode(data);
-          var dbValue = await CourseDBManager.db.containsCourse(term, weekNum);
-          if (dbValue == null) {
-            await CourseDBManager.db
-                .insertCourse(DBCourseBean(term, weekNum, content));
-          } else {
-            await CourseDBManager.db.updateCourse(content, dbValue.id);
-          }
-          SmartDialog.show(
-              builder: (_) => const HintDialog(
-                    title: StringAssets.tips,
-                    subTitle: StringAssets.refreshSuccess,
-                  ));
-        });
+      cookie: cookie,
+      term: term,
+      weekNum: weekNum,
+      onDataSuccess: (data, msg) async {
+        String content = jsonEncode(data);
+        var dbValue = await CourseDBManager.db.containsCourse(term, weekNum);
+        if (dbValue == null) {
+          await CourseDBManager.db
+              .insertCourse(DBCourseBean(term, weekNum, content));
+        } else {
+          await CourseDBManager.db.updateCourse(content, dbValue.id);
+        }
+        const HintDialog(
+          title: StringAssets.tips,
+          subTitle: StringAssets.refreshSuccess,
+        ).showDialog();
+      },
+    );
   }
+
+  /// 刷新本学期课表
+  ///
+  ///
+  void refreshTermCourse() {}
 
   /// 保存自定义课程表List
   void saveCustomCourseList() {

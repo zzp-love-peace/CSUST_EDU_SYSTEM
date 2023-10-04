@@ -1,5 +1,6 @@
 import 'package:csust_edu_system/arch/baseview/seletor_view.dart';
 import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
+import 'package:csust_edu_system/common/dialog/course_progress_dialog.dart';
 import 'package:csust_edu_system/common/termpicker/view/common_term_picker_view.dart';
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
@@ -103,7 +104,7 @@ class _CourseHomeState extends State<CourseHome> {
 
   /// 课程表页AppBar
   AppBar _coursePageAppBar() => CommonAppBar.create(
-        StringAssets.Course,
+    StringAssets.course,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40.0),
           child: Container(
@@ -145,8 +146,7 @@ class _CourseHomeState extends State<CourseHome> {
                       StuInfo.cookie, courseModel.term, courseModel.weekNum);
                   break;
                 case 1:
-                  /// todo:刷新整个学期课表
-                  // _refreshTermCourse();
+                  CourseProgressDialog(term: courseModel.term).showDialog();
                   break;
               }
             },

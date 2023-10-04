@@ -116,6 +116,7 @@ class TelephoneViewModel
     List<CardNumberBean> numberList = [];
     if (school.startsWith(StringAssets.clickSelect) ||
         package.startsWith(StringAssets.clickSelect)) {
+      '校区或套餐未选择'.showToast();
     } else {
       if (package == StringAssets.package59) {
         package = '59';

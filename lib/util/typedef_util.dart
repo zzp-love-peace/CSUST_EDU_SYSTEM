@@ -41,5 +41,5 @@ typedef DatePickerCallBack = void Function(String term);
 
 /// 电话卡选择器回调
 ///
-/// [text] 文字
-typedef ShowPickerCallBack = void Function(dynamic text);
+/// [value] 值
+typedef TelephonePickerCallBack = void Function(dynamic value);

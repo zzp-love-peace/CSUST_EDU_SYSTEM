@@ -35,12 +35,13 @@ class OrderViewModel extends BaseViewModel<OrderModel, OrderService> {
   }
 
   void deleteOrder(int id, OrderBean orderBean) {
-    service?.deleteOrder(id, onDataSuccess: (data, msg) {
-      StringAssets.deleteOrder.showToast();
-      model.orderList.remove(orderBean);
-      notifyListeners();
-    }, onDataFail: (code, msg) {
-      msg.showToast();
-    });
+    service?.deleteOrder(
+      id,
+      onDataSuccess: (data, msg) {
+        StringAssets.deleteOrder.showToast();
+        model.orderList.remove(orderBean);
+        notifyListeners();
+      },
+    );
   }
 }

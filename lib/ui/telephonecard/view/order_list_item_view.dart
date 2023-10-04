@@ -31,8 +31,9 @@ class OrderListItemView extends StatelessWidget {
                 Expanded(
                     child: GestureDetector(
                   onTap: () {
-                    SmartDialog.compatible.show(
-                        widget: _orderDialog(orderBean), isLoadingTemp: false);
+                    SmartDialog.show(
+                        builder: (_) => _orderDialog(orderBean),
+                        clickMaskDismiss: false);
                   },
                   child: Row(children: [
                     Icon(
@@ -56,14 +57,12 @@ class OrderListItemView extends StatelessWidget {
                 )),
                 IconButton(
                     onPressed: () {
-                      SmartDialog.compatible.show(
-                          widget: SelectDialog(
-                              title: '提示',
-                              subTitle: '您确定要删除该订单吗？',
-                              callback: () {
-                                deleteOrder(orderBean.id, orderBean);
-                              }),
-                          clickBgDismissTemp: false);
+                      SelectDialog(
+                          title: StringAssets.tips,
+                          subTitle: '您确定要删除该订单吗？',
+                          callback: () {
+                            deleteOrder(orderBean.id, orderBean);
+                          }).showDialog();
                     },
                     icon: const Icon(Icons.delete))
               ],

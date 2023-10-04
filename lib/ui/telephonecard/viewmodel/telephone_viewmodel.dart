@@ -40,30 +40,11 @@ class TelephoneViewModel
   final SpData<String> _spAddress =
       SpData(key: KeyAssets.address, defaultValue: StringAssets.emptyStr);
 
-  /// 校区选择器回调
-  void schoolCallBack(dynamic school) {
-    model.school = school;
-    notifyListeners();
-  }
-
   /// 卡号选择器回调
   void numberCallBack(dynamic number) {
     CardNumberBean cardNumberBean = number;
     model.number = cardNumberBean.mobile;
     model.cardId = cardNumberBean.id;
-    notifyListeners();
-  }
-
-  /// 套餐选择器回调
-  void packageCallBack(dynamic package) {
-    model.package = package;
-    notifyListeners();
-  }
-
-  /// 收卡时间选择器回调
-  void timeCallBack(dynamic time) {
-    model.time = time;
-    notifyListeners();
   }
 
   /// 初始化电话卡页数据
@@ -83,23 +64,8 @@ class TelephoneViewModel
     if (_spAddress.get().isNotEmpty) {
       model.addressController.text = _spAddress.get();
     }
-    _initTimeList();
   }
 
-  /// 初始化收卡时间列表
-  void _initTimeList() {
-    model.timeList = [
-      model.now + StringAssets.morning,
-      model.now + StringAssets.afternoon,
-      model.now + StringAssets.night,
-      model.tomorrow + StringAssets.morning,
-      model.tomorrow + StringAssets.afternoon,
-      model.tomorrow + StringAssets.night,
-      model.bigTomorrow + StringAssets.morning,
-      model.bigTomorrow + StringAssets.afternoon,
-      model.bigTomorrow + StringAssets.night,
-    ];
-  }
 
   /// 保存电话卡页数据
   void saveTelephonePageData() {
@@ -111,33 +77,6 @@ class TelephoneViewModel
     notifyListeners();
   }
 
-  /// 根据套餐，校区获取卡号列表
-  List<CardNumberBean> getNumberList(String school, String package) {
-    List<CardNumberBean> numberList = [];
-    if (school.startsWith(StringAssets.clickSelect) ||
-        package.startsWith(StringAssets.clickSelect)) {
-      '校区或套餐未选择'.showToast();
-    } else {
-      if (package == StringAssets.package59) {
-        package = '59';
-      }
-      if (package == StringAssets.package28) {
-        package = '28';
-      }
-      service?.getCardByKind(school, package, onDataSuccess: (data, msg) {
-        List records = data[KeyAssets.records];
-        if (records.isNotEmpty) {
-          for (var record in records) {
-            var cardNumberBean = CardNumberBean.fromJson(record);
-            numberList.add(cardNumberBean);
-          }
-        }
-      });
-    }
-    notifyListeners();
-    return numberList;
-  }
-
   /// 提交电话卡订单
   void createOder(int cardId, String name, String mobile, String dormitory,
       String freeDate, String school) {
@@ -145,25 +84,18 @@ class TelephoneViewModel
         name.isNotEmpty &&
         mobile.isNotEmpty &&
         dormitory.isNotEmpty &&
-        !freeDate.startsWith(StringAssets.clickSelect)) {
-      service?.createOder(cardId, name, mobile, dormitory, freeDate,
-          onDataSuccess: (data, msg) {
-        StringAssets.createOrder.showToast();
-      }, onDataFail: (code, msg) {
-        msg.showToast();
-      });
-      saveTelephonePageData();
-    } else if (cardId != -1 &&
-        name.isNotEmpty &&
-        mobile.isNotEmpty &&
-        dormitory.isNotEmpty &&
-        school == StringAssets.school3) {
-      service?.createOder(cardId, name, mobile, dormitory, freeDate,
-          onDataSuccess: (data, msg) {
-        StringAssets.createOrder.showToast();
-      }, onDataFail: (code, msg) {
-        msg.showToast();
-      });
+        (!freeDate.startsWith(StringAssets.clickSelect) ||
+            school == StringAssets.school3)) {
+      service?.createOder(
+        cardId,
+        name,
+        mobile,
+        dormitory,
+        freeDate,
+        onDataSuccess: (data, msg) {
+          StringAssets.createOrder.showToast();
+        },
+      );
       saveTelephonePageData();
     } else {
       StringAssets.addFullMsg.showToast();

@@ -377,13 +377,13 @@ class StringAssets {
   static const String package = '点击选择套餐';
 
   /// 卡号
-  static const String number0 = '卡号';
+  static const String telephoneNumber = '卡号';
 
   /// 选择卡号
   static const String selectNumber = '选择卡号';
 
   /// 点击选择卡号
-  static const String number = '点击选择卡号';
+  static const String clickSelectNumber = '点击选择卡号';
 
   /// 点击选择收卡时间
   static const String time = '点击选择收卡时间';
@@ -515,7 +515,4 @@ class StringAssets {
 
   /// 预订卡号:
   static const String bookNumber = '预订卡号:';
-
-  /// 提示
-  static const String prompt = '提示';
 }

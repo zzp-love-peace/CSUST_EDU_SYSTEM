@@ -1,16 +1,17 @@
-import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
+import 'package:csust_edu_system/ui/telephonecard/data/telephone_picker_type.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/banner_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/function_bar_view.dart';
-import 'package:csust_edu_system/ui/telephonecard/view/show_picker_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_add_wechat_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_button_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_edit_view.dart';
+import 'package:csust_edu_system/ui/telephonecard/view/telephone_picker_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../data/telephone_data.dart';
 import '../model/telephone_model.dart';
 import '../viewmodel/telephone_viewmodel.dart';
 
@@ -64,123 +65,125 @@ class TelephoneHomeState extends State<TelephoneHome> {
           child: ListView(
             children: [
               BannerView(
-                imgList: _telephoneViewModel.model.imgList,
+                imgList: telephoneImgList,
               ),
               const FunctionBarView(),
-              ConsumerView<TelephoneViewModel>(builder: (ctx, viewModel, _) {
-                return Card(
-                  margin: const EdgeInsets.fromLTRB(12, 0, 12, 20),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 30,
+              Card(
+                margin: const EdgeInsets.fromLTRB(12, 0, 12, 20),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        const Text(
+                          StringAssets.schoolArea,
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                        Expanded(
+                          child: TelephonePickerView(
+                            title: StringAssets.selectArea,
+                            text: _telephoneViewModel.model.school,
+                            pickerData: telephoneSchoolList,
+                            callBack: (value) {
+                              _telephoneViewModel.model.school = value;
+                            },
+                            size: 60,
                           ),
-                          const Text(
-                            StringAssets.schoolArea,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                        )
+                      ],
+                    ),
+                    const Divider(
+                        thickness: 1,
+                        indent: 30,
+                        endIndent: 30,
+                        color: Colors.black12),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        const Text(
+                          StringAssets.package0,
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                        Expanded(
+                          child: TelephonePickerView(
+                            title: StringAssets.selectPackage,
+                            text: _telephoneViewModel.model.package,
+                            pickerData: telephonePackageList,
+                            callBack: (value) {
+                              _telephoneViewModel.model.package = value;
+                            },
+                            size: 60,
                           ),
-                          Expanded(
-                            child: ShowPickerView(
-                              title: StringAssets.selectArea,
-                              text: _telephoneViewModel.model.school,
-                              pickerData: _telephoneViewModel.model.schoolList,
-                              callBack: _telephoneViewModel.schoolCallBack,
-                              size: 60,
-                            ),
-                          )
-                        ],
-                      ),
-                      const Divider(
-                          thickness: 1,
-                          indent: 30,
-                          endIndent: 30,
-                          color: Colors.black12),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 30,
+                        )
+                      ],
+                    ),
+                    const Divider(
+                        thickness: 1,
+                        indent: 30,
+                        endIndent: 30,
+                        color: Colors.black12),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        const Text(
+                          StringAssets.telephoneNumber,
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                        Expanded(
+                          child: TelephonePickerView(
+                            title: StringAssets.selectNumber,
+                            text: _telephoneViewModel.model.number,
+                            pickerData: const [],
+                            size: 60,
+                            type: TelephonePickerType.number,
                           ),
-                          const Text(
-                            StringAssets.package0,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                        )
+                      ],
+                    ),
+                    const Divider(
+                        thickness: 1,
+                        indent: 30,
+                        endIndent: 30,
+                        color: Colors.black12),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        const Text(
+                          StringAssets.time0,
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                        Expanded(
+                          child: TelephonePickerView(
+                            title: StringAssets.selectTime,
+                            text: _telephoneViewModel.model.time,
+                            pickerData: timeList,
+                            callBack: (value) {
+                              _telephoneViewModel.model.time = value;
+                            },
+                            size: 24,
                           ),
-                          Expanded(
-                            child: ShowPickerView(
-                              title: StringAssets.selectPackage,
-                              text: _telephoneViewModel.model.package,
-                              pickerData: _telephoneViewModel.model.packageList,
-                              callBack: _telephoneViewModel.packageCallBack,
-                              size: 60,
-                            ),
-                          )
-                        ],
-                      ),
-                      const Divider(
-                          thickness: 1,
-                          indent: 30,
-                          endIndent: 30,
-                          color: Colors.black12),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 30,
-                          ),
-                          const Text(
-                            StringAssets.number0,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                          ),
-                          Expanded(
-                            child: ShowPickerView(
-                              title: StringAssets.selectNumber,
-                              text: _telephoneViewModel.model.number,
-                              pickerData: _telephoneViewModel.getNumberList(
-                                  _telephoneViewModel.model.school,
-                                  _telephoneViewModel.model.package),
-                              callBack: _telephoneViewModel.numberCallBack,
-                              size: 60,
-                            ),
-                          )
-                        ],
-                      ),
-                      const Divider(
-                          thickness: 1,
-                          indent: 30,
-                          endIndent: 30,
-                          color: Colors.black12),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 30,
-                          ),
-                          const Text(
-                            StringAssets.time0,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                          ),
-                          Expanded(
-                            child: ShowPickerView(
-                              title: StringAssets.selectTime,
-                              text: _telephoneViewModel.model.time,
-                              pickerData: _telephoneViewModel.model.timeList,
-                              callBack: _telephoneViewModel.timeCallBack,
-                              size: 24,
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                );
-              }),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
               Card(
                 margin: const EdgeInsets.fromLTRB(12, 0, 12, 20),
                 shape: const RoundedRectangleBorder(
@@ -236,8 +239,9 @@ class TelephoneHomeState extends State<TelephoneHome> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.fromLTRB(50, 15, 50, 80),
-                  child: TelephoneButtonView(onPress: () {
+                padding: const EdgeInsets.fromLTRB(50, 15, 50, 80),
+                child: TelephoneButtonView(
+                  onPress: () {
                     int id = _telephoneViewModel.model.cardId;
                     String name = _telephoneViewModel.model.nameController.text;
                     String mobile =
@@ -248,7 +252,9 @@ class TelephoneHomeState extends State<TelephoneHome> {
                     String school = _telephoneViewModel.model.school;
                     _telephoneViewModel.createOder(
                         id, name, mobile, dormitory, freeDate, school);
-                  }))
+                  },
+                ),
+              ),
             ],
           ),
         ));

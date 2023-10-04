@@ -14,23 +14,30 @@ import 'message_item_view.dart';
 /// @author zzp
 /// @since 2023/10/3
 /// @version v1.8.8
-class MessageListView extends StatelessWidget {
+class MessageListView extends StatefulWidget {
   const MessageListView({super.key, required this.isReadList});
 
   /// 是否是已读消息列表
   final bool isReadList;
 
   @override
+  State<MessageListView> createState() => _MessageListViewState();
+}
+
+class _MessageListViewState extends State<MessageListView>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SelectorView<MessageViewModel, List<MsgBean>>(
       onInit: (viewModel) {
-        if (isReadList) {
+        if (widget.isReadList) {
           viewModel.getReadMsg();
         } else {
           viewModel.getUnreadMsg();
         }
       },
-      selector: (ctx, viewModel) => isReadList
+      selector: (ctx, viewModel) => widget.isReadList
           ? viewModel.model.readMsgList
           : viewModel.model.unReadMsgList,
       builder: (ctx, msgList, _) {
@@ -38,7 +45,7 @@ class MessageListView extends StatelessWidget {
             header: MaterialHeader(),
             onRefresh: () async {
               var viewModel = context.read<MessageViewModel>();
-              if (isReadList) {
+              if (widget.isReadList) {
                 viewModel.getReadMsg();
               } else {
                 viewModel.getUnreadMsg();
@@ -46,15 +53,18 @@ class MessageListView extends StatelessWidget {
             },
             child: msgList.isNotEmpty
                 ? ListView.builder(
-                    itemCount: msgList.length,
+              itemCount: msgList.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return MessageItemView(
-                          msg: msgList[index], isRead: isReadList);
+                          msg: msgList[index], isRead: widget.isReadList);
                     },
                   )
                 : const NoneLottie(hint: StringAssets.messageEmpty));
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

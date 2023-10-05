@@ -27,13 +27,18 @@ class OrderPage extends StatelessWidget {
   }
 }
 
+/// 电话卡订单Home
+///
+/// @author wk
+/// @since 2023/10/2
+/// @version v1.8.8
 class OrderHome extends StatelessWidget {
   const OrderHome({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppBar.create(StringAssets.order),
+      appBar: CommonAppBar.create(StringAssets.orderSearch),
       body: ConsumerView<OrderViewModel>(
         onInit: (viewModel) {
           viewModel.getOrderList();
@@ -45,7 +50,6 @@ class OrderHome extends StatelessWidget {
               itemBuilder: (context, index) {
                 return OrderListItemView(
                   orderBean: viewModel.model.orderList[index],
-                  deleteOrder: viewModel.deleteOrder,
                 );
               });
         },

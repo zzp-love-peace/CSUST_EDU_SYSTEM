@@ -10,8 +10,8 @@ import '../../../route/fade_route.dart';
 /// @author wk
 /// @since 2023/9/25
 /// @version v1.8.8
-class BannerView extends StatelessWidget {
-  const BannerView({super.key, required this.imgList});
+class TelephoneBannerView extends StatelessWidget {
+  const TelephoneBannerView({super.key, required this.imgList});
 
   ///图片路径列表
   final List<String> imgList;

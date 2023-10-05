@@ -27,28 +27,35 @@ class TelephoneEditView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
+        Row(
+          children: [
+            const SizedBox(
+              width: 30,
+            ),
+            Text(
+              title,
+              style: const TextStyle(color: Colors.black, fontSize: 16),
+            ),
+            SizedBox(
+              width: size,
+            ),
+            Expanded(
+                child: TextField(
+              controller: controller,
+              maxLines: 1,
+              style: const TextStyle(fontSize: 16),
+              decoration: InputDecoration(
+                  hintText: hint, hintStyle: const TextStyle(fontSize: 16)),
+            )),
+            const SizedBox(
+              width: 30,
+            ),
+          ],
+        ),
         const SizedBox(
-          width: 30,
-        ),
-        Text(
-          title,
-          style: const TextStyle(color: Colors.black, fontSize: 16),
-        ),
-        SizedBox(
-          width: size,
-        ),
-        Expanded(
-            child: TextField(
-          controller: controller,
-          maxLines: 1,
-          style: const TextStyle(fontSize: 16),
-          decoration: InputDecoration(
-              hintText: hint, hintStyle: const TextStyle(fontSize: 16)),
-        )),
-        const SizedBox(
-          width: 30,
+          height: 10,
         ),
       ],
     );

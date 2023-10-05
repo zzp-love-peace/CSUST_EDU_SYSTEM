@@ -1,3 +1,5 @@
+import '../../../common/picker/common_picker.dart';
+
 /// 电话卡选择器model
 ///
 /// @author wk
@@ -11,4 +13,7 @@ class TelephonePickerModel {
 
   /// 选择器列表
   List pickerData;
+
+  /// 通用选择器
+  final CommonPicker<dynamic> picker = CommonPicker<dynamic>();
 }

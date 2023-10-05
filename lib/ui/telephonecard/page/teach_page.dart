@@ -17,69 +17,57 @@ class TeachPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppBar.create(StringAssets.teach),
+      appBar: CommonAppBar.create(StringAssets.tutorialView),
       body: ListView(
         children: [
-          const Padding(
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-              child: Text(StringAssets.teach1,
-                  style: TextStyle(color: Colors.black, fontSize: 16))),
-          const Padding(
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-              child: Text(StringAssets.teach2,
-                  style: TextStyle(color: Colors.black, fontSize: 16))),
-          Center(
-              child: GestureDetector(
-            child: const Padding(
-              padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
-              child: Image(image: AssetImage(ImageAssets.equity1)),
-            ),
-            onTap: () {
-              Navigator.of(context).push(FadeRoute(
-                  page: PhotoViewGallery.builder(
-                itemCount: 1,
-                builder: (BuildContext context, int index) {
-                  return PhotoViewGalleryPageOptions(
-                    onTapUp: (context, details, controllerValue) {
-                      Navigator.pop(context);
-                    },
-                    imageProvider: const AssetImage(ImageAssets.equity1),
-                  );
-                },
-              )));
-            },
-          )),
-          const Padding(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-              child: Text(StringAssets.teach3,
-                  style: TextStyle(color: Colors.black, fontSize: 16))),
-          Center(
-              child: GestureDetector(
-            child: const Padding(
-              padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
-              child: Image(image: AssetImage(ImageAssets.equity2)),
-            ),
-            onTap: () {
-              Navigator.of(context).push(FadeRoute(
-                  page: PhotoViewGallery.builder(
-                itemCount: 1,
-                builder: (BuildContext context, int index) {
-                  return PhotoViewGalleryPageOptions(
-                    onTapUp: (context, details, controllerValue) {
-                      Navigator.pop(context);
-                    },
-                    imageProvider: const AssetImage(ImageAssets.equity2),
-                  );
-                },
-              )));
-            },
-          )),
-          const Padding(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 50),
-              child: Text(StringAssets.faultFix,
-                  style: TextStyle(color: Colors.black, fontSize: 16))),
+          _paddingText(StringAssets.tutorial1, 10, 0),
+          _paddingText(StringAssets.tutorial2, 10, 0),
+          _image(context, ImageAssets.equity1),
+          _paddingText(StringAssets.networkLinkTutorial, 20, 0),
+          _image(context, ImageAssets.equity2),
+          _paddingText(StringAssets.faultFix, 20, 50),
         ],
       ),
     );
+  }
+
+  /// 获取带Padding的Text
+  ///
+  /// [value]text的值
+  /// [top]padding的top高度
+  /// [bottom]padding的bottom值
+  Widget _paddingText(String value, double top, double bottom) {
+    return Padding(
+        padding: EdgeInsets.fromLTRB(20, top, 20, bottom),
+        child: Text(value,
+            style: const TextStyle(color: Colors.black, fontSize: 16)));
+  }
+
+  /// 获取可点击查看的图片Img
+  ///
+  /// [context] BuildContext
+  /// [imgPath] 图片路径
+  Widget _image(BuildContext context, String imgPath) {
+    return Center(
+        child: GestureDetector(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(30, 20, 30, 0),
+        child: Image(image: AssetImage(imgPath)),
+      ),
+      onTap: () {
+        Navigator.of(context).push(FadeRoute(
+            page: PhotoViewGallery.builder(
+          itemCount: 1,
+          builder: (BuildContext context, int index) {
+            return PhotoViewGalleryPageOptions(
+              onTapUp: (context, details, controllerValue) {
+                Navigator.pop(context);
+              },
+              imageProvider: AssetImage(imgPath),
+            );
+          },
+        )));
+      },
+    ));
   }
 }

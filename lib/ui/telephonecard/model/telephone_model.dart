@@ -9,21 +9,20 @@ import 'package:flutter/material.dart';
 /// @version v1.8.8
 class TelephoneModel {
 
-
   /// 校区
   String school = StringAssets.clickSelectSchool;
 
   /// 套餐
-  String package = StringAssets.package;
+  String package = StringAssets.clickSelectSchool;
 
   /// 卡号
-  String number = StringAssets.clickSelectNumber;
+  String number = StringAssets.clickSelectCardNumber;
 
   /// 卡号id
   int cardId = -1;
 
   /// 选卡时间
-  String time = StringAssets.time;
+  String time = StringAssets.clickSelectCardReceivingTime;
 
   /// 姓名输入控制器
   final nameController = TextEditingController();

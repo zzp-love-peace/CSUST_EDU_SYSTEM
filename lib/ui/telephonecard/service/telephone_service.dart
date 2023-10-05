@@ -16,6 +16,7 @@ class TelephoneService extends BaseService {
   /// [mobile] 联系电话
   /// [dormitory] 详细地址
   /// [freeDate] 空闲时间
+  /// [onDataSuccess] 获取数据成功回调
   void createOder(
       int cardId, String name, String mobile, String dormitory, String freeDate,
       {required OnDataSuccess<KeyMap> onDataSuccess}) {

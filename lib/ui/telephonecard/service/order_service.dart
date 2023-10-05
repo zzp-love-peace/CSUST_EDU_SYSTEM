@@ -11,6 +11,8 @@ import '../../../util/typedef_util.dart';
 /// @version v1.8.8
 class OrderService extends BaseService {
   ///用户获取订单列表
+  ///
+  /// [onDataSuccess] 获取数据成功回调
   void getOrderList({required OnDataSuccess<KeyMap> onDataSuccess}) {
     post(UrlAssets.getOrderList, onDataSuccess: onDataSuccess);
   }
@@ -18,6 +20,7 @@ class OrderService extends BaseService {
   ///用户删除订单
   ///
   /// [id]订单id
+  /// [onDataSuccess] 获取数据成功回调
   void deleteOrder(int id, {required OnDataSuccess<KeyMap?> onDataSuccess}) {
     var params = {
       KeyAssets.id: id,

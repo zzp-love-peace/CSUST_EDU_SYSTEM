@@ -19,11 +19,11 @@ class ServicePage extends StatelessWidget {
           children: [
             Padding(
                 padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                child: Text(StringAssets.service1,
+                child: Text(StringAssets.serviceDetailIntroduce,
                     style: TextStyle(color: Colors.black, fontSize: 16))),
             Padding(
                 padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                child: Text(StringAssets.service2,
+                child: Text(StringAssets.disclaimers,
                     style: TextStyle(color: Colors.black54, fontSize: 16))),
             SizedBox(
               height: 50,

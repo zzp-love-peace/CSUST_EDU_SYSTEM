@@ -68,6 +68,13 @@ class TelephoneViewModel
   }
 
   /// 提交电话卡订单
+  ///
+  /// [cardId] 卡号id
+  /// [name] 姓名
+  /// [mobile] 联系电话
+  /// [dormitory] 详细地址
+  /// [freeDate] 收卡时间
+  /// [school] 校区
   void createOder(int cardId, String name, String mobile, String dormitory,
       String freeDate, String school) {
     if (cardId != -1 &&
@@ -75,7 +82,7 @@ class TelephoneViewModel
         mobile.isNotEmpty &&
         dormitory.isNotEmpty &&
         (!freeDate.startsWith(StringAssets.clickSelect) ||
-            school == StringAssets.school3)) {
+            school == StringAssets.mail)) {
       service?.createOder(
         cardId,
         name,
@@ -83,10 +90,10 @@ class TelephoneViewModel
         dormitory,
         freeDate,
         onDataSuccess: (data, msg) {
-          StringAssets.createOrder.showToast();
+          StringAssets.createOrderSuccess.showToast();
+          saveTelephonePageData();
         },
       );
-      saveTelephonePageData();
     } else {
       StringAssets.addFullMsg.showToast();
     }

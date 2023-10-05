@@ -4,9 +4,15 @@
 /// @since 2023/10/4
 /// @version v1.8.8
 enum TelephonePickerType {
-  /// 通用选择器
-  common,
+  /// 校区选择器
+  schoolArea,
+
+  /// 套餐选择器
+  package,
 
   /// 号码选择器
-  number
+  number,
+
+  /// 收卡时间选择器
+  cardReceivingTime
 }

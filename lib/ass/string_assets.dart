@@ -319,9 +319,6 @@ class StringAssets {
   /// 未读
   static const String unread = '未读';
 
-  /// 提交
-  static const String commit = '提交';
-
   /// 添加客服微信
   static const String addWeChat = '添加客服微信';
 
@@ -331,38 +328,29 @@ class StringAssets {
   /// 点击选择
   static const String clickSelect = '点击选择';
 
-  /// 功能
-  static const String function = '功能';
-
-  /// 收起详情介绍
-  static const String packUpFunction = '收起详情介绍';
-
-  /// 展开详情介绍
-  static const String launchFunction = '展开详情介绍';
-
   /// 线上营业厅
   static const String onlineHall = '线上营业厅';
 
   /// 金盆岭校区
-  static const String school1 = '金盆岭';
+  static const String JinPengRidge = '金盆岭';
 
   /// 云塘校区
-  static const String school2 = '云塘';
+  static const String Yuntang = '云塘';
 
   /// 邮寄
-  static const String school3 = '邮寄';
+  static const String mail = '邮寄';
 
   /// 校区
   static const String schoolArea = '校区';
 
   /// 选择校区
-  static const String selectArea = '选择校区';
+  static const String selectSchoolArea = '选择校区';
 
   /// 点击选择校区
   static const String clickSelectSchool = '点击选择校区';
 
   /// 套餐
-  static const String package0 = '套餐';
+  static const String package = '套餐';
 
   /// 套餐一(59元档)
   static const String package59 = '套餐一(59元档)';
@@ -370,26 +358,32 @@ class StringAssets {
   /// 套餐二(28元档)
   static const String package28 = '套餐二(28元档)';
 
+  /// 59
+  static const String fiftyNine = '59';
+
+  /// 28
+  static const String twentyEight = '28';
+
   /// 选择套餐
   static const String selectPackage = '选择套餐';
 
   /// 点击选择套餐
-  static const String package = '点击选择套餐';
+  static const String clickSelectPackage = '点击选择套餐';
 
   /// 卡号
-  static const String telephoneNumber = '卡号';
+  static const String cardNumber = '卡号';
 
   /// 选择卡号
-  static const String selectNumber = '选择卡号';
+  static const String selectCardNumber = '选择卡号';
 
   /// 点击选择卡号
-  static const String clickSelectNumber = '点击选择卡号';
+  static const String clickSelectCardNumber = '点击选择卡号';
 
   /// 点击选择收卡时间
-  static const String time = '点击选择收卡时间';
+  static const String clickSelectCardReceivingTime = '点击选择收卡时间';
 
   /// 收卡时间
-  static const String time0 = '收卡时间';
+  static const String cardReceivingTime = '收卡时间';
 
   /// 选择时间段
   static const String selectTime = '选择时间段';
@@ -401,10 +395,10 @@ class StringAssets {
   static const String nameHint = '请输入姓名';
 
   /// 联系电话
-  static const String phoneNumber = '联系电话';
+  static const String contactPhoneNumber = '联系电话';
 
   /// 联系电话hint
-  static const String phoneNumberHint = '请输入联系电话';
+  static const String contactPhoneNumberHint = '请输入联系电话';
 
   /// 详细地址
   static const String address = '详细地址';
@@ -425,8 +419,8 @@ class StringAssets {
   static const String packageDetail = '套餐详情';
 
   /// 59元套餐详情介绍
-  static const String package1 = '''59元套餐(带校园网+双权益):
-      170G湖南省内流量 +80G全国流量 +30G定向流量 +300分钟免费通话
+  static const String package59DetailIntroduce = '''59元套餐(带校园网+双权益):
+      190G湖南省内流量 +60G全国流量 +30G定向流量 +300分钟免费通话
       说明:
       1、定向流量适用范围包括抖音、小红书、腾讯视频、爱奇艺、优酷、哔哩哔哩、王者荣耀等超100款第三方热门APP
       2、所有流量不限速全为5G流量，湖南省内学生客户寒暑假可使用流量高达280G
@@ -434,7 +428,7 @@ class StringAssets {
       4、校园双权益: 惠生活权益+芒果卡权益''';
 
   /// 28元套餐详情介绍
-  static const String package2 = '''28元套餐流量卡(不带校园网+单权益):
+  static const String package28DetailIntroduce = '''28元套餐流量卡(不带校园网+单权益):
       170G湖南省内流量+75G全国流量+30G定向流量+300分钟免费通话
       说明:
       1、定向流量适用范围包括抖音、小红书、腾讯视频、爱奇艺、优酷、哔哩哔哩、王者荣耀等超100款第三方热门APP
@@ -452,7 +446,8 @@ class StringAssets {
   static const String equity2 = '''二、时代少年团芒果卡权益:
       1、芒果TV、咪咕视频会员每月免费看。
       2、芒全拍奖:流出门票、芒果局边等月月有福利。
-      3、时代少年团9大专后爱豆特权。''';
+      3、时代少年团9大专后爱豆特权。
+      4、线下活动:综艺录制节目现场(如披荆斩棘的哥哥等)、歌友会等''';
 
   /// 套餐权益注释
   static const String equity3 = '注：套餐权益持续时间为4年，最终解释权及责任方为中国移动天心分公司';
@@ -461,36 +456,37 @@ class StringAssets {
   static const String serviceDetail = '服务介绍';
 
   /// 服务介绍详情
-  static const String service1 =
+  static const String serviceDetailIntroduce =
       '亲爱的同学们，长理教务联合湖南移动天心分公司为大家打造线上校园卡订购服务，在这里可以额外享受到的是轻松的线上预定，便利的送卡上门、活动期间精美的小礼品、优质的售后服务。';
 
   /// 免责声明
-  static const String service2 = '免责声明：长理教务仅负责校园卡的线上预定，校园卡问题仅需联系客服交由中国移动员工处理。';
+  static const String disclaimers =
+      '免责声明：长理教务仅负责校园卡的线上预定，校园卡问题仅需联系客服交由中国移动员工处理。';
 
   /// 电话卡提示
-  static const String promptTelePhone =
+  static const String tipsTelephone =
       '提示：详细地址为寝室楼或邮寄地址,邮寄必须添加客服微信无需填写收卡时间，当日邮寄。';
 
   /// 教程查看
-  static const String teach = '教程查看';
+  static const String tutorialView = '教程查看';
 
   /// 权益领取流程
-  static const String teach1 = '''权益领取流程:
+  static const String tutorial1 = '''权益领取流程:
     一、惠生活权益:
     每月可领取瑞幸咖啡、茶颜悦色等20元生活权益或爱奇艺、优酷、腾讯等视频会员
     领取路径：微信小程序搜索“12580惠生活”小程序，点击进去用新的校园网号码登录，选择自己想要的权益进行领取，在卡包进行兑换。''';
 
   /// 芒果权益领取路径
-  static const String teach2 = '''二、芒果权益领取路径:
+  static const String tutorial2 = '''二、芒果权益领取路径:
     1、芒果TV+咪咕视频APP会员
     用新办理的校园网号码登录APP，自动获取芒果TV、咪咕视频APP会员;
     2、每月抽盲盒
-    微信搜索“湖南移动微厅”-点击公众号-点击右下角福利菜单-点击领权益啦-下滑至权益领取专区-点击芒果卡权益-点击右上角登录-选择登录方式-在惊喜盲盒处点击立即参与即可抽奖\n' +
+    微信搜索“湖南移动微厅”-点击公众号-点击右下角福利菜单-点击领权益啦-下滑至权益领取专区-点击芒果卡权益-点击右上角登录-选择登录方式-在惊喜盲盒处点击立即参与即可抽奖
     3、10086接爱豆来电的流程
     微信搜索“湖南移动微厅”-点击公众号-点击右下角福利菜单-点击领权益啦-下滑至权益领取专区-点击芒果卡权益-点击右上角登录-选择登录方式-在爱豆权益处点击立即领取-点击去设置爱豆惊喜来电-选择喜欢的爱豆-选择呼叫类型、时间-点击立即提交，即可获得爱豆惊喜定制来电！''';
 
   /// 校园网链接教程
-  static const String teach3 = '校园网链接教程';
+  static const String networkLinkTutorial = '校园网链接教程';
 
   /// 故障保修
   static const String faultFix = '''故障报修:
@@ -502,17 +498,26 @@ class StringAssets {
       电话报修请致电:0731-85258112转1云塘校区，转2金盆岭校区。''';
 
   /// 订单查询
-  static const String order = '订单查询';
+  static const String orderSearch = '订单查询';
 
   ///删除订单成功
-  static const String deleteOrder = '删除订单成功';
+  static const String deleteOrderSuccess = '删除订单成功';
 
   ///提交订单成功
-  static const String createOrder = '提交订单成功';
+  static const String createOrderSuccess = '提交订单成功';
 
   /// 请补充完整信息
   static const String addFullMsg = '请补充完整信息';
 
   /// 预订卡号:
-  static const String bookNumber = '预订卡号:';
+  static const String bookCardNumber = '预订卡号:';
+
+  /// 提交订单时间
+  static const String submitOrderTime = '提交订单时间';
+
+  /// 您确定要删除该订单吗？
+  static const String isSureDeleteOrder = '您确定要删除该订单吗？';
+
+  /// 校区或套餐未选择
+  static const String schoolAreaOrPackageUnselect = '校区或套餐未选择';
 }

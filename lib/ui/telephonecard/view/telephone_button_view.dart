@@ -19,7 +19,7 @@ class TelephoneButtonView extends StatelessWidget {
       child: const SizedBox(
         child: Center(
           child: Text(
-            StringAssets.commit,
+            StringAssets.submit,
             style: TextStyle(fontSize: 18, color: Colors.white),
           ),
         ),

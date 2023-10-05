@@ -3,8 +3,6 @@ import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/telephonecard/model/telephone_picker_model.dart';
 import 'package:csust_edu_system/ui/telephonecard/service/telephone_picker_service.dart';
 import 'package:csust_edu_system/ui/telephonecard/viewmodel/telephone_viewmodel.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_picker/picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ass/key_assets.dart';
@@ -34,18 +32,19 @@ class TelephonePickerViewModel
   /// 根据套餐，校区获取卡号列表
   ///
   /// [title] picker标题
+  /// [text] 选择的值
   /// [school] 校区
   /// [package] 套餐
-  void getNumberList(String title, String school, String package) {
+  void getNumberList(String title, String text, String school, String package) {
     if (school.startsWith(StringAssets.clickSelect) ||
         package.startsWith(StringAssets.clickSelect)) {
-      '校区或套餐未选择'.showToast();
+      StringAssets.schoolAreaOrPackageUnselect.showToast();
     } else {
       if (package == StringAssets.package59) {
-        package = '59';
+        package = StringAssets.fiftyNine;
       }
       if (package == StringAssets.package28) {
-        package = '28';
+        package = StringAssets.twentyEight;
       }
       service?.getCardByKind(
         school,
@@ -55,25 +54,17 @@ class TelephonePickerViewModel
           model.pickerData =
               records.map((json) => CardNumberBean.fromJson(json)).toList();
           notifyListeners();
-          Picker(
-            title: Text(
-              title,
-              style: const TextStyle(fontSize: 18, color: Colors.black),
-            ),
-            confirmText: StringAssets.ok,
-            cancelText: StringAssets.cancel,
-            adapter: PickerDataAdapter<dynamic>(pickerData: model.pickerData),
-            changeToFirst: true,
-            hideHeader: false,
-            onConfirm: (Picker picker, List value) {
-              setText(picker.adapter.text
-                  .substring(1, picker.adapter.text.length - 1));
-              var telephoneModel = context.read<TelephoneViewModel>().model;
-              CardNumberBean bean = picker.adapter.getSelectedValues()[0];
-              telephoneModel.number = bean.mobile;
-              telephoneModel.cardId = bean.id;
-            },
-          ).showModal(context);
+          model.picker.showPicker(context,
+              title: title,
+              pickerData: model.pickerData,
+              initIndex: model.pickerData.indexOf(text),
+              onConfirm: (value, index) {
+            setText(value.toString());
+            var telephoneModel = context.read<TelephoneViewModel>().model;
+            CardNumberBean bean = value;
+            telephoneModel.number = bean.mobile;
+            telephoneModel.cardId = bean.id;
+          });
         },
       );
     }

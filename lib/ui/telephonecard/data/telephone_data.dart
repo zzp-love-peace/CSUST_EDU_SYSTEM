@@ -3,16 +3,21 @@ import 'package:date_format/date_format.dart';
 import '../../../ass/image_assets.dart';
 import '../../../ass/string_assets.dart';
 
+/// 线上营业厅轮播图列表
 List<String> telephoneImgList = [
   ImageAssets.telephoneHall,
   ImageAssets.equity1,
   ImageAssets.equity2,
 ];
+
+/// 电话卡业务——校区列表
 List<String> telephoneSchoolList = [
-  StringAssets.school1,
-  StringAssets.school2,
-  StringAssets.school3,
+  StringAssets.JinPengRidge,
+  StringAssets.Yuntang,
+  StringAssets.mail,
 ];
+
+/// 电话卡业务——套餐列表
 List<String> telephonePackageList = [
   StringAssets.package59,
   StringAssets.package28,

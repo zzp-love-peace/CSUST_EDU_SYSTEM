@@ -1,7 +1,9 @@
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/ui/telephonecard/jsonbean/order_bean.dart';
+import 'package:csust_edu_system/ui/telephonecard/viewmodel/order_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/dialog/select_dialog.dart';
 
@@ -11,11 +13,10 @@ import '../../../common/dialog/select_dialog.dart';
 /// @since 2023/10/3
 /// @version v1.8.8
 class OrderListItemView extends StatelessWidget {
-  const OrderListItemView(
-      {super.key, required this.orderBean, required this.deleteOrder});
+  const OrderListItemView({super.key, required this.orderBean});
 
+  /// 订单数据
   final OrderBean orderBean;
-  final void Function(int id, OrderBean orderBean) deleteOrder;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +33,8 @@ class OrderListItemView extends StatelessWidget {
                     child: GestureDetector(
                   onTap: () {
                     SmartDialog.show(
-                        builder: (_) => _orderDialog(orderBean),
-                        clickMaskDismiss: false);
+                      builder: (_) => _orderDialog(orderBean),
+                    );
                   },
                   child: Row(children: [
                     Icon(
@@ -42,7 +43,7 @@ class OrderListItemView extends StatelessWidget {
                       size: 36,
                     ),
                     const Text(
-                      StringAssets.bookNumber,
+                      StringAssets.bookCardNumber,
                       style: TextStyle(color: Colors.black, fontSize: 16),
                     ),
                     const SizedBox(
@@ -59,9 +60,10 @@ class OrderListItemView extends StatelessWidget {
                     onPressed: () {
                       SelectDialog(
                           title: StringAssets.tips,
-                          subTitle: '您确定要删除该订单吗？',
+                          subTitle: StringAssets.isSureDeleteOrder,
                           callback: () {
-                            deleteOrder(orderBean.id, orderBean);
+                            var orderViewModel = context.read<OrderViewModel>();
+                            orderViewModel.deleteOrder(orderBean.id, orderBean);
                           }).showDialog();
                     },
                     icon: const Icon(Icons.delete))
@@ -78,6 +80,9 @@ class OrderListItemView extends StatelessWidget {
         ]));
   }
 
+  /// 获取自定义的dialog
+  ///
+  /// [orderBean] 具体订单
   Widget _orderDialog(OrderBean orderBean) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
@@ -93,65 +98,27 @@ class OrderListItemView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                  children: [
-                    const Text('校区:'),
-                    const SizedBox(width: 10),
-                    Text(orderBean.school)
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text('套餐:'),
-                    const SizedBox(width: 10),
-                    Text(orderBean.package)
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text('预订卡号:'),
-                    const SizedBox(width: 10),
-                    Text(orderBean.number)
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text('收卡时间:'),
-                    const SizedBox(width: 10),
-                    Text(orderBean.freeTime)
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text('姓名:'),
-                    const SizedBox(width: 10),
-                    Text(orderBean.name)
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text('联系电话'),
-                    const SizedBox(width: 10),
-                    Text(orderBean.mobile)
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text('详细地址:'),
-                    const SizedBox(width: 10),
-                    Text(orderBean.address)
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text('提交订单时间:'),
-                    const SizedBox(width: 10),
-                    Text(orderBean.createTime)
-                  ],
-                ),
+                _row(StringAssets.schoolArea, orderBean.school),
+                _row(StringAssets.package, orderBean.package),
+                _row(StringAssets.bookCardNumber, orderBean.number),
+                _row(StringAssets.cardReceivingTime, orderBean.freeTime),
+                _row(StringAssets.name, orderBean.name),
+                _row(StringAssets.contactPhoneNumber, orderBean.mobile),
+                _row(StringAssets.address, orderBean.address),
+                _row(StringAssets.submitOrderTime, orderBean.createTime),
               ],
             ),
           )),
+    );
+  }
+
+  /// 获取带Text的Row
+  ///
+  /// [title] 标题
+  /// [value] 值
+  Widget _row(String title, String value) {
+    return Row(
+      children: [Text(title), const SizedBox(width: 10), Text(value)],
     );
   }
 }

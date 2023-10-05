@@ -52,14 +52,14 @@ class OrderBean {
 
   /// 修改套餐，订单时间格式
   void init() {
-    if (package == '59') {
+    if (package == StringAssets.fiftyNine) {
       package = StringAssets.package59;
     }
-    if (package == '28') {
+    if (package == StringAssets.twentyEight) {
       package = StringAssets.package28;
     }
-    if (freeTime == StringAssets.time) {
-      freeTime = '';
+    if (freeTime == StringAssets.clickSelectCardReceivingTime) {
+      freeTime = StringAssets.emptyStr;
     }
     if (createTime.isNotEmpty) {
       createTime = createTime.replaceAll('T', ' - ');

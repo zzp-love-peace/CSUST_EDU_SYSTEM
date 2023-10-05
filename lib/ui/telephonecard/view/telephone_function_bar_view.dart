@@ -7,15 +7,15 @@ import 'package:csust_edu_system/ui/telephonecard/page/teach_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../ass/string_assets.dart';
-import 'function_item_view.dart';
+import 'telephone_function_item_view.dart';
 
 /// 功能BarView
 ///
 /// @author wk
 /// @since 2023/9/27
 /// @version v1.8.8
-class FunctionBarView extends StatelessWidget {
-  const FunctionBarView({super.key});
+class TelephoneFunctionBarView extends StatelessWidget {
+  const TelephoneFunctionBarView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,35 +35,35 @@ class FunctionBarView extends StatelessWidget {
                   width: 20,
                 ),
                 Text(
-                  '主要功能',
+                  StringAssets.mainFunction,
                   style: TextStyle(color: Colors.black),
                 )
               ],
             ),
             Row(
               children: [
-                FunctionItemView(
+                TelephoneFunctionItemView(
                   label: StringAssets.packageDetail,
                   path: ImageAssets.package,
                   tapCallback: () {
                     context.push(const PackagePage());
                   },
                 ),
-                FunctionItemView(
-                  label: StringAssets.teach,
+                TelephoneFunctionItemView(
+                  label: StringAssets.tutorialView,
                   path: ImageAssets.teach,
                   tapCallback: () {
                     context.push(const TeachPage());
                   },
                 ),
-                FunctionItemView(
-                  label: StringAssets.order,
+                TelephoneFunctionItemView(
+                  label: StringAssets.orderSearch,
                   path: ImageAssets.order,
                   tapCallback: () {
                     context.push(const OrderPage());
                   },
                 ),
-                FunctionItemView(
+                TelephoneFunctionItemView(
                   label: StringAssets.serviceDetail,
                   path: ImageAssets.service,
                   tapCallback: () {

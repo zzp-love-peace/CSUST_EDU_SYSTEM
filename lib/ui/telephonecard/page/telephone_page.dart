@@ -2,11 +2,12 @@ import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/telephonecard/data/telephone_picker_type.dart';
-import 'package:csust_edu_system/ui/telephonecard/view/banner_view.dart';
-import 'package:csust_edu_system/ui/telephonecard/view/function_bar_view.dart';
+import 'package:csust_edu_system/ui/telephonecard/page/order_page.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_add_wechat_view.dart';
+import 'package:csust_edu_system/ui/telephonecard/view/telephone_banner_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_button_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_edit_view.dart';
+import 'package:csust_edu_system/ui/telephonecard/view/telephone_function_bar_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_picker_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -67,177 +68,90 @@ class TelephoneHomeState extends State<TelephoneHome> {
         body: Center(
           child: ListView(
             children: [
-              BannerView(
+              TelephoneBannerView(
                 imgList: telephoneImgList,
               ),
-              const FunctionBarView(),
-              Card(
-                margin: const EdgeInsets.fromLTRB(12, 0, 12, 20),
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
-                child: Column(
+              const TelephoneFunctionBarView(),
+              _card(
+                Column(
                   children: [
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        const Text(
-                          StringAssets.schoolArea,
-                          style: TextStyle(color: Colors.black, fontSize: 16),
-                        ),
-                        Expanded(
-                          child: TelephonePickerView(
-                            title: StringAssets.selectArea,
-                            text: _telephoneViewModel.model.school,
-                            pickerData: telephoneSchoolList,
-                            callBack: (value) {
-                              _telephoneViewModel.model.school = value;
-                            },
-                            size: 60,
-                          ),
-                        )
-                      ],
+                    _rowTelephonePicker(
+                      StringAssets.schoolArea,
+                      StringAssets.selectSchoolArea,
+                      _telephoneViewModel.model.school,
+                      telephoneSchoolList,
+                      60,
+                      TelephonePickerType.schoolArea,
                     ),
-                    const Divider(
-                        thickness: 1,
-                        indent: 30,
-                        endIndent: 30,
-                        color: Colors.black12),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        const Text(
-                          StringAssets.package0,
-                          style: TextStyle(color: Colors.black, fontSize: 16),
-                        ),
-                        Expanded(
-                          child: TelephonePickerView(
-                            title: StringAssets.selectPackage,
-                            text: _telephoneViewModel.model.package,
-                            pickerData: telephonePackageList,
-                            callBack: (value) {
-                              _telephoneViewModel.model.package = value;
-                            },
-                            size: 60,
-                          ),
-                        )
-                      ],
+                    _divider(),
+                    _rowTelephonePicker(
+                      StringAssets.package,
+                      StringAssets.selectPackage,
+                      _telephoneViewModel.model.package,
+                      telephonePackageList,
+                      60,
+                      TelephonePickerType.package,
                     ),
-                    const Divider(
-                        thickness: 1,
-                        indent: 30,
-                        endIndent: 30,
-                        color: Colors.black12),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        const Text(
-                          StringAssets.telephoneNumber,
-                          style: TextStyle(color: Colors.black, fontSize: 16),
-                        ),
-                        Expanded(
-                          child: TelephonePickerView(
-                            title: StringAssets.selectNumber,
-                            text: _telephoneViewModel.model.number,
-                            pickerData: const [],
-                            size: 60,
-                            type: TelephonePickerType.number,
-                          ),
-                        )
-                      ],
+                    _divider(),
+                    _rowTelephonePicker(
+                      StringAssets.cardNumber,
+                      StringAssets.selectCardNumber,
+                      _telephoneViewModel.model.number,
+                      [],
+                      60,
+                      TelephonePickerType.number,
                     ),
-                    const Divider(
-                        thickness: 1,
-                        indent: 30,
-                        endIndent: 30,
-                        color: Colors.black12),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        const Text(
-                          StringAssets.time0,
-                          style: TextStyle(color: Colors.black, fontSize: 16),
-                        ),
-                        Expanded(
-                          child: TelephonePickerView(
-                            title: StringAssets.selectTime,
-                            text: _telephoneViewModel.model.time,
-                            pickerData: timeList,
-                            callBack: (value) {
-                              _telephoneViewModel.model.time = value;
-                            },
-                            size: 24,
-                          ),
-                        )
-                      ],
-                    ),
+                    _divider(),
+                    _rowTelephonePicker(
+                        StringAssets.cardReceivingTime,
+                        StringAssets.selectTime,
+                        _telephoneViewModel.model.time,
+                        timeList,
+                        24,
+                        TelephonePickerType.cardReceivingTime),
                     const SizedBox(
                       height: 10,
                     ),
                   ],
                 ),
               ),
-              Card(
-                margin: const EdgeInsets.fromLTRB(12, 0, 12, 20),
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
-                child: Column(
+              _card(
+                Column(
                   children: [
                     TelephoneEditView(
                         controller: _telephoneViewModel.model.nameController,
                         title: StringAssets.name,
                         size: 58,
                         hint: StringAssets.nameHint),
-                    const SizedBox(
-                      height: 10,
-                    ),
                     TelephoneEditView(
                         controller:
                             _telephoneViewModel.model.phoneNumberController,
-                        title: StringAssets.phoneNumber,
+                        title: StringAssets.contactPhoneNumber,
                         size: 24,
-                        hint: StringAssets.phoneNumberHint),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                        hint: StringAssets.contactPhoneNumberHint),
                     TelephoneEditView(
                         controller: _telephoneViewModel.model.addressController,
                         title: StringAssets.address,
                         size: 24,
                         hint: StringAssets.addressHint),
-                    const SizedBox(
-                      height: 10,
-                    ),
                   ],
                 ),
               ),
-              const Card(
-                margin: EdgeInsets.fromLTRB(12, 0, 12, 20),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
-                child: TelephoneAddWeChatView(),
-              ),
+              _card(const TelephoneAddWeChatView()),
               const Padding(
                 padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
                 child: Text(
-                  StringAssets.promptTelePhone,
+                  StringAssets.tipsTelephone,
                   style: TextStyle(color: Colors.black),
                 ),
               ),
               const Padding(
                 padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                 child: Text(
-                  StringAssets.service2,
+                  StringAssets.disclaimers,
                   style: TextStyle(color: Colors.black54),
                 ),
               ),
@@ -245,21 +159,75 @@ class TelephoneHomeState extends State<TelephoneHome> {
                 padding: const EdgeInsets.fromLTRB(50, 15, 50, 80),
                 child: TelephoneButtonView(
                   onPress: () {
-                    int id = _telephoneViewModel.model.cardId;
-                    String name = _telephoneViewModel.model.nameController.text;
-                    String mobile =
-                        _telephoneViewModel.model.phoneNumberController.text;
-                    String dormitory =
-                        _telephoneViewModel.model.addressController.text;
-                    String freeDate = _telephoneViewModel.model.time;
-                    String school = _telephoneViewModel.model.school;
-                    _telephoneViewModel.createOder(
-                        id, name, mobile, dormitory, freeDate, school);
+                    _createOder();
                   },
                 ),
               ),
             ],
           ),
         ));
+  }
+
+  ///获取分割线
+  Widget _divider() {
+    return const Divider(
+        thickness: 1, indent: 30, endIndent: 30, color: Colors.black12);
+  }
+
+  /// 获取telephonePicker
+  ///
+  /// [text] text的值
+  /// [tittle] 选择器的标题title
+  /// [value] 选择器的值
+  /// [pickerData] 选择器的列表数据
+  /// [size] padding的左边距
+  /// [type] 选择器类型
+  Widget _rowTelephonePicker(String text, String title, String value,
+      List pickerData, double size, TelephonePickerType type) {
+    return Row(
+      children: [
+        const SizedBox(
+          width: 30,
+        ),
+        Text(
+          text,
+          style: const TextStyle(color: Colors.black, fontSize: 16),
+        ),
+        Expanded(
+          child: TelephonePickerView(
+            title: title,
+            text: value,
+            pickerData: pickerData,
+            size: size,
+            type: type,
+          ),
+        )
+      ],
+    );
+  }
+
+  /// 获取Card
+  ///
+  /// [child] Card内的Widget
+  Widget _card(Widget child) {
+    return Card(
+      margin: const EdgeInsets.fromLTRB(12, 0, 12, 20),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12))),
+      child: child,
+    );
+  }
+
+  /// 提交订单
+  void _createOder() {
+    int id = _telephoneViewModel.model.cardId;
+    String name = _telephoneViewModel.model.nameController.text;
+    String mobile = _telephoneViewModel.model.phoneNumberController.text;
+    String dormitory = _telephoneViewModel.model.addressController.text;
+    String freeDate = _telephoneViewModel.model.time;
+    String school = _telephoneViewModel.model.school;
+    _telephoneViewModel.createOder(
+        id, name, mobile, dormitory, freeDate, school);
+    context.pushReplacement(const OrderPage());
   }
 }

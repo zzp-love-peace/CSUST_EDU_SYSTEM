@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 /// @author wk
 /// @since 2023/9/27
 /// @version V1.8.8
-class FunctionItemView extends StatelessWidget {
-  const FunctionItemView(
+class TelephoneFunctionItemView extends StatelessWidget {
+  const TelephoneFunctionItemView(
       {super.key,
       required this.label,
       required this.path,

@@ -32,7 +32,7 @@ class MessageViewModel extends BaseViewModel<MessageModel, MessageService> {
       message.type,
       onDataSuccess: (data, msg) {
         model.unReadMsgList = model.unReadMsgList.removeCanNotify(message);
-        model.readMsgList = model.readMsgList.addCanNotify(message);
+        model.readMsgList = model.readMsgList.insertCanNotify(message, 0);
         if (model.unReadMsgList.isEmpty) {
           context.read<UnreadMsgViewModel>().setHasUnreadMsg(false);
         }

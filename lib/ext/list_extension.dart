@@ -14,6 +14,17 @@ extension ListExtension<T> on List<T> {
     return list;
   }
 
+  /// 可刷新的插入
+  ///
+  /// [value] 值
+  /// [index] 下标
+  List<T> insertCanNotify(T value, int index) {
+    List<T> list = [];
+    list.addAll(this);
+    list.insert(index, value);
+    return list;
+  }
+
   /// 可刷新的删除
   ///
   /// [value] 值

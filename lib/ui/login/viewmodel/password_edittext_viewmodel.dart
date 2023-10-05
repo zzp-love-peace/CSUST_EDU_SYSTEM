@@ -15,4 +15,7 @@ class PasswordEditTextViewModel extends BaseViewModel<PasswordEditTextModel, Emp
     model.passwordVisible = !model.passwordVisible;
     notifyListeners();
   }
+
+  @override
+  EmptyService? createService() => null;
 }

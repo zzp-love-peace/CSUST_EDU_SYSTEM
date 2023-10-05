@@ -108,11 +108,6 @@ class CourseViewModel extends BaseViewModel<CourseModel, CourseService> {
     );
   }
 
-  /// 刷新本学期课表
-  ///
-  ///
-  void refreshTermCourse() {}
-
   /// 保存自定义课程表List
   void saveCustomCourseList() {
     List list =

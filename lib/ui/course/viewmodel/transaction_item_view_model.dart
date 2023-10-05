@@ -47,19 +47,22 @@ class TransactionItemViewModel
             term: term))
         .then(
       (pageResultBean) {
-        if (pageResultBean != null && pageResultBean.resultData != null) {
-          if (pageResultBean.resultCode == PageResultCode.customCourseAdd) {
-            var courseViewModel = context.read<CourseViewModel>();
-            courseViewModel.model.customCourseList
-                .add(pageResultBean.resultData!);
-            courseViewModel.saveCustomCourseList();
-            var emptyCourseItemViewModel =
-                context.read<EmptyCourseItemViewModel>();
-            emptyCourseItemViewModel.setModel(
-                EmptyCourseItemModel(courseBean: pageResultBean.resultData));
-          }
+        if (pageResultBean != null &&
+            pageResultBean.resultData != null &&
+            pageResultBean.resultCode == PageResultCode.customCourseAdd) {
+          var courseViewModel = context.read<CourseViewModel>();
+          courseViewModel.model.customCourseList
+              .add(pageResultBean.resultData!);
+          courseViewModel.saveCustomCourseList();
+          var emptyCourseItemViewModel =
+              context.read<EmptyCourseItemViewModel>();
+          emptyCourseItemViewModel.setModel(
+              EmptyCourseItemModel(courseBean: pageResultBean.resultData));
         }
       },
     );
   }
+
+  @override
+  EmptyService? createService() => null;
 }

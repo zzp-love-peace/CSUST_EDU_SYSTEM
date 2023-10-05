@@ -26,7 +26,7 @@ abstract class BaseViewModel<T, W extends BaseService> extends ChangeNotifier {
   }
 
   /// 创建Service
-  W? createService() => null;
+  W? createService();
 
   /// 设置model并更新
   /// [newModel] 新model

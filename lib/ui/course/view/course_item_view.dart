@@ -21,8 +21,7 @@ class CourseItemView extends StatelessWidget {
       required this.isCustom,
       required this.index,
       required this.weekNum,
-      required this.term,
-      this.deleteCallback});
+      required this.term});
 
   /// 是否是今天的课程
   final bool isToday;
@@ -50,7 +49,6 @@ class CourseItemView extends StatelessWidget {
 
   /// 学期
   final String term;
-  final Function? deleteCallback;
 
   @override
   Widget build(BuildContext context) {

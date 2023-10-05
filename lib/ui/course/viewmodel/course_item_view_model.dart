@@ -72,4 +72,7 @@ class CourseItemViewModel extends BaseViewModel<CourseItemModel, EmptyService> {
       }
     });
   }
+
+  @override
+  EmptyService? createService() => null;
 }

@@ -11,7 +11,6 @@ class CustomCourseViewModel
     model.courseNameController.text = courseName;
     model.teacherController.text = teacher;
     model.placeController.text = place;
-    // notifyListeners();
   }
 
   /// 销毁控制器
@@ -20,4 +19,7 @@ class CustomCourseViewModel
     model.teacherController.dispose();
     model.placeController.dispose();
   }
+
+  @override
+  EmptyService? createService() => null;
 }

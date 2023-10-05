@@ -28,10 +28,6 @@ class CourseViewModel extends BaseViewModel<CourseModel, CourseService> {
 
   /// 初始化数据
   void initData() {
-    if (DateInfo.nowWeek > 0) {
-      model.weekSelectedIndex.clear();
-      model.weekSelectedIndex.add(DateInfo.nowWeek - 1);
-    }
     String myCourseData =
         SpUtil.get<String>(KeyAssets.myCourseData, StringAssets.emptyStr);
     List jsonList;
@@ -52,8 +48,6 @@ class CourseViewModel extends BaseViewModel<CourseModel, CourseService> {
   /// [isNotify] 是否需要notify
   void changeWeekNum(int weekNum, int selectedIndex, {bool isNotify = true}) {
     model.weekNum = weekNum;
-    model.weekSelectedIndex.clear();
-    model.weekSelectedIndex.add(selectedIndex);
     if (isNotify) {
       notifyListeners();
     }

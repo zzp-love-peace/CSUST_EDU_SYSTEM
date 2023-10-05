@@ -31,13 +31,12 @@ class CommonTermPickerViewModel
   void getAllTerm(String cookie) {
     service?.getAllTerm(cookie: cookie,
         onDataSuccess: (data, msg) {
-          model.allTerm = data;
+          model.allTerm = data.map((e) => e.toString()).toList();
           //逻辑待考察
           if (DateInfo.nowTerm.isEmpty) {
             DateInfo.nowTerm = model.allTerm[model.allTerm.length - 2];
-            model.nowTerm= DateInfo.nowTerm;
+            model.nowTerm = DateInfo.nowTerm;
           }
-          model.selected = [model.allTerm.indexOf(DateInfo.nowTerm)];
           notifyListeners();
         }
     );

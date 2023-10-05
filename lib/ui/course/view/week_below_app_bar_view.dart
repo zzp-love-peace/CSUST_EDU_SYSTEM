@@ -2,7 +2,6 @@ import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/ui/course/viewmodel/course_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_picker/picker.dart';
 
 import '../../../data/date_info.dart';
 
@@ -39,29 +38,23 @@ class WeekBelowAppBarView extends StatelessWidget {
                     ],
                   ),
                   onTap: () {
-                    Picker(
-                      title: const Text(
-                        StringAssets.selectWeekNum,
-                        style: TextStyle(fontSize: 18, color: Colors.black),
-                      ),
-                      confirmText: StringAssets.ok,
-                      cancelText: StringAssets.cancel,
-                      selecteds: courseViewModel.model.weekSelectedIndex,
-                      adapter: PickerDataAdapter<String>(pickerData: weekList),
-                      changeToFirst: true,
-                      hideHeader: false,
-                      onConfirm: (Picker picker, List value) {
-                        var week = picker.adapter.text
-                            .substring(1, picker.adapter.text.length - 1);
+                    courseViewModel.model.picker.showPicker(
+                      context,
+                      title: StringAssets.selectWeekNum,
+                      pickerData: weekList,
+                      index: courseViewModel.model.weekNum > 0
+                          ? courseViewModel.model.weekNum - 1
+                          : 0,
+                      onConfirm: (week, index) {
                         var weekNum = weekList.indexOf(week) + 1;
-                        courseViewModel.changeWeekNum(weekNum, value[0],
+                        courseViewModel.changeWeekNum(weekNum, index,
                             isNotify: false);
                         courseViewModel.model.pageController.animateToPage(
                             weekNum - 1,
                             duration: const Duration(milliseconds: 1200),
                             curve: Curves.fastOutSlowIn);
                       },
-                    ).showModal(context);
+                    );
                   },
                 )),
             Expanded(

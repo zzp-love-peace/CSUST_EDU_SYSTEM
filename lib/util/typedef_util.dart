@@ -39,6 +39,12 @@ typedef KeyList = List<dynamic>;
 /// [term] 学期
 typedef DatePickerCallBack = void Function(String term);
 
+/// 通用选择器确认回调
+///
+/// [value] 选择的值
+/// [index] 选择的下标
+typedef CommonPickerConfirm<T> = void Function(T value, int index);
+
 /// 电话卡选择器回调
 ///
 /// [value] 值

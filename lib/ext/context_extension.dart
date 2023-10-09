@@ -1,3 +1,4 @@
+import 'package:csust_edu_system/common/theme/viewmodel/theme_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -5,7 +6,6 @@ import '../arch/basedata/page_result_bean.dart';
 import '../arch/baseviewmodel/base_view_model.dart';
 import '../ass/key_assets.dart';
 import '../ass/string_assets.dart';
-import '../provider/theme_color_provider.dart';
 import '../util/sp/sp_util.dart';
 
 /// BuildContext的自定义扩展函数
@@ -17,11 +17,10 @@ extension BuildContextExtension on BuildContext {
   /// 初始化主题色
   void initThemeColor() {
     var nowColor = SpUtil.get(KeyAssets.color, StringAssets.blue);
-    var themeColorProvider =
-        Provider.of<ThemeColorProvider>(this, listen: false);
-    if (themeColorProvider.themeColor != nowColor) {
+    var themeViewModel = read<ThemeViewModel>();
+    if (themeViewModel.model.themeColorKey != nowColor) {
       // 设置初始化主题颜色
-      themeColorProvider.setTheme(nowColor);
+      themeViewModel.setThemeColor(nowColor);
     }
   }
 

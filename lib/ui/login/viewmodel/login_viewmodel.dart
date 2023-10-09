@@ -9,8 +9,10 @@ import 'package:csust_edu_system/ui/login/service/login_service.dart';
 import 'package:csust_edu_system/util/sp/sp_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/dialog/hint_dialog.dart';
+import '../../../common/functionswicher/viewmodel/function_switcher_view_model.dart';
 import '../../../data/date_info.dart';
 import '../../../data/stu_info.dart';
 import '../../bottomtab/page/bottom_tab_page.dart';
@@ -82,6 +84,7 @@ class LoginViewModel extends BaseViewModel<LoginModel, LoginService> {
           StuInfo.cookie = loginBean.cookie;
           _getDateInfo(loginBean.cookie);
           _getStuInfo(loginBean.cookie);
+          context.read<FunctionSwitcherViewModel>().getFunctionSwitchers();
           context.pushReplacement(const BottomTabPage());
         },
         onDataFail: (code, msg) {

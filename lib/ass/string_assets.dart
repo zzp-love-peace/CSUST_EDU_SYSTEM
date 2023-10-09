@@ -318,4 +318,10 @@ class StringAssets {
 
   /// 未读
   static const String unread = '未读';
+
+  /// 数字1
+  static const String one = '1';
+
+  /// 主题色
+  static const String themeColor = '主题色';
 }

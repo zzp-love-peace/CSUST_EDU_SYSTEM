@@ -1,12 +1,12 @@
 import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
+import 'package:csust_edu_system/ui/themecolor/page/theme_color_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../ass/string_assets.dart';
 import '../../../common/dialog/hint_dialog.dart';
 import '../../../common/dialog/select_dialog.dart';
 import '../../../homes/about_home.dart';
-import '../../../homes/theme_home.dart';
 import '../../advice/page/advice_page.dart';
 import '../../login/page/login_page.dart';
 
@@ -58,7 +58,7 @@ class SettingPage extends StatelessWidget {
                       color: Colors.black,
                     ),
                     onTap: () {
-                      context.push(const ThemeHome());
+                      context.push(const ThemeColorPage());
                     },
                   ),
                 ),

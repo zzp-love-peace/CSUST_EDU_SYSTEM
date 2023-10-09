@@ -9,11 +9,11 @@ import 'package:csust_edu_system/ui/course/model/course_model.dart';
 import 'package:csust_edu_system/ui/course/view/week_below_app_bar_view.dart';
 import 'package:csust_edu_system/ui/course/view/week_course_layout_view.dart';
 import 'package:csust_edu_system/ui/course/viewmodel/course_view_model.dart';
+import 'package:csust_edu_system/ui/themecolor/page/theme_color_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ass/string_assets.dart';
-import '../../../homes/theme_home.dart';
 import '../../../util/date_util.dart';
 import '../../notification/page/notification_page.dart';
 
@@ -165,7 +165,7 @@ class _CourseHomeState extends State<CourseHome> {
           ),
           IconButton(
             onPressed: () {
-              context.push(const ThemeHome());
+              context.push(const ThemeColorPage());
             },
             icon: const Icon(Icons.color_lens),
           ),

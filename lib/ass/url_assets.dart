@@ -32,15 +32,18 @@ class UrlAssets {
   /// url-发送意见或建议
   static const postAdvice = '/advice/add';
 
-  ///url-获取已读消息接口
+  /// url-获取已读消息接口
   static const getReadMsg = '/message/hasRead';
 
-  ///url-设置消息已读
-  static const setMsgRead='/message/setRead';
+  /// url-设置消息已读
+  static const setMsgRead = '/message/setRead';
 
-  ///url-设置全部消息已读
-  static const setAllMsgRead='/message/setAllRead';
-  ///url-获取帖子详情信息
+  /// url-设置全部消息已读
+  static const setAllMsgRead = '/message/setAllRead';
+
+  /// url-获取帖子详情信息
   static const getForumInfo = '/post/detail';
 
+  /// url-获取功能开关
+  static const getFunctionSwitchers = '/sCard/judge';
 }

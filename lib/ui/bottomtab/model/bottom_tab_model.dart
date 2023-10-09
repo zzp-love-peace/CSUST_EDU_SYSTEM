@@ -10,6 +10,7 @@ class BottomTabModel {
 
   /// 当前页面index
   int currentIndex;
+
   /// 页面列表
-  List<Widget> pages;
+  final List<Widget> pages;
 }

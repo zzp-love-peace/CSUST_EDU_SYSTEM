@@ -140,4 +140,13 @@ class KeyAssets {
 
   /// key-帖子
   static const String indexPost = 'indexPost';
+
+  /// key-兼职
+  static const String partTimeJob = 'partTimeJob';
+
+  /// key-论坛
+  static const String forum = 'forum';
+
+  /// key-线上营业厅
+  static const String serviceHall = 'serviceHall';
 }

@@ -1,10 +1,12 @@
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/telephonecard/model/telephone_model.dart';
 
 import '../../../ass/key_assets.dart';
 import '../../../ass/string_assets.dart';
 import '../../../util/sp/sp_data.dart';
+import '../page/order_page.dart';
 import '../service/telephone_service.dart';
 
 /// 电话卡ViewModel
@@ -92,6 +94,7 @@ class TelephoneViewModel
         onDataSuccess: (data, msg) {
           StringAssets.createOrderSuccess.showToast();
           saveTelephonePageData();
+          context.pushReplacement(const OrderPage());
         },
       );
     } else {

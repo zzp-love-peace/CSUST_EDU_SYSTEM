@@ -28,7 +28,7 @@ class TelephoneAddWeChatView extends StatelessWidget {
             Expanded(
               child: Text(
                 StringAssets.addWeChat,
-                style: TextStyle(fontSize: 18, color: Colors.black),
+                style: TextStyle(fontSize: 16, color: Colors.black),
               ),
             ),
             Icon(
@@ -41,7 +41,9 @@ class TelephoneAddWeChatView extends StatelessWidget {
           ],
         ),
         onTap: () {
-          Clipboard.setData(const ClipboardData(text: '493018572'));
+          ///尚未确定客服微信号
+          Clipboard.setData(
+              const ClipboardData(text: StringAssets.onlineHallWechat));
           StringAssets.copyWeChat.showToast();
         },
       ),

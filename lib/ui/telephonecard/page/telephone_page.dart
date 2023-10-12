@@ -2,7 +2,6 @@ import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/telephonecard/data/telephone_picker_type.dart';
-import 'package:csust_edu_system/ui/telephonecard/page/order_page.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_add_wechat_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_banner_view.dart';
 import 'package:csust_edu_system/ui/telephonecard/view/telephone_button_view.dart';
@@ -68,12 +67,12 @@ class TelephoneHomeState extends State<TelephoneHome> {
         body: Center(
           child: ListView(
             children: [
-              TelephoneBannerView(
+              const TelephoneBannerView(
                 imgList: telephoneImgList,
               ),
               const TelephoneFunctionBarView(),
               _card(
-                Column(
+                child: Column(
                   children: [
                     const SizedBox(
                       height: 10,
@@ -119,7 +118,7 @@ class TelephoneHomeState extends State<TelephoneHome> {
                 ),
               ),
               _card(
-                Column(
+                child: Column(
                   children: [
                     TelephoneEditView(
                         controller: _telephoneViewModel.model.nameController,
@@ -140,7 +139,7 @@ class TelephoneHomeState extends State<TelephoneHome> {
                   ],
                 ),
               ),
-              _card(const TelephoneAddWeChatView()),
+              _card(child: const TelephoneAddWeChatView()),
               const Padding(
                 padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
                 child: Text(
@@ -209,7 +208,7 @@ class TelephoneHomeState extends State<TelephoneHome> {
   /// 获取Card
   ///
   /// [child] Card内的Widget
-  Widget _card(Widget child) {
+  Widget _card({required Widget child}) {
     return Card(
       margin: const EdgeInsets.fromLTRB(12, 0, 12, 20),
       shape: const RoundedRectangleBorder(
@@ -228,6 +227,5 @@ class TelephoneHomeState extends State<TelephoneHome> {
     String school = _telephoneViewModel.model.school;
     _telephoneViewModel.createOder(
         id, name, mobile, dormitory, freeDate, school);
-    context.pushReplacement(const OrderPage());
   }
 }

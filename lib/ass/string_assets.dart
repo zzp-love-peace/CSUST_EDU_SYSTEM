@@ -520,4 +520,7 @@ class StringAssets {
 
   /// 校区或套餐未选择
   static const String schoolAreaOrPackageUnselect = '校区或套餐未选择';
+
+  /// 线上营业厅客服微信(尚未确定客服微信号)
+  static const String onlineHallWechat = '493018572';
 }

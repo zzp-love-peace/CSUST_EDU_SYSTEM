@@ -53,7 +53,6 @@ class TelephonePickerViewModel
           List records = data[KeyAssets.records];
           model.pickerData =
               records.map((json) => CardNumberBean.fromJson(json)).toList();
-          notifyListeners();
           model.picker.showPicker(context,
               title: title,
               pickerData: model.pickerData,

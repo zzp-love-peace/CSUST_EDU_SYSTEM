@@ -4,21 +4,21 @@ import '../../../ass/image_assets.dart';
 import '../../../ass/string_assets.dart';
 
 /// 线上营业厅轮播图列表
-List<String> telephoneImgList = [
+const List<String> telephoneImgList = [
   ImageAssets.telephoneHall,
   ImageAssets.equity1,
   ImageAssets.equity2,
 ];
 
 /// 电话卡业务——校区列表
-List<String> telephoneSchoolList = [
+const List<String> telephoneSchoolList = [
   StringAssets.JinPengRidge,
   StringAssets.Yuntang,
   StringAssets.mail,
 ];
 
 /// 电话卡业务——套餐列表
-List<String> telephonePackageList = [
+const List<String> telephonePackageList = [
   StringAssets.package59,
   StringAssets.package28,
 ];
@@ -36,7 +36,7 @@ final String _bigTomorrow = formatDate(
     DateTime.now().add(const Duration(days: 3)), [yyyy, '-', mm, '-', dd, '-']);
 
 /// 收卡时间段列表
-List<String> timeList = [
+final List<String> timeList = [
   _now + StringAssets.morning,
   _now + StringAssets.afternoon,
   _now + StringAssets.night,

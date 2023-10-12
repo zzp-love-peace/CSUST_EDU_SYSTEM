@@ -75,6 +75,8 @@ dependencies:
   image_gallery_saver: ^2.0.3
   # log库
   logger: ^2.0.2
+  # 格式化时间库
+  date_format: ^2.0.5
 
 dev_dependencies:
   flutter_test:

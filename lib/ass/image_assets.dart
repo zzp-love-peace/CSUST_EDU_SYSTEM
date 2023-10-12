@@ -57,4 +57,25 @@ class ImageAssets {
 
   /// 地图2
   static const String schoolMap2 = 'assets/images/school_map2.jpg';
+
+  /// 套餐图标路径
+  static const String package = 'assets/images/package.png';
+
+  /// 服务图标路径
+  static const String service = 'assets/images/service.png';
+
+  /// 教程图标路径
+  static const String teach = 'assets/images/teach.png';
+
+  /// 权益海报路径
+  static const String equity1 = 'assets/images/equity1.jpg';
+
+  /// 校园网链接海报路径
+  static const String equity2 = 'assets/images/equity2.jpg';
+
+  /// 订单查询图标路径
+  static const String order = 'assets/images/order.png';
+
+  /// 线上营业厅轮播图图片路径
+  static const String telephoneHall = 'assets/images/telephone_hall1.jpg';
 }

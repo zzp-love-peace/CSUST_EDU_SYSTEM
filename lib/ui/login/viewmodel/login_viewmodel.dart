@@ -60,7 +60,6 @@ class LoginViewModel extends BaseViewModel<LoginModel, LoginService> {
     if (_spPassword.get().isNotEmpty) {
       model.passwordController.text = _spPassword.get();
     }
-    notifyListeners();
   }
 
   /// 登录

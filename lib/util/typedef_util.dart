@@ -44,3 +44,8 @@ typedef DatePickerCallBack = void Function(String term);
 /// [value] 选择的值
 /// [index] 选择的下标
 typedef CommonPickerConfirm<T> = void Function(T value, int index);
+
+/// 电话卡选择器回调
+///
+/// [value] 值
+typedef TelephonePickerCallBack = void Function(dynamic value);

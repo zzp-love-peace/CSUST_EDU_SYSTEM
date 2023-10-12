@@ -104,7 +104,7 @@ class _CourseHomeState extends State<CourseHome> {
 
   /// 课程表页AppBar
   AppBar _coursePageAppBar() => CommonAppBar.create(
-        StringAssets.course,
+    StringAssets.course,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40.0),
           child: Container(

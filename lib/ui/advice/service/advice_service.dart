@@ -2,6 +2,7 @@ import 'package:csust_edu_system/arch/baseservice/base_service.dart';
 import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/ass/url_assets.dart';
 import 'package:dio/dio.dart';
+
 import '../../../util/typedef_util.dart';
 
 /// 反馈建议Service
@@ -10,8 +11,6 @@ import '../../../util/typedef_util.dart';
 /// @since 2023/9/23
 /// @version v1.8.8
 class AdviceService extends BaseService {
-
-
   /// 发送建议或反馈
   /// [advice] 建议内容
   /// [phone] 提供建议者的手机号

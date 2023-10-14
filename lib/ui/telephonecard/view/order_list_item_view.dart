@@ -98,14 +98,22 @@ class OrderListItemView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _row(StringAssets.schoolArea, orderBean.school),
-                _row(StringAssets.package, orderBean.package),
-                _row(StringAssets.bookCardNumber, orderBean.number),
-                _row(StringAssets.cardReceivingTime, orderBean.freeTime),
-                _row(StringAssets.name, orderBean.name),
-                _row(StringAssets.contactPhoneNumber, orderBean.mobile),
-                _row(StringAssets.address, orderBean.address),
-                _row(StringAssets.submitOrderTime, orderBean.createTime),
+                _row(title: StringAssets.schoolArea, value: orderBean.school),
+                _row(title: StringAssets.package, value: orderBean.package),
+                _row(
+                    title: StringAssets.bookCardNumber,
+                    value: orderBean.number),
+                _row(
+                    title: StringAssets.cardReceivingTime,
+                    value: orderBean.freeTime),
+                _row(title: StringAssets.name, value: orderBean.name),
+                _row(
+                    title: StringAssets.contactPhoneNumber,
+                    value: orderBean.mobile),
+                _row(title: StringAssets.address, value: orderBean.address),
+                _row(
+                    title: StringAssets.submitOrderTime,
+                    value: orderBean.createTime),
               ],
             ),
           )),
@@ -116,7 +124,7 @@ class OrderListItemView extends StatelessWidget {
   ///
   /// [title] 标题
   /// [value] 值
-  Widget _row(String title, String value) {
+  Widget _row({required String title, required String value}) {
     return Row(
       children: [Text(title), const SizedBox(width: 10), Text(value)],
     );

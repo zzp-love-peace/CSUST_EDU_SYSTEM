@@ -28,7 +28,7 @@ class CommonPicker<T> {
     if (_picker == null) {
       _selected = [initIndex];
     }
-    if (index != null) {
+    if (index != null && index >= 0) {
       _selected = [index];
     }
     return Picker(

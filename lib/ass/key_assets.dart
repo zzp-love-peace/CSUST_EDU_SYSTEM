@@ -186,4 +186,22 @@ class KeyAssets {
 
   /// key-线上营业厅
   static const String serviceHall = 'serviceHall';
+
+  /// key-json数据（查询电费）
+  static const String jsondata = 'jsondata';
+
+  /// key-方法名（查询电费）
+  static const String funname = 'funname';
+
+  /// key-json（查询电费）
+  static const String json = 'json';
+
+  /// key-校区
+  static const String area = 'area';
+
+  /// key-宿舍
+  static const String building = 'building';
+
+  /// key-房间号
+  static const String room = 'room';
 }

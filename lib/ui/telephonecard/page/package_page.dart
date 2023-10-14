@@ -17,10 +17,12 @@ class PackagePage extends StatelessWidget {
         appBar: CommonAppBar.create(StringAssets.packageDetail),
         body: ListView(
           children: [
-            _paddingText(StringAssets.package59DetailIntroduce, 10),
-            _paddingText(StringAssets.package28DetailIntroduce, 20),
-            _paddingText(StringAssets.equity1, 20),
-            _paddingText(StringAssets.equity2, 20),
+            _paddingText(
+                text: StringAssets.package59DetailIntroduce, paddingTop: 10),
+            _paddingText(
+                text: StringAssets.package28DetailIntroduce, paddingTop: 20),
+            _paddingText(text: StringAssets.equity1, paddingTop: 20),
+            _paddingText(text: StringAssets.equity2, paddingTop: 20),
             const Padding(
                 padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                 child: Text(StringAssets.equity3,
@@ -34,12 +36,12 @@ class PackagePage extends StatelessWidget {
 
   /// 获取带Padding的Text
   ///
-  /// [value]text的值
-  /// [top]padding的top高度
-  Widget _paddingText(String value, double top) {
+  /// [text] text的值
+  /// [paddingTop] padding的top高度
+  Widget _paddingText({required String text, required double paddingTop}) {
     return Padding(
-        padding: EdgeInsets.fromLTRB(20, top, 20, 0),
-        child: Text(value,
+        padding: EdgeInsets.fromLTRB(20, paddingTop, 20, 0),
+        child: Text(text,
             style: const TextStyle(color: Colors.black, fontSize: 16)));
   }
 }

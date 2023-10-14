@@ -1,116 +1,108 @@
-import 'dart:convert';
-import 'dart:io';
 
-import 'package:flutter/material.dart';
 
+// 这里的数据是用于解析查电费接口返回的数据，数据量太大不做key的拆分，就保持这样
 class JsonData {
-  late QueryElectRoomInfo query_elec_roominfo;
+  QueryElectRoomInfo query_elec_roominfo;
 
   JsonData(this.query_elec_roominfo);
 
-  JsonData.fromJson(Map jsonData) {
-    query_elec_roominfo =
-        QueryElectRoomInfo.fromJson(jsonData['query_elec_roominfo']);
-  }
+  JsonData.fromJson(Map jsonData)
+      : query_elec_roominfo =
+            QueryElectRoomInfo.fromJson(jsonData['query_elec_roominfo']);
 
-  toJson() =>
-      <String, dynamic>{}
-        ..putIfAbsent(
-            "query_elec_roominfo", () => query_elec_roominfo.toJson());
+  toJson() => <String, dynamic>{}
+    ..putIfAbsent("query_elec_roominfo", () => query_elec_roominfo.toJson());
 }
 
 class QueryElectRoomInfo {
-  late String errmsg;
-  late String account;
-  late String aid;
-  late Area area;
-  late Building building;
-  late Floor floor;
-  late Room room;
+  String errmsg;
+  String account;
+  String aid;
+  Area area;
+  Building building;
+  Floor floor;
+  Room room;
 
   QueryElectRoomInfo(this.errmsg, this.account, this.aid, this.area,
       this.building, this.floor, this.room);
 
-  QueryElectRoomInfo.fromJson(Map query_elec_roominfo) {
-    errmsg = query_elec_roominfo['errmsg'];
-    account = query_elec_roominfo['account'];
-    aid = query_elec_roominfo['aid'];
-    area = Area.fromJson(query_elec_roominfo['area']);
-    building = Building.fromJson(query_elec_roominfo['building']);
-    floor = Floor.fromJson(query_elec_roominfo['floor']);
-    room = Room.fromJson(query_elec_roominfo['room']);
-  }
+  QueryElectRoomInfo.fromJson(Map query_elec_roominfo)
+      : errmsg = query_elec_roominfo['errmsg'],
+        account = query_elec_roominfo['account'],
+        aid = query_elec_roominfo['aid'],
+        area = Area.fromJson(query_elec_roominfo['area']),
+        building = Building.fromJson(query_elec_roominfo['building']),
+        floor = Floor.fromJson(query_elec_roominfo['floor']),
+        room = Room.fromJson(query_elec_roominfo['room']);
 
-  toJson() =>
-      <String, dynamic>{}..putIfAbsent("account", () => account)..putIfAbsent(
-          "aid", () => aid)..putIfAbsent(
-          "area", () => area.toJson())..putIfAbsent(
-          "building", () => building.toJson())..putIfAbsent(
-          "errmsg", () => errmsg)..putIfAbsent(
-          "floor", () => floor.toJson())..putIfAbsent(
-          "room", () => room.toJson());
+  toJson() => <String, dynamic>{}
+    ..putIfAbsent("account", () => account)
+    ..putIfAbsent("aid", () => aid)
+    ..putIfAbsent("area", () => area.toJson())
+    ..putIfAbsent("building", () => building.toJson())
+    ..putIfAbsent("errmsg", () => errmsg)
+    ..putIfAbsent("floor", () => floor.toJson())
+    ..putIfAbsent("room", () => room.toJson());
 }
 
 class Area {
-  late String area;
-  late String areaname;
+  String area;
+  String areaname;
 
   Area(this.area, this.areaname);
 
-  Area.fromJson(Map area) {
-    this.area = area['area'];
-    areaname = area['areaname'];
-  }
+  Area.fromJson(Map area)
+      : area = area['area'],
+        areaname = area['areaname'];
 
-  toJson() => <String, dynamic>{}..putIfAbsent("area", () => area)..putIfAbsent(
-      "areaname", () => areaname);
+  toJson() => <String, dynamic>{}
+    ..putIfAbsent("area", () => area)
+    ..putIfAbsent("areaname", () => areaname);
 }
 
 class Building {
-  late String building;
-  late String buildingid;
+  String building;
+  String buildingid;
 
   Building(this.building, this.buildingid);
 
-  Building.fromJson(Map building) {
-    this.building = building['building'];
-    buildingid = building['buildingid'];
-  }
+  Building.fromJson(Map building)
+      : building = building['building'],
+        buildingid = building['buildingid'];
 
-  toJson() =>
-      <String, dynamic>{}..putIfAbsent("building", () => building)..putIfAbsent(
-          "buildingid", () => buildingid);
+  toJson() => <String, dynamic>{}
+    ..putIfAbsent("building", () => building)
+    ..putIfAbsent("buildingid", () => buildingid);
 }
 
 class Floor {
-  late String floor;
-  late String floorid;
+  String floor;
+  String floorid;
 
   Floor(this.floor, this.floorid);
 
-  Floor.fromJson(Map floor) {
-    this.floor = floor['floor'];
-    floorid = floor['floorid'];
-  }
+  Floor.fromJson(Map floor)
+      : floor = floor['floor'],
+        floorid = floor['floorid'];
 
-  toJson() =>
-      <String, dynamic>{}..putIfAbsent("floor", () => floor)..putIfAbsent(
-          "floorid", () => floorid);
+  toJson() => <String, dynamic>{}
+    ..putIfAbsent("floor", () => floor)
+    ..putIfAbsent("floorid", () => floorid);
 }
 
 class Room {
-  late String room;
-  late String roomid;
+  String room;
+  String roomid;
 
   Room(this.room, this.roomid);
 
-  Room.fromJson(Map room) {
-    this.room = room['room'];
-    roomid = room['roomid'];
-  }
+  Room.fromJson(Map room)
+      : room = room['room'],
+        roomid = room['roomid'];
 
-  toJson() => <String, dynamic>{}..putIfAbsent("room", () => room)..putIfAbsent(
-      "roomid", () => roomid);
+  toJson() => <String, dynamic>{}
+    ..putIfAbsent("room", () => room)
+    ..putIfAbsent("roomid", () => roomid);
 }
 
 class Constant {
@@ -135,8 +127,8 @@ class Constant {
     return result;
   }
 
-  List getAllBuildingName() {
-    List result = [];
+  List<String> getAllBuildingName() {
+    List<String> result = [];
     _buildingMap.forEach((key, value) {
       result.add(key);
     });
@@ -209,23 +201,3 @@ class Constant {
     _buildingMap2["南苑8栋"] = "98";
   }
 }
-
-var map = {
-  "query_elec_roominfo": {
-    "retcode": "0",
-    "errmsg": " 房间剩余电量35.40",
-    "aid": "0030000000002501",
-    "account": "1",
-    "meterflag": "amt",
-    "bal": "",
-    "price": "0",
-    "pkgflag": "none",
-    "area": {"area": "云塘校区", "areaname": "云塘校区"},
-    "building": {"buildingid": "106", "building": "行健轩2栋B区"},
-    "floor": {"floorid": "", "floor": ""},
-    "room": {"roomid": "B306", "room": "B306"},
-    "pkgtab": []
-  }
-};
-
-

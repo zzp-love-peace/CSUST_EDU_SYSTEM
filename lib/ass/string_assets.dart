@@ -337,11 +337,17 @@ class StringAssets {
   /// 线上营业厅
   static const String onlineHall = '线上营业厅';
 
-  /// 金盆岭校区
+  /// 金盆岭
   static const String JinPengRidge = '金盆岭';
 
-  /// 云塘校区
+  /// 金盆岭校区
+  static const String JinPengRidgeSchoolArea = '金盆岭校区';
+
+  /// 云塘
   static const String Yuntang = '云塘';
+
+  /// 云塘校区
+  static const String YuntangSchoolArea = '云塘校区';
 
   /// 邮寄
   static const String mail = '邮寄';
@@ -529,4 +535,45 @@ class StringAssets {
 
   /// 线上营业厅客服微信(尚未确定客服微信号)
   static const String onlineHallWechat = '493018572';
+
+  /// 宿舍楼
+  static const String schoolBuilding = '宿舍楼';
+
+  /// 房间号
+  static const String roomNumber = '房间号';
+
+  /// 房间号输入提示
+  static const String roomNumberInputHint = '如：306，B123';
+
+  /// 选择宿舍楼
+  static const String selectSchoolBuilding = '选择宿舍楼';
+
+  /// 查询
+  static const String query = '查询';
+
+  /// 查询成功
+  static const String querySuccess = '查询成功';
+
+  /// 出现异常了，查询失败
+  static const String queryFailWithError = '出现异常了，查询失败';
+
+  /// 点击选择宿舍楼
+  static const String clickSelectSchoolBuilding = '点击选择宿舍楼';
+
+  /// 请选择校区
+  static const String pleaseSelectSchoolArea = '请选择校区';
+
+  /// 请选择宿舍楼
+  static const String pleaseSelectSchoolBuilding = '请选择宿舍楼';
+
+  /// 请输入房间号
+  static const String pleaseInputRoomNum = '请输入房间号';
+
+  /// 查询电费funname value值
+  static const String queryElectricityRoomInfoValue =
+      'synjones.onecard.query.elec.roominfo';
+
+  /// 查电费温馨提示
+  static const String queryElectricityTips =
+      '提示：房间号，金村不分A区、B区则直接输入门牌号即可，云塘有A区、B区之分，则要加前缀，如B306，A504。';
 }

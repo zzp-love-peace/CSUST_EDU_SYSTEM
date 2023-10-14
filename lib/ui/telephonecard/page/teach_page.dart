@@ -20,12 +20,13 @@ class TeachPage extends StatelessWidget {
       appBar: CommonAppBar.create(StringAssets.tutorialView),
       body: ListView(
         children: [
-          _paddingText(StringAssets.tutorial1, 10, 0),
-          _paddingText(StringAssets.tutorial2, 10, 0),
-          _image(context, ImageAssets.equity1),
-          _paddingText(StringAssets.networkLinkTutorial, 20, 0),
-          _image(context, ImageAssets.equity2),
-          _paddingText(StringAssets.faultFix, 20, 50),
+          _paddingText(text: StringAssets.tutorial1, top: 10, bottom: 0),
+          _paddingText(text: StringAssets.tutorial2, top: 10, bottom: 0),
+          _image(context, imgPath: ImageAssets.equity1),
+          _paddingText(
+              text: StringAssets.networkLinkTutorial, top: 20, bottom: 0),
+          _image(context, imgPath: ImageAssets.equity2),
+          _paddingText(text: StringAssets.faultFix, top: 20, bottom: 50),
         ],
       ),
     );
@@ -33,13 +34,14 @@ class TeachPage extends StatelessWidget {
 
   /// 获取带Padding的Text
   ///
-  /// [value]text的值
-  /// [top]padding的top高度
-  /// [bottom]padding的bottom值
-  Widget _paddingText(String value, double top, double bottom) {
+  /// [value] text的值
+  /// [top] padding的top高度
+  /// [bottom] padding的bottom值
+  Widget _paddingText(
+      {required String text, required double top, required double bottom}) {
     return Padding(
         padding: EdgeInsets.fromLTRB(20, top, 20, bottom),
-        child: Text(value,
+        child: Text(text,
             style: const TextStyle(color: Colors.black, fontSize: 16)));
   }
 
@@ -47,7 +49,7 @@ class TeachPage extends StatelessWidget {
   ///
   /// [context] BuildContext
   /// [imgPath] 图片路径
-  Widget _image(BuildContext context, String imgPath) {
+  Widget _image(BuildContext context, {required String imgPath}) {
     return Center(
         child: GestureDetector(
       child: Padding(

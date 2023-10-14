@@ -20,7 +20,6 @@ class TelephoneFunctionBarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        // elevation: 0,
         margin: const EdgeInsets.fromLTRB(12, 0, 12, 20),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(12))),

@@ -41,7 +41,7 @@ class TelephoneAddWeChatView extends StatelessWidget {
           ],
         ),
         onTap: () {
-          ///尚未确定客服微信号
+          //尚未确定客服微信号
           Clipboard.setData(
               const ClipboardData(text: StringAssets.onlineHallWechat));
           StringAssets.copyWeChat.showToast();

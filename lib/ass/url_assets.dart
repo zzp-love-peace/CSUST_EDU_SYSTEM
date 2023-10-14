@@ -59,4 +59,8 @@ class UrlAssets {
 
   /// url-用户删除订单
   static const deleteOrder = '/sCard/deleteOrder';
+
+  /// url-查询电费
+  static const queryElectricity =
+      'http://yktwd.csust.edu.cn:8988/web/Common/Tsm.html';
 }

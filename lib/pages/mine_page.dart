@@ -5,10 +5,10 @@ import 'package:csust_edu_system/common/unreadmsg/viewmodel/unread_msg_view_mode
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/homes/info_home.dart';
-import 'package:csust_edu_system/homes/my_collect_home.dart';
-import 'package:csust_edu_system/homes/my_forum_home.dart';
 import 'package:csust_edu_system/ui/login/page/login_page.dart';
 import 'package:csust_edu_system/ui/message/page/message_page.dart';
+import 'package:csust_edu_system/ui/mycollect/page/my_collect_page.dart';
+import 'package:csust_edu_system/ui/myforum/page/my_forum_page.dart';
 import 'package:csust_edu_system/ui/setting/page/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -68,7 +68,7 @@ class MinePage extends StatelessWidget {
                     ),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MyForumHome()));
+                          builder: (context) => const MyForumPage()));
                     },
                   ),
                 ),
@@ -85,7 +85,7 @@ class MinePage extends StatelessWidget {
                     ),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MyCollectHome()));
+                          builder: (context) => const MyCollectPage()));
                     },
                   ),
                 ),

@@ -1,12 +1,12 @@
 import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/common/dialog/select_dialog.dart';
+import 'package:csust_edu_system/common/forumlist/view/forum_item_image_detail_view.dart';
 import 'package:csust_edu_system/common/lottie/none_lottie.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/util/date_util.dart';
 import 'package:csust_edu_system/util/my_util.dart';
-import 'package:csust_edu_system/widgets/forum_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -15,9 +15,10 @@ import 'package:like_button/like_button.dart';
 
 import '../common/dialog/custom_toast.dart';
 import '../common/dialog/hint_dialog.dart';
+import '../common/forumlist/jsonbean/forum_bean.dart';
 
 class DetailHome extends StatefulWidget {
-  final Forum forum;
+  final ForumBean forum;
   final Function(bool, bool) stateCallback;
   final Function? deleteCallback;
 
@@ -265,7 +266,7 @@ class _DetailHomeState extends State<DetailHome> {
     );
   }
 
-  Widget _imgView(String url, List images) {
+  Widget _imgView(String url, List<String> images) {
     return Hero(
         tag: url,
         child: GestureDetector(
@@ -274,9 +275,9 @@ class _DetailHomeState extends State<DetailHome> {
             //     page: ForumItemImages(images: images, url: url)));
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (BuildContext context) {
-              return ForumItemImages(
+              return ForumItemImageDetailView(
                 images: images,
-                url: url,
+                initUrl: url,
               );
             }));
           },

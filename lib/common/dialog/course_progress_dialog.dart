@@ -61,12 +61,12 @@ class _CourseProgressDialogState extends State<CourseProgressDialog> {
         var responseData = HttpResponseData.fromJson(res.data);
         if (responseData.code == HttpResponseCode.success) {
           String content = jsonEncode(responseData.data);
-          var dbValue = await CourseDBManager.db.containsCourse(widget.term, i);
+          var dbValue = await CourseDBManager.containsCourse(widget.term, i);
           if (dbValue == null) {
-            await CourseDBManager.db
-                .insertCourse(DBCourseBean(widget.term, i, content));
+            await CourseDBManager.insertCourse(
+                DBCourseBean(widget.term, i, content));
           } else {
-            await CourseDBManager.db.updateCourse(content, dbValue.id);
+            await CourseDBManager.updateCourse(content, dbValue.id);
           }
           setState(() {
             _value = i / DateInfo.totalWeek;

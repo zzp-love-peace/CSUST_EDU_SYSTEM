@@ -11,12 +11,18 @@ abstract class BaseViewModel<T, W extends BaseService> extends ChangeNotifier {
 
   /// model数据
   T model;
+
   /// context
   late final BuildContext context = _context!;
+
   /// 实际的context
   BuildContext? _context;
+
   /// 用与网络请求的Service
   late W? service = createService();
+
+  /// 子ViewModel仓库
+  final Map<dynamic, BaseViewModel> _store = {};
 
   /// 注入context
   ///
@@ -29,9 +35,36 @@ abstract class BaseViewModel<T, W extends BaseService> extends ChangeNotifier {
   W? createService();
 
   /// 设置model并更新
+  ///
   /// [newModel] 新model
   void setModel(T newModel) {
     model = newModel;
     notifyListeners();
+  }
+
+  /// 注册子ViewModel
+  ///
+  /// [key] 键
+  /// [sonViewModel] 子ViewModel
+  void registerSonViewModel(dynamic key, BaseViewModel sonViewModel) {
+    _store[key] = sonViewModel;
+  }
+
+  /// 读取子ViewModel
+  ///
+  /// [key] 键
+  V? readSonViewModel<V extends BaseViewModel>(dynamic key) {
+    if (_store[key] is V) {
+      return _store[key] as V;
+    }
+    return null;
+  }
+
+  @override
+  void dispose() {
+    _store.forEach((key, viewModel) {
+      viewModel.dispose();
+    });
+    super.dispose();
   }
 }

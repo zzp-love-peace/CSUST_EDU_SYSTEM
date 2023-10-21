@@ -1,8 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/ui/message/jsonbean/message_bean.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/cachedimage/data/cached_image_type.dart';
+import '../../../common/cachedimage/view/cached_image.dart';
 import '../../../util/date_util.dart';
 import '../viewmodel/message_viewmodel.dart';
 
@@ -34,27 +35,11 @@ class MessageItemView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(12),
               child: ClipOval(
-                child: CachedNetworkImage(
-                  width: 45,
-                  height: 45,
+                child: CachedImage(
+                  size: 45,
+                  url: msg.avatar,
+                  type: CachedImageType.thumb,
                   fit: BoxFit.cover,
-                  imageUrl: '${msg.avatar}/webp',
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(
-                          value: downloadProgress.progress),
-                  errorWidget: (context, url, error) => CachedNetworkImage(
-                      width: 45,
-                      height: 45,
-                      fit: BoxFit.cover,
-                      imageUrl: msg.avatar,
-                      progressIndicatorBuilder:
-                          (context, url, downloadProgress) =>
-                              CircularProgressIndicator(
-                                  value: downloadProgress.progress),
-                      errorWidget: (context, url, error) => Container(
-                          width: 45,
-                          height: 45,
-                          color: Theme.of(context).primaryColor)),
                 ),
               ),
             ),

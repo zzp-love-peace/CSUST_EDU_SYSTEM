@@ -11,7 +11,7 @@ class DateUtil {
     return [year, month, day];
   }
 
-  ///  蔡勒公式计算星期几 0表示周日
+  /// 蔡勒公式计算星期几 0表示周日
   static int date2Week(String date) {
     List<int> dates = splitDate(date);
     int year = dates[0];
@@ -151,6 +151,45 @@ class DateUtil {
         break;
     }
     return result;
+  }
+
+  static String getForumDateString(String postDate) {
+    var postDateTime = DateTime.parse(postDate);
+    var nowDateTime = DateTime.now();
+    var diffDateTime = nowDateTime.difference(postDateTime);
+    String minute;
+    String hour;
+    if (postDateTime.minute < 10) {
+      minute = '0${postDateTime.minute}';
+    } else {
+      minute = postDateTime.minute.toString();
+    }
+    if (postDateTime.hour < 10) {
+      hour = '0${postDateTime.hour}';
+    } else {
+      hour = postDateTime.hour.toString();
+    }
+    if (diffDateTime.inMinutes < 1) {
+      return '刚刚';
+    } else if (diffDateTime.inMinutes >= 1 && diffDateTime.inMinutes < 30) {
+      return '${diffDateTime.inMinutes}分钟前';
+    } else if (diffDateTime.inMinutes >= 30 && diffDateTime.inMinutes < 60) {
+      return '半小时前';
+    } else if (diffDateTime.inMinutes >= 60 && diffDateTime.inHours <= 10) {
+      return '${diffDateTime.inHours}小时前';
+    } else if (postDateTime.day == nowDateTime.day) {
+      return '今天 $hour:$minute';
+    } else if (nowDateTime.day == postDateTime.day + 1) {
+      return '昨天 $hour:$minute';
+    } else if (nowDateTime.day == postDateTime.day + 2) {
+      return '前天 $hour:$minute';
+    } else if (nowDateTime.day == postDateTime.day + 3) {
+      return '大前天 $hour:$minute';
+    } else if (nowDateTime.year == postDateTime.year) {
+      return '${postDateTime.month}/${postDateTime.day} $hour:$minute';
+    } else {
+      return '${postDateTime.year} ${postDateTime.month}/${postDateTime.day} $hour:$minute';
+    }
   }
 }
 

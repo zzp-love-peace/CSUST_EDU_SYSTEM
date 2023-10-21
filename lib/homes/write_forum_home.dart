@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:csust_edu_system/common/dialog/custom_toast.dart';
 import 'package:csust_edu_system/common/dialog/hint_dialog.dart';
+import 'package:csust_edu_system/common/forumlist/jsonbean/forum_bean.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:dio/dio.dart';
@@ -15,12 +16,11 @@ import 'package:photo_view/photo_view_gallery.dart';
 
 import '../common/dialog/select_dialog.dart';
 import '../util/my_util.dart';
-import '../widgets/forum_item.dart';
 
 class WriteForumHome extends StatefulWidget {
   final List<String> tabs;
   final List<int> tabsId;
-  final Function(Forum, int) callback;
+  final Function(ForumBean, int) callback;
 
   const WriteForumHome(
       {Key? key,
@@ -364,7 +364,7 @@ class _WriteForumHomeState extends State<WriteForumHome> {
       if (value.isNotEmpty) {
         SmartDialog.dismiss();
         if (value['code'] == 200) {
-          Forum forum = Forum.fromJson(value['data']);
+          var forum = ForumBean.fromJson(value['data']);
           SmartDialog.compatible
               .showToast('', widget: const CustomToast('上传成功'));
           Navigator.of(context).pop();

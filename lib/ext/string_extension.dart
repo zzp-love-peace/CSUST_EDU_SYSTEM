@@ -34,6 +34,16 @@ extension StringExtension on String {
   bool isNotBlank() {
     return !isBlank();
   }
+
+  /// 添加webp后缀
+  String suffixWebp() {
+    return this + '/webp';
+  }
+
+  /// 添加thumb后缀
+  String suffixThumb() {
+    return this + '/thumb';
+  }
 }
 
 /// String？的自定义扩展函数

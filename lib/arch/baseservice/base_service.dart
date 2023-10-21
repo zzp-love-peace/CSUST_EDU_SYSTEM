@@ -34,8 +34,10 @@ abstract class BaseService {
       OnError? onError,
       OnFinish? onFinish}) {
     onPrepare?.call();
-    HttpHelper().get(path, params).then((response) {
-      handleHttpResponse(response,
+    HttpHelper().get(path, params: params).then((response) {
+      handleHttpResponse(
+          url: path,
+          response: response,
           onDataSuccess: onDataSuccess,
           onDataFail: onDataFail,
           onFail: onFail,
@@ -66,7 +68,9 @@ abstract class BaseService {
       OnFinish? onFinish}) {
     onPrepare?.call();
     HttpHelper().post(path, params, contentType).then((response) {
-      handleHttpResponse(response,
+      handleHttpResponse(
+          url: path,
+          response: response,
           onDataSuccess: onDataSuccess,
           onDataFail: onDataFail,
           onFail: onFail,
@@ -77,14 +81,17 @@ abstract class BaseService {
 
   /// 处理http请求结果
   ///
-  /// [response] 请求结果
+  /// [url] 接口路径
+  /// [response] http请求结果
   /// [onDataSuccess] 获取数据成功回调
   /// [OnDataFail] 获取数据失败回调
   /// [OnFail] 请求失败回调
   /// [OnError] 请求异常回调
   /// [OnFinish] 请求结束回调
-  void handleHttpResponse<T>(HttpResponse response,
-      {required OnDataSuccess<T> onDataSuccess,
+  void handleHttpResponse<T>(
+      {required String url,
+      required HttpResponse response,
+      required OnDataSuccess<T> onDataSuccess,
       OnDataFail? onDataFail,
       OnFail? onFail,
       OnError? onError,
@@ -98,7 +105,7 @@ abstract class BaseService {
           isSuccess = true;
         } else {
           if (onDataFail == null) {
-            _doDataFail(responseData.msg);
+            _doDataFail(url, responseData);
           } else {
             onDataFail.call(responseData.code, responseData.msg);
           }
@@ -106,14 +113,14 @@ abstract class BaseService {
         break;
       case ResponseStatus.fail:
         if (onFail == null) {
-          _doFail(response.data);
+          _doFail(url, response.data);
         } else {
           onFail(response.data);
         }
         break;
       case ResponseStatus.error:
         if (onError == null) {
-          _doError(response.data);
+          _doError(url, response.data);
         } else {
           onError(response.data);
         }
@@ -124,25 +131,28 @@ abstract class BaseService {
 
   /// 获取数据失败的默认操作
   ///
-  /// [msg] 错误信息
-  void _doDataFail(String msg) {
-    '${StringAssets.getDataFail}:$msg'.showToast();
-    Log.e(msg);
+  /// [url] 接口路径
+  /// [errorData] 错误数据
+  void _doDataFail(String url, HttpResponseData errorData) {
+    '${StringAssets.getDataFail}:${errorData.msg}'.showToast();
+    Log.e('url=>$url, onDataFail=>$errorData');
   }
 
   /// 请求失败的默认操作
   ///
+  /// [url] 接口路径
   /// [msg] 错误信息
-  void _doFail(String? msg) {
+  void _doFail(String url, String? msg) {
     StringAssets.requestFail.showToast();
-    Log.e(msg);
+    Log.e('url=>$url, onFail=>$msg');
   }
 
   /// 请求异常的默认操作
   ///
+  /// [url] 接口路径
   /// [e] 异常
-  void _doError(Exception e) {
+  void _doError(String url, Exception e) {
     StringAssets.onError.showToast();
-    Log.e(e.toString());
+    Log.e('url=>$url, onError=>$e');
   }
 }

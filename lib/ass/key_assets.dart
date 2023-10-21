@@ -204,4 +204,46 @@ class KeyAssets {
 
   /// key-房间号
   static const String room = 'room';
+
+  /// key-点赞数
+  static const String likeNum = 'likeNum';
+
+  /// key-评论数
+  static const String commentNum = 'commentNum';
+
+  /// key-是否已点赞
+  static const String isLike = 'isLike';
+
+  /// key-是否已收藏
+  static const String isEnshrine = 'isEnshrine';
+
+  /// key-帖子图片
+  static const String images = 'images';
+
+  /// key-广告
+  static const String advertise = 'advertise';
+
+  /// key-是否成功
+  static const String isSuccess = 'isSuccess';
+
+  /// key-错误信息
+  static const String errorMessage = 'errorMessage';
+
+  /// key-标签名
+  static const String themeName = 'themeName';
+
+  /// key-标签id
+  static const String themeId = 'themeId';
+
+  /// key-页数
+  static const String page = 'page';
+
+  /// key-单页帖子数
+  static const String rows = 'rows';
+
+  /// key-帖子列表
+  static const String indexPosts = 'indexPosts';
+
+  /// key-总数量
+  static const String totalCount = 'totalCount';
 }

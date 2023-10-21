@@ -87,12 +87,12 @@ class CourseViewModel extends BaseViewModel<CourseModel, CourseService> {
       weekNum: weekNum,
       onDataSuccess: (data, msg) async {
         String content = jsonEncode(data);
-        var dbValue = await CourseDBManager.db.containsCourse(term, weekNum);
+        var dbValue = await CourseDBManager.containsCourse(term, weekNum);
         if (dbValue == null) {
-          await CourseDBManager.db
-              .insertCourse(DBCourseBean(term, weekNum, content));
+          await CourseDBManager.insertCourse(
+              DBCourseBean(term, weekNum, content));
         } else {
-          await CourseDBManager.db.updateCourse(content, dbValue.id);
+          await CourseDBManager.updateCourse(content, dbValue.id);
         }
         const HintDialog(
           title: StringAssets.tips,

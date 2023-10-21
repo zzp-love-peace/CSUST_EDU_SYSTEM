@@ -8,7 +8,9 @@ import 'package:flutter/foundation.dart';
 class HttpManager {
   static final HttpManager _instance = HttpManager._internal();
 
-  static const _baseUrl = 'http://finalab.cn:8989';
+  // static const _baseUrl = 'http://finalab.cn:8989';
+  static const _baseUrl = 'http://cop.eigeen.com';
+
   // static const _baseUrl = 'http://47.97.205.5:8989';
 
   Dio? _dio;
@@ -17,7 +19,8 @@ class HttpManager {
 
   ///通用全局单例，第一次使用时初始化
   HttpManager._internal() {
-    _dio ??= Dio(BaseOptions(baseUrl: _baseUrl, connectTimeout: const Duration(milliseconds: 8000)));
+    _dio ??= Dio(BaseOptions(
+        baseUrl: _baseUrl, connectTimeout: const Duration(milliseconds: 8000)));
     // _dio ??= Dio(BaseOptions(baseUrl: _baseUrl, connectTimeout: 8000));
   }
 

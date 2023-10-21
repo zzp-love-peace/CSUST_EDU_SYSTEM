@@ -1,7 +1,7 @@
-import 'package:csust_edu_system/arch/baseservice/base_service.dart';
 import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/ass/url_assets.dart';
 
+import '../../../common/unreadmsg/service/unread_msg_service.dart';
 import '../../../util/typedef_util.dart';
 
 /// 消息通知Service
@@ -9,14 +9,7 @@ import '../../../util/typedef_util.dart';
 /// @Author: Orcas_Liu
 /// @version: 1.8.8
 /// @Since: 2023.9.23
-class MessageService extends BaseService {
-  /// 获得未读消息
-  ///
-  /// [onDataSuccess] 获取数据成功回调
-  void getUnreadMsg({required OnDataSuccess<KeyList> onDataSuccess}) {
-    get(UrlAssets.getUnreadMsg, onDataSuccess: onDataSuccess);
-  }
-
+class MessageService extends UnreadMsgService {
   /// 获得已读消息
   ///
   /// [onDataSuccess] 获取数据成功回调

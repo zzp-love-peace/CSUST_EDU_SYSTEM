@@ -33,4 +33,9 @@ class HttpResponseData<T> extends BaseJsonBean {
     json[KeyAssets.data] = data;
     return json;
   }
+
+  @override
+  String toString() {
+    return '{code:$code, msg:$msg, data:$data}';
+  }
 }

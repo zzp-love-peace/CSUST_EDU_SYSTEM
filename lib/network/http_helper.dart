@@ -18,8 +18,11 @@ const Duration constTimeOut = Duration(seconds: 8);
 class HttpHelper {
   /// 唯一单例对象
   static final HttpHelper _instance = HttpHelper._internal();
+
   /// url
-  static const _baseUrl = 'http://finalab.cn:8989';
+  // static const _baseUrl = 'http://finalab.cn:8989';
+  static const _baseUrl = 'http://cop.eigeen.com';
+
   /// dio对象
   Dio? _dio;
 
@@ -44,17 +47,21 @@ class HttpHelper {
   ///
   /// [path] url路径
   /// [params] 参数
-  Future<HttpResponse> get(String path, Map<String, dynamic>? params) async {
+  /// [responseType] 响应类型
+  Future<HttpResponse> get(String path,
+      {Map<String, dynamic>? params, ResponseType? responseType}) async {
     Response? response;
     HttpResponse res;
     try {
-      response = await _dio?.get(path, queryParameters: params);
+      response = await _dio?.get(path,
+          queryParameters: params,
+          options: Options(responseType: responseType));
       if (response?.statusCode == HttpStatus.ok) {
         res = HttpResponse(ResponseStatus.success, response!.data);
       } else {
         res = HttpResponse(ResponseStatus.fail, response?.statusMessage);
       }
-    }  on Exception catch (e) {
+    } on Exception catch (e) {
       res = HttpResponse(ResponseStatus.error, e);
     }
     return res;
@@ -70,14 +77,13 @@ class HttpHelper {
     HttpResponse res;
     try {
       response = await _dio?.post(path,
-          data: params,
-          options: Options(contentType: contentType));
+          data: params, options: Options(contentType: contentType));
       if (response?.statusCode == HttpStatus.ok) {
         res = HttpResponse(ResponseStatus.success, response!.data);
       } else {
         res = HttpResponse(ResponseStatus.fail, response?.statusMessage);
       }
-    }  on Exception catch (e) {
+    } on Exception catch (e) {
       res = HttpResponse(ResponseStatus.error, e);
     }
     return res;

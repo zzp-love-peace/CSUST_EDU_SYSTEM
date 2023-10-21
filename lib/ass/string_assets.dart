@@ -576,4 +576,22 @@ class StringAssets {
   /// 查电费温馨提示
   static const String queryElectricityTips =
       '提示：房间号，金村不分A区、B区则直接输入门牌号即可，云塘有A区、B区之分，则要加前缀，如B306，A504。';
+
+  /// 图片
+  static const String image = '图片';
+
+  /// 下载成功
+  static const String uploadSuccess = '下载成功';
+
+  /// 全部
+  static const String all = '全部';
+
+  /// 我的发帖
+  static const String myForum = '我的发帖';
+
+  /// 我的收藏
+  static const String myCollect = '我的收藏';
+
+  /// 我的收藏提示语句
+  static const String myCollectTips = '这里是你的收藏列表，遇到有用的帖子就点击星星收藏起来吧';
 }

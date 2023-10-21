@@ -1,5 +1,4 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
-import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/common/functionswicher/viewmodel/function_switcher_view_model.dart';
 import 'package:csust_edu_system/ui/bottomtab/model/bottom_tab_model.dart';
 import 'package:csust_edu_system/ui/bottomtab/view/bottom_bar_view.dart';
@@ -7,9 +6,10 @@ import 'package:csust_edu_system/ui/bottomtab/viewmodel/bottom_tab_view_model.da
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../pages/forum_page.dart';
+import '../../../ass/key_assets.dart';
 import '../../../pages/mine_page.dart';
 import '../../course/page/course_page.dart';
+import '../../forum/page/forum_page.dart';
 import '../../school/page/school_page.dart';
 
 /// 底部导航栏页面

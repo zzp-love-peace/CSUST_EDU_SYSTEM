@@ -63,4 +63,28 @@ class UrlAssets {
   /// url-查询电费
   static const queryElectricity =
       'http://yktwd.csust.edu.cn:8988/web/Common/Tsm.html';
+
+  /// url-点击广告帖子
+  static const clickAdvertise = '/clickAdvertise';
+
+  /// url-点赞广告帖子
+  static const likeAdvertise = '/likeAdvertise';
+
+  /// url-点赞
+  static const likeForum = '/post/like';
+
+  /// url-收藏
+  static const collectForum = '/post/enshrine';
+
+  /// url-获取所有帖子标签
+  static const getAllTabs = '/theme/all';
+
+  /// url-根据标签获取帖子列表
+  static const getForumListByTabId = '/getForumAdvertise';
+
+  /// url-获取我的发帖列表
+  static const getMyForumList = '/post/self';
+
+  /// url-获取我的收藏列表
+  static const getMyCollectList = '/enshrine/list';
 }

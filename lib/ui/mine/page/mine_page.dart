@@ -189,7 +189,11 @@ class MinePage extends StatelessWidget {
               ),
               child: ClipOval(
                 child: CachedImage(
-                    url: StuInfo.avatar, size: 64, fit: BoxFit.cover),
+                  url: StuInfo.avatar,
+                  size: 64,
+                  fit: BoxFit.cover,
+                  isShowDetail: true,
+                ),
               ),
             ),
             const SizedBox(

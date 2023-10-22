@@ -40,6 +40,7 @@ class MessageItemView extends StatelessWidget {
                   url: msg.avatar,
                   type: CachedImageType.thumb,
                   fit: BoxFit.cover,
+                  isShowDetail: true,
                 ),
               ),
             ),

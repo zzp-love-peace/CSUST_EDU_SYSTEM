@@ -85,7 +85,7 @@ class ForumItemImageDetailView extends StatelessWidget {
                               Icons.download,
                               color: Colors.white,
                             ),
-                            onPressed: () async {
+                            onPressed: () {
                               String url = images[viewModel.model.curImgIndex];
                               viewModel.uploadImage(url);
                             },

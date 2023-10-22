@@ -64,6 +64,7 @@ class ForumItemView extends StatelessWidget {
                               url: forum.avatar,
                               type: CachedImageType.thumb,
                               fit: BoxFit.cover,
+                              isShowDetail: true,
                             ),
                           ),
                         ),

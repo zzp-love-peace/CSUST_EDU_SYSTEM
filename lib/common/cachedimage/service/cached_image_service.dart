@@ -6,12 +6,12 @@ import 'package:csust_edu_system/network/http_helper.dart';
 import 'package:csust_edu_system/util/typedef_util.dart';
 import 'package:dio/dio.dart';
 
-/// 帖子图片详情Service
+/// 缓存图片Service
 ///
 /// @author zzp
 /// @since 2023/10/18
 /// @version v1.8.8
-class ForumItemImageDetailService extends BaseService {
+class CachedImageService extends BaseService {
   /// 下载图片
   ///
   /// [imgUrl] 图片链接

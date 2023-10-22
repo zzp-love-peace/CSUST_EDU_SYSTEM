@@ -49,8 +49,6 @@ dependencies:
   flutter_easyrefresh: ^2.2.2
   # 轮播图
   flutter_swiper_view: ^1.1.8
-  # 液体效果容器
-  liquid_progress_indicator_v2: ^0.5.0
   # 带动画的text
   animated_text_kit: ^4.2.2
   # 加载html的组件

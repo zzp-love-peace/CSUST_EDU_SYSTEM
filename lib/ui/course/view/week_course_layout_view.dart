@@ -69,7 +69,7 @@ class WeekCourseLayoutView extends StatelessWidget {
               builder: (ctx, viewModel, _) {
                 return viewModel.model.courseList.isNotEmpty
                     ? GridView.builder(
-                        padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+                  padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 8,
                           mainAxisSpacing: 3.0,
@@ -77,8 +77,10 @@ class WeekCourseLayoutView extends StatelessWidget {
                           childAspectRatio: childAspectRatio,
                         ),
                         itemCount: 40,
-                        itemBuilder: (context, position) {
-                          return _getCourseItem(context, position);
+                        itemBuilder: (ctx, position) {
+                          return _getCourseItem(ctx,
+                              index: position,
+                              color: Theme.of(context).primaryColor);
                         },
                       )
                     : Container();
@@ -191,9 +193,11 @@ class WeekCourseLayoutView extends StatelessWidget {
   ///
   /// [context] context
   /// [index] 课程在课程表中下标索引
-  Widget _getCourseItem(BuildContext context, int index) {
+  /// [color] 颜色
+  Widget _getCourseItem(BuildContext context,
+      {required int index, required Color color}) {
     if (index % 8 == 0) {
-      return _getTimeItem(index, Theme.of(context).primaryColor);
+      return _getTimeItem(index, color);
     }
     final weekCourseLayoutModel =
         context.read<WeekCourseLayoutViewModel>().model;

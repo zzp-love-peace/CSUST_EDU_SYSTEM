@@ -67,6 +67,9 @@ class KeyAssets {
   /// key-总周数
   static const String totalWeek = 'totalWeek';
 
+  /// key-当前学期
+  static const String nowXueqi = 'nowXueqi';
+
   /// key-通知内容
   static const String notificationContent = 'content';
 
@@ -246,4 +249,7 @@ class KeyAssets {
 
   /// key-总数量
   static const String totalCount = 'totalCount';
+
+  /// 性别
+  static const String sex = 'sex';
 }

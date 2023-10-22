@@ -9,7 +9,6 @@ import 'package:photo_view/photo_view_gallery.dart';
 import '../../../homes/association_home.dart';
 import '../../../homes/exam_home.dart';
 import '../../../homes/grade_home.dart';
-import '../../../route/fade_route.dart';
 
 /// 校园功能栏View
 ///
@@ -60,7 +59,7 @@ class SchoolFunctionBarView extends StatelessWidget {
               _functionItem(
                   StringAssets.queryElectricity, ImageAssets.imgElectricity,
                   () {
-                    context.push(const ElectricityPage());
+                context.push(const ElectricityPage());
               }),
             ],
           ),
@@ -71,18 +70,19 @@ class SchoolFunctionBarView extends StatelessWidget {
                   ImageAssets.schoolMap1,
                   ImageAssets.schoolMap2
                 ];
-                Navigator.of(context).push(FadeRoute(
-                    page: PhotoViewGallery.builder(
-                  itemCount: mapImages.length,
-                  builder: (BuildContext context, int index) {
-                    return PhotoViewGalleryPageOptions(
-                      onTapUp: (context, details, controllerValue) {
-                        Navigator.pop(context);
-                      },
-                      imageProvider: AssetImage(mapImages[index]),
-                    );
-                  },
-                )));
+                context.pushWithFadeRoute(
+                  PhotoViewGallery.builder(
+                    itemCount: mapImages.length,
+                    builder: (BuildContext context, int index) {
+                      return PhotoViewGalleryPageOptions(
+                        onTapUp: (context, details, controllerValue) {
+                          Navigator.pop(context);
+                        },
+                        imageProvider: AssetImage(mapImages[index]),
+                      );
+                    },
+                  ),
+                );
               }),
               _functionItem(StringAssets.schoolGroup, ImageAssets.imgGroup, () {
                 context.push(const AssociationHome());

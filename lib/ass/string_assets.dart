@@ -594,4 +594,13 @@ class StringAssets {
 
   /// 我的收藏提示语句
   static const String myCollectTips = '这里是你的收藏列表，遇到有用的帖子就点击星星收藏起来吧';
+
+  /// 个人资料
+  static const String personalData = '个人资料';
+
+  /// 加入app交流群
+  static const String joinAppGroup = '加入app交流群';
+
+  /// 复制qq群号成功
+  static const String copyQQGroupNumSuccess = '复制qq群号成功';
 }

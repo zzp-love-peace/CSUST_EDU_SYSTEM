@@ -1,4 +1,5 @@
 import 'package:csust_edu_system/common/theme/viewmodel/theme_view_model.dart';
+import 'package:csust_edu_system/util/route/fade_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -51,6 +52,13 @@ extension BuildContextExtension on BuildContext {
   Future<PageResultBean<T>?> push<T>(Widget page) {
     return Navigator.of(this)
         .push<PageResultBean<T>>(MaterialPageRoute(builder: (_) => page));
+  }
+
+  /// 带有显隐动效的跳转
+  ///
+  /// [page] 页面
+  void pushWithFadeRoute(Widget page) {
+    Navigator.of(this).push(FadeRoute(page: page));
   }
 
   /// 回退页面

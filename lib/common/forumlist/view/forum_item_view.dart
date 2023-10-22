@@ -10,7 +10,6 @@ import 'package:csust_edu_system/util/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../route/fade_route.dart';
 import '../../../ui/forum/viewmodel/forum_tab_list_view_model.dart';
 import '../../../ui/mycollect/viewmodel/my_collect_view_model.dart';
 import '../../../ui/myforum/viewmodel/my_forum_view_model.dart';
@@ -172,12 +171,10 @@ class ForumItemView extends StatelessWidget {
       tag: url,
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(
-            FadeRoute(
-              page: ForumItemImageDetailView(
-                images: images,
-                initUrl: url,
-              ),
+          context.pushWithFadeRoute(
+            ForumItemImageDetailView(
+              images: images,
+              initUrl: url,
             ),
           );
         },

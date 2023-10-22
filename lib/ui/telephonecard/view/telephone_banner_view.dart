@@ -1,9 +1,8 @@
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-
-import '../../../route/fade_route.dart';
 
 /// 电话卡轮播图
 ///
@@ -42,21 +41,22 @@ class TelephoneBannerView extends StatelessWidget {
                 },
                 itemCount: imgList.length,
                 onTap: (i) {
-                  Navigator.of(context).push(FadeRoute(
-                      page: PhotoViewGallery.builder(
-                    pageController: PageController(initialPage: i),
-                    itemCount: imgList.length,
-                    builder: (BuildContext context, int index) {
-                      return PhotoViewGalleryPageOptions(
-                        onTapUp: (context, details, controllerValue) {
-                          Navigator.pop(context);
-                        },
-                        heroAttributes:
-                            PhotoViewHeroAttributes(tag: imgList[index]),
-                        imageProvider: AssetImage(imgList[index]),
-                      );
-                    },
-                  )));
+                  context.pushWithFadeRoute(
+                    PhotoViewGallery.builder(
+                      pageController: PageController(initialPage: i),
+                      itemCount: imgList.length,
+                      builder: (BuildContext context, int index) {
+                        return PhotoViewGalleryPageOptions(
+                          onTapUp: (context, details, controllerValue) {
+                            Navigator.pop(context);
+                          },
+                          heroAttributes:
+                              PhotoViewHeroAttributes(tag: imgList[index]),
+                          imageProvider: AssetImage(imgList[index]),
+                        );
+                      },
+                    ),
+                  );
                 },
               ),
             ),

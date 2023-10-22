@@ -30,6 +30,7 @@ class WeekBelowAppBarView extends StatelessWidget {
                 child: InkWell(
                   child: Wrap(
                     direction: Axis.horizontal,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     alignment: WrapAlignment.center,
                     children: [
                       Text('第${courseViewModel.model.weekNum}周',

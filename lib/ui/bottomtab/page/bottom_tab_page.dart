@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ass/key_assets.dart';
-import '../../../pages/mine_page.dart';
 import '../../course/page/course_page.dart';
 import '../../forum/page/forum_page.dart';
+import '../../mine/page/mine_page.dart';
 import '../../school/page/school_page.dart';
 
 /// 底部导航栏页面

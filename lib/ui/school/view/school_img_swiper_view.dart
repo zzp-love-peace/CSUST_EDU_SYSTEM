@@ -4,6 +4,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/arch/baseview/seletor_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/school/jsonbean/banner_bean.dart';
 import 'package:csust_edu_system/ui/school/viewmodel/school_view_model.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,6 @@ import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-import '../../../route/fade_route.dart';
 import '../data/school_data.dart';
 
 /// 校园图片轮播图View
@@ -60,41 +60,35 @@ class SchoolImgSwiperView extends StatelessWidget {
                         ? schoolImgList.length
                         : bannerList.length,
                     onTap: (i) {
-                      Navigator.of(context).push(
-                        FadeRoute(
-                          page: PhotoViewGallery.builder(
-                            pageController: PageController(initialPage: i),
-                            itemCount: bannerList.isEmpty
-                                ? schoolImgList.length
-                                : bannerList.length,
-                            builder: (BuildContext context, int index) {
-                              return bannerList.isEmpty
-                                  ? PhotoViewGalleryPageOptions(
-                                      onTapUp:
-                                          (context, details, controllerValue) {
-                                        Navigator.pop(context);
-                                      },
-                                      heroAttributes: PhotoViewHeroAttributes(
-                                          tag: schoolImgList[index]),
-                                      imageProvider:
-                                          AssetImage(schoolImgList[index]),
-                                      // initialScale: PhotoViewComputedScale.contained *
-                                      //     0.95,
-                                    )
-                                  : PhotoViewGalleryPageOptions(
-                                      onTapUp:
-                                          (context, details, controllerValue) {
-                                        Navigator.pop(context);
-                                      },
-                                      heroAttributes: PhotoViewHeroAttributes(
-                                          tag: bannerList[index]),
-                                      imageProvider: CachedNetworkImageProvider(
-                                          bannerList[index].detailUrl),
-                                      // initialScale: PhotoViewComputedScale.contained *
-                                      //     0.95,
-                                    );
-                            },
-                          ),
+                      context.pushWithFadeRoute(
+                        PhotoViewGallery.builder(
+                          pageController: PageController(initialPage: i),
+                          itemCount: bannerList.isEmpty
+                              ? schoolImgList.length
+                              : bannerList.length,
+                          builder: (BuildContext context, int index) {
+                            return bannerList.isEmpty
+                                ? PhotoViewGalleryPageOptions(
+                                    onTapUp:
+                                        (context, details, controllerValue) {
+                                      Navigator.pop(context);
+                                    },
+                                    heroAttributes: PhotoViewHeroAttributes(
+                                        tag: schoolImgList[index]),
+                                    imageProvider:
+                                        AssetImage(schoolImgList[index]),
+                                  )
+                                : PhotoViewGalleryPageOptions(
+                                    onTapUp:
+                                        (context, details, controllerValue) {
+                                      Navigator.pop(context);
+                                    },
+                                    heroAttributes: PhotoViewHeroAttributes(
+                                        tag: bannerList[index]),
+                                    imageProvider: CachedNetworkImageProvider(
+                                        bannerList[index].detailUrl),
+                                  );
+                          },
                         ),
                       );
                     },
@@ -129,6 +123,7 @@ class SchoolImgSwiperView extends StatelessWidget {
         ));
   }
 
+  /// 轮播图打招呼字符串
   String _welcomeString() {
     var result = StringAssets.emptyStr;
     DateTime dateTime = DateTime.now();

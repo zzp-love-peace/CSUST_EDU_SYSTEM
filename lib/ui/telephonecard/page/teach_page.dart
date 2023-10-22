@@ -1,10 +1,9 @@
 import 'package:csust_edu_system/ass/image_assets.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-
-import '../../../route/fade_route.dart';
 
 /// 教程查看页
 ///
@@ -57,18 +56,19 @@ class TeachPage extends StatelessWidget {
         child: Image(image: AssetImage(imgPath)),
       ),
       onTap: () {
-        Navigator.of(context).push(FadeRoute(
-            page: PhotoViewGallery.builder(
-          itemCount: 1,
-          builder: (BuildContext context, int index) {
-            return PhotoViewGalleryPageOptions(
-              onTapUp: (context, details, controllerValue) {
-                Navigator.pop(context);
-              },
-              imageProvider: AssetImage(imgPath),
-            );
-          },
-        )));
+        context.pushWithFadeRoute(
+          PhotoViewGallery.builder(
+            itemCount: 1,
+            builder: (BuildContext context, int index) {
+              return PhotoViewGalleryPageOptions(
+                onTapUp: (context, details, controllerValue) {
+                  Navigator.pop(context);
+                },
+                imageProvider: AssetImage(imgPath),
+              );
+            },
+          ),
+        );
       },
     ));
   }

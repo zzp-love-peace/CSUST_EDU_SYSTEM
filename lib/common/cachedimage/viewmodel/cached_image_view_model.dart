@@ -26,7 +26,7 @@ class CachedImageViewModel<M> extends BaseViewModel<M, CachedImageService> {
       onDataSuccess: (data, msg) async {
         var result = await ImageGallerySaver.saveImage(data, quality: 100);
         if (result[KeyAssets.isSuccess] == true) {
-          StringAssets.uploadSuccess.showToast();
+          StringAssets.downloadSuccess.showToast();
         } else {
           (result[KeyAssets.errorMessage] as String).showToast();
         }

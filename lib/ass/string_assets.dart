@@ -581,7 +581,7 @@ class StringAssets {
   static const String image = '图片';
 
   /// 下载成功
-  static const String uploadSuccess = '下载成功';
+  static const String downloadSuccess = '下载成功';
 
   /// 全部
   static const String all = '全部';
@@ -627,4 +627,25 @@ class StringAssets {
 
   /// 标签
   static const String tab = '标签';
+
+  /// 标签不能为空
+  static const String tabCannotEmpty = '标签不能为空';
+
+  /// 内容不能为空
+  static const String contentCannotEmpty = '内容不能为空';
+
+  /// 上传中...
+  static const String uploading = '上传中...';
+
+  /// 拍照
+  static const String takePhoto = '拍照';
+
+  /// 从相册选取
+  static const String selectFromPhotoAlbum = '从相册选取';
+
+  /// 上传成功
+  static const String uploadSuccess = '上传成功';
+
+  /// 发帖图片提示语句
+  static const String postForumImgTips = '最多上传3张图片\n请勿上传违规图片！\n否则将被禁言并通报';
 }

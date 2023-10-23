@@ -9,4 +9,7 @@ enum PageResultCode {
 
   /// 自定义课程删除
   customCourseDelete,
+
+  /// 上传帖子成功
+  uploadForumSuccess,
 }

@@ -131,9 +131,8 @@ class MinePage extends StatelessWidget {
                     StringAssets.copyQQGroupNumSuccess.showToast();
                     const HintDialog(
                             title: StringAssets.tips,
-                            subTitle: "教务app交流1群：955731766"
-                                '\n'
-                                "教务app交流2群：493018572")
+                            subTitle:
+                                '教务app交流1群：955731766\n教务app交流2群：493018572')
                         .showDialog();
                   },
                 ),

@@ -1,15 +1,15 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
+import 'package:csust_edu_system/data/page_result_code.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/forum/model/forum_model.dart';
 import 'package:csust_edu_system/ui/forum/view/forum_tab_list_view.dart';
 import 'package:csust_edu_system/ui/forum/viewmodel/forum_tab_list_view_model.dart';
 import 'package:csust_edu_system/ui/forum/viewmodel/forum_view_model.dart';
+import 'package:csust_edu_system/ui/postforum/page/post_forum_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../homes/write_forum_home.dart';
 
 /// 论坛页
 ///
@@ -68,18 +68,27 @@ class ForumHome extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               foregroundColor: Colors.white,
               onPressed: () {
-                context.push(WriteForumHome(
-                  tabs: viewModel.model.tabList.sublist(1),
-                  tabsId: viewModel.model.tabIdList.sublist(1),
-                  callback: (forum, id) {
-                    viewModel
-                        .readSonViewModel<ForumTabListViewModel>(id)
-                        ?.addForumAtFirst(forum);
-                    viewModel
-                        .readSonViewModel<ForumTabListViewModel>(0)
-                        ?.addForumAtFirst(forum);
+                context
+                    .push(
+                  PostForumPage(
+                      tabList: viewModel.model.tabList.sublist(1),
+                      tabIdList: viewModel.model.tabIdList.sublist(1)),
+                )
+                    .then(
+                  (result) {
+                    if (result != null &&
+                        result.resultCode ==
+                            PageResultCode.uploadForumSuccess) {
+                      viewModel
+                          .readSonViewModel<ForumTabListViewModel>(
+                              result.resultData.tabId)
+                          ?.addForumAtFirst(result.resultData.forum);
+                      viewModel
+                          .readSonViewModel<ForumTabListViewModel>(0)
+                          ?.addForumAtFirst(result.resultData.forum);
+                    }
                   },
-                ));
+                );
               },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(22),

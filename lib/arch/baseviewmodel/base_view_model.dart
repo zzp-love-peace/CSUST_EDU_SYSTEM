@@ -59,12 +59,4 @@ abstract class BaseViewModel<T, W extends BaseService> extends ChangeNotifier {
     }
     return null;
   }
-
-  @override
-  void dispose() {
-    _store.forEach((key, viewModel) {
-      viewModel.dispose();
-    });
-    super.dispose();
-  }
 }

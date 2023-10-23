@@ -71,7 +71,7 @@ class CachedImage extends StatelessWidget {
                   builder: (BuildContext context, int index) {
                     return PhotoViewGalleryPageOptions.customChild(
                         onTapUp: (context, details, controllerValue) {
-                          Navigator.pop(context);
+                          context.pop();
                         },
                         child: _imageDetailView());
                   },

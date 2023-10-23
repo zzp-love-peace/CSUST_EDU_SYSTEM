@@ -3,6 +3,7 @@ import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/cachedimage/data/cached_image_type.dart';
 import 'package:csust_edu_system/common/forumlist/model/forum_item_image_detail_model.dart';
 import 'package:csust_edu_system/common/forumlist/viewmodel/forum_item_image_detail_view_model.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -96,7 +97,7 @@ class ForumItemImageDetailView extends StatelessWidget {
                   ],
                 ),
                 onTapUp: (context, details, controllerValue) {
-                  Navigator.pop(context);
+                  context.pop();
                 },
                 heroAttributes: PhotoViewHeroAttributes(tag: images[index]),
               );

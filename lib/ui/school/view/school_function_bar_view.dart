@@ -76,7 +76,7 @@ class SchoolFunctionBarView extends StatelessWidget {
                     builder: (BuildContext context, int index) {
                       return PhotoViewGalleryPageOptions(
                         onTapUp: (context, details, controllerValue) {
-                          Navigator.pop(context);
+                          context.pop();
                         },
                         imageProvider: AssetImage(mapImages[index]),
                       );

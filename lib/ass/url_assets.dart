@@ -87,4 +87,7 @@ class UrlAssets {
 
   /// url-获取我的收藏列表
   static const getMyCollectList = '/enshrine/list';
+
+  /// url-发帖
+  static const postForum = '/post/write';
 }

@@ -78,4 +78,7 @@ class ImageAssets {
 
   /// 线上营业厅轮播图图片路径
   static const String telephoneHall = 'assets/images/telephone_hall1.jpg';
+
+  /// 标签icon图
+  static const String imgTab = 'assets/images/tab.png';
 }

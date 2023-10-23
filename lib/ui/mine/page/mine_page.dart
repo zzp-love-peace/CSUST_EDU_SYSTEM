@@ -1,16 +1,15 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
-import 'package:csust_edu_system/common/cachedimage/view/cached_image.dart';
 import 'package:csust_edu_system/common/dialog/hint_dialog.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ext/string_extension.dart';
+import 'package:csust_edu_system/ui/mine/mine_head_image_container_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../common/dialog/select_dialog.dart';
 import '../../../common/unreadmsg/viewmodel/unread_msg_view_model.dart';
-import '../../../data/stu_info.dart';
 import '../../../homes/info_home.dart';
 import '../../login/page/login_page.dart';
 import '../../message/page/message_page.dart';
@@ -47,7 +46,7 @@ class MinePage extends StatelessWidget {
       ]),
       body: ListView(
         children: [
-          _headerImageContainer(color: Theme.of(context).primaryColor),
+          const MineHeadImageContainerView(),
           Card(
             margin: const EdgeInsets.fromLTRB(12, 30, 12, 0),
             color: Colors.white,
@@ -155,59 +154,6 @@ class MinePage extends StatelessWidget {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  /// 头像区域
-  ///
-  /// [color] 颜色
-  Widget _headerImageContainer({required Color color}) {
-    return Container(
-      height: 150,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [color, Colors.white24],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight),
-      ),
-      child: Center(
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          direction: Axis.vertical,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: 64,
-              height: 64,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.white, width: 3),
-                borderRadius: BorderRadius.circular(40),
-              ),
-              child: ClipOval(
-                child: CachedImage(
-                  url: StuInfo.avatar,
-                  size: 64,
-                  fit: BoxFit.cover,
-                  isShowDetail: true,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(
-              StuInfo.username,
-              style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
-          ],
-        ),
       ),
     );
   }

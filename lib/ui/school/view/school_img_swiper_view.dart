@@ -71,7 +71,7 @@ class SchoolImgSwiperView extends StatelessWidget {
                                 ? PhotoViewGalleryPageOptions(
                                     onTapUp:
                                         (context, details, controllerValue) {
-                                      Navigator.pop(context);
+                                      context.pop();
                                     },
                                     heroAttributes: PhotoViewHeroAttributes(
                                         tag: schoolImgList[index]),
@@ -81,7 +81,7 @@ class SchoolImgSwiperView extends StatelessWidget {
                                 : PhotoViewGalleryPageOptions(
                                     onTapUp:
                                         (context, details, controllerValue) {
-                                      Navigator.pop(context);
+                                          context.pop();
                                     },
                                     heroAttributes: PhotoViewHeroAttributes(
                                         tag: bannerList[index]),

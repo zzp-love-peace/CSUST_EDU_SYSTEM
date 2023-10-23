@@ -252,4 +252,7 @@ class KeyAssets {
 
   /// 性别
   static const String sex = 'sex';
+
+  /// 是否匿名
+  static const String isAnonymous = 'isAnonymous';
 }

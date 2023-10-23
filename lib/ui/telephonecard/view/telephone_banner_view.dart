@@ -48,7 +48,7 @@ class TelephoneBannerView extends StatelessWidget {
                       builder: (BuildContext context, int index) {
                         return PhotoViewGalleryPageOptions(
                           onTapUp: (context, details, controllerValue) {
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           heroAttributes:
                               PhotoViewHeroAttributes(tag: imgList[index]),

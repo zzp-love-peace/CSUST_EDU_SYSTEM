@@ -603,4 +603,28 @@ class StringAssets {
 
   /// 复制qq群号成功
   static const String copyQQGroupNumSuccess = '复制qq群号成功';
+
+  /// 学院
+  static const String college = '学院';
+
+  /// 专业
+  static const String major = '专业';
+
+  /// 发帖
+  static const String postForum = '发帖';
+
+  /// 发帖提示语句
+  static const String postForumTips = '已有编辑的内容存在，确定要退出吗？';
+
+  /// 匿名发布
+  static const String anonymousPost = '匿名发布';
+
+  /// 说点啥
+  static const String saySomething = '说点啥...';
+
+  /// 选择标签
+  static const String selectTab = '选择标签';
+
+  /// 标签
+  static const String tab = '标签';
 }

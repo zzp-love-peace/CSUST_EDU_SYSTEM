@@ -10,13 +10,18 @@ import 'package:dio/dio.dart';
 /// @since 2023/9/20
 /// @version v1.8.8
 class CommonTermPickerService extends BaseService {
-
   /// 获取全部学期
   ///
   /// [cookie] cookie
   /// [onDataSuccess] 获取数据成功回调
-  void getAllTerm({required String cookie, required OnDataSuccess<KeyList> onDataSuccess}) {
-    post(UrlAssets.getAllTerm, params: FormData.fromMap({KeyAssets.cookie: cookie}),
-        onDataSuccess: onDataSuccess);
+  /// [onFinish] 请求结束回调
+  void getAllTerm(
+      {required String cookie,
+      required OnDataSuccess<KeyList> onDataSuccess,
+      OnFinish? onFinish}) {
+    post(UrlAssets.getAllTerm,
+        params: FormData.fromMap({KeyAssets.cookie: cookie}),
+        onDataSuccess: onDataSuccess,
+        onFinish: onFinish);
   }
 }

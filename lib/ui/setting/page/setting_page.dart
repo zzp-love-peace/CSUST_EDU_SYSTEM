@@ -137,7 +137,7 @@ class SettingPage extends StatelessWidget {
                       SelectDialog(
                         title: StringAssets.tips,
                         subTitle: StringAssets.sureExitLogin,
-                        callback: () {
+                        okCallback: () {
                           // 移除全部
                           Navigator.pushAndRemoveUntil(
                               context,

@@ -61,7 +61,7 @@ class OrderListItemView extends StatelessWidget {
                       SelectDialog(
                           title: StringAssets.tips,
                           subTitle: StringAssets.isSureDeleteOrder,
-                          callback: () {
+                          okCallback: () {
                             var orderViewModel = context.read<OrderViewModel>();
                             orderViewModel.deleteOrder(orderBean.id, orderBean);
                           }).showDialog();

@@ -1,11 +1,11 @@
 import 'package:csust_edu_system/arch/baseview/seletor_view.dart';
 import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
-import 'package:csust_edu_system/common/dialog/course_progress_dialog.dart';
 import 'package:csust_edu_system/common/termpicker/view/common_term_picker_view.dart';
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/course/model/course_model.dart';
+import 'package:csust_edu_system/ui/course/view/course_progress_dialog_view.dart';
 import 'package:csust_edu_system/ui/course/view/week_below_app_bar_view.dart';
 import 'package:csust_edu_system/ui/course/view/week_course_layout_view.dart';
 import 'package:csust_edu_system/ui/course/viewmodel/course_view_model.dart';
@@ -146,7 +146,7 @@ class _CourseHomeState extends State<CourseHome> {
                       StuInfo.cookie, courseModel.term, courseModel.weekNum);
                   break;
                 case 1:
-                  CourseProgressDialog(term: courseModel.term).showDialog();
+                  CourseProgressDialogView(term: courseModel.term).showDialog();
                   break;
               }
             },

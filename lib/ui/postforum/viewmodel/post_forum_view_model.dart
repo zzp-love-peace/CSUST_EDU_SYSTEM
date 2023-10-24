@@ -109,7 +109,7 @@ class PostForumViewModel
       SelectDialog(
         title: StringAssets.tips,
         subTitle: StringAssets.postForumTips,
-        callback: () {
+        okCallback: () {
           context.pop();
         },
       ).showDialog();

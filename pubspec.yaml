@@ -63,8 +63,6 @@ dependencies:
   cached_network_image: ^3.2.3
   # 数据源改变自带动画的列表
   animated_list_plus: ^0.5.2
-  # url跳转
-  url_launcher: ^6.1.14
   # 带动画的searchBar
   animated_search_bar: ^2.6.0
   # 数据库
@@ -75,6 +73,8 @@ dependencies:
   logger: ^2.0.2
   # 格式化时间库
   date_format: ^2.0.5
+  # 应用内更新
+  flutter_app_update: ^3.0.3
 
 dev_dependencies:
   flutter_test:

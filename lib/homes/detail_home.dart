@@ -6,7 +6,6 @@ import 'package:csust_edu_system/common/lottie/none_lottie.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
 import 'package:csust_edu_system/util/date_util.dart';
-import 'package:csust_edu_system/util/my_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -16,6 +15,7 @@ import 'package:like_button/like_button.dart';
 import '../common/dialog/custom_toast.dart';
 import '../common/dialog/hint_dialog.dart';
 import '../common/forumlist/jsonbean/forum_bean.dart';
+import '../util/widget_util.dart';
 
 class DetailHome extends StatefulWidget {
   final ForumBean forum;
@@ -153,14 +153,14 @@ class _DetailHomeState extends State<DetailHome> {
                             physics: const NeverScrollableScrollPhysics(),
                             areItemsTheSame: (a, b) => a.id == b.id,
                             itemBuilder: (context, animation, item, index) {
-                              return buildFadeWidgetVertical(
+                              return WidgetUtil.buildFadeWidgetVertical(
                                   _CommentItem(
                                       comment: item,
                                       deleteCallback: _deleteCallback),
                                   animation);
                             },
                             removeItemBuilder: (context, animation, oldItem) {
-                              return buildFadeWidgetVertical(
+                              return WidgetUtil.buildFadeWidgetVertical(
                                   _CommentItem(
                                       comment: oldItem,
                                       deleteCallback: _deleteCallback),
@@ -207,7 +207,7 @@ class _DetailHomeState extends State<DetailHome> {
                       widget: SelectDialog(
                           title: '提示',
                           subTitle: '您确定要删除该帖子吗？',
-                          callback: () {
+                          okCallback: () {
                             _deleteForum(widget.forum.id);
                           }),
                       clickBgDismissTemp: false);
@@ -219,7 +219,7 @@ class _DetailHomeState extends State<DetailHome> {
                       widget: SelectDialog(
                         title: '提示',
                         subTitle: '您确定要举报该帖子吗？',
-                        callback: () {
+                        okCallback: () {
                           _reportComment(widget.forum.id);
                         },
                       ),
@@ -738,10 +738,11 @@ class _CommentItemState extends State<_CommentItem> {
                   physics: const NeverScrollableScrollPhysics(),
                   areItemsTheSame: (a, b) => a.id == b.id,
                   itemBuilder: (context, animation, item, index) {
-                    return buildFadeWidgetVertical(_replyItem(item), animation);
+                    return WidgetUtil.buildFadeWidgetVertical(
+                        _replyItem(item), animation);
                   },
                   removeItemBuilder: (context, animation, oldItem) {
-                    return buildFadeWidgetVertical(
+                    return WidgetUtil.buildFadeWidgetVertical(
                         _replyItem(oldItem), animation);
                   },
                 ),
@@ -819,7 +820,7 @@ class _CommentItemState extends State<_CommentItem> {
                                 widget: SelectDialog(
                                   title: '提示',
                                   subTitle: '您确定要删除该评论吗？',
-                                  callback: () {
+                                  okCallback: () {
                                     if (isComment) {
                                       _deleteComment(widget.comment.id);
                                     } else {
@@ -844,7 +845,7 @@ class _CommentItemState extends State<_CommentItem> {
                                 widget: SelectDialog(
                                   title: '提示',
                                   subTitle: '您确定要举报该评论吗？',
-                                  callback: () {
+                                  okCallback: () {
                                     SmartDialog.showLoading(msg: '上传中...');
                                     Future.delayed(
                                         const Duration(milliseconds: 1200), () {

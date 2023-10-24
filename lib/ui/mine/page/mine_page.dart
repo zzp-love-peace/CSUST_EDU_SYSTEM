@@ -33,7 +33,7 @@ class MinePage extends StatelessWidget {
             SelectDialog(
               title: StringAssets.tips,
               subTitle: StringAssets.sureExitLogin,
-              callback: () {
+              okCallback: () {
                 context.pushReplacement(const LoginPage());
               },
             ).showDialog();

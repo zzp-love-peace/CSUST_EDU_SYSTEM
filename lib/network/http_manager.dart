@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:csust_edu_system/util/my_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -69,14 +68,14 @@ class HttpManager {
     return response?.data;
   }
 
-  @Deprecated('废弃')
-  Future<Map> login(String username, String password) async =>
-      await _post('/login',
-          params: FormData.fromMap({
-            'stuNum': username,
-            'password': password,
-            'version': '$appName$version${getAppSuffix()}'
-          }));
+  // @Deprecated('废弃')
+  // Future<Map> login(String username, String password) async =>
+  //     await _post('/login',
+  //         params: FormData.fromMap({
+  //           'stuNum': username,
+  //           'password': password,
+  //           'version': '$appName$version${getAppSuffix()}'
+  //         }));
 
   @Deprecated('废弃')
   Future<Map> getDateData(String cookie, String token) async =>
@@ -146,8 +145,8 @@ class HttpManager {
               {'cookie': cookie, 'xueqi': term, 'zc': weekNum}),
           headers: {"token": token});
 
-  @Deprecated('废弃')
   // 获取教务通知列表
+  @Deprecated('已废弃')
   Future<Map> getNoticeList(String cookie, String token) async =>
       await _post('/getNoticeList',
           params: FormData.fromMap({'cookie': cookie}),
@@ -159,6 +158,7 @@ class HttpManager {
           params: FormData.fromMap({'cookie': cookie, 'ggid': ggid}),
           headers: {"token": token});
 
+  @Deprecated('已废弃')
   Future<Map> addAdvice(String token, String content, String phone,
       String name) async =>
       await _post('/advice/add',
@@ -197,17 +197,20 @@ class HttpManager {
   /*/
   论坛
    */
+  @Deprecated('已废弃')
   Future<Map> getAllTab(String token) async =>
       await _get('/theme/all', header: token);
 
 //获取帖子
   //post/index
+  @Deprecated('已废弃')
   Future<Map> getFormListByTabId(String token, int tabId, int page,
       int rows) async =>
       await _post('/getForumAdvertise',
           params: {'themeId': tabId, 'page': page, 'rows': rows},
           headers: {"token": token});
 
+  @Deprecated('已废弃')
   Future<Map> postForum(String token, int themeId, String content,
       bool isAnonymous, List<MultipartFile> images) async =>
       await _post('/post/write',
@@ -219,46 +222,58 @@ class HttpManager {
           }),
           headers: {"token": token});
   //点击广告
+  @Deprecated('已废弃')
   Future<Map> clickAdvertise(String token , int id)  async=>
       await _post('/clickAdvertise',params: FormData.fromMap({'id':id}),
           headers: {"token":token});
   //点赞广告
+  @Deprecated('已废弃')
   Future<Map> likeAdvertise(String token , int id)  async=>
       await _post('/likeAdvertise',params: FormData.fromMap({'id':id}),
           headers: {"token":token});
 
+  @Deprecated('已废弃')
   Future<Map> likeForum(String token, int id) async =>
       await _get('/post/like', params: {'id': id}, header: token);
 
+  @Deprecated('已废弃')
   Future<Map> collectForum(String token, int id) async =>
       await _get('/post/enshrine', params: {'id': id}, header: token);
 
+  @Deprecated('已废弃')
   Future<Map> getMyForums(String token) async =>
       await _get('/post/self', header: token);
 
+  @Deprecated('已废弃')
   Future<Map> getMyCollects(String token) async =>
       await _get('/enshrine/list', header: token);
 
+  @Deprecated('已废弃')
   Future<Map> getForumInfo(String token, int id) async =>
       await _get('/post/detail', params: {"id": id}, header: token);
 
+  @Deprecated('已废弃')
   Future<Map> deleteForum(String token, int postId) async =>
       await _post('/post/delete',
           params: {'postId': postId}, headers: {"token": token});
 
+  @Deprecated('已废弃')
   Future<Map> deleteComment(String token, int commentId) async =>
       await _post('/post/delete',
           params: {'commentId': commentId}, headers: {"token": token});
 
+  @Deprecated('已废弃')
   Future<Map> deleteReply(String token, int replyId) async =>
       await _post('/post/delete',
           params: {'replyId': replyId}, headers: {"token": token});
 
+  @Deprecated('已废弃')
   Future<Map> postComment(String token, int postId, String content) async =>
       await _post('/comment/write',
           params: {'postId': postId, 'content': content},
           headers: {"token": token});
 
+  @Deprecated('已废弃')
   Future<Map> postReply(String token, int commentId, int replyId,
       String content) async =>
       await _post('/reply/write', params: {
@@ -269,22 +284,28 @@ class HttpManager {
         "token": token
       });
 
+  @Deprecated('已废弃')
   Future<Map> getUnreadMsg(String token) async =>
       await _get('/message/unread', header: token);
 
+  @Deprecated('已废弃')
   Future<Map> getReadMsg(String token) async =>
       await _get('/message/hasRead', header: token);
 
+  @Deprecated('已废弃')
   Future<Map> setAllMsgRead(String token) async =>
       await _post('/message/setAllRead', headers: {"token": token});
 
+  @Deprecated('已废弃')
   Future<Map> setMsgRead(String token, int id, int type) async =>
       await _post('/message/setRead',
           params: {'id': id, 'type': type}, headers: {"token": token});
 
+  @Deprecated('已废弃')
   Future<Map> getNotifications(String token) async =>
       await _get('/notice/get', header: token);
 
+  @Deprecated('已废弃')
   Future<Map> reportComment(String token, int postId) async =>
       await _post('/report/add', params:  FormData.fromMap({'postId': postId}), headers: {"token": token});
 
@@ -307,6 +328,7 @@ class HttpManager {
   Future<Map> getBannerImg(String token) async =>
       await _get('/loopImg/getAll', header: token);
 
+  @Deprecated('已废弃')
   queryElectricity(String jsonData) async =>
       await _post('http://yktwd.csust.edu.cn:8988/web/Common/Tsm.html',
           params: {
@@ -316,44 +338,15 @@ class HttpManager {
           },
           contentType: Headers.formUrlEncodedContentType);
 
+  @Deprecated('已废弃')
   Future<Map> getAllCourseOfTerm(String cookie, String token,
       String term) async =>
       await _post('/getCourse',
           params: FormData.fromMap({'cookie': cookie, 'xueqi': term, 'zc': 0}), headers: {"token": token});
 
+  @Deprecated('已废弃')
   Future<Uint8List> imageToBytes(String imgUrl) async {
     var response = await _dio?.get(imgUrl, options: Options(responseType: ResponseType.bytes));
     return Uint8List.fromList(response?.data);
   }
-
-  // 并行获取所有周的课程表
-  // Future<List> getAllCourse(String token, String cookie, String term,
-  //     int totalWeek) async {
-  //   List result = [];
-  //   List<Future> futures = [];
-  //   // print(totalWeek);
-  //   for (int i = 1; i <= totalWeek; i++) {
-  //     futures.add(HttpManager().queryCourse(token, cookie, term, i.toString()));
-  //   }
-  //   var response = await Future.wait(futures);
-  //   for (Map value in response) {
-  //     if (value.isNotEmpty) {
-  //       // print(value);
-  //       if (value['code'] == 200) {
-  //         result.add(value['data']);
-  //       } else {
-  //         if (kDebugMode) {
-  //           print('出异常了');
-  //         }
-  //         throw Exception('获取课表出错了');
-  //       }
-  //     } else {
-  //       if (kDebugMode) {
-  //         print('出异常了');
-  //       }
-  //       throw Exception('获取课表出错了');
-  //     }
-  //   }
-  //   return result;
-  // }
 }

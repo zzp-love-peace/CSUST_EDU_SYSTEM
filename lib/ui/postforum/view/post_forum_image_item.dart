@@ -5,12 +5,11 @@ import 'package:csust_edu_system/arch/baseview/seletor_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/ui/postforum/view/add_image_button_view.dart';
 import 'package:csust_edu_system/ui/postforum/viewmodel/post_forum_view_model.dart';
+import 'package:csust_edu_system/util/widget_util.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
-
-import '../../../util/my_util.dart';
 
 /// 发帖图片item
 ///
@@ -58,12 +57,12 @@ class PostForumImageItem extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 areItemsTheSame: (a, b) => a == b,
                 itemBuilder: (context, animation, item, index) {
-                  return buildFadeWidgetHorizontal(
+                  return WidgetUtil.buildFadeWidgetHorizontal(
                       _forumImgView(context, path: item, imgPaths: imgPaths),
                       animation);
                 },
                 removeItemBuilder: (context, animation, oldItem) {
-                  return buildFadeWidgetHorizontal(
+                  return WidgetUtil.buildFadeWidgetHorizontal(
                       _forumImgView(context, path: oldItem, imgPaths: imgPaths),
                       animation);
                 },

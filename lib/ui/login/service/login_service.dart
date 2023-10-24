@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:csust_edu_system/arch/baseservice/base_service.dart';
 import 'package:csust_edu_system/ass/key_assets.dart';
+import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/ass/url_assets.dart';
+import 'package:csust_edu_system/data/app_info.dart';
 import 'package:csust_edu_system/util/typedef_util.dart';
 import 'package:dio/dio.dart';
-
-import '../../../util/my_util.dart';
 
 /// 登录Service
 ///
@@ -23,12 +25,23 @@ class LoginService extends BaseService {
   /// [onFinish] 请求结束回调
   void login(String username, String password, {required OnDataSuccess<KeyMap> onDataSuccess,
     OnDataFail? onDataFail, OnPrepare? onPrepare, OnFinish? onFinish}) {
+    String suffix = StringAssets.emptyStr;
+    if (Platform.isAndroid) {
+      suffix = StringAssets.androidSuffix;
+    } else if (Platform.isIOS) {
+      suffix = StringAssets.iOSSuffix;
+    }
     var params = FormData.fromMap({
       KeyAssets.stuNum: username,
       KeyAssets.password: password,
-      KeyAssets.version: '$appName$version${getAppSuffix()}'});
-    post(UrlAssets.login, params: params, onPrepare: onPrepare, onDataSuccess: onDataSuccess,
-        onDataFail: onDataFail, onFinish: onFinish);
+      KeyAssets.version: '${AppInfo.appName}${AppInfo.version}$suffix'
+    });
+    post(UrlAssets.login,
+        params: params,
+        onPrepare: onPrepare,
+        onDataSuccess: onDataSuccess,
+        onDataFail: onDataFail,
+        onFinish: onFinish);
   }
 
   /// 获取日期数据

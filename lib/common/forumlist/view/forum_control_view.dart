@@ -16,75 +16,68 @@ class ForumControlView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConsumerView<ForumItemViewModel>(
       builder: (ctx, viewModel, _) {
-        if (!viewModel.model.forumBean.isAdvertise) {
-          return Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: LikeButton(
-                  likeBuilder: (bool isLiked) {
-                    return Icon(
-                      Icons.star,
-                      color: isLiked ? Colors.amberAccent : Colors.grey,
-                      size: 24,
-                    );
-                  },
-                  isLiked: viewModel.model.forumBean.isEnshrine,
-                  likeCount: null,
-                  onTap: (bool isCollected) async {
-                    viewModel.collectForum();
-                    return !isCollected;
-                  },
-                ),
+        return Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: LikeButton(
+                likeBuilder: (bool isLiked) {
+                  return Icon(
+                    Icons.star,
+                    color: isLiked ? Colors.amberAccent : Colors.grey,
+                    size: 24,
+                  );
+                },
+                isLiked: viewModel.model.forumBean.isEnshrine,
+                likeCount: null,
+                onTap: (bool isCollected) async {
+                  viewModel.collectForum();
+                  return !isCollected;
+                },
               ),
-              Expanded(
-                flex: 1,
-                child: InkWell(
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  onTap: () {
-                    viewModel.navigatorToDetailHome();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.comment, size: 24, color: Colors.grey),
-                        if (viewModel.model.forumBean.commentNum > 0)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: Text(
-                              viewModel.model.forumBean.commentNum.toString(),
-                              style: const TextStyle(color: Colors.grey),
-                            ),
-                          )
-                      ],
-                    ),
+            ),
+            Expanded(
+              flex: 1,
+              child: InkWell(
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                onTap: () {
+                  viewModel.navigatorToDetailHome();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.comment, size: 24, color: Colors.grey),
+                      if (viewModel.model.forumBean.commentNum > 0)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Text(
+                            viewModel.model.forumBean.commentNum.toString(),
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                        )
+                    ],
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: LikeButton(
-                  likeCount: viewModel.model.forumBean.likeNum > 0
-                      ? viewModel.model.forumBean.likeNum
-                      : null,
-                  onTap: (bool isLiked) async {
-                    viewModel.likeForum();
-                    return !isLiked;
-                  },
-                  size: 24,
-                  isLiked: viewModel.model.forumBean.isLike,
-                ),
+            ),
+            Expanded(
+              flex: 1,
+              child: LikeButton(
+                likeCount: viewModel.model.forumBean.likeNum > 0
+                    ? viewModel.model.forumBean.likeNum
+                    : null,
+                onTap: (bool isLiked) async {
+                  viewModel.likeForum();
+                  return !isLiked;
+                },
+                size: 24,
+                isLiked: viewModel.model.forumBean.isLike,
               ),
-            ],
-          );
-        } else {
-          return const SizedBox(
-            width: double.infinity,
-            height: 20,
-          );
-        }
+            ),
+          ],
+        );
       },
     );
   }

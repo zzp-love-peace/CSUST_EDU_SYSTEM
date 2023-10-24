@@ -648,4 +648,62 @@ class StringAssets {
 
   /// 发帖图片提示语句
   static const String postForumImgTips = '最多上传3张图片\n请勿上传违规图片！\n否则将被禁言并通报';
+
+  /// android安卓包后缀
+  static const String androidSuffix = '.apk';
+
+  /// apk
+  static const String apk = 'apk';
+
+  /// iOS安装包后缀
+  static const String iOSSuffix = '.ipa';
+
+  /// ipa
+  static const String ipa = 'ipa';
+
+  /// app在app store的链接
+  static const String ipaPath =
+      'https://apps.apple.com/cn/app/%E9%95%BF%E7%90%86%E6%95%99%E5%8A%A1/id1619946564';
+
+  /// 有新版本
+  static const String haveNewVersion = '有新版本';
+
+  /// 已经是最新版本了哦
+  static const String newVersionTips = '已经是最新版本了哦';
+
+  /// 现在更新
+  static const String updateNow = '现在更新';
+
+  /// 现在更新
+  static const String updateLater = '以后再说';
+
+  /// apk路径异常
+  static const String apkPathError = '下载链接有误，请联系管理员';
+
+  /// 更新后安装包名
+  static const String csusterApk = 'csuster.apk';
+
+  /// app图标路径名
+  static const String appIconPath = 'launcher_icon';
+
+  /// 更新中
+  static const String updating = '更新中';
+
+  /// 百分百
+  static const String oneHundredPercent = '100%';
+
+  /// start
+  static const String startEnglish = 'start';
+
+  /// downloading
+  static const String downloadingEnglish = 'downloading';
+
+  /// done
+  static const String doneEnglish = 'done';
+
+  /// error
+  static const String errorEnglish = 'error';
+
+  /// cancel
+  static const String cancelEnglish = 'cancel';
 }

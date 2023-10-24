@@ -1,3 +1,5 @@
+import 'package:csust_edu_system/common/versionchecker/viewmodel/version_checker_view_model.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../../arch/baseview/consumer_view.dart';
@@ -10,11 +12,10 @@ import '../../../common/unreadmsg/viewmodel/unread_msg_view_model.dart';
 /// @since 2023/9/19
 /// @version v1.8.8
 class BottomBarView extends StatelessWidget {
-  const BottomBarView(
-      {super.key,
-      required this.currentIndex,
-      required this.onTap,
-      required this.forumSwitcher});
+  const BottomBarView({super.key,
+    required this.currentIndex,
+    required this.onTap,
+    required this.forumSwitcher});
 
   /// 帖子功能开关
   final bool forumSwitcher;
@@ -29,34 +30,37 @@ class BottomBarView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConsumerView<UnreadMsgViewModel>(
         onInit: (viewModel) {
+          context
+              .readViewModel<VersionCheckerViewModel>()
+              .checkoutVersion(isBegin: true);
           viewModel.getUnreadMsg();
         },
         builder: (context, unreadMsgViewModel, _) => BottomNavigationBar(
-                showUnselectedLabels: false,
-                type: BottomNavigationBarType.fixed,
-                currentIndex: currentIndex,
-                onTap: onTap,
-                items: [
-                  const BottomNavigationBarItem(
-                      icon: Icon(Icons.assignment_outlined),
-                      activeIcon: Icon(Icons.assignment),
-                      label: StringAssets.course),
-                  const BottomNavigationBarItem(
-                      icon: Icon(Icons.home_work_outlined),
-                      activeIcon: Icon(Icons.home_work),
-                      label: StringAssets.campus),
-                  if (forumSwitcher)
-                    const BottomNavigationBarItem(
-                        icon: Icon(Icons.forum_outlined),
-                        activeIcon: Icon(Icons.forum),
-                        label: StringAssets.forum),
-                  BottomNavigationBarItem(
-                      icon: _getMineIcon(
-                          false, unreadMsgViewModel.model.hasUnreadMsg),
-                      activeIcon: _getMineIcon(
-                          true, unreadMsgViewModel.model.hasUnreadMsg),
-                      label: StringAssets.mine)
-                ]));
+            showUnselectedLabels: false,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: currentIndex,
+            onTap: onTap,
+            items: [
+              const BottomNavigationBarItem(
+                  icon: Icon(Icons.assignment_outlined),
+                  activeIcon: Icon(Icons.assignment),
+                  label: StringAssets.course),
+              const BottomNavigationBarItem(
+                  icon: Icon(Icons.home_work_outlined),
+                  activeIcon: Icon(Icons.home_work),
+                  label: StringAssets.campus),
+              if (forumSwitcher)
+                const BottomNavigationBarItem(
+                    icon: Icon(Icons.forum_outlined),
+                    activeIcon: Icon(Icons.forum),
+                    label: StringAssets.forum),
+              BottomNavigationBarItem(
+                  icon: _getMineIcon(
+                      false, unreadMsgViewModel.model.hasUnreadMsg),
+                  activeIcon: _getMineIcon(
+                      true, unreadMsgViewModel.model.hasUnreadMsg),
+                  label: StringAssets.mine)
+            ]));
   }
 
   /// 「我的」icon

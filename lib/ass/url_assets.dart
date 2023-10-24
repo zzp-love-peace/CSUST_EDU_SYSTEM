@@ -88,6 +88,24 @@ class UrlAssets {
   /// url-获取我的收藏列表
   static const getMyCollectList = '/enshrine/list';
 
-  /// url-发帖
+  /// url-发布帖子
   static const postForum = '/post/write';
+
+  /// url-获取帖子详情
+  static const getForumDetail = '/post/detail';
+
+  /// url-删除帖子/评论/回复
+  static const deleteForumOrCommentOrReply = '/post/delete';
+
+  /// url-发布评论
+  static const postComment = '/comment/write';
+
+  /// url-发布回复
+  static const postReply = '/reply/write';
+
+  /// url-举报帖子
+  static const reportForum = '/report/add';
+
+  /// url-获取最新版本
+  static const getLastVersion = '/getLastVersion';
 }

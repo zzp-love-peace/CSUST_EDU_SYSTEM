@@ -156,7 +156,7 @@ class _CustomCourseHomeState extends State<CustomCourseHome> {
                   SelectDialog(
                     title: StringAssets.tips,
                     subTitle: StringAssets.confirmDeleteCourse,
-                    callback: () {
+                    okCallback: () {
                       context.pop(
                           result: PageResultBean(
                               PageResultCode.customCourseDelete, null));

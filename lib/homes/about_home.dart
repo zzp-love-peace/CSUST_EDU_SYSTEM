@@ -1,6 +1,8 @@
+import 'package:csust_edu_system/common/versionchecker/viewmodel/version_checker_view_model.dart';
+import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:flutter/material.dart';
 
-import '../util/my_util.dart';
+import '../data/app_info.dart';
 
 class AboutHome extends StatelessWidget {
   const AboutHome({Key? key}) : super(key: key);
@@ -41,7 +43,7 @@ class AboutHome extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Text('版本号: $version'),
+              const Text('版本号: ${AppInfo.version}'),
               const SizedBox(
                 height: 15,
               ),
@@ -57,7 +59,9 @@ class AboutHome extends StatelessWidget {
                     side: const BorderSide(width: 1),
                   ),
                   onPressed: () {
-                    checkVersion();
+                    context
+                        .readViewModel<VersionCheckerViewModel>()
+                        .checkoutVersion();
                   },
                   child: const Text(
                     '检查更新',

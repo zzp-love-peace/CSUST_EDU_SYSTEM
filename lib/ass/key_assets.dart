@@ -250,9 +250,46 @@ class KeyAssets {
   /// key-总数量
   static const String totalCount = 'totalCount';
 
-  /// 性别
+  /// key-性别
   static const String sex = 'sex';
 
-  /// 是否匿名
+  /// key-是否匿名
   static const String isAnonymous = 'isAnonymous';
+
+  /// key-学期列表
+  static const String termList = 'termList';
+
+  /// key-评论id
+  static const String commentId = 'commentId';
+
+  /// key-回复id
+  static const String replyId = 'replyId';
+
+  /// key-标志
+  static const String flag = 'flag';
+
+  /// key-apk路径
+  static const String apkPath = 'apkPath';
+
+  /// key-信息
+  static const String info = 'info';
+
+  /// key-应用类型
+  static const String form = 'form';
+
+  /// key-是否强制更新
+  static const String forcedUpdating = 'forcedUpdating';
+
+  /// key-版本更新Dialog ViewModel
+  static const String versionUpdateDialogViewModel =
+      'versionUpdateDialogViewModel';
+
+  /// key-异常
+  static const String exception = 'exception';
+
+  /// key-最大
+  static const String max = 'max';
+
+  /// key-进度
+  static const String progress = 'progress';
 }

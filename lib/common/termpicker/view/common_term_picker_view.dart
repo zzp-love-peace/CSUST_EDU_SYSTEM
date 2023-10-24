@@ -6,7 +6,6 @@ import 'package:csust_edu_system/util/typedef_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../data/date_info.dart';
 import '../../../data/stu_info.dart';
 
 /// 通用学期选择器
@@ -61,18 +60,16 @@ class CommonTermPickerView extends StatelessWidget {
               ],
             ),
             onTap: () {
-              if (StuInfo.cookie.isNotEmpty) {
-                viewModel.model.picker.showPicker(
-                  context,
-                  title: StringAssets.selectTerm,
-                  pickerData: viewModel.model.allTerm,
-                  initIndex: viewModel.model.allTerm.indexOf(DateInfo.nowTerm),
-                  onConfirm: (value, index) {
-                    viewModel.setNowTerm(value);
-                    callBack.call(viewModel.model.nowTerm);
-                  },
-                );
-              }
+              viewModel.model.picker.showPicker(
+                context,
+                title: StringAssets.selectTerm,
+                pickerData: viewModel.model.allTerm,
+                index: viewModel.model.allTerm.indexOf(viewModel.model.nowTerm),
+                onConfirm: (value, index) {
+                  viewModel.setNowTerm(value);
+                  callBack.call(viewModel.model.nowTerm);
+                },
+              );
             },
           );
         },

@@ -10,30 +10,32 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
-import '../../ass/url_assets.dart';
-import '../../data/date_info.dart';
-import '../../network/data/http_response_code.dart';
-import '../../network/data/http_response_data.dart';
-import '../../ui/course/db/course_db_manager.dart';
-import '../../ui/course/jsonbean/db_course_bean.dart';
-import 'hint_dialog.dart';
+import '../../../ass/url_assets.dart';
+import '../../../common/dialog/hint_dialog.dart';
+import '../../../data/date_info.dart';
+import '../../../network/data/http_response_code.dart';
+import '../../../network/data/http_response_data.dart';
+import '../db/course_db_manager.dart';
+import '../jsonbean/db_course_bean.dart';
 
 /// 加载学期课表Dialog
 ///
 /// @author zzp
 /// @since 2023/10/1
 /// @version v1.8.8
-class CourseProgressDialog extends StatefulWidget with BaseDialog {
+class CourseProgressDialogView extends StatefulWidget with BaseDialog {
   /// 学期
   final String term;
 
-  const CourseProgressDialog({Key? key, required this.term}) : super(key: key);
+  const CourseProgressDialogView({Key? key, required this.term})
+      : super(key: key);
 
   @override
-  State<CourseProgressDialog> createState() => _CourseProgressDialogState();
+  State<CourseProgressDialogView> createState() =>
+      _CourseProgressDialogViewState();
 }
 
-class _CourseProgressDialogState extends State<CourseProgressDialog> {
+class _CourseProgressDialogViewState extends State<CourseProgressDialogView> {
   /// 当前进度
   double _value = 0.0;
 

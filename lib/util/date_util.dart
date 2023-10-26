@@ -1,8 +1,17 @@
+import 'package:csust_edu_system/ass/string_assets.dart';
+
+/// 日期相关工具类
+///
+/// @author zzp
+/// @since 2023/10/26
+/// @version v1.8.8
 class DateUtil {
-  /// 将xxxx-xx-xx的日期格式分割成int
+  /// 分割日期（将xxxx-xx-xx的日期格式分割成int）
+  ///
+  /// [date] 日期字符串
   static List<int> splitDate(String date) {
-    if(date.isEmpty){
-      date=(DateTime.now().toString()).split(' ')[0];
+    if (date.isEmpty) {
+      date = (DateTime.now().toString()).split(' ')[0];
     }
     List<String> dates = date.split('-');
     int year = int.parse(dates[0]);
@@ -11,7 +20,9 @@ class DateUtil {
     return [year, month, day];
   }
 
-  /// 蔡勒公式计算星期几 0表示周日
+  /// 日期转星期（蔡勒公式计算星期几 0表示周日）
+  ///
+  /// [date] 日期字符串
   static int date2Week(String date) {
     List<int> dates = splitDate(date);
     int year = dates[0];
@@ -29,7 +40,9 @@ class DateUtil {
     return w;
   }
 
-  /// 传入今天的日期 格式为xxx-xx-xx 返回本周日的年月日
+  /// 获取本周日的日期（传入今天的日期 格式为xxx-xx-xx 返回本周日的年月日）
+  ///
+  /// [nowDate] 今日日期
   static List<int> getSunday(String nowDate) {
     var date = DateUtil.splitDate(nowDate);
     int dateOfWeek = DateUtil.date2Week(nowDate);
@@ -125,34 +138,40 @@ class DateUtil {
     return d == day ? [year, month, day] : addDay(year, month, day, 0);
   }
 
+  /// 下标转换为周几
+  ///
+  /// [index] 下标
   static String indexToWeekDay(int index) {
     String result = '';
     switch (index) {
       case 1:
-        result = '周日';
+        result = StringAssets.Sunday;
         break;
       case 2:
-        result = '周一';
+        result = StringAssets.Monday;
         break;
       case 3:
-        result = '周二';
+        result = StringAssets.Tuesday;
         break;
       case 4:
-        result = '周三';
+        result = StringAssets.Wednesday;
         break;
       case 5:
-        result = '周四';
+        result = StringAssets.Thursday;
         break;
       case 6:
-        result = '周五';
+        result = StringAssets.Friday;
         break;
       case 7:
-        result = '周六';
+        result = StringAssets.Saturday;
         break;
     }
     return result;
   }
 
+  /// 格式化日期字符串
+  ///
+  /// [postDate] 日期字符串
   static String getForumDateString(String postDate) {
     var postDateTime = DateTime.parse(postDate);
     var nowDateTime = DateTime.now();
@@ -190,45 +209,5 @@ class DateUtil {
     } else {
       return '${postDateTime.year} ${postDateTime.month}/${postDateTime.day} $hour:$minute';
     }
-  }
-}
-
-String getForumDateString(String postDate) {
-  var postDateTime = DateTime.parse(postDate);
-  var nowDateTime = DateTime.now();
-  // print('${nowDateTime.month}:${nowDateTime.day}');
-  var diffDateTime = nowDateTime.difference(postDateTime);
-  String minute;
-  String hour;
-  if (postDateTime.minute < 10) {
-    minute = '0${postDateTime.minute}';
-  } else {
-    minute = postDateTime.minute.toString();
-  }
-  if (postDateTime.hour < 10) {
-    hour = '0${postDateTime.hour}';
-  } else {
-    hour = postDateTime.hour.toString();
-  }
-  if (diffDateTime.inMinutes < 1) {
-    return '刚刚';
-  } else if (diffDateTime.inMinutes >= 1 && diffDateTime.inMinutes < 30) {
-    return '${diffDateTime.inMinutes}分钟前';
-  } else if (diffDateTime.inMinutes >= 30 && diffDateTime.inMinutes < 60) {
-    return '半小时前';
-  } else if (diffDateTime.inMinutes >= 60 && diffDateTime.inHours <= 10) {
-    return '${diffDateTime.inHours}小时前';
-  } else if (postDateTime.day == nowDateTime.day) {
-    return '今天 $hour:$minute';
-  } else if (nowDateTime.day == postDateTime.day + 1) {
-    return '昨天 $hour:$minute';
-  } else if (nowDateTime.day == postDateTime.day + 2) {
-    return '前天 $hour:$minute';
-  } else if (nowDateTime.day == postDateTime.day + 3) {
-    return '大前天 $hour:$minute';
-  } else if (nowDateTime.year == postDateTime.year) {
-    return '${postDateTime.month}/${postDateTime.day} $hour:$minute';
-  } else {
-    return '${postDateTime.year} ${postDateTime.month}/${postDateTime.day} $hour:$minute';
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:csust_edu_system/ass/key_assets.dart';
+import 'package:csust_edu_system/common/forumlist/jsonbean/user_info_bean.dart';
 
 /// 帖子Bean类
 ///
@@ -10,9 +11,7 @@ import 'package:csust_edu_system/ass/key_assets.dart';
 class ForumBean {
   ForumBean.fromJson(Map json)
       : id = json[KeyAssets.id],
-        avatar = json[KeyAssets.userInfo][KeyAssets.avatar],
-        username = json[KeyAssets.userInfo][KeyAssets.username],
-        userId = json[KeyAssets.userInfo][KeyAssets.userId],
+        userInfo = UserInfoBean.fromJson(json[KeyAssets.userInfo]),
         content = json[KeyAssets.content],
         createTime = json[KeyAssets.createTime],
         likeNum = json[KeyAssets.likeNum],
@@ -29,14 +28,8 @@ class ForumBean {
   /// 帖子id
   int id;
 
-  /// 帖子头像url
-  String avatar;
-
-  /// 帖子用户名
-  String username;
-
-  /// 帖子用户id
-  int userId;
+  /// 发帖者用户信息
+  UserInfoBean userInfo;
 
   /// 帖子内容
   String content;
@@ -76,7 +69,7 @@ class ForumBean {
 
   @override
   String toString() {
-    return ''''{id:$id, userinfo:{avatar:$avatar, username:$username, userId:$userId}, content:$content,
+    return ''''{id:$id, userinfo:$userInfo, content:$content,
     createTime:$createTime, likeNum:$likeNum, commentNum:$commentNum, isLike:$isLike, isEnshrine:$isEnshrine,
     images:$images, isAdvertise:$isAdvertise}''';
   }

@@ -37,7 +37,7 @@ class MessageItemView extends StatelessWidget {
               child: ClipOval(
                 child: CachedImage(
                   size: 45,
-                  url: msg.avatar,
+                  url: msg.userInfo.avatar,
                   type: CachedImageType.thumb,
                   fit: BoxFit.cover,
                   isShowDetail: true,
@@ -52,7 +52,7 @@ class MessageItemView extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    msg.username,
+                    msg.userInfo.username,
                     style: const TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   Padding(
@@ -74,7 +74,7 @@ class MessageItemView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(right: 15, bottom: 8),
                       child: Text(
-                        getForumDateString(msg.createTime),
+                        DateUtil.getForumDateString(msg.createTime),
                         style:
                             const TextStyle(fontSize: 12, color: Colors.black),
                       ),

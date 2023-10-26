@@ -41,7 +41,9 @@ class ForumListView extends StatelessWidget {
         },
       );
     } else {
-      return const NoneLottie(hint: StringAssets.messageEmpty);
+      return const NoneLottie(
+        hint: StringAssets.nobody,
+      );
     }
   }
 }

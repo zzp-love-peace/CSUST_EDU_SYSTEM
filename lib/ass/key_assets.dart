@@ -292,4 +292,13 @@ class KeyAssets {
 
   /// key-进度
   static const String progress = 'progress';
+
+  /// key-回复名
+  static const String replyName = 'replyName';
+
+  /// key-回复信息
+  static const String replyInfos = 'replyInfos';
+
+  /// key-评论信息
+  static const String commentInfo = 'commentInfo';
 }

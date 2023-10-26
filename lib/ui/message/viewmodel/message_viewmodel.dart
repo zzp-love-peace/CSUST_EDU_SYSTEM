@@ -3,12 +3,12 @@ import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/common/unreadmsg/viewmodel/unread_msg_view_model.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ext/list_extension.dart';
+import 'package:csust_edu_system/ui/forumdetail/page/forum_detail_page.dart';
 import 'package:csust_edu_system/ui/message/model/message_model.dart';
 import 'package:csust_edu_system/ui/message/service/message_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/forumlist/jsonbean/forum_bean.dart';
-import '../../../homes/detail_home.dart';
 import '../jsonbean/message_bean.dart';
 
 /// 消息界面View model
@@ -92,15 +92,16 @@ class MessageViewModel extends BaseViewModel<MessageModel, MessageService> {
       message.postId,
       onDataSuccess: (data, msg) {
         var forum = ForumBean.fromJson(data[KeyAssets.indexPost]);
-        context.push(
-          DetailHome(
-            forum: forum,
-            stateCallback: (isLike, isCollect) {
-              if (!isRead) {
-                setMsgRead(message);
-              }
-            },
-          ),
+        context
+            .push(
+          ForumDetailPage(forumBean: forum),
+        )
+            .then(
+          (value) {
+            if (!isRead) {
+              setMsgRead(message);
+            }
+          },
         );
       },
     );

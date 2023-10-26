@@ -12,4 +12,10 @@ enum PageResultCode {
 
   /// 上传帖子成功
   uploadForumSuccess,
+
+  /// 删除帖子
+  forumDelete,
+
+  /// 帖子状态（点赞或收藏）改变
+  forumStateChange,
 }

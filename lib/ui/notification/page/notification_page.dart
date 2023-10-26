@@ -62,9 +62,10 @@ class NotificationHome extends StatelessWidget {
                     ),
                     title: Text(_notificationList[index].content),
                     trailing: Text(
-                      getForumDateString(_notificationList[index].createTime),
-                      style: const TextStyle(color: Colors.grey),
-                    ),
+                      DateUtil.getForumDateString(
+                                _notificationList[index].createTime),
+                            style: const TextStyle(color: Colors.grey),
+                          ),
                   ));
             },) : const NoneLottie(hint: StringAssets.notificationPageNoContent);
         }));

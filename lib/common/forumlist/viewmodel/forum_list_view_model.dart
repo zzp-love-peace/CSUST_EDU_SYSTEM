@@ -19,4 +19,13 @@ abstract class ForumListViewModel<M extends ForumListModel,
     model.forumList.remove(forumBean);
     notifyListeners();
   }
+
+  /// 更新帖子
+  ///
+  /// [oldForum] 老帖子
+  /// [newForum] 新帖子
+  void updateForum(ForumBean oldForum, ForumBean newForum) {
+    model.forumList[model.forumList.indexOf(oldForum)] = newForum;
+    notifyListeners();
+  }
 }

@@ -158,7 +158,7 @@ class _CustomCourseHomeState extends State<CustomCourseHome> {
                     subTitle: StringAssets.confirmDeleteCourse,
                     okCallback: () {
                       context.pop(
-                          result: PageResultBean(
+                          result: PageResultBean<CustomCourseBean?>(
                               PageResultCode.customCourseDelete, null));
                     },
                   ).showDialog();
@@ -234,6 +234,8 @@ class _CustomCourseHomeState extends State<CustomCourseHome> {
         widget.index,
         widget.weekNum,
         widget.term);
-    context.pop(result: PageResultBean(PageResultCode.customCourseAdd, course));
+    context.pop(
+        result: PageResultBean<CustomCourseBean?>(
+            PageResultCode.customCourseAdd, course));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:csust_edu_system/ass/image_assets.dart';
+import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -8,7 +9,8 @@ import 'package:lottie/lottie.dart';
 /// @since 2023/9/24
 /// @version v1.8.8
 class NoneLottie extends StatelessWidget {
-  const NoneLottie({Key? key, required this.hint}) : super(key: key);
+  const NoneLottie({Key? key, this.hint = StringAssets.messageEmpty})
+      : super(key: key);
 
   /// 提示
   final String hint;

@@ -706,4 +706,67 @@ class StringAssets {
 
   /// cancel
   static const String cancelEnglish = 'cancel';
+
+  /// 详情
+  static const String detail = '详情';
+
+  /// 删除帖子提示语句
+  static const String deleteForumTips = '您确定要删除该帖子吗';
+
+  /// 举报帖子提示语句
+  static const String reportForumTips = '您确定要举报该帖子吗';
+
+  /// 荒无人烟
+  static const String nobody = '荒无人烟...';
+
+  /// 举报中
+  static const String reporting = '举报中...';
+
+  /// 举报帖子成功提示语句
+  static const String reportSuccessTips = '您的举报已收到，我们将尽快核实并受理';
+
+  /// 删除成功
+  static const String deleteSuccess = '删除成功';
+
+  /// 评论
+  static const String comment = '评论';
+
+  /// 点赞
+  static const String like = '点赞';
+
+  /// 写评论
+  static const String writeComment = '写评论';
+
+  /// 回复
+  static const String reply = '回复';
+
+  /// 收起回复
+  static const String dropReply = '收起回复';
+
+  /// 展开回复
+  static const String expandReply = '展开回复';
+
+  /// 发布
+  static const String publish = '发布';
+
+  /// 复制
+  static const String copy = '复制';
+
+  /// 举报
+  static const String report = '举报';
+
+  /// 复制成功
+  static const String copySuccess = '复制成功';
+
+  /// 举报评论提示语句
+  static const String reportCommentTips = '您确定要举报该评论吗';
+
+  /// 删除
+  static const String delete = '删除';
+
+  /// 删除评论提示语句
+  static const String deleteCommentTips = '您确定要删除该评论吗';
+
+  /// 回复给
+  static const String replyTo = '回复给';
 }

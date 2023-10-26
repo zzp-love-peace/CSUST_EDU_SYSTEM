@@ -8,10 +8,10 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 /// @version v1.8.8
 mixin BaseDialog on Widget {
   /// 展示Dialog
-  void showDialog({bool? backDismiss}) {
+  void showDialog({bool clickMaskDismiss = false, bool? backDismiss}) {
     SmartDialog.show(
         builder: (_) => this,
-        clickMaskDismiss: false,
+        clickMaskDismiss: clickMaskDismiss,
         backDismiss: backDismiss);
   }
 }

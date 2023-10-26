@@ -4,7 +4,6 @@ import 'package:csust_edu_system/common/cachedimage/data/cached_image_type.dart'
 import 'package:csust_edu_system/common/cachedimage/view/cached_normal_image.dart';
 import 'package:csust_edu_system/common/cachedimage/viewmodel/cached_image_view_model.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
-import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
@@ -50,18 +49,19 @@ class CachedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl;
-    switch (type) {
-      case CachedImageType.normal:
-        imageUrl = url;
-        break;
-      case CachedImageType.thumb:
-        imageUrl = url.suffixThumb();
-        break;
-      case CachedImageType.webp:
-        imageUrl = url.suffixWebp();
-        break;
-    }
+    // 暂时未确定网络图片展示模式，先加载原图
+    String imageUrl = url;
+    // switch (type) {
+    //   case CachedImageType.normal:
+    //     imageUrl = url;
+    //     break;
+    //   case CachedImageType.thumb:
+    //     imageUrl = url.suffixThumb();
+    //     break;
+    //   case CachedImageType.webp:
+    //     imageUrl = url.suffixWebp();
+    //     break;
+    // }
     return GestureDetector(
       onTap: isShowDetail
           ? () {

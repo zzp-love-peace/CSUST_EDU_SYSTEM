@@ -4,6 +4,7 @@ import 'package:csust_edu_system/common/forumlist/data/forum_item_type.dart';
 import 'package:csust_edu_system/common/forumlist/jsonbean/forum_bean.dart';
 import 'package:csust_edu_system/common/forumlist/model/forum_item_model.dart';
 import 'package:csust_edu_system/common/forumlist/view/forum_control_view.dart';
+import 'package:csust_edu_system/common/forumlist/view/forum_image_view.dart';
 import 'package:csust_edu_system/common/forumlist/viewmodel/forum_item_view_model.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/util/date_util.dart';
@@ -13,7 +14,6 @@ import 'package:provider/provider.dart';
 import '../../../ui/forum/viewmodel/forum_tab_list_view_model.dart';
 import '../../../ui/mycollect/viewmodel/my_collect_view_model.dart';
 import '../../../ui/myforum/viewmodel/my_forum_view_model.dart';
-import 'forum_item_image_detail_view.dart';
 
 /// 帖子Item View
 ///
@@ -57,11 +57,11 @@ class ForumItemView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: Hero(
-                          tag: forum.avatar + forum.id.toString(),
+                          tag: forum.userInfo.avatar + forum.id.toString(),
                           child: ClipOval(
                             child: CachedImage(
                               size: 42,
-                              url: forum.avatar,
+                              url: forum.userInfo.avatar,
                               type: CachedImageType.thumb,
                               fit: BoxFit.cover,
                               isShowDetail: true,
@@ -77,9 +77,9 @@ class ForumItemView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Hero(
-                            tag: forum.username + forum.id.toString(),
+                            tag: forum.userInfo.username + forum.id.toString(),
                             child: Text(
-                              forum.username,
+                              forum.userInfo.username,
                               style: const TextStyle(
                                   fontSize: 14, color: Colors.black),
                             ),
@@ -122,7 +122,7 @@ class ForumItemView extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           crossAxisCount: 3,
                           children: forum.images
-                              .map((url) => _forumImgView(context,
+                              .map((url) => ForumImageView(
                                   url: url, images: forum.images))
                               .toList(),
                         ),
@@ -159,33 +159,5 @@ class ForumItemView extends StatelessWidget {
                 forumControlViewModel,
             child: child);
     }
-  }
-
-  /// 帖子图片
-  ///
-  /// [context] context
-  /// [url] 图片链接
-  /// [images] 图片所在的图片list
-  Widget _forumImgView(BuildContext context,
-      {required String url, required List<String> images}) {
-    return Hero(
-      tag: url,
-      child: GestureDetector(
-        onTap: () {
-          context.pushWithFadeRoute(
-            ForumItemImageDetailView(
-              images: images,
-              initUrl: url,
-            ),
-          );
-        },
-        child: CachedImage(
-          size: double.infinity,
-          url: url,
-          type: CachedImageType.webp,
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
   }
 }

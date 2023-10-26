@@ -1,6 +1,9 @@
 /// 请求前回调
 typedef OnPrepare = void Function();
 
+/// 请求完成回调
+typedef OnComplete = void Function();
+
 /// 获取数据成功回调
 ///
 /// [data] 数据

@@ -10,8 +10,10 @@ class LoginModel {
 
   /// 是否记住密码
   bool isRemember;
+
   /// 用户名输入控制器
   final usernameController = TextEditingController();
+
   /// 密码输入控制器
   final passwordController = TextEditingController();
 }

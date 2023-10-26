@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:provider/provider.dart';
 
-import '../../../ass/string_assets.dart';
 import '../../../common/lottie/none_lottie.dart';
 import '../viewmodel/message_viewmodel.dart';
 import 'message_item_view.dart';
@@ -53,14 +52,14 @@ class _MessageListViewState extends State<MessageListView>
             },
             child: msgList.isNotEmpty
                 ? ListView.builder(
-              itemCount: msgList.length,
+                    itemCount: msgList.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return MessageItemView(
                           msg: msgList[index], isRead: widget.isReadList);
                     },
                   )
-                : const NoneLottie(hint: StringAssets.messageEmpty));
+                : const NoneLottie());
       },
     );
   }

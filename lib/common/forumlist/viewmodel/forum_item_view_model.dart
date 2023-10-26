@@ -1,13 +1,15 @@
-import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
 import 'package:csust_edu_system/common/forumlist/data/forum_item_type.dart';
+import 'package:csust_edu_system/common/forumlist/jsonbean/forum_bean.dart';
 import 'package:csust_edu_system/common/forumlist/model/forum_item_model.dart';
 import 'package:csust_edu_system/common/forumlist/service/forum_item_service.dart';
+import 'package:csust_edu_system/common/forumlist/viewmodel/forum_like_and_collect_view_model.dart';
 import 'package:csust_edu_system/common/forumlist/viewmodel/forum_list_view_model.dart';
+import 'package:csust_edu_system/data/page_result_code.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/forum/viewmodel/forum_tab_list_view_model.dart';
+import 'package:csust_edu_system/ui/forumdetail/page/forum_detail_page.dart';
 import 'package:provider/provider.dart';
 
-import '../../../homes/detail_home.dart';
 import '../../../ui/mycollect/viewmodel/my_collect_view_model.dart';
 import '../../../ui/myforum/viewmodel/my_forum_view_model.dart';
 
@@ -17,7 +19,7 @@ import '../../../ui/myforum/viewmodel/my_forum_view_model.dart';
 /// @since 2023/9/28
 /// @version v1.8.8
 class ForumItemViewModel
-    extends BaseViewModel<ForumItemModel, ForumItemService> {
+    extends ForumLikeAndCollectViewModel<ForumItemModel, ForumItemService> {
   ForumItemViewModel({required super.model});
 
   @override
@@ -28,55 +30,28 @@ class ForumItemViewModel
     if (model.forumBean.isAdvertise) {
       service?.clickAdvertise(model.forumBean.id);
     }
-    context.push(
-      DetailHome(
-        forum: model.forumBean,
-        stateCallback: (isLike, isCollect) {
-          if (model.forumBean.isLike && !isLike) {
-            model.forumBean.likeNum--;
-          } else if (!model.forumBean.isLike && isLike) {
-            model.forumBean.likeNum++;
-          }
-          model.forumBean.isLike = isLike;
-          model.forumBean.isEnshrine = isCollect;
-          notifyListeners();
-        },
-        deleteCallback: (forum) {
-          ForumListViewModel viewModel;
-          switch (model.type) {
-            case ForumItemType.tabForum:
-              viewModel = context.read<ForumTabListViewModel>();
-              break;
-            case ForumItemType.collectForum:
-              viewModel = context.read<MyCollectViewModel>();
-              break;
-            case ForumItemType.myForum:
-              viewModel = context.read<MyForumViewModel>();
-              break;
-          }
-          viewModel.removeForum(forum);
-        },
-      ),
-    );
-  }
-
-  /// 点赞帖子
-  void likeForum() {
-    service?.likeForum(
-      model.forumBean.id,
-      onDataSuccess: (data, msg) {
-        if (model.forumBean.isAdvertise) {
-          service?.likeAdvertise(model.forumBean.id);
+    context
+        .push<ForumBean>(ForumDetailPage(forumBean: model.forumBean))
+        .then((result) {
+      if (result != null) {
+        ForumListViewModel viewModel;
+        switch (model.type) {
+          case ForumItemType.tabForum:
+            viewModel = context.read<ForumTabListViewModel>();
+            break;
+          case ForumItemType.collectForum:
+            viewModel = context.read<MyCollectViewModel>();
+            break;
+          case ForumItemType.myForum:
+            viewModel = context.read<MyForumViewModel>();
+            break;
         }
-      },
-    );
-  }
-
-  /// 收藏帖子
-  void collectForum() {
-    service?.collectForum(
-      model.forumBean.id,
-      onDataSuccess: (data, msg) {},
-    );
+        if (result.resultCode == PageResultCode.forumDelete) {
+          viewModel.removeForum(result.resultData);
+        } else if (result.resultCode == PageResultCode.forumStateChange) {
+          viewModel.updateForum(model.forumBean, result.resultData);
+        }
+      }
+    });
   }
 }

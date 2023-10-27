@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:csust_edu_system/ass/key_assets.dart';
+import 'package:csust_edu_system/common/forumlist/jsonbean/real_info_bean.dart';
 import 'package:csust_edu_system/common/forumlist/jsonbean/user_info_bean.dart';
 
 /// 帖子Bean类
@@ -12,6 +13,7 @@ class ForumBean {
   ForumBean.fromJson(Map json)
       : id = json[KeyAssets.id],
         userInfo = UserInfoBean.fromJson(json[KeyAssets.userInfo]),
+        realInfo = RealInfoBean.fromJson(json[KeyAssets.realInfo]),
         content = json[KeyAssets.content],
         createTime = json[KeyAssets.createTime],
         likeNum = json[KeyAssets.likeNum],
@@ -30,6 +32,9 @@ class ForumBean {
 
   /// 发帖者用户信息
   UserInfoBean userInfo;
+
+  /// 发帖者实名信息
+  RealInfoBean realInfo;
 
   /// 帖子内容
   String content;

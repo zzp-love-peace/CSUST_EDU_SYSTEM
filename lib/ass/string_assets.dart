@@ -769,4 +769,40 @@ class StringAssets {
 
   /// 回复给
   static const String replyTo = '回复给';
+
+  /// 关于
+  static const String about = '关于';
+
+  /// 版本号
+  static const String versionNum = '版本号';
+
+  /// 检查更新
+  static const String checkoutUpdate = '检查更新';
+
+  /// 兼职
+  static const String recruit = '兼职';
+
+  /// 兼职搜索提示语句
+  static const String recruitSearchTips = '例如家教、摄影等';
+
+  /// 暂无信息
+  static const String noInformation = '暂无信息...';
+
+  /// 兼职详情
+  static const String recruitDetail = '兼职详情';
+
+  /// 工作日期
+  static const String workDate = '工作日期';
+
+  /// 详细时间
+  static const String detailedTime = '详细时间';
+
+  /// 联系方式
+  static const String contact = '联系方式';
+
+  /// 免责声明
+  static const String disclaimer = '免责声明';
+
+  /// 线上营业厅
+  static const String serviceHall = '线上营业厅';
 }

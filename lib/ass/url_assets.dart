@@ -108,4 +108,10 @@ class UrlAssets {
 
   /// url-获取最新版本
   static const getLastVersion = '/getLastVersion';
+
+  /// url-获取所有兼职信息
+  static const getAllRecruitInfo = '/recruitInfo/getAll';
+
+  /// url-通过标题获取兼职信息
+  static const getRecruitInfoByTitle = '/recruitInfo/getByTitle';
 }

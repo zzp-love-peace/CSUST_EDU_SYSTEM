@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/common/dialog/edit_dialog.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/picker.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -11,7 +10,6 @@ import 'package:image_picker/image_picker.dart';
 
 import '../common/dialog/custom_toast.dart';
 import '../network/http_manager.dart';
-import '../util/grade_util.dart';
 
 late String _avatar;
 
@@ -349,40 +347,40 @@ class _InfoHomeState extends State<InfoHome> {
   }
 
   _setAllPoint() async {
-    var value =
-        await HttpManager().getAllSemester(StuInfo.cookie, StuInfo.token);
-    if (value.isNotEmpty) {
-      if (value['code'] == 200) {
-        List gradeList = [];
-        List allTerm = value['data'];
-        for (int i = 0; i < allTerm.length; i++) {
-          var scoreValue = await HttpManager()
-              .queryScore(StuInfo.token, StuInfo.cookie, allTerm[i]);
-          if (scoreValue['code'] == 200) {
-            List grade = scoreValue['data'];
-            gradeList.addAll(grade);
-          } else {
-            if (kDebugMode) {
-              print('获取${allTerm[i]}成绩出错了');
-            }
-          }
-        }
-        if (kDebugMode) {
-          print(gradeList);
-        }
-        if (mounted) {
-          if (StuInfo.name.isNotEmpty) {
-            setState(() {
-              _allPoint = getSumPoint(gradeList);
-            });
-          }
-        }
-      } else {
-        if (kDebugMode) {
-          print('获取所有学期出错了');
-        }
-      }
-    }
+    // var value =
+    //     await HttpManager().getAllSemester(StuInfo.cookie, StuInfo.token);
+    // if (value.isNotEmpty) {
+    //   if (value['code'] == 200) {
+    //     List gradeList = [];
+    //     List allTerm = value['data'];
+    //     for (int i = 0; i < allTerm.length; i++) {
+    //       var scoreValue = await HttpManager()
+    //           .queryScore(StuInfo.token, StuInfo.cookie, allTerm[i]);
+    //       if (scoreValue['code'] == 200) {
+    //         List grade = scoreValue['data'];
+    //         gradeList.addAll(grade);
+    //       } else {
+    //         if (kDebugMode) {
+    //           print('获取${allTerm[i]}成绩出错了');
+    //         }
+    //       }
+    //     }
+    //     if (kDebugMode) {
+    //       print(gradeList);
+    //     }
+    //     if (mounted) {
+    //       if (StuInfo.name.isNotEmpty) {
+    //         setState(() {
+    //           _allPoint = getSumPoint(gradeList);
+    //         });
+    //       }
+    //     }
+    //   } else {
+    //     if (kDebugMode) {
+    //       print('获取所有学期出错了');
+    //     }
+    //   }
+    // }
   }
 
   _refreshStuInfo() {

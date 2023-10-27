@@ -6,6 +6,7 @@ import 'package:csust_edu_system/common/cachedimage/view/cached_image.dart';
 import 'package:csust_edu_system/common/forumlist/view/forum_image_view.dart';
 import 'package:csust_edu_system/data/page_result_code.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
+import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/forumdetail/model/forum_detail_model.dart';
 import 'package:csust_edu_system/ui/forumdetail/view/comment_list_view.dart';
 import 'package:csust_edu_system/ui/forumdetail/viewmodel/forum_detail_view_model.dart';
@@ -104,10 +105,10 @@ class ForumDetailHome extends StatelessWidget {
                           child: _headImageView(
                               forumDetailModel.forumBean.userInfo.avatar)),
                       Hero(
-                        tag: forumDetailModel.forumBean.userInfo.username +
+                        tag: forumDetailModel.forumBean.realInfo.name +
                             forumDetailModel.forumBean.id.toString(),
                         child: Text(
-                          forumDetailModel.forumBean.userInfo.username,
+                          forumDetailModel.forumBean.realInfo.name.hideName(),
                           style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,

@@ -2,6 +2,8 @@ import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/common/forumlist/jsonbean/user_info_bean.dart';
 import 'package:csust_edu_system/ui/forumdetail/jsonbean/reply_bean.dart';
 
+import '../../../common/forumlist/jsonbean/real_info_bean.dart';
+
 /// 评论Bean类
 ///
 /// @author zzp
@@ -11,6 +13,7 @@ class CommentBean {
   CommentBean.fromJson(Map<String, dynamic> json)
       : id = json[KeyAssets.id],
         userInfo = UserInfoBean.fromJson(json[KeyAssets.userInfo]),
+        realInfo = RealInfoBean.fromJson(json[KeyAssets.realInfo]),
         content = json[KeyAssets.content],
         createTime = json[KeyAssets.createTime],
         replyList = (json[KeyAssets.replyInfos] as List)
@@ -22,6 +25,9 @@ class CommentBean {
 
   /// 评论者用户信息
   UserInfoBean userInfo;
+
+  /// 发帖者实名信息
+  RealInfoBean realInfo;
 
   /// 评论内容
   String content;

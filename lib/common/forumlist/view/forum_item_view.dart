@@ -7,8 +7,8 @@ import 'package:csust_edu_system/common/forumlist/view/forum_control_view.dart';
 import 'package:csust_edu_system/common/forumlist/view/forum_image_view.dart';
 import 'package:csust_edu_system/common/forumlist/viewmodel/forum_item_view_model.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
+import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/util/date_util.dart';
-import 'package:csust_edu_system/util/log.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +36,6 @@ class ForumItemView extends StatelessWidget {
         ForumItemViewModel(model: ForumItemModel(type: type, forumBean: forum));
     var child = Builder(
       builder: (innerContext) {
-        Log.d('build');
         var viewModel = innerContext.readViewModel<ForumItemViewModel>();
         return Card(
           color: Colors.white,
@@ -79,9 +78,9 @@ class ForumItemView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Hero(
-                            tag: forum.userInfo.username + forum.id.toString(),
+                            tag: forum.realInfo.name + forum.id.toString(),
                             child: Text(
-                              forum.userInfo.username,
+                              forum.realInfo.name.hideName(),
                               style: const TextStyle(
                                   fontSize: 14, color: Colors.black),
                             ),

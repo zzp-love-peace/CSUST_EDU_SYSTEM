@@ -301,4 +301,19 @@ class KeyAssets {
 
   /// key-评论信息
   static const String commentInfo = 'commentInfo';
+
+  /// key-实名信息
+  static const String realInfo = 'realInfo';
+
+  /// key-工作日期
+  static const String workDate = 'workDate';
+
+  /// key-工作时间
+  static const String workTime = 'workTime';
+
+  /// key-联系方式
+  static const String contact = 'contact';
+
+  /// key-免责声明
+  static const String duty = 'duty';
 }

@@ -52,6 +52,9 @@ class ImageAssets {
   /// 兼职icon图
   static const String imgWork = 'assets/images/img_work.png';
 
+  /// 线上营业厅icon图
+  static const String imgServiceHall = 'assets/images/img_service_hall.png';
+
   /// 地图1
   static const String schoolMap1 = 'assets/images/school_map1.jpg';
 

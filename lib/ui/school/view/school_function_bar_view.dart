@@ -1,7 +1,11 @@
+import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/image_assets.dart';
+import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/common/functionswicher/viewmodel/function_switcher_view_model.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/electricity/page/electricity_page.dart';
+import 'package:csust_edu_system/ui/recruit/page/recruit_page.dart';
 import 'package:csust_edu_system/ui/telephonecard/page/telephone_page.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -53,14 +57,14 @@ class SchoolFunctionBarView extends StatelessWidget {
                 context.push(const GradeHome());
               }),
               _functionItem(StringAssets.examArrangement, ImageAssets.imgExam,
-                  () {
-                context.push(const ExamHome());
-              }),
+                      () {
+                    context.push(const ExamHome());
+                  }),
               _functionItem(
                   StringAssets.queryElectricity, ImageAssets.imgElectricity,
-                  () {
-                context.push(const ElectricityPage());
-              }),
+                      () {
+                    context.push(const ElectricityPage());
+                  }),
             ],
           ),
           Row(
@@ -87,10 +91,23 @@ class SchoolFunctionBarView extends StatelessWidget {
               _functionItem(StringAssets.schoolGroup, ImageAssets.imgGroup, () {
                 context.push(const AssociationHome());
               }),
-              _functionItem(StringAssets.workInformation, ImageAssets.imgWork,
-                  () {
-                context.push(const TelephonePage());
-              }),
+              ConsumerView<FunctionSwitcherViewModel>(
+                builder: (ctx, viewModel, _) {
+                  return viewModel
+                              .model.functionSwitchers[KeyAssets.serviceHall] ??
+                          false
+                      ? _functionItem(
+                          StringAssets.serviceHall, ImageAssets.imgServiceHall,
+                          () {
+                          context.push(const TelephonePage());
+                        })
+                      : _functionItem(
+                          StringAssets.workInformation, ImageAssets.imgWork,
+                          () {
+                          context.push(const RecruitPage());
+                        });
+                },
+              ),
             ],
           ),
           const SizedBox(

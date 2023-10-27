@@ -68,27 +68,6 @@ class HttpManager {
     return response?.data;
   }
 
-  // @Deprecated('废弃')
-  // Future<Map> login(String username, String password) async =>
-  //     await _post('/login',
-  //         params: FormData.fromMap({
-  //           'stuNum': username,
-  //           'password': password,
-  //           'version': '$appName$version${getAppSuffix()}'
-  //         }));
-
-  @Deprecated('废弃')
-  Future<Map> getDateData(String cookie, String token) async =>
-      await _post('/getBasicData',
-          params: FormData.fromMap({'cookie': cookie}),
-          headers: {"token": token});
-
-  @Deprecated('废弃')
-  Future<Map> getStuInfo(String cookie, String token) async =>
-      await _post('/getStuInfo',
-          params: FormData.fromMap({'cookie': cookie}),
-          headers: {"token": token});
-
   Future<Map> setStuInfo(String token, String username, bool sex) async =>
       await _post('/setStuInfo',
           params: FormData.fromMap({'username': username, 'sex': sex}),
@@ -116,12 +95,6 @@ class HttpManager {
           params: FormData.fromMap({'cookie': cookie}),
           headers: {"token": token});
 
-  @Deprecated('废弃')
-  Future<Map> getAllSemester(String cookie, String token) async =>
-      await _post('/getAllSemester',
-          params: FormData.fromMap({'cookie': cookie}),
-          headers: {"token": token});
-
   Future<Map> queryScore(String token, String cookie, String term) async =>
       await _post('/queryScore',
           params: FormData.fromMap({'cookie': cookie, 'xueqi': term}),
@@ -137,186 +110,11 @@ class HttpManager {
           params: FormData.fromMap({'cookie': cookie, 'pscjUrl': url}),
           headers: {"token": token});
 
-  @Deprecated('废弃')
-  Future<Map> queryCourse(String token, String cookie, String term,
-      String weekNum) async =>
-      await _post('/getCourse',
-          params: FormData.fromMap(
-              {'cookie': cookie, 'xueqi': term, 'zc': weekNum}),
-          headers: {"token": token});
-
-  // 获取教务通知列表
-  @Deprecated('已废弃')
-  Future<Map> getNoticeList(String cookie, String token) async =>
-      await _post('/getNoticeList',
-          params: FormData.fromMap({'cookie': cookie}),
-          headers: {"token": token});
-
-  @Deprecated('废弃')
-  Future<Map> getNoticeDetail(String cookie, String token, String ggid) async =>
-      await _post('/getNoticeDetail',
-          params: FormData.fromMap({'cookie': cookie, 'ggid': ggid}),
-          headers: {"token": token});
-
-  @Deprecated('已废弃')
-  Future<Map> addAdvice(String token, String content, String phone,
-      String name) async =>
-      await _post('/advice/add',
-          params: FormData.fromMap(
-              {'content': content, 'phone': phone, 'name': name}),
-          headers: {"token": token});
-
-  @Deprecated('废弃')
-  Future<Map> getCourseByHtml(String token, String html) async =>
-      await _post('http://47.97.205.5:8989/parse/courseHtml',
-          params: FormData.fromMap(
-              {'html': html}),
-          headers: {"token": token});
-
-  @Deprecated('废弃')
-  Future<Map> getExamByHtml(String token, String html) async =>
-      await _post('http://47.97.205.5:8989/parse/ksapHtml',
-          params: FormData.fromMap(
-              {'html': html}),
-          headers: {"token": token});
-
-  @Deprecated('废弃')
-  Future<Map> getScoreByHtml(String token, String html) async =>
-      await _post('http://47.97.205.5:8989/parse/scoreHtml',
-          params: FormData.fromMap(
-              {'html': html}),
-          headers: {"token": token});
-
-  @Deprecated('废弃')
-  Future<Map> getScoreInfoByHtml(String token, String html) async =>
-      await _post('http://47.97.205.5:8989/parse/pscjHtml',
-          params: FormData.fromMap(
-              {'html': html}),
-          headers: {"token": token});
-
-  /*/
-  论坛
-   */
-  @Deprecated('已废弃')
-  Future<Map> getAllTab(String token) async =>
-      await _get('/theme/all', header: token);
-
-//获取帖子
-  //post/index
-  @Deprecated('已废弃')
-  Future<Map> getFormListByTabId(String token, int tabId, int page,
-      int rows) async =>
-      await _post('/getForumAdvertise',
-          params: {'themeId': tabId, 'page': page, 'rows': rows},
-          headers: {"token": token});
-
-  @Deprecated('已废弃')
-  Future<Map> postForum(String token, int themeId, String content,
-      bool isAnonymous, List<MultipartFile> images) async =>
-      await _post('/post/write',
-          params: FormData.fromMap({
-            'themeId': themeId,
-            'content': content,
-            'isAnonymous': isAnonymous,
-            'images': images
-          }),
-          headers: {"token": token});
-  //点击广告
-  @Deprecated('已废弃')
-  Future<Map> clickAdvertise(String token , int id)  async=>
-      await _post('/clickAdvertise',params: FormData.fromMap({'id':id}),
-          headers: {"token":token});
-  //点赞广告
-  @Deprecated('已废弃')
-  Future<Map> likeAdvertise(String token , int id)  async=>
-      await _post('/likeAdvertise',params: FormData.fromMap({'id':id}),
-          headers: {"token":token});
-
-  @Deprecated('已废弃')
-  Future<Map> likeForum(String token, int id) async =>
-      await _get('/post/like', params: {'id': id}, header: token);
-
-  @Deprecated('已废弃')
-  Future<Map> collectForum(String token, int id) async =>
-      await _get('/post/enshrine', params: {'id': id}, header: token);
-
-  @Deprecated('已废弃')
-  Future<Map> getMyForums(String token) async =>
-      await _get('/post/self', header: token);
-
-  @Deprecated('已废弃')
-  Future<Map> getMyCollects(String token) async =>
-      await _get('/enshrine/list', header: token);
-
-  @Deprecated('已废弃')
-  Future<Map> getForumInfo(String token, int id) async =>
-      await _get('/post/detail', params: {"id": id}, header: token);
-
-  @Deprecated('已废弃')
-  Future<Map> deleteForum(String token, int postId) async =>
-      await _post('/post/delete',
-          params: {'postId': postId}, headers: {"token": token});
-
-  @Deprecated('已废弃')
-  Future<Map> deleteComment(String token, int commentId) async =>
-      await _post('/post/delete',
-          params: {'commentId': commentId}, headers: {"token": token});
-
-  @Deprecated('已废弃')
-  Future<Map> deleteReply(String token, int replyId) async =>
-      await _post('/post/delete',
-          params: {'replyId': replyId}, headers: {"token": token});
-
-  @Deprecated('已废弃')
-  Future<Map> postComment(String token, int postId, String content) async =>
-      await _post('/comment/write',
-          params: {'postId': postId, 'content': content},
-          headers: {"token": token});
-
-  @Deprecated('已废弃')
-  Future<Map> postReply(String token, int commentId, int replyId,
-      String content) async =>
-      await _post('/reply/write', params: {
-        'commentId': commentId,
-        'replyId': replyId,
-        'content': content
-      }, headers: {
-        "token": token
-      });
-
-  @Deprecated('已废弃')
-  Future<Map> getUnreadMsg(String token) async =>
-      await _get('/message/unread', header: token);
-
-  @Deprecated('已废弃')
-  Future<Map> getReadMsg(String token) async =>
-      await _get('/message/hasRead', header: token);
-
-  @Deprecated('已废弃')
-  Future<Map> setAllMsgRead(String token) async =>
-      await _post('/message/setAllRead', headers: {"token": token});
-
-  @Deprecated('已废弃')
-  Future<Map> setMsgRead(String token, int id, int type) async =>
-      await _post('/message/setRead',
-          params: {'id': id, 'type': type}, headers: {"token": token});
-
-  @Deprecated('已废弃')
-  Future<Map> getNotifications(String token) async =>
-      await _get('/notice/get', header: token);
-
-  @Deprecated('已废弃')
-  Future<Map> reportComment(String token, int postId) async =>
-      await _post('/report/add', params:  FormData.fromMap({'postId': postId}), headers: {"token": token});
-
   Future<Map> getAssTabs(String token) async =>
       await _get('/category/getAll', header: token);
 
   Future<Map> getAssByTab(String token, int id) async =>
       await _get('/association/get', params: {'id': id} , header: token);
-
-  Future<Map> getLastVersion(String token, String form) async =>
-      await _get('/getLastVersion', params: {'flag': 2, 'form': form} , header: token);
 
   Future<Map> getAllRecruitInfo(String token) async =>
       await _get('/recruitInfo/getAll', header: token);
@@ -324,29 +122,4 @@ class HttpManager {
   Future<Map> getRecruitInfoByTitle(String token, String title) async =>
       await _get('/recruitInfo/getByTitle', params: {'name': title}, header: token);
 
-  @Deprecated('废弃')
-  Future<Map> getBannerImg(String token) async =>
-      await _get('/loopImg/getAll', header: token);
-
-  @Deprecated('已废弃')
-  queryElectricity(String jsonData) async =>
-      await _post('http://yktwd.csust.edu.cn:8988/web/Common/Tsm.html',
-          params: {
-            'jsondata': jsonData,
-            'funname': 'synjones.onecard.query.elec.roominfo',
-            'json': true
-          },
-          contentType: Headers.formUrlEncodedContentType);
-
-  @Deprecated('已废弃')
-  Future<Map> getAllCourseOfTerm(String cookie, String token,
-      String term) async =>
-      await _post('/getCourse',
-          params: FormData.fromMap({'cookie': cookie, 'xueqi': term, 'zc': 0}), headers: {"token": token});
-
-  @Deprecated('已废弃')
-  Future<Uint8List> imageToBytes(String imgUrl) async {
-    var response = await _dio?.get(imgUrl, options: Options(responseType: ResponseType.bytes));
-    return Uint8List.fromList(response?.data);
-  }
 }

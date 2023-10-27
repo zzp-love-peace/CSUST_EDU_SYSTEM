@@ -44,6 +44,14 @@ extension StringExtension on String {
   String suffixThumb() {
     return this + '/thumb';
   }
+
+  /// 隐藏部分姓名
+  String hideName() {
+    if (length == 2) {
+      return '${this[0]}*';
+    }
+    return replaceRange(1, length - 1, '*' * (length - 2));
+  }
 }
 
 /// String？的自定义扩展函数

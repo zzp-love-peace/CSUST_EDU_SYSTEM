@@ -34,24 +34,35 @@ class ForumItemViewModel
         .push<ForumBean>(ForumDetailPage(forumBean: model.forumBean))
         .then((result) {
       if (result != null) {
-        ForumListViewModel viewModel;
-        switch (model.type) {
-          case ForumItemType.tabForum:
-            viewModel = context.read<ForumTabListViewModel>();
-            break;
-          case ForumItemType.collectForum:
-            viewModel = context.read<MyCollectViewModel>();
-            break;
-          case ForumItemType.myForum:
-            viewModel = context.read<MyForumViewModel>();
-            break;
-        }
         if (result.resultCode == PageResultCode.forumDelete) {
+          ForumListViewModel viewModel;
+          switch (model.type) {
+            case ForumItemType.tabForum:
+              viewModel = context.read<ForumTabListViewModel>();
+              break;
+            case ForumItemType.collectForum:
+              viewModel = context.read<MyCollectViewModel>();
+              break;
+            case ForumItemType.myForum:
+              viewModel = context.read<MyForumViewModel>();
+              break;
+          }
           viewModel.removeForum(result.resultData);
         } else if (result.resultCode == PageResultCode.forumStateChange) {
-          viewModel.updateForum(model.forumBean, result.resultData);
+          _updateForum(result.resultData);
         }
       }
     });
+  }
+
+  /// 更新帖子
+  ///
+  /// [newForum] 新帖子
+  void _updateForum(ForumBean newForum) {
+    model.forumBean.likeNum = newForum.likeNum;
+    model.forumBean.commentNum = newForum.commentNum;
+    model.forumBean.isLike = newForum.isLike;
+    model.forumBean.isEnshrine = newForum.isEnshrine;
+    notifyListeners();
   }
 }

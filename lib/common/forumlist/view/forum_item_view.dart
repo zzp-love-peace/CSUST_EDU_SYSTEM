@@ -8,6 +8,7 @@ import 'package:csust_edu_system/common/forumlist/view/forum_image_view.dart';
 import 'package:csust_edu_system/common/forumlist/viewmodel/forum_item_view_model.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/util/date_util.dart';
+import 'package:csust_edu_system/util/log.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +36,7 @@ class ForumItemView extends StatelessWidget {
         ForumItemViewModel(model: ForumItemModel(type: type, forumBean: forum));
     var child = Builder(
       builder: (innerContext) {
+        Log.d('build');
         var viewModel = innerContext.readViewModel<ForumItemViewModel>();
         return Card(
           color: Colors.white,
@@ -107,7 +109,7 @@ class ForumItemView extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 4,
                         style:
-                            const TextStyle(fontSize: 16, color: Colors.black),
+                        const TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ),
                   ),
@@ -123,7 +125,7 @@ class ForumItemView extends StatelessWidget {
                           crossAxisCount: 3,
                           children: forum.images
                               .map((url) => ForumImageView(
-                                  url: url, images: forum.images))
+                              url: url, images: forum.images))
                               .toList(),
                         ),
                       ),

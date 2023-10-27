@@ -21,6 +21,15 @@ class DBManager {
   /// 静态获取单例方法
   static DBManager getInstance() => _db;
 
+  /// 数据库课程表建表语句
+  static const createCourseTableSql =
+      'create table $courseTableName(id integer primary key autoincrement, term text, weekNum integer, content text)';
+
+  ///数据库教务通知表建表语句
+  static const createSchoolNoticeTableSql =
+      '''create table $schoolNoticeTableName(id integer primary key autoincrement,
+           ggid text, title text, time text, html text)''';
+
   /// 获取不为空的数据库
   Future<Database> _getCheckDatabase() async {
     if (_myDatabase != null) return _myDatabase!;
@@ -32,11 +41,18 @@ class DBManager {
   Future<Database> _initDB() async {
     var databasesPath = await getDatabasesPath();
     String path = join(databasesPath, dbName);
-    return await openDatabase(path, version: 1, onOpen: (db) {},
-        onCreate: (Database db, int v) async {
-      await db.execute(
-          "create table $courseTableName(id integer primary key autoincrement, term text, weekNum integer, content text)");
-    });
+    return await openDatabase(
+      path,
+      version: 2,
+      onOpen: (db) {},
+      onCreate: (Database db, int v) async {
+        await db.execute(createCourseTableSql);
+        await db.execute(createSchoolNoticeTableSql);
+      },
+      onUpgrade: (Database db, int oldVersion, int newVersion) async {
+        await db.execute(createSchoolNoticeTableSql);
+      },
+    );
   }
 
   /// 查询
@@ -65,5 +81,14 @@ class DBManager {
   Future<int> rawUpdate(String sql, [List<Object?>? arguments]) async {
     final databaseDB = await _getCheckDatabase();
     return databaseDB.rawUpdate(sql, arguments);
+  }
+
+  /// 删除
+  ///
+  /// [sql] sql语句
+  /// [arguments] 参数
+  Future<int> rawDelete(String sql, [List<Object?>? arguments]) async {
+    final databaseDB = await _getCheckDatabase();
+    return databaseDB.rawDelete(sql, arguments);
   }
 }

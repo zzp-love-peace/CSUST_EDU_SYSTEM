@@ -1,4 +1,5 @@
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
+import 'package:csust_edu_system/ui/school/db/school_notice_db_manager.dart';
 import 'package:csust_edu_system/ui/school/jsonbean/banner_bean.dart';
 import 'package:csust_edu_system/ui/school/jsonbean/school_notice_bean.dart';
 import 'package:csust_edu_system/ui/school/model/school_model.dart';
@@ -31,6 +32,19 @@ class SchoolViewModel extends BaseViewModel<SchoolModel, SchoolService> {
         model.noticeList =
             data.map((json) => SchoolNoticeBean.fromJson(json)).toList();
         notifyListeners();
+        for (var notice in model.noticeList) {
+          SchoolNoticeDBManager.insertSchoolNotice(notice);
+        }
+      },
+      onFinish: (isSuccess) {
+        if (!isSuccess) {
+          SchoolNoticeDBManager.getAllSchoolNotice().then(
+            (data) {
+              model.noticeList = data;
+              notifyListeners();
+            },
+          );
+        }
       },
     );
   }

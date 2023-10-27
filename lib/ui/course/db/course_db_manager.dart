@@ -5,6 +5,10 @@ import '../../../util/db/db_data.dart';
 import '../jsonbean/db_course_bean.dart';
 
 /// 课程表数据库管理器
+///
+/// @author zzp
+/// @since 2023/10/18
+/// @version v1.8.8
 class CourseDBManager {
   /// 获取某一学期课表
   ///
@@ -30,7 +34,7 @@ class CourseDBManager {
   /// [content] 内容
   /// [id] id
   static Future<void> updateCourse(String content, int id) async {
-    int res = await DBManager.getInstance().rawUpdate(
+    await DBManager.getInstance().rawUpdate(
         'update $courseTableName set content=? where id=?', [content, id]);
   }
 

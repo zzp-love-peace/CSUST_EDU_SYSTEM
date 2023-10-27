@@ -24,9 +24,10 @@ class SchoolNoticePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       ChangeNotifierProvider(
-        create: (_) => SchoolNoticeViewModel(model: SchoolNoticeModel()),
+        create: (_) =>
+            SchoolNoticeViewModel(model: SchoolNoticeModel(ggid: ggid)),
       )
-    ], child: SchoolNoticeHome(ggid));
+    ], child: const SchoolNoticeHome());
   }
 }
 
@@ -37,10 +38,7 @@ class SchoolNoticePage extends StatelessWidget {
 /// @version v1.8.8
 
 class SchoolNoticeHome extends StatelessWidget {
-  /// 学校通知id
-  final String ggid;
-
-  const SchoolNoticeHome(this.ggid, {Key? key}) : super(key: key);
+  const SchoolNoticeHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +47,8 @@ class SchoolNoticeHome extends StatelessWidget {
       body: SingleChildScrollView(
         child: ConsumerView<SchoolNoticeViewModel>(
           onInit: (viewModel) {
-            viewModel.initSchoolNoticePageData(StuInfo.cookie, ggid);
+            viewModel.initSchoolNoticePageData(
+                StuInfo.cookie, viewModel.model.ggid);
           },
           builder: (context, viewModel, _) {
             return HtmlWidget(viewModel.model.html);

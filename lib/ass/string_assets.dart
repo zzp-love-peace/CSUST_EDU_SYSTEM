@@ -805,4 +805,7 @@ class StringAssets {
 
   /// 线上营业厅
   static const String serviceHall = '线上营业厅';
+
+  /// 刚刚
+  static const String justNow = '刚刚';
 }

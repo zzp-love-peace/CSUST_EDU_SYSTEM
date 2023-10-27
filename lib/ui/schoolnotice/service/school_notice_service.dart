@@ -16,14 +16,14 @@ class SchoolNoticeService extends BaseService {
   /// [cookie] cookie字符串
   /// [ggid] 学校通知id
   /// [onDataSuccess] 获取数据成功回调
-  /// [onDataFail] 获取数据失败回调
+  /// [onFinish] 请求结束回调
   void getNoticeDetail(String cookie, String ggid,
-      {required OnDataSuccess<KeyMap> onDataSuccess, OnDataFail? onDataFail}) {
+      {required OnDataSuccess<KeyMap> onDataSuccess, OnFinish? onFinish}) {
     var params = FormData.fromMap({
       KeyAssets.cookie: cookie,
       KeyAssets.ggid: ggid,
     });
     post(UrlAssets.getNoticeDetail,
-        params: params, onDataSuccess: onDataSuccess, onDataFail: onDataFail);
+        params: params, onDataSuccess: onDataSuccess, onFinish: onFinish);
   }
 }

@@ -14,10 +14,14 @@ class SchoolService extends BaseService {
   ///
   /// [cookie] cookie
   /// [onDataSuccess] 获取数据成功回调
+  /// [onFinish] 请求结束回调
   void getNoticeList(
-      {required String cookie, required OnDataSuccess<KeyList> onDataSuccess}) {
+      {required String cookie,
+      required OnDataSuccess<KeyList> onDataSuccess,
+      OnFinish? onFinish}) {
     var params = FormData.fromMap({KeyAssets.cookie: cookie});
-    post(UrlAssets.getNoticeList, params: params, onDataSuccess: onDataSuccess);
+    post(UrlAssets.getNoticeList,
+        params: params, onDataSuccess: onDataSuccess, onFinish: onFinish);
   }
 
   /// 获取轮播图图片

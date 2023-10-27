@@ -316,4 +316,7 @@ class KeyAssets {
 
   /// key-免责声明
   static const String duty = 'duty';
+
+  /// key-html
+  static const String html = 'html';
 }

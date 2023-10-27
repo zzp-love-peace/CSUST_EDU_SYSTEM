@@ -49,6 +49,12 @@ class DateUtil {
     return DateUtil.minusDay(date[0], date[1], date[2], dateOfWeek);
   }
 
+  /// 计算某个日期的前num天
+  ///
+  /// [year] 年
+  /// [month] 月
+  /// [day] 日
+  /// [num] 天数
   static List<int> minusDay(int year, int month, int day, int num) {
     int n = 0;
     day -= num;
@@ -81,14 +87,18 @@ class DateUtil {
             n = 28;
           }
           break;
-        default:
-          throw Exception('月份传错了');
       }
       day += n;
     }
     return day > 0 ? [year, month, day] : minusDay(year, month, day, 0);
   }
 
+  /// 计算某个日期的后num天
+  ///
+  /// [year] 年
+  /// [month] 月
+  /// [day] 日
+  /// [num] 天数
   static List<int> addDay(int year, int month, int day, int num) {
     day += num;
     int d = day;
@@ -132,8 +142,6 @@ class DateUtil {
           }
         }
         break;
-      default:
-        throw Exception('月份传错了');
     }
     return d == day ? [year, month, day] : addDay(year, month, day, 0);
   }
@@ -189,7 +197,7 @@ class DateUtil {
       hour = postDateTime.hour.toString();
     }
     if (diffDateTime.inMinutes < 1) {
-      return '刚刚';
+      return StringAssets.justNow;
     } else if (diffDateTime.inMinutes >= 1 && diffDateTime.inMinutes < 30) {
       return '${diffDateTime.inMinutes}分钟前';
     } else if (diffDateTime.inMinutes >= 30 && diffDateTime.inMinutes < 60) {

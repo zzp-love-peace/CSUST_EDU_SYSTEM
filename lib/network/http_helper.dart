@@ -8,7 +8,7 @@ import 'data/http_response.dart';
 import 'data/response_status.dart';
 
 /// 请求时间常量
-const Duration constTimeOut = Duration(seconds: 8);
+const Duration constTimeOut = Duration(seconds: 6);
 
 /// Http请求工具类
 ///

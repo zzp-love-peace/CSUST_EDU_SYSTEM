@@ -2,6 +2,7 @@ import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/cachedimage/data/cached_image_type.dart';
 import 'package:csust_edu_system/common/cachedimage/view/cached_image.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
+import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/forumdetail/jsonbean/comment_bean.dart';
 import 'package:csust_edu_system/ui/forumdetail/model/comment_item_model.dart';
 import 'package:csust_edu_system/ui/forumdetail/view/comment_and_reply_control_dialog.dart';
@@ -71,7 +72,7 @@ class CommentItemView extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        commentBean.userInfo.username,
+                        commentBean.realInfo.name.hideName(),
                         style: TextStyle(
                             fontSize: 14,
                             color: Theme.of(context).primaryColor),

@@ -8,7 +8,8 @@ import 'package:csust_edu_system/ui/notification/service/notification_service.da
 /// @Author: Orcas_Liu
 /// @version: 1.8.8
 /// @Since: 2023.9.19
-class NotificationViewModel extends BaseViewModel<NotificationModel, NotificationService> {
+class NotificationViewModel
+    extends BaseViewModel<NotificationModel, NotificationService> {
   NotificationViewModel({required super.model});
 
   @override
@@ -16,15 +17,15 @@ class NotificationViewModel extends BaseViewModel<NotificationModel, Notificatio
 
   /// 初始化通知页面数据 -> 抓取信息，生成通知item并装入List
   void initNotificationPageData() {
-    service?.getNotifications(onDataSuccess: (data, msg) {
-      List notifications = data;
-      if (notifications.isNotEmpty) {
-          for (var notification in notifications) {
-            var notificationJson = NotificationBean.fromJson(notification);
-            model.notificationList.add(notificationJson);
-        }
+    service?.getNotifications(
+      onDataSuccess: (data, msg) {
+        model.notificationList = data
+            .map((json) => NotificationBean.fromJson(json))
+            .toList()
+            .reversed
+            .toList();
         notifyListeners();
-      }
-    });
+      },
+    );
   }
 }

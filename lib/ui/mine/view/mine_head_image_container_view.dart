@@ -2,7 +2,7 @@ import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:flutter/material.dart';
 
-import '../../common/cachedimage/view/cached_image.dart';
+import '../../../common/cachedimage/view/cached_image.dart';
 
 /// 我的页面头像区域View
 ///
@@ -113,6 +113,7 @@ class MineHeadImageContainerView extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 3),
           Text(
             content,
             style: const TextStyle(fontSize: 12, color: Colors.black54),

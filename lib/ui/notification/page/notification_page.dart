@@ -40,10 +40,12 @@ class NotificationHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CommonAppBar.create(StringAssets.notificationPageTitle),
-        body: ConsumerView<NotificationViewModel>(onInit: (viewModel) {
+      appBar: CommonAppBar.create(StringAssets.notificationPageTitle),
+      body: ConsumerView<NotificationViewModel>(
+        onInit: (viewModel) {
           viewModel.initNotificationPageData();
-        }, builder: (context, viewModel, _) {
+        },
+        builder: (context, viewModel, _) {
           List<NotificationBean> _notificationList =
               viewModel.model.notificationList;
           return _notificationList.isNotEmpty
@@ -51,23 +53,28 @@ class NotificationHome extends StatelessWidget {
                   itemCount: _notificationList.length,
                   itemBuilder: (ctx, index) {
                     return Container(
-                  color: Colors.white,
-                  child: ListTile(
-                    leading: ClipOval(
-                      child: Image.asset(
-                        ImageAssets.logo,
-                        width: 36,
-                        height: 36,
-                      ),
-                    ),
-                    title: Text(_notificationList[index].content),
-                    trailing: Text(
-                      DateUtil.getForumDateString(
-                                _notificationList[index].createTime),
-                            style: const TextStyle(color: Colors.grey),
+                      color: Colors.white,
+                      child: ListTile(
+                        leading: ClipOval(
+                          child: Image.asset(
+                            ImageAssets.logo,
+                            width: 36,
+                            height: 36,
                           ),
-                  ));
-            },) : const NoneLottie(hint: StringAssets.notificationPageNoContent);
-        }));
+                        ),
+                        title: Text(_notificationList[index].content),
+                        trailing: Text(
+                          DateUtil.getForumDateString(
+                              _notificationList[index].createTime),
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                    );
+                  },
+                )
+              : const NoneLottie(hint: StringAssets.notificationPageNoContent);
+        },
+      ),
+    );
   }
 }

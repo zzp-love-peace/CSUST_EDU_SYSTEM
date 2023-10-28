@@ -218,4 +218,14 @@ class DateUtil {
       return '${postDateTime.year} ${postDateTime.month}/${postDateTime.day} $hour:$minute';
     }
   }
+
+  /// 获取当天与指定日期相差的天数
+  ///
+  /// [date] 日期
+  static int getDiffDays(String date) {
+    var dateTime = DateTime.parse(date);
+    var nowDateTime = DateTime.now();
+    var diffDateTime = nowDateTime.difference(dateTime);
+    return diffDateTime.inDays;
+  }
 }

@@ -319,4 +319,7 @@ class KeyAssets {
 
   /// key-html
   static const String html = 'html';
+
+  /// key-已读通知列表
+  static const String readNotificationList = 'readNotificationList';
 }

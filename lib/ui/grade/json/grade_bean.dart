@@ -13,9 +13,9 @@ class GradeBean {
         method = json[KeyAssets.method],
         property = json[KeyAssets.property],
         nature = json[KeyAssets.nature],
-        xuefen = json[KeyAssets.xuefen],
+        creditPoints = json[KeyAssets.creditPoints],
         score = json[KeyAssets.score],
-        pscjUrl = json[KeyAssets.pscjUrl];
+        gradeInfoUrl = json[KeyAssets.gradeInfoUrl];
 
   /// 学科名称
   String courseName;
@@ -36,8 +36,8 @@ class GradeBean {
   String score;
 
   /// 学分
-  String xuefen;
+  String creditPoints;
 
-  /// pscjUrl
-  String pscjUrl;
+  /// 成绩详情Url
+  String gradeInfoUrl;
 }

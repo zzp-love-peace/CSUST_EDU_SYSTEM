@@ -13,6 +13,7 @@ import '../viewmodel/grade_viewmodel.dart';
 class GradeItemView extends StatelessWidget {
   /// 成绩详情数据
   final GradeBean gradeBean;
+  /// 成绩列表索引
   final int position;
 
   const GradeItemView(
@@ -38,7 +39,7 @@ class GradeItemView extends StatelessWidget {
           ),
           onTap: () {
             gradeViewModel.queryScoreInfo(
-                StuInfo.cookie, gradeBean.pscjUrl, position);
+                StuInfo.cookie, gradeBean.gradeInfoUrl, position);
           },
         ),
       ],

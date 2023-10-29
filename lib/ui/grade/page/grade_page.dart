@@ -1,6 +1,5 @@
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
-import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +9,7 @@ import '../../../data/date_info.dart';
 import '../../../data/stu_info.dart';
 import '../model/grade_model.dart';
 import '../view/grade_center_layout.dart';
-import '../view/grade_page_appbar.dart';
+import '../view/point_below_appbar.dart';
 import '../viewmodel/grade_viewmodel.dart';
 
 /// 成绩Page
@@ -31,34 +30,14 @@ class GradePage extends StatelessWidget {
   }
 }
 
-class GradeHome extends StatefulWidget {
+class GradeHome extends StatelessWidget {
   const GradeHome({super.key});
 
   @override
-  State<StatefulWidget> createState() => _GradeHomeState();
-}
-
-class _GradeHomeState extends State<GradeHome> {
-  late GradeViewModel gradeViewModel;
-  late GradeModel gradeModel;
-
-  @override
   Widget build(BuildContext context) {
+    GradeViewModel gradeViewModel = context.readViewModel<GradeViewModel>();
     return Scaffold(
-      appBar: _gradeAppBar(),
-      body: const GradeCenterLayout(),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    gradeViewModel = context.readViewModel<GradeViewModel>();
-    gradeModel = gradeViewModel.model;
-    gradeViewModel.queryScore(StuInfo.cookie, gradeModel.term);
-  }
-
-  AppBar _gradeAppBar() => CommonAppBar.create(
+      appBar: CommonAppBar.create(
         StringAssets.grade,
         bottom: PreferredSize(
             preferredSize: const Size.fromHeight(40.0),
@@ -74,23 +53,21 @@ class _GradeHomeState extends State<GradeHome> {
                           gradeViewModel.queryScore(StuInfo.cookie, term);
                           gradeViewModel.model.term = term;
                         }),
-                    const GradePageAppBar()
+                    const PointBelowAppBar()
                   ],
                 ))),
         actions: [
           IconButton(
               onPressed: () {
-                var now = DateTime.now().millisecondsSinceEpoch;
-                if (now - gradeViewModel.model.lastClick < 1500) return;
-                gradeViewModel.model.lastClick = now;
-                gradeViewModel.queryScore(
-                    StuInfo.cookie, gradeViewModel.model.term);
-                StringAssets.refreshSuccess.showToast();
+                gradeViewModel.refreshGrade();
               },
               icon: const Icon(
                 Icons.refresh,
                 color: Colors.white,
               ))
         ],
-      );
+      ),
+      body: const GradeCenterLayout(),
+    );
+  }
 }

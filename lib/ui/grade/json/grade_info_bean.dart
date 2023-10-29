@@ -7,28 +7,28 @@ import 'package:csust_edu_system/ass/key_assets.dart';
 /// @version v1.8.8
 class GradeInfoBean {
   GradeInfoBean.fromJson(Map<String, dynamic> json)
-      : normalGrade = json[KeyAssets.pscj] ?? '',
-        normalGradePer = json[KeyAssets.pscjBL] ?? '',
-        middleGrade = json[KeyAssets.qzcj] ?? '',
-        middleGradePer = json[KeyAssets.qzcjBL] ?? '',
-        finalGrade = json[KeyAssets.qmcj] ?? '',
-        finalGradePer = json[KeyAssets.qmcjBL] ?? '';
+      : normalGrade = json[KeyAssets.normalGrade],
+        normalGradePer = json[KeyAssets.normalGradePer],
+        middleGrade = json[KeyAssets.middleGrade],
+        middleGradePer = json[KeyAssets.middleGradePer],
+        finalGrade = json[KeyAssets.finalGrade],
+        finalGradePer = json[KeyAssets.finalGradePer];
 
   /// 平时成绩
-  String normalGrade;
+  String? normalGrade;
 
   /// 平时成绩比例
-  String normalGradePer;
+  String? normalGradePer;
 
   /// 期中成绩
-  String middleGrade;
+  String? middleGrade;
 
   /// 期中成绩比例
-  String middleGradePer;
+  String? middleGradePer;
 
   /// 期末成绩
-  String finalGrade;
+  String? finalGrade;
 
   /// 期末成绩比例
-  String finalGradePer;
+  String? finalGradePer;
 }

@@ -16,6 +16,7 @@ class GradeService extends BaseService {
   /// [onDataSuccess] 获取数据成功回调
   /// [term] 学期
   /// [cookie] cookie
+  /// [onFinish] 请求结束回调
   void queryScore(
       {required String cookie,
       required String term,
@@ -34,6 +35,7 @@ class GradeService extends BaseService {
   /// [onDataSuccess] 获取数据成功回调
   /// [cookie] cookie
   /// [pscjUrl] 成绩详情Url
+  /// [onFinish] 请求结束回调
   void queryScoreInfo(
       {required String cookie,
       required String pscjUrl,
@@ -41,7 +43,7 @@ class GradeService extends BaseService {
       OnFinish? onFinish}) {
     var params = FormData.fromMap({
       KeyAssets.cookie: cookie,
-      KeyAssets.pscjUrl: pscjUrl,
+      KeyAssets.gradeInfoUrl: pscjUrl,
     });
     post(UrlAssets.queryScoreInfo,
         params: params, onDataSuccess: onDataSuccess, onFinish: onFinish);

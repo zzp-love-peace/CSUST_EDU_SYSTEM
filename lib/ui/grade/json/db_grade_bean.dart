@@ -1,4 +1,5 @@
 import 'package:csust_edu_system/arch/basedata/base_json_bean.dart';
+import 'package:csust_edu_system/ass/string_assets.dart';
 
 import '../../../ass/key_assets.dart';
 
@@ -9,7 +10,7 @@ import '../../../ass/key_assets.dart';
 /// @version V1.8.8
 class DBGradeBean extends BaseJsonBean {
   DBGradeBean(this.term, this.courseName, this.content,
-      {this.id = -1, this.infoContent = ''});
+      {this.id = -1, this.infoContent = StringAssets.emptyStr});
 
   DBGradeBean.fromMap(Map map)
       : id = map[KeyAssets.id],

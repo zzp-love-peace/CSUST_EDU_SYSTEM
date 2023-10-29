@@ -1,4 +1,5 @@
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/common/dialog/base_dialog.dart';
 import 'package:csust_edu_system/ui/grade/json/grade_info_bean.dart';
 import 'package:flutter/material.dart';
 
@@ -9,10 +10,13 @@ import '../json/grade_bean.dart';
 /// @author wk
 /// @since 2023/10/28
 /// @version v1.8.8
-class GradeDialog extends StatelessWidget {
+class GradeDialog extends StatelessWidget with BaseDialog {
   const GradeDialog({super.key, required this.data, required this.infoData});
 
+  /// 成绩数据
   final GradeBean data;
+
+  /// 成绩详情数据
   final GradeInfoBean infoData;
 
   @override
@@ -36,7 +40,8 @@ class GradeDialog extends StatelessWidget {
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.black),
                 ),
-                _row(title: StringAssets.xuefen, value: data.xuefen),
+                _row(
+                    title: StringAssets.creditPoints, value: data.creditPoints),
                 _row(title: StringAssets.point, value: data.point),
                 _row(
                     title: StringAssets.courseNature,
@@ -68,9 +73,13 @@ class GradeDialog extends StatelessWidget {
   ///
   /// [title] 标题
   /// [value] 值
-  Widget _row({required String title, required String value}) {
-    return Row(
-      children: [Text(title), const SizedBox(width: 10), Text(value)],
-    );
+  Widget _row({required String title, required String? value}) {
+    return value != null
+        ? Row(
+            children: [Text(title), const SizedBox(width: 10), Text(value)],
+          )
+        : Row(
+            children: [Text(title), const SizedBox(width: 10), const Text('')],
+          );
   }
 }

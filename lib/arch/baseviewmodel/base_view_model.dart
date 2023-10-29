@@ -50,13 +50,6 @@ abstract class BaseViewModel<T, W extends BaseService> extends ChangeNotifier {
     _store[key] = sonViewModel;
   }
 
-  /// 反注册子ViewModel
-  ///
-  /// [key] 键
-  void unregisterSonViewModel(dynamic key) {
-    _store.remove(key);
-  }
-
   /// 读取子ViewModel
   ///
   /// [key] 键
@@ -66,4 +59,19 @@ abstract class BaseViewModel<T, W extends BaseService> extends ChangeNotifier {
     }
     return null;
   }
+
+  /// 反注册子ViewModel
+  ///
+  /// [key] 键
+  void unregisterSonViewModel(dynamic key) {
+    _store.remove(key);
+  }
+
+// @override
+// void dispose() {
+//   _store.forEach((key, viewModel) {
+//     viewModel.dispose();
+//   });
+//   super.dispose();
+// }
 }

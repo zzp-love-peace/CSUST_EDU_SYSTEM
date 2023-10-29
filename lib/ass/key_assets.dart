@@ -336,29 +336,29 @@ class KeyAssets {
   static const String nature = 'nature';
 
   /// key-学分
-  static const String xuefen = 'xuefen';
+  static const String creditPoints = 'xuefen';
 
   /// key-score
   static const String score = 'score';
 
-  /// key-pscjUrl
-  static const String pscjUrl = 'pscjUrl';
+  /// key-成绩详情Url
+  static const String gradeInfoUrl = 'pscjUrl';
 
   /// key-平时成绩
-  static const String pscj = 'pscj';
+  static const String normalGrade = 'pscj';
 
   /// key-平时成绩比例
-  static const String pscjBL = 'pscjBL';
+  static const String normalGradePer = 'pscjBL';
 
   /// key-期中成绩
-  static const String qzcj = 'qzcj';
+  static const String middleGrade = 'qzcj';
 
   /// key-期中成绩比例
-  static const String qzcjBL = 'qzcjBL';
+  static const String middleGradePer = 'qzcjBL';
 
   /// key-期末成绩
-  static const String qmcj = 'qmcj';
+  static const String finalGrade = 'qmcj';
 
   /// key-期末成绩比例
-  static const String qmcjBL = 'qmcjBL';
+  static const String finalGradePer = 'qmcjBL';
 }

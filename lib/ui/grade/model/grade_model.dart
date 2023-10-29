@@ -14,8 +14,6 @@ class GradeModel {
   /// 学期
   String term;
 
-  /// 最后一次点击
-  int lastClick = 0;
 
   /// 成绩列表
   List<GradeBean> gradeList = [];

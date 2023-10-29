@@ -828,7 +828,7 @@ class StringAssets {
   static const String dbGradeDuplicated = '数据库成绩数据重复';
 
   /// 学分
-  static const String xuefen = '学分';
+  static const String creditPoints = '学分';
 
   /// 课程性质
   static const String courseNature = '课程性质';

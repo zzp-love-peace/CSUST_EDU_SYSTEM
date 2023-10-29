@@ -21,7 +21,6 @@ class ForumDetailLikeAndCommentView extends StatelessWidget {
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Icon(
                   Icons.message_outlined,
@@ -47,7 +46,6 @@ class ForumDetailLikeAndCommentView extends StatelessWidget {
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Icon(
                   Icons.thumb_up_outlined,

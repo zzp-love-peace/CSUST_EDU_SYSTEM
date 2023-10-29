@@ -65,7 +65,6 @@ class CommentItemView extends StatelessWidget {
                           size: 40,
                           fit: BoxFit.cover,
                           type: CachedImageType.webp,
-                          isShowDetail: true,
                         ),
                       ),
                       const SizedBox(

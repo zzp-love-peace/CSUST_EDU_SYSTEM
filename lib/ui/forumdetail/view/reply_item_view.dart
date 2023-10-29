@@ -59,6 +59,7 @@ class ReplyItemView extends StatelessWidget {
             );
           },
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipOval(
                 child: CachedImage(
@@ -66,7 +67,6 @@ class ReplyItemView extends StatelessWidget {
                   size: 30,
                   fit: BoxFit.cover,
                   type: CachedImageType.webp,
-                  isShowDetail: true,
                 ),
               ),
               const SizedBox(
@@ -96,7 +96,7 @@ class ReplyItemView extends StatelessWidget {
                       TextSpan(
                         text: replyBean.content,
                         style:
-                            const TextStyle(fontSize: 14, color: Colors.black),
+                        const TextStyle(fontSize: 14, color: Colors.black),
                       ),
                     ],
                   ),

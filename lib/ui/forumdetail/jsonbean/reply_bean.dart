@@ -24,7 +24,7 @@ class ReplyBean {
   /// 发回复者的用户信息
   UserInfoBean userInfo;
 
-  /// 发帖者实名信息
+  /// 发回复者的实名信息
   RealInfoBean realInfo;
 
   /// 回复内容

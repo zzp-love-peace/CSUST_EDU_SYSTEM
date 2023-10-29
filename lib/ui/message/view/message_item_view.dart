@@ -1,3 +1,5 @@
+import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/message/jsonbean/message_bean.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,19 +54,19 @@ class MessageItemView extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    msg.userInfo.username,
+                    msg.realInfo.name.hideName(),
                     style: const TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 3, 15, 5),
                     child: msg.type == 0
                         ? Text(
-                            '评论：${msg.content}',
+                      '${StringAssets.comment}：${msg.content}',
                             style: const TextStyle(
                                 fontSize: 14, color: Colors.black54),
                           )
                         : Text(
-                            '回复：${msg.content}',
+                      '${StringAssets.reply}：${msg.content}',
                             style: const TextStyle(
                                 fontSize: 14, color: Colors.black54),
                           ),
@@ -76,7 +78,7 @@ class MessageItemView extends StatelessWidget {
                       child: Text(
                         DateUtil.getForumDateString(msg.createTime),
                         style:
-                            const TextStyle(fontSize: 12, color: Colors.black),
+                        const TextStyle(fontSize: 12, color: Colors.black),
                       ),
                     ),
                   )

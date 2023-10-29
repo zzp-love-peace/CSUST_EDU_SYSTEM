@@ -1,18 +1,22 @@
 import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/common/forumlist/jsonbean/user_info_bean.dart';
 
+import '../../../common/forumlist/jsonbean/real_info_bean.dart';
+
 /// MsgBean类
 ///
 /// @Author: Orcas_Liu
 /// @version: 1.8.8
 /// @Since: 2023.9.23
-
 class MsgBean {
   /// 消息id
   int id;
 
   /// 消息发送者用户信息
   UserInfoBean userInfo;
+
+  /// 消息发送者者实名信息
+  RealInfoBean realInfo;
 
   /// 消息内容
   String content;
@@ -29,6 +33,7 @@ class MsgBean {
   MsgBean.fromJson(Map<String, dynamic> json)
       : id = json[KeyAssets.id],
         userInfo = UserInfoBean.fromJson(json[KeyAssets.userInfo]),
+        realInfo = RealInfoBean.fromJson(json[KeyAssets.realInfo]),
         content = json[KeyAssets.content],
         createTime = json[KeyAssets.createTime],
         postId = json[KeyAssets.postId],

@@ -26,7 +26,7 @@ class CommentBean {
   /// 评论者用户信息
   UserInfoBean userInfo;
 
-  /// 发帖者实名信息
+  /// 发评论者实名信息
   RealInfoBean realInfo;
 
   /// 评论内容

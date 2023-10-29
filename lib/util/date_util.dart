@@ -196,27 +196,30 @@ class DateUtil {
     } else {
       hour = postDateTime.hour.toString();
     }
-    if (diffDateTime.inMinutes < 1) {
-      return StringAssets.justNow;
-    } else if (diffDateTime.inMinutes >= 1 && diffDateTime.inMinutes < 30) {
-      return '${diffDateTime.inMinutes}分钟前';
-    } else if (diffDateTime.inMinutes >= 30 && diffDateTime.inMinutes < 60) {
-      return '半小时前';
-    } else if (diffDateTime.inMinutes >= 60 && diffDateTime.inHours <= 10) {
-      return '${diffDateTime.inHours}小时前';
-    } else if (postDateTime.day == nowDateTime.day) {
-      return '今天 $hour:$minute';
-    } else if (nowDateTime.day == postDateTime.day + 1) {
-      return '昨天 $hour:$minute';
-    } else if (nowDateTime.day == postDateTime.day + 2) {
-      return '前天 $hour:$minute';
-    } else if (nowDateTime.day == postDateTime.day + 3) {
-      return '大前天 $hour:$minute';
-    } else if (nowDateTime.year == postDateTime.year) {
-      return '${postDateTime.month}/${postDateTime.day} $hour:$minute';
-    } else {
-      return '${postDateTime.year} ${postDateTime.month}/${postDateTime.day} $hour:$minute';
+    String res =
+        '${postDateTime.year} ${postDateTime.month}/${postDateTime.day} $hour:$minute';
+    if (nowDateTime.year == postDateTime.year) {
+      res = '${postDateTime.month}/${postDateTime.day} $hour:$minute';
     }
+    if (diffDateTime.inDays == 3) {
+      res = '大前天 $hour:$minute';
+    } else if (diffDateTime.inDays == 2) {
+      res = '前天 $hour:$minute';
+    } else if (diffDateTime.inDays == 1) {
+      res = '昨天 $hour:$minute';
+    } else if (diffDateTime.inDays == 0) {
+      res = '今天 $hour:$minute';
+      if (diffDateTime.inMinutes < 1) {
+        res = StringAssets.justNow;
+      } else if (diffDateTime.inMinutes >= 1 && diffDateTime.inMinutes < 30) {
+        res = '${diffDateTime.inMinutes}分钟前';
+      } else if (diffDateTime.inMinutes >= 30 && diffDateTime.inMinutes < 60) {
+        res = '半小时前';
+      } else if (diffDateTime.inMinutes >= 60 && diffDateTime.inHours <= 10) {
+        res = '${diffDateTime.inHours}小时前';
+      }
+    }
+    return res;
   }
 
   /// 获取当天与指定日期相差的天数

@@ -319,4 +319,16 @@ class KeyAssets {
 
   /// key-html
   static const String html = 'html';
+
+  /// key-图标
+  static const String icon = 'icon';
+
+  /// key-qq
+  static const String qq = 'qq';
+
+  /// key-社团介绍
+  static const String introduce = 'introduce';
+
+  /// key-公众号
+  static const String publicNum = 'publicNum';
 }

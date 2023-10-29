@@ -114,4 +114,10 @@ class UrlAssets {
 
   /// url-通过标题获取兼职信息
   static const getRecruitInfoByTitle = '/recruitInfo/getByTitle';
+
+  /// url-获取社团类别
+  static const getAssociationTabList = '/category/getAll';
+
+  /// url-通过类别获取社团列表
+  static const getAssociationInfoByTabId = '/association/get';
 }

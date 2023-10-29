@@ -34,16 +34,16 @@ class GradeService extends BaseService {
   ///
   /// [onDataSuccess] 获取数据成功回调
   /// [cookie] cookie
-  /// [pscjUrl] 成绩详情Url
+  /// [gradeInfoUrl] 成绩详情Url
   /// [onFinish] 请求结束回调
   void queryScoreInfo(
       {required String cookie,
-      required String pscjUrl,
+      required String gradeInfoUrl,
       required OnDataSuccess<KeyMap> onDataSuccess,
       OnFinish? onFinish}) {
     var params = FormData.fromMap({
       KeyAssets.cookie: cookie,
-      KeyAssets.gradeInfoUrl: pscjUrl,
+      KeyAssets.gradeInfoUrl: gradeInfoUrl,
     });
     post(UrlAssets.queryScoreInfo,
         params: params, onDataSuccess: onDataSuccess, onFinish: onFinish);

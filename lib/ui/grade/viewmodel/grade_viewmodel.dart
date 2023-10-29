@@ -71,12 +71,12 @@ class GradeViewModel extends BaseViewModel<GradeModel, GradeService> {
   /// 获取成绩详情
   ///
   /// [cookie] cookie
-  /// [gradeInfoUrl] pscjUrl
+  /// [gradeInfoUrl] 成绩详情Url
   /// [position] 列表索引
   void queryScoreInfo(String cookie, String gradeInfoUrl, int position) {
     service?.queryScoreInfo(
         cookie: cookie,
-        pscjUrl: gradeInfoUrl,
+        gradeInfoUrl: gradeInfoUrl,
         onDataSuccess: (data, msg) {
           GradeInfoBean gradeInfoBean = GradeInfoBean.fromJson(data);
           GradeDialog(

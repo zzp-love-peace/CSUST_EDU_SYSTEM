@@ -66,12 +66,4 @@ abstract class BaseViewModel<T, W extends BaseService> extends ChangeNotifier {
   void unregisterSonViewModel(dynamic key) {
     _store.remove(key);
   }
-
-// @override
-// void dispose() {
-//   _store.forEach((key, viewModel) {
-//     viewModel.dispose();
-//   });
-//   super.dispose();
-// }
 }

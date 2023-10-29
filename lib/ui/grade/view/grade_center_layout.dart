@@ -1,5 +1,6 @@
 import 'package:csust_edu_system/arch/baseview/seletor_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/ui/grade/json/grade_bean.dart';
 import 'package:csust_edu_system/ui/grade/view/grade_item_view.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -17,7 +18,7 @@ class GradeCenterLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SelectorView<GradeViewModel, List>(
+    return SelectorView<GradeViewModel, List<GradeBean>>(
         selector: (ctx, viewModel) => viewModel.model.gradeList,
         onInit: (viewModel) {
           viewModel.queryScore(StuInfo.cookie, viewModel.model.term);

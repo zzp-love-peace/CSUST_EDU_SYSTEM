@@ -6,3 +6,6 @@ const String courseTableName = 'course_week';
 
 /// 教务通知表名
 const String schoolNoticeTableName = 'school_notice';
+
+/// 成绩表名
+const String gradeTableName = 'grade_term';

@@ -325,4 +325,46 @@ class KeyAssets {
 
   /// key-周课表时间Map
   static const String weekCourseTimeMap = 'weekCourseTimeMap';
+
+  /// key-infoContent
+  static const String infoContent = 'infoContent';
+
+  /// key-绩点
+  static const String point = 'point';
+
+  /// key-方式
+  static const String method = 'method';
+
+  /// key-选修还是必修
+  static const String property = 'property';
+
+  /// key-课程类别
+  static const String nature = 'nature';
+
+  /// key-学分
+  static const String creditPoints = 'xuefen';
+
+  /// key-score
+  static const String score = 'score';
+
+  /// key-成绩详情Url
+  static const String gradeInfoUrl = 'pscjUrl';
+
+  /// key-平时成绩
+  static const String normalGrade = 'pscj';
+
+  /// key-平时成绩比例
+  static const String normalGradePer = 'pscjBL';
+
+  /// key-期中成绩
+  static const String middleGrade = 'qzcj';
+
+  /// key-期中成绩比例
+  static const String middleGradePer = 'qzcjBL';
+
+  /// key-期末成绩
+  static const String finalGrade = 'qmcj';
+
+  /// key-期末成绩比例
+  static const String finalGradePer = 'qmcjBL';
 }

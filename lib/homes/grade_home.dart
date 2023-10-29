@@ -4,18 +4,18 @@ import 'package:csust_edu_system/common/termpicker/view/common_term_picker_view.
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
 import 'package:csust_edu_system/network/http_manager.dart';
-import 'package:csust_edu_system/util/grade_util.dart';
+import 'package:csust_edu_system/util/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
-class GradeHome extends StatefulWidget {
-  const GradeHome({Key? key}) : super(key: key);
+class GradeHomeT extends StatefulWidget {
+  const GradeHomeT({Key? key}) : super(key: key);
 
   @override
-  State<GradeHome> createState() => _GradeHomeState();
+  State<GradeHomeT> createState() => _GradeHomeState();
 }
 
-class _GradeHomeState extends State<GradeHome> {
+class _GradeHomeState extends State<GradeHomeT> {
   List _gradeList = [];
   double _point = 0;
   String _term = DateInfo.nowTerm;
@@ -120,9 +120,9 @@ class _GradeHomeState extends State<GradeHome> {
                       .toList(),
                 ),
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
                     child: Text(
@@ -158,6 +158,7 @@ class _GradeHomeState extends State<GradeHome> {
         ),
         onTap: () {
           _queryScoreInfo(element['pscjUrl']).then((value) {
+            Log.d(value);
             var examData = _ExamData(
                 element['courseName'],
                 element['point'],
@@ -191,7 +192,7 @@ class _GradeHomeState extends State<GradeHome> {
       if (value['code'] == 200) {
         setState(() {
           _gradeList = value['data'];
-          _point = getSumPoint(_gradeList);
+          //  _point = getSumPoint(_gradeList);
         });
       } else {
         SmartDialog.compatible.showToast('', widget: CustomToast(value['msg']));

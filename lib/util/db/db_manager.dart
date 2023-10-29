@@ -23,12 +23,17 @@ class DBManager {
 
   /// 数据库课程表建表语句
   static const createCourseTableSql =
-      'create table $courseTableName(id integer primary key autoincrement, term text, weekNum integer, content text)';
+      'create table if not exists $courseTableName(id integer primary key autoincrement, term text, weekNum integer, content text)';
 
   ///数据库教务通知表建表语句
   static const createSchoolNoticeTableSql =
-      '''create table $schoolNoticeTableName(id integer primary key autoincrement,
+      '''create table if not exists $schoolNoticeTableName(id integer primary key autoincrement,
            ggid text, title text, time text, html text)''';
+
+  /// 数据库成绩表建表语句
+  static const createGradeTableSql =
+      '''create table if not exists $gradeTableName(id integer primary key autoincrement,
+          term text, courseName text, content text, infoContent text)''';
 
   /// 获取不为空的数据库
   Future<Database> _getCheckDatabase() async {
@@ -43,14 +48,16 @@ class DBManager {
     String path = join(databasesPath, dbName);
     return await openDatabase(
       path,
-      version: 2,
+      version: 3,
       onOpen: (db) {},
       onCreate: (Database db, int v) async {
         await db.execute(createCourseTableSql);
         await db.execute(createSchoolNoticeTableSql);
+        await db.execute(createGradeTableSql);
       },
       onUpgrade: (Database db, int oldVersion, int newVersion) async {
         await db.execute(createSchoolNoticeTableSql);
+        await db.execute(createGradeTableSql);
       },
     );
   }

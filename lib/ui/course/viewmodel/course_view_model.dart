@@ -8,6 +8,7 @@ import 'package:csust_edu_system/ui/course/jsonbean/custom_course_bean.dart';
 import 'package:csust_edu_system/ui/course/jsonbean/db_course_bean.dart';
 import 'package:csust_edu_system/ui/course/model/course_model.dart';
 import 'package:csust_edu_system/ui/course/service/course_service.dart';
+import 'package:csust_edu_system/util/sp/sp_data.dart';
 import 'package:csust_edu_system/util/sp/sp_util.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +26,10 @@ class CourseViewModel extends BaseViewModel<CourseModel, CourseService> {
 
   @override
   CourseService? createService() => CourseService();
+
+  /// 周课表时间Map
+  final SpData<String> _spWeekCourseTimeMap = SpData<String>(
+      key: KeyAssets.weekCourseTimeMap, defaultValue: StringAssets.emptyStr);
 
   /// 初始化数据
   void initData() {
@@ -51,6 +56,37 @@ class CourseViewModel extends BaseViewModel<CourseModel, CourseService> {
     if (isNotify) {
       notifyListeners();
     }
+  }
+
+  /// 是否需要从网络获取周课程表
+  ///
+  /// [weekNum] 周数
+  bool isGetWeekCourseFromNetwork(int weekNum) {
+    if (_spWeekCourseTimeMap.get().isNotEmpty) {
+      Map<String, dynamic> timeMap = jsonDecode(_spWeekCourseTimeMap.get());
+      if (timeMap.containsKey(weekNum.toString()) &&
+          DateTime.now()
+                  .difference(DateTime.parse(timeMap[weekNum.toString()]!))
+                  .inDays ==
+              0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /// 增加周课表最新请求时间
+  ///
+  /// [weekNum] 周数
+  void addWeekCourseLastTime(int weekNum) {
+    Map<String, dynamic> timeMap;
+    if (_spWeekCourseTimeMap.get().isNotEmpty) {
+      timeMap = jsonDecode(_spWeekCourseTimeMap.get());
+    } else {
+      timeMap = {};
+    }
+    timeMap[weekNum.toString()] = DateTime.now().toString();
+    _spWeekCourseTimeMap.set(jsonEncode(timeMap));
   }
 
   /// 学期选择器回调
@@ -94,6 +130,7 @@ class CourseViewModel extends BaseViewModel<CourseModel, CourseService> {
         } else {
           await CourseDBManager.updateCourse(content, dbValue.id);
         }
+        addWeekCourseLastTime(weekNum);
         const HintDialog(
           title: StringAssets.tips,
           subTitle: StringAssets.refreshSuccess,

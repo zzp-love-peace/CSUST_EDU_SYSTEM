@@ -17,17 +17,20 @@ class CourseService extends BaseService {
   /// [term] 学期
   /// [weekNum] 周数
   /// [onDataSuccess] 获取数据成功回调
+  /// [onFinish] 请求结束回调
   void getWeekCourse(
       {required String cookie,
       required String term,
       required int weekNum,
-      required OnDataSuccess onDataSuccess}) {
+      required OnDataSuccess onDataSuccess,
+      OnFinish? onFinish}) {
     post(UrlAssets.getWeekCourse,
         params: FormData.fromMap({
           KeyAssets.cookie: cookie,
           KeyAssets.xueqi: term,
           KeyAssets.zc: weekNum.toString()
         }),
-        onDataSuccess: onDataSuccess);
+        onDataSuccess: onDataSuccess,
+        onFinish: onFinish);
   }
 }

@@ -23,6 +23,9 @@ class CourseDBManager {
   ///
   /// [course] 具体课程
   static Future<DBCourseBean> insertCourse(DBCourseBean course) async {
+    await DBManager.getInstance().rawDelete(
+        'delete from $courseTableName where term=? and weekNum=?',
+        [course.term, course.weekNum]);
     course.id = await DBManager.getInstance().rawInsert(
         'insert into $courseTableName (term, weekNum, content) values (?, ? ,?)',
         [course.term, course.weekNum, course.content]);

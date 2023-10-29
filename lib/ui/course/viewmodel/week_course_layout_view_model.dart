@@ -4,6 +4,8 @@ import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
 import 'package:csust_edu_system/ui/course/db/course_db_manager.dart';
 import 'package:csust_edu_system/ui/course/jsonbean/db_course_bean.dart';
 import 'package:csust_edu_system/ui/course/model/week_course_layout_model.dart';
+import 'package:csust_edu_system/ui/course/viewmodel/course_view_model.dart';
+import 'package:provider/provider.dart';
 
 import '../service/course_service.dart';
 
@@ -25,26 +27,42 @@ class WeekCourseLayoutViewModel
   /// [term] 学期
   /// [weekNum] 周数
   void getWeekCourse(String cookie, String term, int weekNum) {
-    CourseDBManager.containsCourse(term, weekNum).then((dbValue) {
-      if (dbValue == null) {
-        service?.getWeekCourse(
-          cookie: cookie,
-          term: term,
-          weekNum: weekNum,
-          onDataSuccess: (data, msg) {
-            model.courseList = _changeCourseList(data);
-            String content = jsonEncode(data);
-            CourseDBManager.insertCourse(DBCourseBean(term, weekNum, content));
-          },
-        );
-      } else {
-        List list = jsonDecode(dbValue.content);
-        if (list.isNotEmpty) {
-          model.courseList = _changeCourseList(list);
+    CourseDBManager.containsCourse(term, weekNum).then(
+      (dbValue) {
+        var courseViewModel = context.read<CourseViewModel>();
+        if (dbValue != null &&
+            !courseViewModel.isGetWeekCourseFromNetwork(weekNum)) {
+          List list = jsonDecode(dbValue.content);
+          if (list.isNotEmpty) {
+            model.courseList = _changeCourseList(list);
+            notifyListeners();
+          }
+        } else {
+          service?.getWeekCourse(
+            cookie: cookie,
+            term: term,
+            weekNum: weekNum,
+            onDataSuccess: (data, msg) {
+              model.courseList = _changeCourseList(data);
+              notifyListeners();
+              String content = jsonEncode(data);
+              CourseDBManager.insertCourse(
+                  DBCourseBean(term, weekNum, content));
+              courseViewModel.addWeekCourseLastTime(weekNum);
+            },
+            onFinish: (isSuccess) {
+              if (!isSuccess && dbValue != null) {
+                List list = jsonDecode(dbValue.content);
+                if (list.isNotEmpty) {
+                  model.courseList = _changeCourseList(list);
+                  notifyListeners();
+                }
+              }
+            },
+          );
         }
-      }
-      notifyListeners();
-    });
+      },
+    );
   }
 
   /// 改变服务器返回的课表list格式 (服务器返回的数据不适合GridView。。。所以必须得处理)

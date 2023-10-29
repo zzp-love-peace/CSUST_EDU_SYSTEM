@@ -115,11 +115,4 @@ class HttpManager {
 
   Future<Map> getAssByTab(String token, int id) async =>
       await _get('/association/get', params: {'id': id} , header: token);
-
-  Future<Map> getAllRecruitInfo(String token) async =>
-      await _get('/recruitInfo/getAll', header: token);
-
-  Future<Map> getRecruitInfoByTitle(String token, String title) async =>
-      await _get('/recruitInfo/getByTitle', params: {'name': title}, header: token);
-
 }

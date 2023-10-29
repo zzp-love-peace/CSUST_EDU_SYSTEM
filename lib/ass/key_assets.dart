@@ -322,4 +322,7 @@ class KeyAssets {
 
   /// key-已读通知列表
   static const String readNotificationList = 'readNotificationList';
+
+  /// key-周课表时间Map
+  static const String weekCourseTimeMap = 'weekCourseTimeMap';
 }

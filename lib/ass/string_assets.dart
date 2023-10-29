@@ -808,4 +808,46 @@ class StringAssets {
 
   /// 刚刚
   static const String justNow = '刚刚';
+
+  /// 成绩
+  static const String grade = '成绩';
+
+  /// 成绩tips
+  static const String gradeTips = 'Tip:点击学科列表获取平时成绩';
+
+  /// 暂无数据...
+  static const String noDataAvailable = '暂无数据...';
+
+  /// 平均绩点
+  static const String averagePoint = '平均绩点';
+
+  /// 绩点
+  static const String point = '绩点';
+
+  /// 数据库成绩数据重复
+  static const String dbGradeDuplicated = '数据库成绩数据重复';
+
+  /// 学分
+  static const String xuefen = '学分';
+
+  /// 课程性质
+  static const String courseNature = '课程性质';
+
+  /// 平时成绩
+  static const String normalGrade = '平时成绩';
+
+  /// 平时成绩比例
+  static const String normalGradePer = '平时成绩比例';
+
+  /// 期中成绩
+  static const String middleGrade = '期中成绩';
+
+  /// 期中成绩比例
+  static const String middleGradePer = '期中成绩比例';
+
+  /// 期末成绩
+  static const String finalGrade = '期末成绩';
+
+  /// 期末成绩比例
+  static const String finalGradePer = '期末成绩比例';
 }

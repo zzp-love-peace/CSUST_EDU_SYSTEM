@@ -114,4 +114,10 @@ class UrlAssets {
 
   /// url-通过标题获取兼职信息
   static const getRecruitInfoByTitle = '/recruitInfo/getByTitle';
+
+  /// url-通过学期获取成绩
+  static const queryScore = '/queryScore';
+
+  /// url-查询成绩详情
+  static const queryScoreInfo = '/queryPscj';
 }

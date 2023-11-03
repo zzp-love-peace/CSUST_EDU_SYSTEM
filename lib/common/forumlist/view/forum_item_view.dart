@@ -58,7 +58,9 @@ class ForumItemView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: Hero(
-                          tag: forum.userInfo.avatar + forum.id.toString(),
+                          tag: forum.userInfo.avatar +
+                              forum.id.toString() +
+                              forumItemTypeToHeroTag(type),
                           child: ClipOval(
                             child: CachedImage(
                               size: 42,
@@ -78,7 +80,9 @@ class ForumItemView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Hero(
-                            tag: forum.realInfo.name + forum.id.toString(),
+                            tag: forum.realInfo.name +
+                                forum.id.toString() +
+                                forumItemTypeToHeroTag(type),
                             child: Text(
                               forum.realInfo.name.hideName(),
                               style: const TextStyle(
@@ -89,7 +93,9 @@ class ForumItemView extends StatelessWidget {
                             height: 5,
                           ),
                           Hero(
-                            tag: forum.createTime + forum.id.toString(),
+                            tag: forum.createTime +
+                                forum.id.toString() +
+                                forumItemTypeToHeroTag(type),
                             child: Text(
                               DateUtil.getForumDateString(forum.createTime),
                               style: const TextStyle(fontSize: 12),
@@ -102,13 +108,15 @@ class ForumItemView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
                     child: Hero(
-                      tag: forum.content + forum.id.toString(),
+                      tag: forum.content +
+                          forum.id.toString() +
+                          forumItemTypeToHeroTag(type),
                       child: Text(
                         forum.content,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 4,
                         style:
-                        const TextStyle(fontSize: 16, color: Colors.black),
+                            const TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ),
                   ),

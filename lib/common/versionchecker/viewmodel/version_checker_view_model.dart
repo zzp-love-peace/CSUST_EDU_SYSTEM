@@ -54,7 +54,7 @@ class VersionCheckerViewModel
                   _showUpdateDialog(versionInfoBean.apkPath);
                 }).showDialog();
           }
-        } else {
+        } else if (!isBegin) {
           StringAssets.newVersionTips.showToast();
         }
       },

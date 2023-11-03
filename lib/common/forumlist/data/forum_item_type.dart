@@ -1,3 +1,5 @@
+import 'package:csust_edu_system/ass/string_assets.dart';
+
 /// 帖子item类型
 ///
 /// @author zzp
@@ -12,4 +14,23 @@ enum ForumItemType {
 
   /// 我的发帖内的帖子
   myForum
+}
+
+/// 帖子item类型转hero动画tag
+///
+/// [type] 帖子item类型
+String forumItemTypeToHeroTag(ForumItemType type) {
+  String res;
+  switch (type) {
+    case ForumItemType.tabForum:
+      res = StringAssets.forum;
+      break;
+    case ForumItemType.collectForum:
+      res = StringAssets.myCollect;
+      break;
+    case ForumItemType.myForum:
+      res = StringAssets.myForum;
+      break;
+  }
+  return res;
 }

@@ -31,7 +31,8 @@ class ForumItemViewModel
       service?.clickAdvertise(model.forumBean.id);
     }
     context
-        .push<ForumBean>(ForumDetailPage(forumBean: model.forumBean))
+        .push<ForumBean>(
+            ForumDetailPage(type: model.type, forumBean: model.forumBean))
         .then((result) {
       if (result != null) {
         if (result.resultCode == PageResultCode.forumDelete) {

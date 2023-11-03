@@ -15,6 +15,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/dialog/select_dialog.dart';
+import '../../../common/forumlist/data/forum_item_type.dart';
 import '../../../common/forumlist/jsonbean/forum_bean.dart';
 import '../../../data/stu_info.dart';
 import '../../../util/date_util.dart';
@@ -27,7 +28,11 @@ import '../view/forum_detail_like_and_comment_view.dart';
 /// @since 2023/10/23
 /// @version v1.8.8
 class ForumDetailPage extends StatelessWidget {
-  const ForumDetailPage({super.key, required this.forumBean});
+  const ForumDetailPage(
+      {super.key, this.type = ForumItemType.tabForum, required this.forumBean});
+
+  /// 帖子类型
+  final ForumItemType type;
 
   /// 帖子
   final ForumBean forumBean;
@@ -35,8 +40,8 @@ class ForumDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) =>
-          ForumDetailViewModel(model: ForumDetailModel(forumBean: forumBean)),
+      create: (_) => ForumDetailViewModel(
+          model: ForumDetailModel(type: type, forumBean: forumBean)),
       child: const ForumDetailHome(),
     );
   }
@@ -101,12 +106,14 @@ class ForumDetailHome extends StatelessWidget {
                     children: [
                       Hero(
                           tag: forumDetailModel.forumBean.userInfo.avatar +
-                              forumDetailModel.forumBean.id.toString(),
+                              forumDetailModel.forumBean.id.toString() +
+                              forumItemTypeToHeroTag(forumDetailModel.type),
                           child: _headImageView(
                               forumDetailModel.forumBean.userInfo.avatar)),
                       Hero(
                         tag: forumDetailModel.forumBean.realInfo.name +
-                            forumDetailModel.forumBean.id.toString(),
+                            forumDetailModel.forumBean.id.toString() +
+                            forumItemTypeToHeroTag(forumDetailModel.type),
                         child: Text(
                           forumDetailModel.forumBean.realInfo.name.hideName(),
                           style: const TextStyle(
@@ -121,7 +128,8 @@ class ForumDetailHome extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(24, 20, 24, 20),
                           child: Hero(
                             tag: forumDetailModel.forumBean.content +
-                                forumDetailModel.forumBean.id.toString(),
+                                forumDetailModel.forumBean.id.toString() +
+                                forumItemTypeToHeroTag(forumDetailModel.type),
                             child: SelectableText(
                               forumDetailModel.forumBean.content,
                               style: const TextStyle(
@@ -157,7 +165,8 @@ class ForumDetailHome extends StatelessWidget {
                             padding: const EdgeInsets.only(right: 24),
                             child: Hero(
                               tag: forumDetailModel.forumBean.createTime +
-                                  forumDetailModel.forumBean.id.toString(),
+                                  forumDetailModel.forumBean.id.toString() +
+                                  forumItemTypeToHeroTag(forumDetailModel.type),
                               child: Text(
                                 DateUtil.getForumDateString(
                                     forumDetailModel.forumBean.createTime),
@@ -190,6 +199,8 @@ class ForumDetailHome extends StatelessWidget {
   }
 
   /// 头像
+  ///
+  /// [imgUrl] 头像链接
   Widget _headImageView(String imgUrl) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 15, 0, 8),

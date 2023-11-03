@@ -1,8 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ui/association/jsonbean/association_info_bean.dart';
 import 'package:flutter/material.dart';
+
 import '../../../ass/string_assets.dart';
+import '../../../common/cachedimage/view/cached_image.dart';
+
 /// 社团信息页
 ///
 /// @author bmc
@@ -39,25 +41,21 @@ class AssociationInfoPage extends StatelessWidget {
                     height: 30,
                   ),
                   ClipOval(
-                    child: CachedNetworkImage(
-                      width: 80,
-                      height: 80,
+                    child: CachedImage(
+                      size: 80,
                       fit: BoxFit.cover,
-                      imageUrl: '${assInfo.icon}/webp',
-                      progressIndicatorBuilder:
-                          (context, url, downloadProgress) =>
+                      url: '${assInfo.icon}/webp',
+                      progressWidget: (context, url, downloadProgress) =>
+                          CircularProgressIndicator(
+                              value: downloadProgress.progress),
+                      errorWidget: CachedImage(
+                          size: 80,
+                          fit: BoxFit.cover,
+                          url: assInfo.icon,
+                          progressWidget: (context, url, downloadProgress) =>
                               CircularProgressIndicator(
                                   value: downloadProgress.progress),
-                      errorWidget: (context, url, error) => CachedNetworkImage(
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                          imageUrl: assInfo.icon,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) =>
-                                  CircularProgressIndicator(
-                                      value: downloadProgress.progress),
-                          errorWidget: (context, url, error) => Container(
+                          errorWidget: Container(
                               width: 80,
                               height: 80,
                               color: Theme.of(context).primaryColor)),

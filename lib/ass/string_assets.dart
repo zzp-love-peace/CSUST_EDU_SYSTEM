@@ -850,4 +850,7 @@ class StringAssets {
 
   /// 期末成绩比例
   static const String finalGradePer = '期末成绩比例';
+
+  /// 考试
+  static const String exam = "考试";
 }

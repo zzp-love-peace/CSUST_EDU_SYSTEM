@@ -1,7 +1,10 @@
+import 'package:csust_edu_system/ext/context_extension.dart';
+import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/association/jsonbean/association_info_bean.dart';
 import 'package:csust_edu_system/ui/association/page/association_info_page.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common/cachedimage/data/cached_image_type.dart';
 import '../../../common/cachedimage/view/cached_image.dart';
 
 /// 社团列表Item View
@@ -21,8 +24,7 @@ class AssociationItemView extends StatelessWidget {
       color: Colors.white,
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => AssociationInfoPage(assInfo: assInfo)));
+          context.push(AssociationInfoPage(assInfo: assInfo));
         },
         child: Row(
           children: [
@@ -32,21 +34,8 @@ class AssociationItemView extends StatelessWidget {
                 child: CachedImage(
                   size: 45,
                   fit: BoxFit.cover,
-                  url: '${assInfo.icon}/webp',
-                  progressWidget: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(
-                          value: downloadProgress.progress),
-                  errorWidget: CachedImage(
-                      size: 45,
-                      fit: BoxFit.cover,
-                      url: assInfo.icon,
-                      progressWidget: (context, url, downloadProgress) =>
-                          CircularProgressIndicator(
-                              value: downloadProgress.progress),
-                      errorWidget: Container(
-                          width: 45,
-                          height: 45,
-                          color: Theme.of(context).primaryColor)),
+                  url: assInfo.icon.httpsToHttp(),
+                  type: CachedImageType.webp,
                 ),
               ),
             ),

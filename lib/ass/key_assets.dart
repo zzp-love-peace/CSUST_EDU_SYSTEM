@@ -331,4 +331,7 @@ class KeyAssets {
 
   /// key-公众号
   static const String publicNum = 'publicNum';
+
+  /// key-社团类别名
+  static const String categoryName = 'categoryName';
 }

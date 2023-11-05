@@ -6,7 +6,7 @@ import 'package:csust_edu_system/ui/association/view/association_list_view.dart'
 import 'package:csust_edu_system/ui/association/viewmodel/association_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../common/lottie/none_lottie.dart';
+
 /// 社团页
 ///
 /// @author bmc
@@ -22,6 +22,7 @@ class AssociationPage extends StatelessWidget {
         child: const AssociationHome());
   }
 }
+
 /// 社团页Home
 ///
 /// @author bmc
@@ -37,7 +38,7 @@ class AssociationHome extends StatelessWidget {
         viewModel.getAssociationTabList();
       },
       builder: (ctx, viewModel, _) {
-        return viewModel.model.associationList.isNotEmpty ? DefaultTabController(
+        return DefaultTabController(
           length: viewModel.model.tabList.length,
           child: Scaffold(
             appBar: CommonAppBar.create(
@@ -51,11 +52,12 @@ class AssociationHome extends StatelessWidget {
                 isScrollable: true,
               ),
             ),
-            body: TabBarView(children: viewModel.model.tabList.map((tabBean) => AssociationListView(id: tabBean.id)).toList(),
+            body: TabBarView(
+              children: viewModel.model.tabList
+                  .map((tabBean) => AssociationListView(id: tabBean.id))
+                  .toList(),
             ),
-            ),
-          ) : const NoneLottie(
-          hint: StringAssets.noInformation,
+          ),
         );
       },
     );

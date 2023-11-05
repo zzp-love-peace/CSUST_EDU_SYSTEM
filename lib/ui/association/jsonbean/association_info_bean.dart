@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:csust_edu_system/ass/key_assets.dart';
 
 /// 社团信息Bean类
@@ -34,7 +35,7 @@ class AssociationInfoBean {
   /// 社团介绍
   String introduce;
 
-  // 社团官q
+  /// 社团官q
   String qq;
 
   /// 社团公众号

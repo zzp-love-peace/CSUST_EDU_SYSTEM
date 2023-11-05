@@ -16,8 +16,8 @@ extension StringExtension on String {
         this != _StringToastHelper.lastToast ||
         (this == _StringToastHelper.lastToast &&
             nowDateTime
-                    .difference(_StringToastHelper.lastToastDateTime!)
-                    .inSeconds >=
+                .difference(_StringToastHelper.lastToastDateTime!)
+                .inSeconds >=
                 5)) {
       SmartDialog.showToast(this, builder: (_) => CustomToast(this));
       _StringToastHelper.lastToast = this;
@@ -51,6 +51,14 @@ extension StringExtension on String {
       return '${this[0]}*';
     }
     return replaceRange(1, length - 1, '*' * (length - 2));
+  }
+
+  /// 将https转变成http
+  String httpsToHttp() {
+    if (startsWith(StringAssets.https)) {
+      return replaceRange(0, 5, StringAssets.http);
+    }
+    return this;
   }
 }
 

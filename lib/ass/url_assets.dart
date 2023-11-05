@@ -123,4 +123,10 @@ class UrlAssets {
 
   /// url-通过学期获取考试
   static const queryExam = '/getKsap';
+
+  /// url-获取社团类别
+  static const getAssociationTabList = '/category/getAll';
+
+  /// url-通过类别获取社团列表
+  static const getAssociationInfoByTabId = '/association/get';
 }

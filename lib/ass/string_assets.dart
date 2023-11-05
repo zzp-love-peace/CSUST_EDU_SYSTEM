@@ -856,4 +856,25 @@ class StringAssets {
 
   /// 数据库考试数据重复
   static const String dbExamDuplicated = '数据库考试数据重复';
+
+  /// 公众号：
+  static const String publicNum = '公众号：';
+
+  /// 官q：
+  static const String officialQQ = '官q：';
+
+  /// 材料来源：长理学社联
+  static const String sourceOfMaterial = '材料来源：长理学社联';
+
+  /// 社团详情
+  static const String associationInfo = '社团详情';
+
+  /// 社团
+  static const String association = '社团';
+
+  /// https
+  static const String https = 'https';
+
+  /// http
+  static const String http = 'http';
 }

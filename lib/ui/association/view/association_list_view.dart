@@ -21,14 +21,17 @@ class AssociationListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => AssociationListViewModel(model: AssociationListModel()),
-      child:
-          ConsumerView<AssociationListViewModel>(builder: (ctx, viewModel, _) {
-        viewModel.getAssociationByTab(id);
-        return ListView.builder(
-            itemCount: viewModel.model.associationList.length,
-            itemBuilder: (context, index) => AssociationItemView(
-                assInfo: viewModel.model.associationList[index]));
-      }),
+      child: ConsumerView<AssociationListViewModel>(
+        onInit: (viewModel) {
+          viewModel.getAssociationByTab(id);
+        },
+        builder: (ctx, viewModel, _) {
+          return ListView.builder(
+              itemCount: viewModel.model.associationList.length,
+              itemBuilder: (context, index) => AssociationItemView(
+                  assInfo: viewModel.model.associationList[index]));
+        },
+      ),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/association/jsonbean/association_info_bean.dart';
 import 'package:csust_edu_system/ui/association/model/association_list_model.dart';
 import 'package:csust_edu_system/ui/association/service/association_list_service.dart';
@@ -22,7 +21,6 @@ class AssociationListViewModel
   /// [id] 社团类别id
   getAssociationByTab(int id) {
     service?.getAssociationInfoByTabId(id, onDataSuccess: (data, msg) {
-      var model = context.readViewModel<AssociationListViewModel>().model;
       model.associationList =
           data.map((json) => AssociationInfoBean.fromJson(json)).toList();
       notifyListeners();

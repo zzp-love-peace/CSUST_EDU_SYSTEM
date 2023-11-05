@@ -1,4 +1,5 @@
 import '../jsonbean/association_info_bean.dart';
+
 /// 社团列表 Model
 ///
 /// @author bmc

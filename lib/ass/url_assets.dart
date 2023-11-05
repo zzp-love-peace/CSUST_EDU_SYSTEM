@@ -120,4 +120,10 @@ class UrlAssets {
 
   /// url-查询成绩详情
   static const queryScoreInfo = '/queryPscj';
+
+  /// url-获取社团类别
+  static const getAssociationTabList = '/category/getAll';
+
+  /// url-通过类别获取社团列表
+  static const getAssociationInfoByTabId = '/association/get';
 }

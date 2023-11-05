@@ -367,4 +367,19 @@ class KeyAssets {
 
   /// key-期末成绩比例
   static const String finalGradePer = 'qmcjBL';
+
+  /// key-图标
+  static const String icon = 'icon';
+
+  /// key-qq
+  static const String qq = 'qq';
+
+  /// key-社团介绍
+  static const String introduce = 'introduce';
+
+  /// key-公众号
+  static const String publicNum = 'publicNum';
+
+  /// key-社团类别名
+  static const String categoryName = 'categoryName';
 }

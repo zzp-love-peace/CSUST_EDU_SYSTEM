@@ -32,6 +32,12 @@ class ExamPage extends StatelessWidget {
   }
 }
 
+/// 考试页Home
+///
+/// @author wk
+/// @since 2023/11/4
+/// @version v1.8.8
+
 class ExamHome extends StatelessWidget {
   const ExamHome({super.key});
 
@@ -39,55 +45,61 @@ class ExamHome extends StatelessWidget {
   Widget build(BuildContext context) {
     ExamViewModel gradeViewModel = context.readViewModel<ExamViewModel>();
     return Scaffold(
-        appBar: CommonAppBar.create(
-          StringAssets.exam,
-          bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(40.0),
-              child: Container(
-                  color: Colors.white,
-                  height: 40,
-                  child: CommonTermPickerView(
-                      nowTerm: gradeViewModel.model.term,
-                      callBack: (term) {
-                        gradeViewModel.queryExam(StuInfo.cookie, term);
-                        gradeViewModel.model.term = term;
-                      }))),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  gradeViewModel.refreshExam();
-                },
-                icon: const Icon(Icons.refresh, color: Colors.white))
-          ],
+      appBar: CommonAppBar.create(
+        StringAssets.exam,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(40.0),
+          child: Container(
+            color: Colors.white,
+            height: 40,
+            child: CommonTermPickerView(
+              nowTerm: gradeViewModel.model.term,
+              callBack: (term) {
+                gradeViewModel.queryExam(StuInfo.cookie, term);
+                gradeViewModel.model.term = term;
+              },
+            ),
+          ),
         ),
-        body: SelectorView<ExamViewModel, List<ExamBean>>(
-            selector: (ctx, viewModel) => viewModel.model.examList,
-            onInit: (viewModel) {
-              viewModel.queryExam(StuInfo.cookie, viewModel.model.term);
-            },
-            builder: (ctx, examList, _) {
-              return examList.isNotEmpty
-                  ? Column(
+        actions: [
+          IconButton(
+              onPressed: () {
+                gradeViewModel.refreshExam();
+              },
+              icon: const Icon(Icons.refresh, color: Colors.white)),
+        ],
+      ),
+      body: SelectorView<ExamViewModel, List<ExamBean>>(
+        selector: (ctx, viewModel) => viewModel.model.examList,
+        onInit: (viewModel) {
+          viewModel.queryExam(StuInfo.cookie, viewModel.model.term);
+        },
+        builder: (ctx, examList, _) {
+          return examList.isNotEmpty
+              ? Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: examList.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return ExamItemView(examBean: examList[index]);
+                        },
+                      ),
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                            child: ListView.builder(
-                          itemCount: examList.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return ExamItemView(examBean: examList[index]);
-                          },
-                        )),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 20,
-                            )
-                          ],
-                        )
+                        SizedBox(
+                          height: 20,
+                        ),
                       ],
-                    )
-                  : const NoneLottie(hint: StringAssets.noDataAvailable);
-            }));
+                    ),
+                  ],
+                )
+              : const NoneLottie(hint: StringAssets.noDataAvailable);
+        },
+      ),
+    );
   }
 }

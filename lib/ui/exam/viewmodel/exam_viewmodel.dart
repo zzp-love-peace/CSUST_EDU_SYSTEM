@@ -6,10 +6,10 @@ import 'package:csust_edu_system/ui/exam/jsonbean/exam_bean.dart';
 import 'package:csust_edu_system/ui/exam/model/exam_model.dart';
 import 'package:csust_edu_system/ui/exam/service/exam_service.dart';
 
-import '../../../ass/key_assets.dart';
 import '../../../ass/string_assets.dart';
 import '../../../data/stu_info.dart';
-import '../../../util/sp/sp_data.dart';
+import '../db/exam_db_manager.dart';
+import '../jsonbean/db_exam_bean.dart';
 
 /// 考试ViewModel
 ///
@@ -21,10 +21,6 @@ class ExamViewModel extends BaseViewModel<ExamModel, ExamService> {
 
   /// 上一次click触发时间
   int lastClick = 0;
-
-  /// sp-考试列表
-  final SpData<String> _spExamList =
-      SpData(key: KeyAssets.exam, defaultValue: StringAssets.emptyStr);
 
   @override
   ExamService? createService() => ExamService();
@@ -38,18 +34,29 @@ class ExamViewModel extends BaseViewModel<ExamModel, ExamService> {
         cookie: cookie,
         term: term,
         onDataSuccess: (data, msg) {
-          model.examList = data.map((json) => ExamBean.fromJson(json)).toList();
+          model.examList = data.map((json) {
+            String content = jsonEncode(json);
+            ExamBean examBean = ExamBean.fromJson(json);
+            ExamDBManager.containsExam(term, examBean.examName).then((dbValue) {
+              if (dbValue == null) {
+                ExamDBManager.insertExam(
+                    DBExamBean(term, examBean.examName, content));
+              } else {
+                ExamDBManager.updateExam(content, dbValue.id);
+              }
+            });
+            return examBean;
+          }).toList();
           notifyListeners();
-          _spExamList.set(jsonEncode(data));
         },
         onFinish: (isSuccess) {
           if (!isSuccess) {
-            if (_spExamList.get().isNotEmpty) {
-              List data = jsonDecode(_spExamList.get());
-              model.examList =
-                  data.map((json) => ExamBean.fromJson(json)).toList();
+            ExamDBManager.getExamsOfTerm(term).then((dbValue) {
+              model.examList = dbValue
+                  .map((e) => ExamBean.fromJson(jsonDecode(e.content)))
+                  .toList();
               notifyListeners();
-            }
+            });
           }
         });
   }

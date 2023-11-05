@@ -35,6 +35,11 @@ class DBManager {
       '''create table if not exists $gradeTableName(id integer primary key autoincrement,
           term text, courseName text, content text, infoContent text)''';
 
+  /// 数据库考试表建表语句
+  static const createExamTableSql =
+      '''create table if not exists $examTableName(id integer primary key autoincrement,
+          term text, courseName text, content text)''';
+
   /// 获取不为空的数据库
   Future<Database> _getCheckDatabase() async {
     if (_myDatabase != null) return _myDatabase!;
@@ -48,16 +53,18 @@ class DBManager {
     String path = join(databasesPath, dbName);
     return await openDatabase(
       path,
-      version: 3,
+      version: 4,
       onOpen: (db) {},
       onCreate: (Database db, int v) async {
         await db.execute(createCourseTableSql);
         await db.execute(createSchoolNoticeTableSql);
         await db.execute(createGradeTableSql);
+        await db.execute(createExamTableSql);
       },
       onUpgrade: (Database db, int oldVersion, int newVersion) async {
         await db.execute(createSchoolNoticeTableSql);
         await db.execute(createGradeTableSql);
+        await db.execute(createExamTableSql);
       },
     );
   }

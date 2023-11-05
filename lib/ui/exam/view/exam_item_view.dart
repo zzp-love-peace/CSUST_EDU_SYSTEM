@@ -72,19 +72,20 @@ class ExamItemView extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30),
-                      child: Text(examBean.examAddress,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: isToday ? Colors.white : Colors.black)),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ));
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: Text(examBean.examAddress,
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: isToday ? Colors.white : Colors.black)),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

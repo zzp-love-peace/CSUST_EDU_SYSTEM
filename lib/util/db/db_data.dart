@@ -9,3 +9,6 @@ const String schoolNoticeTableName = 'school_notice';
 
 /// 成绩表名
 const String gradeTableName = 'grade_term';
+
+/// 考试表名
+const String examTableName = 'exam_term';

@@ -30,6 +30,12 @@ class GradePage extends StatelessWidget {
   }
 }
 
+/// 成绩页Home
+///
+/// @author wk
+/// @since 2023/10/28
+/// @version V1.8.8
+
 class GradeHome extends StatelessWidget {
   const GradeHome({super.key});
 

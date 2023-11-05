@@ -368,6 +368,15 @@ class KeyAssets {
   /// key-期末成绩比例
   static const String finalGradePer = 'qmcjBL';
 
+  /// key-开始时间
+  static const String startTime = 'startTime';
+
+  /// key-结束时间
+  static const String endTime = 'endTime';
+
+  /// key-考试
+  static const String exam = 'exam';
+
   /// key-图标
   static const String icon = 'icon';
 

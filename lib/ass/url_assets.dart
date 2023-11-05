@@ -121,6 +121,9 @@ class UrlAssets {
   /// url-查询成绩详情
   static const queryScoreInfo = '/queryPscj';
 
+  /// url-通过学期获取考试
+  static const queryExam = '/getKsap';
+
   /// url-获取社团类别
   static const getAssociationTabList = '/category/getAll';
 

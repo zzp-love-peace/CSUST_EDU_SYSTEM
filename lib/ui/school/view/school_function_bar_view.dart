@@ -6,13 +6,13 @@ import 'package:csust_edu_system/common/functionswicher/viewmodel/function_switc
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ui/association/page/association_page.dart';
 import 'package:csust_edu_system/ui/electricity/page/electricity_page.dart';
+import 'package:csust_edu_system/ui/exam/page/exam_page.dart';
 import 'package:csust_edu_system/ui/grade/page/grade_page.dart';
 import 'package:csust_edu_system/ui/recruit/page/recruit_page.dart';
 import 'package:csust_edu_system/ui/telephonecard/page/telephone_page.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-import '../../../homes/exam_home.dart';
 
 /// 校园功能栏View
 ///
@@ -58,8 +58,8 @@ class SchoolFunctionBarView extends StatelessWidget {
               }),
               _functionItem(StringAssets.examArrangement, ImageAssets.imgExam,
                       () {
-                    context.push(const ExamHome());
-                  }),
+                        context.push(const ExamPage());
+              }),
               _functionItem(
                   StringAssets.queryElectricity, ImageAssets.imgElectricity,
                       () {

@@ -851,6 +851,12 @@ class StringAssets {
   /// 期末成绩比例
   static const String finalGradePer = '期末成绩比例';
 
+  /// 考试
+  static const String exam = "考试";
+
+  /// 数据库考试数据重复
+  static const String dbExamDuplicated = '数据库考试数据重复';
+
   /// 公众号：
   static const String publicNum = '公众号：';
 

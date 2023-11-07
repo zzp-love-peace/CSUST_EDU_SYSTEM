@@ -111,7 +111,10 @@ class MinePage extends StatelessWidget {
                             onTap: () {
                               context.push(const MessagePage());
                             },
-                          )
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
                         ],
                       ),
                     )
@@ -125,6 +128,9 @@ class MinePage extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(12))),
             child: Column(
               children: [
+                const SizedBox(
+                  height: 8,
+                ),
                 _mineCardTile(
                   text: StringAssets.personalData,
                   icon: const Icon(
@@ -216,8 +222,9 @@ class MinePage extends StatelessWidget {
       required Icon icon,
       required Function onTap,
       Widget? trailing}) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      height: 40,
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(12)),
         child: Row(
@@ -227,7 +234,10 @@ class MinePage extends StatelessWidget {
               width: 30,
             ),
             Expanded(
-              child: Text(text),
+              child: Text(
+                text,
+                style: const TextStyle(fontSize: 15, color: Colors.black),
+              ),
             ),
             trailing ?? const SizedBox(),
             const SizedBox(

@@ -856,4 +856,10 @@ class StringAssets {
 
   /// 数据库考试数据重复
   static const String dbExamDuplicated = '数据库考试数据重复';
+
+  /// 用户反馈
+  static const String accountAdvice = '用户反馈';
+
+  /// 系统通知
+  static const String systemNotice = '系统通知';
 }

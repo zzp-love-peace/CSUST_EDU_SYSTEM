@@ -16,7 +16,7 @@ class ExamItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// 是否是今天
+    // 是否是今天
     bool isToday = false;
     if (examBean.date == DateInfo.nowDate) isToday = true;
     return Card(

@@ -183,7 +183,26 @@ class MinePage extends StatelessWidget {
                     Icons.sync,
                     color: Colors.green,
                   ),
-                  trailing: const Text(AppInfo.version),
+                  trailing: ConsumerView<VersionCheckerViewModel>(
+                    builder: (context, appInfo, _) => Stack(
+                      alignment: Alignment.centerLeft,
+                      children: [
+                        if (appInfo.model.hasNewVersion)
+                          const Padding(
+                            padding: EdgeInsets.only(right: 30),
+                            child: Icon(
+                              Icons.circle,
+                              color: Colors.red,
+                              size: 9,
+                            ),
+                          ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 30),
+                          child: Text(AppInfo.version),
+                        ),
+                      ],
+                    ),
+                  ),
                   onTap: () {
                     context
                         .readViewModel<VersionCheckerViewModel>()

@@ -4,6 +4,7 @@ import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:flutter/material.dart';
 
+import '../../../arch/baseview/consumer_view.dart';
 import '../../../common/versionchecker/viewmodel/version_checker_view_model.dart';
 import '../../../data/app_info.dart';
 
@@ -48,21 +49,39 @@ class AboutPage extends StatelessWidget {
             ),
             OutlinedButton(
               style: OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  side: const BorderSide(width: 1),
                 ),
-                side: const BorderSide(width: 1),
-              ),
-              onPressed: () {
-                context
-                    .readViewModel<VersionCheckerViewModel>()
-                    .checkoutVersion();
-              },
-              child: const Text(
-                StringAssets.checkoutUpdate,
-                style: TextStyle(fontSize: 15, color: Colors.black),
-              ),
-            ),
+                onPressed: () {
+                  context
+                      .readViewModel<VersionCheckerViewModel>()
+                      .checkoutVersion();
+                },
+                child: ConsumerView<VersionCheckerViewModel>(
+                  builder: (context, appInfo, _) => Stack(
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 8, right: 8),
+                        child: Text(
+                          StringAssets.checkoutUpdate,
+                          style: TextStyle(fontSize: 15, color: Colors.black),
+                        ),
+                      ),
+                      if (appInfo.model.hasNewVersion)
+                        const Padding(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Icon(
+                            Icons.circle,
+                            color: Colors.red,
+                            size: 9,
+                          ),
+                        ),
+                    ],
+                  ),
+                )),
             const Card(
               margin: EdgeInsets.fromLTRB(24, 15, 24, 15),
               shape: RoundedRectangleBorder(

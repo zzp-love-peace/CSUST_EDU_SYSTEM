@@ -1,9 +1,9 @@
-import 'package:csust_edu_system/arch/basedata/empty_model.dart';
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
 import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/dialog/hint_dialog.dart';
 import 'package:csust_edu_system/common/versionchecker/jsonbean/version_checker_bean.dart';
+import 'package:csust_edu_system/common/versionchecker/model/version_checker_model.dart';
 import 'package:csust_edu_system/common/versionchecker/service/version_checker_service.dart';
 import 'package:csust_edu_system/common/versionchecker/view/version_upudate_dialog_view.dart';
 import 'package:csust_edu_system/common/versionchecker/viewmodel/version_update_dialog_view_model.dart';
@@ -22,7 +22,7 @@ import '../../dialog/select_dialog.dart';
 /// @since 2023/10/24
 /// @version v1.8.8
 class VersionCheckerViewModel
-    extends BaseViewModel<EmptyModel, VersionCheckerService> {
+    extends BaseViewModel<VersionCheckerModel, VersionCheckerService> {
   VersionCheckerViewModel({required super.model});
 
   @override
@@ -36,6 +36,7 @@ class VersionCheckerViewModel
       onDataSuccess: (data, msg) {
         var versionInfoBean = VersionInfoBean.fromJson(data);
         if (versionInfoBean.version.compareTo(AppInfo.version) > 0) {
+          setHasNewVersion(true);
           if (isBegin && versionInfoBean.forcedUpdating) {
             HintDialog(
                 title: StringAssets.haveNewVersion,
@@ -84,6 +85,7 @@ class VersionCheckerViewModel
               as VersionUpdateDialogViewModel;
           var curProgress = ((progress / max) * 100).floor();
           versionUpdateDialogViewModel.setCurProgress(curProgress);
+          setHasNewVersion(false);
           break;
         case StringAssets.doneEnglish:
         case StringAssets.cancelEnglish:
@@ -102,5 +104,11 @@ class VersionCheckerViewModel
             .showDialog();
       }
     });
+  }
+
+  /// 设置是否有新版本更新
+  void setHasNewVersion(bool hasNewVersion) {
+    model.hasNewVersion = hasNewVersion;
+    notifyListeners();
   }
 }

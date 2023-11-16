@@ -31,7 +31,9 @@ class BottomBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConsumerView<UnreadMsgViewModel>(
+    return ConsumerView<VersionCheckerViewModel>(
+        builder: (context, versionCheckerViewModel, _) =>
+      ConsumerView<UnreadMsgViewModel>(
       onInit: (viewModel) {
         context.read<BottomTabViewModel>().showUnreadNotification(
           onFinish: () {
@@ -62,11 +64,12 @@ class BottomBarView extends StatelessWidget {
                 activeIcon: Icon(Icons.forum),
                 label: StringAssets.forum),
           BottomNavigationBarItem(
-              icon: _getMineIcon(false, unreadMsgViewModel.model.hasUnreadMsg),
+              icon: _getMineIcon(false, unreadMsgViewModel.model.hasUnreadMsg,versionCheckerViewModel.model.hasNewVersion),
               activeIcon:
-                  _getMineIcon(true, unreadMsgViewModel.model.hasUnreadMsg),
+                  _getMineIcon(true, unreadMsgViewModel.model.hasUnreadMsg,versionCheckerViewModel.model.hasNewVersion),
               label: StringAssets.mine)
         ],
+      ),
       ),
     );
   }
@@ -75,14 +78,15 @@ class BottomBarView extends StatelessWidget {
   ///
   /// [isActive] 是否被选中
   /// [hasUnreadMsg] 是否有未读消息
-  Widget _getMineIcon(bool isActive, bool hasUnreadMsg) {
+  /// [hasNewVersion] 是否有新版本
+  Widget _getMineIcon(bool isActive, bool hasUnreadMsg, bool hasNewVersion) {
     return Stack(
       alignment: Alignment.topRight,
       children: [
         Icon(
           isActive ? Icons.person : Icons.person_outline,
         ),
-        if (hasUnreadMsg)
+        if (hasUnreadMsg || hasNewVersion)
           const Icon(
             Icons.circle,
             color: Colors.red,

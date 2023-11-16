@@ -36,7 +36,7 @@ class VersionCheckerViewModel
       onDataSuccess: (data, msg) {
         var versionInfoBean = VersionInfoBean.fromJson(data);
         if (versionInfoBean.version.compareTo(AppInfo.version) > 0) {
-          setHasNewVersion(true);
+          _setHasNewVersion(true);
           if (isBegin && versionInfoBean.forcedUpdating) {
             HintDialog(
                 title: StringAssets.haveNewVersion,
@@ -85,7 +85,7 @@ class VersionCheckerViewModel
               as VersionUpdateDialogViewModel;
           var curProgress = ((progress / max) * 100).floor();
           versionUpdateDialogViewModel.setCurProgress(curProgress);
-          setHasNewVersion(false);
+          _setHasNewVersion(false);
           break;
         case StringAssets.doneEnglish:
         case StringAssets.cancelEnglish:
@@ -107,7 +107,7 @@ class VersionCheckerViewModel
   }
 
   /// 设置是否有新版本更新
-  void setHasNewVersion(bool hasNewVersion) {
+  void _setHasNewVersion(bool hasNewVersion) {
     model.hasNewVersion = hasNewVersion;
     notifyListeners();
   }

@@ -61,10 +61,10 @@ class AboutPage extends StatelessWidget {
                 },
                 child: ConsumerView<VersionCheckerViewModel>(
                   builder: (context, appInfo, _) => Stack(
-                    alignment: Alignment.centerLeft,
+                    alignment: Alignment.centerRight,
                     children: [
                       const Padding(
-                        padding: EdgeInsets.only(left: 8, right: 8),
+                        padding: EdgeInsets.only(left: 10, right: 10),
                         child: Text(
                           StringAssets.checkoutUpdate,
                           style: TextStyle(fontSize: 15, color: Colors.black),
@@ -72,7 +72,7 @@ class AboutPage extends StatelessWidget {
                       ),
                       if (appInfo.model.hasNewVersion)
                         const Padding(
-                          padding: EdgeInsets.only(right: 10),
+                          padding: EdgeInsets.only(right: 0),
                           child: Icon(
                             Icons.circle,
                             color: Colors.red,

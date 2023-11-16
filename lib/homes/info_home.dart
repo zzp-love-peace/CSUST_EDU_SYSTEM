@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/common/dialog/edit_dialog.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_picker/picker.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../common/dialog/custom_toast.dart';
 import '../network/http_manager.dart';
 

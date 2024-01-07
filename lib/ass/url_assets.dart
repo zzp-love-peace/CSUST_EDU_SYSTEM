@@ -129,4 +129,16 @@ class UrlAssets {
 
   /// url-通过类别获取社团列表
   static const getAssociationInfoByTabId = '/association/get';
+
+  /// url-刷新个人资料
+  static const refreshStuInfo = '/refreshStuInfo';
+
+  /// url-设置个人资料
+  static const setStuInfo = '/setStuInfo';
+
+  /// url-设置头像
+  static const setHeadImg = '/setHeadImg';
+
+  /// url-恢复默认头像
+  static const restoreHeadImg = '/restoreHeadImg';
 }

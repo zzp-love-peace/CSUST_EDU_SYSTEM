@@ -18,4 +18,7 @@ enum PageResultCode {
 
   /// 帖子状态（点赞或收藏）改变
   forumStateChange,
+
+  /// 修改个人资料
+  stuInfoChange,
 }

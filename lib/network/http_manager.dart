@@ -89,30 +89,4 @@ class HttpManager {
       await _post('/refreshStuInfo',
           params: FormData.fromMap({'cookie': cookie}),
           headers: {"token": token});
-
-  Future<Map> getHeadImage(String cookie, String token) async =>
-      await _post('/getHeadImg',
-          params: FormData.fromMap({'cookie': cookie}),
-          headers: {"token": token});
-
-  Future<Map> queryScore(String token, String cookie, String term) async =>
-      await _post('/queryScore',
-          params: FormData.fromMap({'cookie': cookie, 'xueqi': term}),
-          headers: {"token": token});
-
-  Future<Map> queryExam(String token, String cookie, String term) async =>
-      await _post('/getKsap',
-          params: FormData.fromMap({'cookie': cookie, 'xueqi': term}),
-          headers: {"token": token});
-
-  Future<Map> queryScoreInfo(String token, String cookie, String url) async =>
-      await _post('/queryPscj',
-          params: FormData.fromMap({'cookie': cookie, 'pscjUrl': url}),
-          headers: {"token": token});
-
-  Future<Map> getAssTabs(String token) async =>
-      await _get('/category/getAll', header: token);
-
-  Future<Map> getAssByTab(String token, int id) async =>
-      await _get('/association/get', params: {'id': id} , header: token);
 }

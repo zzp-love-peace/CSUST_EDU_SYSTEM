@@ -36,7 +36,6 @@ class StuInfo {
 
   /// 头像
   static String avatar = StringAssets.emptyStr;
-
   /// 初始化数据
   ///
   /// [stuData] 学生信息相关json数据

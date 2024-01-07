@@ -7,31 +7,56 @@ import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/advice/page/advice_page.dart';
 import 'package:csust_edu_system/ui/mine/view/mine_head_image_container_view.dart';
+import 'package:csust_edu_system/ui/mine/viewmodel/mine_head_container_view_model.dart';
 import 'package:csust_edu_system/ui/notification/page/notification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../../../ass/key_assets.dart';
 import '../../../common/dialog/select_dialog.dart';
 import '../../../common/functionswicher/viewmodel/function_switcher_view_model.dart';
 import '../../../common/unreadmsg/viewmodel/unread_msg_view_model.dart';
 import '../../../common/versionchecker/viewmodel/version_checker_view_model.dart';
-import '../../../homes/info_home.dart';
+import '../../../data/stu_info.dart';
 import '../../login/page/login_page.dart';
 import '../../message/page/message_page.dart';
 import '../../mycollect/page/my_collect_page.dart';
 import '../../myforum/page/my_forum_page.dart';
 import '../../setting/page/setting_page.dart';
+import '../model/mine_head_container_model.dart';
 
 /// 我的页面
 ///
 /// @author zzp
 /// @since 2023/10/22
+/// @version v1.8.8
 class MinePage extends StatelessWidget {
   const MinePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(
+          create: (_) => MineHeadContainerViewModel(
+              model: MineHeadContainerModel(
+                  userName: StuInfo.username, avatar: StuInfo.avatar))),
+    ], child: const MineHome());
+  }
+}
+
+/// 我的页面Home
+///
+/// @author wk
+/// @since 2023/11/27
+/// @version v1.8.8
+class MineHome extends StatelessWidget {
+  const MineHome({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    MineHeadContainerViewModel mineHeadContainerViewModel =
+        context.readViewModel<MineHeadContainerViewModel>();
     return Scaffold(
       appBar: CommonAppBar.create(StringAssets.mine, actions: [
         IconButton(
@@ -57,7 +82,7 @@ class MinePage extends StatelessWidget {
             builder: (ctx, viewModel, _) {
               return viewModel.model.functionSwitchers[KeyAssets.forum] ?? true
                   ? Card(
-                      margin: const EdgeInsets.fromLTRB(12, 10, 12, 0),
+                      margin: const EdgeInsets.fromLTRB(12, 15, 12, 0),
                       color: Colors.white,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -122,7 +147,7 @@ class MinePage extends StatelessWidget {
             },
           ),
           Card(
-            margin: const EdgeInsets.fromLTRB(12, 10, 12, 0),
+            margin: const EdgeInsets.fromLTRB(12, 15, 12, 60),
             color: Colors.white,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -137,9 +162,7 @@ class MinePage extends StatelessWidget {
                     Icons.person_outline,
                     color: Colors.redAccent,
                   ),
-                  onTap: () {
-                    context.push(const InfoHome());
-                  },
+                  onTap: mineHeadContainerViewModel.goToStuInfoPage,
                 ),
                 _mineCardTile(
                   text: StringAssets.systemNotice,
@@ -243,7 +266,7 @@ class MinePage extends StatelessWidget {
       Widget? trailing}) {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-      height: 40,
+      height: 50,
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(12)),
         child: Row(

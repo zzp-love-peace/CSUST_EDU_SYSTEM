@@ -883,4 +883,37 @@ class StringAssets {
 
   /// http
   static const String http = 'http';
+
+  /// 头像
+  static const String headImg = '头像';
+
+  /// 恢复默认头像
+  static const String restoreHeadImg = '恢复默认头像';
+
+  /// 请输入你要修改的昵称
+  static const String pleaseInputChangedUsername = '请输入你要修改的昵称';
+
+  /// 昵称
+  static const String userName = '昵称';
+
+  /// 性别
+  static const String sex = '性别';
+
+  /// 班级
+  static const String className = '班级';
+
+  /// 总绩点
+  static const String totalPoint = '总绩点';
+
+  /// 选择性别
+  static const String selectSex = '选择性别';
+
+  /// 男
+  static const String man = '男';
+
+  /// 女
+  static const String woman = '女';
+
+  /// 个人资料
+  static const String stuInfo = '个人资料';
 }

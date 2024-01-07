@@ -391,4 +391,10 @@ class KeyAssets {
 
   /// key-社团类别名
   static const String categoryName = 'categoryName';
+
+  /// key-图片
+  static const String img = 'img';
+
+  /// ket-总绩点
+  static const String totalPoint = 'totalPoint';
 }

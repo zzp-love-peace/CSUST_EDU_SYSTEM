@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:csust_edu_system/common/dialog/edit_dialog.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_picker/picker.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:image_picker/image_picker.dart';
+
 import '../common/dialog/custom_toast.dart';
 import '../network/http_manager.dart';
 
@@ -30,7 +32,7 @@ class _InfoHomeState extends State<InfoHome> {
 
   late String _stuId;
   late List<int> _pickerIndex;
-  double _allPoint = 0;
+  final double _allPoint = 0;
 
   bool _enable = false;
 
@@ -261,7 +263,7 @@ class _InfoHomeState extends State<InfoHome> {
                   }
                 },
               ),
-            )
+            ),
           ],
         ).toList(),
         // children:
@@ -276,13 +278,13 @@ class _InfoHomeState extends State<InfoHome> {
         if (value.isNotEmpty) {
           SmartDialog.dismiss();
           if (value['code'] == 200) {
-            _refreshStuInfo();
+            // _refreshStuInfo();
             if (_sex != StuInfo.sex || _username != StuInfo.username) {
               HttpManager().setStuInfo(StuInfo.token, _username, _sex).then(
                   (value) {
                 if (value.isNotEmpty) {
                   if (value['code'] == 200) {
-                    _refreshStuInfo();
+                    //_refreshStuInfo();
                     setState(() {
                       _enable = false;
                     });
@@ -335,7 +337,7 @@ class _InfoHomeState extends State<InfoHome> {
     _sex = StuInfo.sex;
     _username = StuInfo.username;
     _avatar = StuInfo.avatar;
-    print("_avatar is " + _avatar);
+    // print("_avatar is " + _avatar);
     _name = StuInfo.name;
     _major = StuInfo.major;
     _college = StuInfo.college;
@@ -387,11 +389,11 @@ class _InfoHomeState extends State<InfoHome> {
         print(value);
         if (value['code'] == 200) {
           StuInfo.initData(value['data']);
-          if (mounted) {
-            setState(() {
-              _initData();
-            });
-          }
+          // if (mounted) {
+          //   setState(() {
+          //     _initData();
+          //   });
+          // }
         } else {
           SmartDialog.compatible
               .showToast('', widget: CustomToast(value['msg']));
@@ -501,7 +503,7 @@ class _HeadImageRowState extends State<_HeadImageRow> {
                   InkWell(
                     child: const Center(
                         child: Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
                             child: Text(
                               '拍照',
                               style:
@@ -515,7 +517,7 @@ class _HeadImageRowState extends State<_HeadImageRow> {
                           _imagePath = image.path;
                         });
                       }
-                      Navigator.pop(context);
+                      // Navigator.pop(context);
                       widget.callback();
                     },
                   ),
@@ -537,6 +539,7 @@ class _HeadImageRowState extends State<_HeadImageRow> {
                         });
                       }
                       Navigator.pop(context);
+                      //context.pop();
                       widget.callback();
                     },
                   ),

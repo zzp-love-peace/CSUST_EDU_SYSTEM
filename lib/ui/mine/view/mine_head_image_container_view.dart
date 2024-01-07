@@ -1,7 +1,9 @@
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/data/stu_info.dart';
+import 'package:csust_edu_system/ui/mine/viewmodel/mine_head_container_view_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../arch/baseview/seletor_view.dart';
 import '../../../common/cachedimage/view/cached_image.dart';
 
 /// 我的页面头像区域View
@@ -19,13 +21,13 @@ class MineHeadImageContainerView extends StatelessWidget {
         ClipPath(
           clipper: _HeaderImageClipper(length: 20),
           child: Container(
-            height: 150,
+            height: 160,
             color: Theme.of(context).primaryColor,
           ),
         ),
         Column(
           children: [
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             Container(
               width: 64,
               height: 64,
@@ -34,24 +36,32 @@ class MineHeadImageContainerView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(40),
               ),
               child: ClipOval(
-                child: CachedImage(
-                  url: StuInfo.avatar,
-                  size: 64,
-                  fit: BoxFit.cover,
-                  isShowDetail: true,
-                ),
+                child: SelectorView<MineHeadContainerViewModel, String>(
+                    selector: (ctx, viewModel) => viewModel.model.avatar,
+                    builder: (ctx, avatar, _) {
+                      return CachedImage(
+                        url: StuInfo.avatar,
+                        size: 64,
+                        fit: BoxFit.cover,
+                        isShowDetail: true,
+                      );
+                    }),
               ),
             ),
             const SizedBox(
               height: 5,
             ),
-            Text(
-              StuInfo.username,
-              style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
+            SelectorView<MineHeadContainerViewModel, String>(
+                selector: (ctx, viewModel) => viewModel.model.userName,
+                builder: (ctx, userName, _) {
+                  return Text(
+                    StuInfo.username,
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  );
+                }),
             Container(
               decoration: const BoxDecoration(
                   color: Colors.white,

@@ -45,10 +45,12 @@ class StuInfoService extends BaseService {
   /// [imgPath] 图片路径
   Future<void> setHeadImg(
       {required String imgPath,
-      required OnDataSuccess<String> onDataSuccess}) async {
+      required OnDataSuccess<String> onDataSuccess,
+      OnFinish? onFinish}) async {
     var params = FormData.fromMap(
         {KeyAssets.img: await MultipartFile.fromFile(imgPath)});
-    post(UrlAssets.setHeadImg, params: params, onDataSuccess: onDataSuccess);
+    post(UrlAssets.setHeadImg,
+        params: params, onDataSuccess: onDataSuccess, onFinish: onFinish);
   }
 
   /// 恢复默认头像

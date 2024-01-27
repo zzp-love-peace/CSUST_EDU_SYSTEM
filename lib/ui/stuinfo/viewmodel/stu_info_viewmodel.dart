@@ -80,8 +80,10 @@ class StuInfoViewModel extends BaseViewModel<StuInfoModel, StuInfoService> {
     service?.setHeadImg(
         imgPath: imgPath,
         onDataSuccess: (data, msg) {
-          SmartDialog.dismiss();
           refreshStuInfo(StuInfo.cookie);
+        },
+        onFinish: (_) {
+          SmartDialog.dismiss();
         });
   }
 

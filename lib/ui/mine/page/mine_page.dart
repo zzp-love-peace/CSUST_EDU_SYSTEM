@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../../../ass/key_assets.dart';
 import '../../../common/dialog/select_dialog.dart';
 import '../../../common/functionswicher/viewmodel/function_switcher_view_model.dart';
 import '../../../common/unreadmsg/viewmodel/unread_msg_view_model.dart';
@@ -80,7 +79,7 @@ class MineHome extends StatelessWidget {
           const MineHeadImageContainerView(),
           ConsumerView<FunctionSwitcherViewModel>(
             builder: (ctx, viewModel, _) {
-              return viewModel.model.functionSwitchers[KeyAssets.forum] ?? true
+              return viewModel.model.functionSwitcherBean.forum
                   ? Card(
                       margin: const EdgeInsets.fromLTRB(12, 15, 12, 0),
                       color: Colors.white,

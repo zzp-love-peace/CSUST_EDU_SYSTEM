@@ -6,7 +6,6 @@ import 'package:csust_edu_system/ui/bottomtab/viewmodel/bottom_tab_view_model.da
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../ass/key_assets.dart';
 import '../../course/page/course_page.dart';
 import '../../forum/page/forum_page.dart';
 import '../../mine/page/mine_page.dart';
@@ -47,9 +46,8 @@ class BottomTabHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConsumerView<FunctionSwitcherViewModel>(
       builder: (_, functionSwitcherViewModel, __) {
-        var forumSwitcher = functionSwitcherViewModel
-                .model.functionSwitchers[KeyAssets.forum] ??
-            true;
+        var forumSwitcher =
+            functionSwitcherViewModel.model.functionSwitcherBean.forum;
         return ConsumerView<BottomTabViewModel>(
           builder: (_, bottomTabViewModel, __) {
             if (bottomTabViewModel.model.pages.length > 3 && !forumSwitcher) {

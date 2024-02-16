@@ -1,5 +1,6 @@
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/common/functionswicher/jsonbean/function_switcher_bean.dart';
 import 'package:csust_edu_system/common/functionswicher/model/function_switcher_model.dart';
 import 'package:csust_edu_system/common/functionswicher/service/function_switcher_service.dart';
 
@@ -19,8 +20,9 @@ class FunctionSwitcherViewModel
   void getFunctionSwitchers() {
     service?.getFunctionSwitchers(
       onDataSuccess: (data, msg) {
-        model.functionSwitchers = data.map((key, value) =>
+        var functionMap = data.map((key, value) =>
             MapEntry<String, bool>(key, value == StringAssets.one));
+        model.functionSwitcherBean = FunctionSwitcherBean.fromJson(functionMap);
         notifyListeners();
       },
     );

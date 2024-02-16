@@ -46,20 +46,23 @@ class StuInfoListTile extends StatelessWidget {
                 trailing,
                 style: const TextStyle(color: Colors.black),
               )
-            : OutlinedButton(
-                onPressed: () {
-                  trailingButtonOnPressed?.call();
-                },
-                child: Text(
-                  trailing,
-                  style: const TextStyle(color: Colors.black),
+            : SizedBox(
+                height: 32,
+                child: OutlinedButton(
+                  onPressed: () {
+                    trailingButtonOnPressed?.call();
+                  },
+                  child: Text(
+                    trailing,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      side: const BorderSide(width: 1),
+                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0)),
                 ),
-                style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    side: const BorderSide(width: 1),
-                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0)),
               ),
       ),
       onTap: () {

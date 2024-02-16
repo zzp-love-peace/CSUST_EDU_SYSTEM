@@ -1,6 +1,5 @@
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/image_assets.dart';
-import 'package:csust_edu_system/ass/key_assets.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/functionswicher/viewmodel/function_switcher_view_model.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
@@ -93,9 +92,7 @@ class SchoolFunctionBarView extends StatelessWidget {
               }),
               ConsumerView<FunctionSwitcherViewModel>(
                 builder: (ctx, viewModel, _) {
-                  return viewModel
-                              .model.functionSwitchers[KeyAssets.serviceHall] ??
-                          false
+                  return viewModel.model.functionSwitcherBean.serviceHall
                       ? _functionItem(
                           StringAssets.serviceHall, ImageAssets.imgServiceHall,
                           () {

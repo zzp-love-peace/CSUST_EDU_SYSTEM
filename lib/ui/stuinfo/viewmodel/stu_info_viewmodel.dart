@@ -193,7 +193,7 @@ class StuInfoViewModel extends BaseViewModel<StuInfoModel, StuInfoService> {
             .toList();
         allGradeList.addAll(gradeList);
         if (term == DateInfo.nowTerm) {
-          model.totalPoint = getSumPoint(allGradeList);
+          model.totalPoint = GradeUtil.getSumPoint(allGradeList);
           SpUtil.put(KeyAssets.totalPoint, model.totalPoint);
           notifyListeners();
           return;

@@ -51,7 +51,7 @@ class GradeViewModel extends BaseViewModel<GradeModel, GradeService> {
           });
           return gradeBean;
         }).toList();
-        model.point = getSumPoint(model.gradeList);
+        model.point = GradeUtil.getSumPoint(model.gradeList);
         notifyListeners();
       },
       onFinish: (isSuccess) {
@@ -60,7 +60,7 @@ class GradeViewModel extends BaseViewModel<GradeModel, GradeService> {
             model.gradeList = dbValue
                 .map((e) => GradeBean.fromJson(jsonDecode(e.content)))
                 .toList();
-            model.point = getSumPoint(model.gradeList);
+            model.point = GradeUtil.getSumPoint(model.gradeList);
             notifyListeners();
           });
         }

@@ -72,7 +72,7 @@ abstract class BaseService {
       OnError? onError,
       OnFinish? onFinish}) {
     onPrepare?.call();
-    HttpHelper().post(path, params, contentType).then((response) {
+    HttpHelper().post(path, params, contentType: contentType).then((response) {
       onComplete?.call();
       handleHttpResponse(
           url: path,

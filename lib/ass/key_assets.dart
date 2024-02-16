@@ -394,7 +394,4 @@ class KeyAssets {
 
   /// key-图片
   static const String img = 'img';
-
-  /// ket-总绩点
-  static const String totalPoint = 'totalPoint';
 }

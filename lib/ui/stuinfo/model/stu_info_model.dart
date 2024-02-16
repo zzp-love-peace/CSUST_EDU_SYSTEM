@@ -1,8 +1,6 @@
 import 'package:csust_edu_system/ass/string_assets.dart';
 
-import '../../../ass/key_assets.dart';
 import '../../../common/picker/common_picker.dart';
-import '../../../util/sp/sp_util.dart';
 
 /// 个人资料model
 ///
@@ -26,7 +24,7 @@ class StuInfoModel {
   String avatar;
 
   ///  总绩点
-  double totalPoint = SpUtil.get<double>(KeyAssets.totalPoint, 0);
+  double totalPoint = -1;
 
   ///  是否可以保存
   bool enable = false;

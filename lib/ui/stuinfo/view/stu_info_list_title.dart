@@ -7,7 +7,12 @@ import 'package:flutter/material.dart';
 /// @version v1.8.8
 class StuInfoListTile extends StatelessWidget {
   const StuInfoListTile(
-      {super.key, required this.leading, required this.trailing, this.onPress});
+      {super.key,
+      required this.leading,
+      required this.trailing,
+      this.isTrailingButton = false,
+      this.trailingButtonOnPressed,
+      this.onPressed});
 
   /// leading-text
   final String leading;
@@ -15,8 +20,14 @@ class StuInfoListTile extends StatelessWidget {
   /// trailing-text
   final String trailing;
 
+  /// 尾部是否为按钮
+  final bool isTrailingButton;
+
+  /// 尾部按钮点击事件
+  final Function? trailingButtonOnPressed;
+
   /// 点击事件回调
-  final Function? onPress;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +41,29 @@ class StuInfoListTile extends StatelessWidget {
       ),
       trailing: Padding(
         padding: const EdgeInsets.only(right: 20),
-        child: Text(
-          trailing,
-          style: const TextStyle(color: Colors.black),
-        ),
+        child: !isTrailingButton
+            ? Text(
+                trailing,
+                style: const TextStyle(color: Colors.black),
+              )
+            : OutlinedButton(
+                onPressed: () {
+                  trailingButtonOnPressed?.call();
+                },
+                child: Text(
+                  trailing,
+                  style: const TextStyle(color: Colors.black),
+                ),
+                style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    side: const BorderSide(width: 1),
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0)),
+              ),
       ),
       onTap: () {
-        onPress?.call();
+        onPressed?.call();
       },
     );
   }

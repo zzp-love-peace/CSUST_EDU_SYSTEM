@@ -57,8 +57,7 @@ class _CourseProgressDialogViewState extends State<CourseProgressDialogView> {
             KeyAssets.cookie: StuInfo.cookie,
             KeyAssets.xueqi: widget.term,
             KeyAssets.zc: i.toString()
-          }),
-          null);
+          }));
       if (res.status == ResponseStatus.success) {
         var responseData = HttpResponseData.fromJson(res.data);
         if (responseData.code == HttpResponseCode.success) {

@@ -29,7 +29,7 @@ class ElectricityService extends BaseService {
               KeyAssets.funname: StringAssets.queryElectricityRoomInfoValue,
               KeyAssets.json: true
             },
-            Headers.formUrlEncodedContentType)
+            contentType: Headers.formUrlEncodedContentType)
         .then(
       (value) {
         if (value.status == ResponseStatus.success) {

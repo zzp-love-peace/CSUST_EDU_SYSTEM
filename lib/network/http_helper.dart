@@ -72,7 +72,7 @@ class HttpHelper {
   /// [path] url路径
   /// [params] 参数
   /// [contentType] 内容类型
-  Future<HttpResponse> post(String path, params, String? contentType) async {
+  Future<HttpResponse> post(String path, params, {String? contentType}) async {
     Response? response;
     HttpResponse res;
     try {

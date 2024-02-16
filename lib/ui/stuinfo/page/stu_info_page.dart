@@ -67,7 +67,7 @@ class StuInfoHome extends StatelessWidget {
                   return StuInfoListTile(
                     leading: StringAssets.userName,
                     trailing: userName,
-                    onPress: stuInfoViewModel.changeUserName,
+                    onPressed: stuInfoViewModel.changeUserName,
                   );
                 }),
             SelectorView<StuInfoViewModel, bool>(
@@ -81,7 +81,7 @@ class StuInfoHome extends StatelessWidget {
                     trailing: stuInfoViewModel.model.sex
                         ? StringAssets.man
                         : StringAssets.woman,
-                    onPress: stuInfoViewModel.selectSex,
+                    onPressed: stuInfoViewModel.selectSex,
                   );
                 }),
             StuInfoListTile(leading: StringAssets.name, trailing: StuInfo.name),
@@ -95,14 +95,20 @@ class StuInfoHome extends StatelessWidget {
                 leading: StringAssets.className, trailing: StuInfo.className),
             SelectorView<StuInfoViewModel, double>(
                 selector: (ctx, viewModel) => viewModel.model.totalPoint,
-                onInit: (ctx) {
-                  stuInfoViewModel.getTotalPoint();
-                },
+                // onInit: (ctx) {
+                //   stuInfoViewModel.getTotalPoint();
+                // },
                 builder: (ctx, totalPoint, _) {
                   return StuInfoListTile(
-                      leading: StringAssets.totalPoint,
-                      trailing:
-                          stuInfoViewModel.model.totalPoint.toStringAsFixed(2));
+                    leading: StringAssets.totalPoint,
+                    trailing: totalPoint > 0
+                        ? stuInfoViewModel.model.totalPoint.toStringAsFixed(2)
+                        : StringAssets.pressCount,
+                    isTrailingButton: totalPoint < 0,
+                    trailingButtonOnPressed: () {
+                      stuInfoViewModel.getTotalPoint();
+                    },
+                  );
                 }),
             SelectorView<StuInfoViewModel, bool>(
                 selector: (ctx, viewModel) => viewModel.model.enable,

@@ -19,7 +19,7 @@ class GradeDBManager {
     return res.map((e) => DBGradeBean.fromMap(e)).toList();
   }
 
-  /// 添加课程
+  /// 添加成绩
   ///
   /// [dbGradeBean] 具体成绩
   static Future<DBGradeBean> insertGrade(DBGradeBean dbGradeBean) async {

@@ -2,21 +2,26 @@ import 'dart:convert';
 
 import 'package:csust_edu_system/arch/baseviewmodel/base_view_model.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
+import 'package:csust_edu_system/common/dialog/hint_dialog.dart';
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ext/string_extension.dart';
+import 'package:csust_edu_system/network/http_helper.dart';
 import 'package:csust_edu_system/ui/stuinfo/model/stu_info_model.dart';
 import 'package:csust_edu_system/ui/stuinfo/service/stu_info_service.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../ass/key_assets.dart';
+import '../../../ass/url_assets.dart';
 import '../../../common/dialog/edit_dialog.dart';
 import '../../../data/stu_info.dart';
+import '../../../network/data/response_status.dart';
 import '../../../util/grade_util.dart';
 import '../../../util/sp/sp_data.dart';
-import '../../../util/sp/sp_util.dart';
 import '../../grade/db/grade_db_manager.dart';
+import '../../grade/json/db_grade_bean.dart';
 import '../../grade/json/grade_bean.dart';
 
 /// 个人资料viewModel
@@ -182,23 +187,59 @@ class StuInfoViewModel extends BaseViewModel<StuInfoModel, StuInfoService> {
   }
 
   /// 获取总绩点
-  void getTotalPoint() {
+  void getTotalPoint() async {
+    SmartDialog.showLoading(msg: StringAssets.loading);
     List allTerm =
         SpData<List<String>>(key: KeyAssets.termList, defaultValue: []).get();
     List<GradeBean> allGradeList = [];
     for (String term in allTerm) {
-      GradeDBManager.getGradesOfTerm(term).then((dbValue) {
+      var dbValue = await GradeDBManager.getGradesOfTerm(term);
+      if (dbValue.isEmpty) {
+        try {
+          var curTermGradeList = await _queryGrade(term);
+          allGradeList.addAll(curTermGradeList);
+        } catch (e) {
+          SmartDialog.dismiss();
+          const HintDialog(
+                  title: StringAssets.tips,
+                  subTitle: StringAssets.queryFailWithError)
+              .showDialog();
+          return;
+        }
+      } else {
         List<GradeBean> gradeList = dbValue
             .map((e) => GradeBean.fromJson(jsonDecode(e.content)))
             .toList();
         allGradeList.addAll(gradeList);
-        if (term == DateInfo.nowTerm) {
-          model.totalPoint = GradeUtil.getSumPoint(allGradeList);
-          SpUtil.put(KeyAssets.totalPoint, model.totalPoint);
-          notifyListeners();
-          return;
-        }
-      });
+      }
+      if (term == DateInfo.nowTerm) {
+        model.totalPoint = GradeUtil.getSumPoint(allGradeList);
+        SmartDialog.dismiss();
+        notifyListeners();
+      }
+    }
+  }
+
+  /// 查询成绩
+  ///
+  /// [term] 学期
+  Future<List<GradeBean>> _queryGrade(String term) async {
+    var params = FormData.fromMap({
+      KeyAssets.cookie: StuInfo.cookie,
+      KeyAssets.xueqi: term,
+    });
+    var res = await HttpHelper().post(UrlAssets.queryScore, params);
+    if (res.status == ResponseStatus.success) {
+      List<GradeBean> gradeList = res.data.map((json) {
+        var gradeBean = GradeBean.fromJson(json);
+        String content = jsonEncode(json);
+        GradeDBManager.insertGrade(
+            DBGradeBean(term, gradeBean.courseName, content));
+        return gradeBean;
+      }).toList();
+      return gradeList;
+    } else {
+      throw Exception();
     }
   }
 }

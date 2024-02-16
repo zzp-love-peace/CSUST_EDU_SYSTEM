@@ -916,4 +916,7 @@ class StringAssets {
 
   /// 个人资料
   static const String stuInfo = '个人资料';
+
+  /// 点击计算
+  static const String pressCount = '点击计算';
 }

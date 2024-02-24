@@ -33,7 +33,7 @@
         </intent>
     </queries>
     <application
-        android:label="长理教务"
+        android:label="长理校园"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true"

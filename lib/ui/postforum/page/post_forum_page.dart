@@ -78,6 +78,7 @@ class PostForumHome extends StatelessWidget {
             const PostForumTabItem(),
             const PostForumImageItem(),
             const PostForumAnonymousItem(),
+
           ],
         ),
       ),

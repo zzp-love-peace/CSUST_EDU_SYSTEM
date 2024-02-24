@@ -141,4 +141,7 @@ class UrlAssets {
 
   /// url-恢复默认头像
   static const restoreHeadImg = '/restoreHeadImg';
+
+  /// 获取交流群号
+  static const getCommunicationGroupID = '/getCommunicationGroupID';
 }

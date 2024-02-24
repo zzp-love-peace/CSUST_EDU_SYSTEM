@@ -55,14 +55,16 @@ class GuideViewModel extends BaseViewModel<EmptyModel, LoginService> {
   /// [username] 用户名
   /// [password] 密码
   void _login(String username, String password) {
-    service?.login(username, password,
+    service?.login(
+      username,
+      password,
       onDataSuccess: (data, msg) {
         var loginBean = LoginBean.fromJson(data);
         StuInfo.token = loginBean.token;
         StuInfo.cookie = loginBean.cookie;
+        context.read<FunctionSwitcherViewModel>().getFunctionSwitchers();
         _getStuInfo(loginBean.cookie);
         _getDateInfo(loginBean.cookie);
-        context.read<FunctionSwitcherViewModel>().getFunctionSwitchers();
       },
       onDataFail: (code, msg) {
         if (code == HttpResponseCode.stuIdOrPasswordWrong) {
@@ -74,7 +76,7 @@ class GuideViewModel extends BaseViewModel<EmptyModel, LoginService> {
       onFinish: (isSuccess) {
         if (!isSuccess) {
           _doOnLoginDataFail();
-          context.pushReplacement( const BottomTabPage());
+          context.pushReplacement(const BottomTabPage());
         }
       },
     );
@@ -84,32 +86,27 @@ class GuideViewModel extends BaseViewModel<EmptyModel, LoginService> {
   ///
   /// [cookie] cookie
   void _getDateInfo(String cookie) {
-    service?.getDateData(cookie,
-      onDataSuccess: (data, msg) {
-        DateInfo.initData(data);
-      },
-      onFinish: (isSuccess) {
-        if (!isSuccess) {
-          DateInfo.initDataFromSp();
-          _computeNowWeek();
-        }
-        context.pushReplacement( const BottomTabPage());
+    service?.getDateData(cookie, onDataSuccess: (data, msg) {
+      DateInfo.initData(data);
+    }, onFinish: (isSuccess) {
+      if (!isSuccess) {
+        DateInfo.initDataFromSp();
+        _computeNowWeek();
       }
-    );
+      Future.delayed(const Duration(milliseconds: 200))
+          .then((value) => context.pushReplacement(const BottomTabPage()));
+    });
   }
 
   /// 获取学生信息相关数据
   ///
   /// [cookie] cookie
   void _getStuInfo(String cookie) {
-    service?.getStuInfo(cookie,
-      onDataSuccess: (data, msg) {
-        StuInfo.initData(data);
-      },
-      onDataFail: (code, msg) {
-        StuInfo.initDataFromSp();
-      }
-    );
+    service?.getStuInfo(cookie, onDataSuccess: (data, msg) {
+      StuInfo.initData(data);
+    }, onDataFail: (code, msg) {
+      StuInfo.initDataFromSp();
+    });
   }
 
   /// 请求数据失败后从缓存读取数据，并计算当前周数

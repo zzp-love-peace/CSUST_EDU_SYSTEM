@@ -1,16 +1,15 @@
+import 'package:csust_edu_system/arch/basedata/empty_model.dart';
 import 'package:csust_edu_system/arch/baseview/consumer_view.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
-import 'package:csust_edu_system/common/dialog/hint_dialog.dart';
 import 'package:csust_edu_system/data/app_info.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
-import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/advice/page/advice_page.dart';
 import 'package:csust_edu_system/ui/mine/view/mine_head_image_container_view.dart';
 import 'package:csust_edu_system/ui/mine/viewmodel/mine_head_container_view_model.dart';
+import 'package:csust_edu_system/ui/mine/viewmodel/mine_view_model.dart';
 import 'package:csust_edu_system/ui/notification/page/notification_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/dialog/select_dialog.dart';
@@ -40,6 +39,8 @@ class MinePage extends StatelessWidget {
           create: (_) => MineHeadContainerViewModel(
               model: MineHeadContainerModel(
                   userName: StuInfo.username, avatar: StuInfo.avatar))),
+      ChangeNotifierProvider(
+          create: (_) => MineViewModel(model: EmptyModel())),
     ], child: const MineHome());
   }
 }
@@ -190,13 +191,7 @@ class MineHome extends StatelessWidget {
                     color: Colors.cyan,
                   ),
                   onTap: () {
-                    Clipboard.setData(const ClipboardData(text: '493018572'));
-                    StringAssets.copyQQGroupNumSuccess.showToast();
-                    const HintDialog(
-                            title: StringAssets.tips,
-                            subTitle:
-                                '教务app交流1群：955731766\n教务app交流2群：493018572')
-                        .showDialog();
+                    context.readViewModel<MineViewModel>().getCommunicationGroupID();
                   },
                 ),
                 _mineCardTile(

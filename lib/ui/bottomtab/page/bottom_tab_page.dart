@@ -21,16 +21,9 @@ class BottomTabPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> pages = [
-      const CoursePage(),
-      const SchoolPage(),
-      const ForumPage(),
-      const MinePage()
-    ];
     return MultiProvider(providers: [
       ChangeNotifierProvider(
-          create: (_) =>
-              BottomTabViewModel(model: BottomTabModel(pages: pages))),
+          create: (_) => BottomTabViewModel(model: BottomTabModel())),
     ], child: const BottomTabHome());
   }
 }
@@ -50,14 +43,22 @@ class BottomTabHome extends StatelessWidget {
             functionSwitcherViewModel.model.functionSwitcherBean.forum;
         return ConsumerView<BottomTabViewModel>(
           builder: (_, bottomTabViewModel, __) {
-            if (bottomTabViewModel.model.pages.length > 3 && !forumSwitcher) {
-              bottomTabViewModel.model.pages.removeAt(2);
-            }
             return WillPopScope(
                 child: Scaffold(
                     body: IndexedStack(
                       index: bottomTabViewModel.model.currentIndex,
-                      children: bottomTabViewModel.model.pages,
+                      children: forumSwitcher
+                          ? [
+                              const CoursePage(),
+                              const SchoolPage(),
+                              const ForumPage(),
+                              const MinePage(),
+                            ]
+                          : [
+                              const CoursePage(),
+                              const SchoolPage(),
+                              const MinePage()
+                            ],
                     ),
                     bottomNavigationBar: BottomBarView(
                         forumSwitcher: forumSwitcher,

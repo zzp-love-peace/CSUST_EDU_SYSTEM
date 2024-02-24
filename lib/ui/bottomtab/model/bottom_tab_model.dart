@@ -6,11 +6,8 @@ import 'package:flutter/cupertino.dart';
 /// @since 2023/9/19
 /// @version v1.8.8
 class BottomTabModel {
-  BottomTabModel({this.currentIndex = 0, required this.pages});
+  BottomTabModel({this.currentIndex = 0});
 
   /// 当前页面index
   int currentIndex;
-
-  /// 页面列表
-  final List<Widget> pages;
 }

@@ -6,7 +6,7 @@ import 'package:csust_edu_system/ui/mine/model/mine_head_container_model.dart';
 import '../../stuinfo/model/stu_info_model.dart';
 import '../../stuinfo/page/stu_info_page.dart';
 
-/// 我的页面头部Model
+/// 我的页面头部ViewModel
 ///
 /// @author wk
 /// @since 2023/11/27

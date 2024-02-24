@@ -81,10 +81,11 @@ class LoginViewModel extends BaseViewModel<LoginModel, LoginService> {
           _saveLoginPageData();
           StuInfo.token = loginBean.token;
           StuInfo.cookie = loginBean.cookie;
+          context.read<FunctionSwitcherViewModel>().getFunctionSwitchers();
           _getDateInfo(loginBean.cookie);
           _getStuInfo(loginBean.cookie);
-          context.read<FunctionSwitcherViewModel>().getFunctionSwitchers();
-          context.pushReplacement(const BottomTabPage());
+          Future.delayed(const Duration(milliseconds: 200))
+              .then((value) => context.pushReplacement(const BottomTabPage()));
         },
         onDataFail: (code, msg) {
           HintDialog(title: StringAssets.tips, subTitle: msg).showDialog();

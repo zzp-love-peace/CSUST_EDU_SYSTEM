@@ -11,4 +11,9 @@ class HttpResponse<T> {
   ResponseStatus status;
   /// 数据
   T data;
+
+  @override
+  String toString() {
+    return '{status:$status, data:$data}';
+  }
 }

@@ -7,8 +7,8 @@ class StringAssets {
   /// 空字符串
   static const String emptyStr = '';
 
-  /// app名「长理教务」
-  static const String appName = '长理教务';
+  /// app名「长理校园」
+  static const String appName = '长理校园';
 
   /// 校训上半句
   static const String schoolMotto1 = '博学 力行';
@@ -469,11 +469,11 @@ class StringAssets {
 
   /// 服务介绍详情
   static const String serviceDetailIntroduce =
-      '亲爱的同学们，长理教务联合湖南移动天心分公司为大家打造线上校园卡订购服务，在这里可以额外享受到的是轻松的线上预定，便利的送卡上门、活动期间精美的小礼品、优质的售后服务。';
+      '亲爱的同学们，长理校园联合湖南移动天心分公司为大家打造线上校园卡订购服务，在这里可以额外享受到的是轻松的线上预定，便利的送卡上门、活动期间精美的小礼品、优质的售后服务。';
 
   /// 免责声明
   static const String disclaimers =
-      '免责声明：长理教务仅负责校园卡的线上预定，校园卡问题仅需联系客服交由中国移动员工处理。';
+      '免责声明：长理校园仅负责校园卡的线上预定，校园卡问题仅需联系客服交由中国移动员工处理。';
 
   /// 电话卡提示
   static const String tipsTelephone =

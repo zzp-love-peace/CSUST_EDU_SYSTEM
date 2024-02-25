@@ -10,6 +10,10 @@ class StringAssets {
   /// app名「长理校园」
   static const String appName = '长理校园';
 
+  /// 项目github地址
+  static const String projectUrl =
+      'https://github.com/zzp-love-peace/CSUST_EDU_SYSTEM';
+
   /// 校训上半句
   static const String schoolMotto1 = '博学 力行';
 
@@ -923,4 +927,7 @@ class StringAssets {
   /// 发帖底部tips
   static const String postForumBottomTips =
       'tips：论坛信息在后台均已实名，请勿发布违规内容，若造成负面影响后果自负！';
+
+  /// 点击复制
+  static const String clickCopy = '点击复制';
 }

@@ -2,7 +2,9 @@ import 'package:csust_edu_system/ass/image_assets.dart';
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/appbar/common_app_bar.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
+import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../arch/baseview/consumer_view.dart';
 import '../../../common/versionchecker/viewmodel/version_checker_view_model.dart';
@@ -49,39 +51,55 @@ class AboutPage extends StatelessWidget {
             ),
             OutlinedButton(
               style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                  ),
-                  side: const BorderSide(width: 1),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
                 ),
-                onPressed: () {
-                  context
-                      .readViewModel<VersionCheckerViewModel>()
-                      .checkoutVersion();
-                },
-                child: ConsumerView<VersionCheckerViewModel>(
-                  builder: (context, appInfo, _) => Stack(
-                    alignment: Alignment.centerRight,
-                    children: [
+                side: const BorderSide(width: 1),
+              ),
+              onPressed: () {
+                context
+                    .readViewModel<VersionCheckerViewModel>()
+                    .checkoutVersion();
+              },
+              child: ConsumerView<VersionCheckerViewModel>(
+                builder: (context, appInfo, _) => Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      child: Text(
+                        StringAssets.checkoutUpdate,
+                        style: TextStyle(fontSize: 15, color: Colors.black),
+                      ),
+                    ),
+                    if (appInfo.model.hasNewVersion)
                       const Padding(
-                        padding: EdgeInsets.only(left: 10, right: 10),
-                        child: Text(
-                          StringAssets.checkoutUpdate,
-                          style: TextStyle(fontSize: 15, color: Colors.black),
+                        padding: EdgeInsets.only(right: 0),
+                        child: Icon(
+                          Icons.circle,
+                          color: Colors.red,
+                          size: 9,
                         ),
                       ),
-                      if (appInfo.model.hasNewVersion)
-                        const Padding(
-                          padding: EdgeInsets.only(right: 0),
-                          child: Icon(
-                            Icons.circle,
-                            color: Colors.red,
-                            size: 9,
-                          ),
-                        ),
-                    ],
-                  ),
-                )),
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Clipboard.setData(
+                    const ClipboardData(text: StringAssets.projectUrl));
+                StringAssets.copySuccess.showToast();
+              },
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(3, 15, 3, 15),
+                child: Text(
+                  StringAssets.projectUrl,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
+              ),
+            ),
             const Card(
               margin: EdgeInsets.fromLTRB(24, 15, 24, 15),
               shape: RoundedRectangleBorder(

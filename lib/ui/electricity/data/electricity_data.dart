@@ -157,6 +157,10 @@ class Constant {
     _buildingMap["敏行轩1栋B区"] = "184";
     _buildingMap["敏行轩2栋A区"] = "513";
     _buildingMap["敏行轩2栋B区"] = "520";
+    _buildingMap["敏行轩3栋A区"] = "527";
+    _buildingMap["敏行轩3栋B区"] = "528";
+    _buildingMap["敏行轩4栋A区"] = "529";
+    _buildingMap["敏行轩4栋B区"] = "530";
     _buildingMap["行健轩1栋A区"] = "85";
     _buildingMap["行健轩1栋B区"] = "92";
     _buildingMap["行健轩2栋A区"] = "99";

@@ -1,7 +1,7 @@
   # 长理校园APP
 
 本项目基于Flutter实现Android与iOS双端应用，服务于长沙理工大学各年级本科生，提供查课表、查成绩、查考试安排、校内论坛等多项功能。
-项目架构是基于provider封装MVVM，实现视图与业务逻辑的分离。
+项目架构是基于provider封装的MVVM，实现视图与业务逻辑的分离。
 
 ## Getting Started
 

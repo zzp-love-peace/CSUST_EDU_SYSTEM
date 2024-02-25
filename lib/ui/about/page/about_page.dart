@@ -100,8 +100,9 @@ class AboutPage extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(24, 12, 24, 20),
-                    child: Text('本app由长沙理工大学计通学院凡路实验室成员开发，'
-                        '对app有任何的建议，都可以反馈给我们。非常期待您推荐给身边的同学。'),
+                    child:
+                        Text('本app由长沙理工大学计通学院凡路实验室成员开发，并非官方应用，且与长沙理工大学教务处无任何关联。'
+                            '对app有任何的建议，都可以反馈给我们。非常期待您推荐给身边的同学。'),
                   ),
                 ],
               ),

@@ -1,7 +1,6 @@
 import 'package:csust_edu_system/ass/string_assets.dart';
 import 'package:csust_edu_system/common/cachedimage/data/cached_image_type.dart';
 import 'package:csust_edu_system/common/cachedimage/view/cached_image.dart';
-import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/forumdetail/jsonbean/reply_bean.dart';
 import 'package:csust_edu_system/ui/forumdetail/viewmodel/comment_item_view_model.dart';
 import 'package:csust_edu_system/ui/forumdetail/viewmodel/forum_detail_view_model.dart';
@@ -76,8 +75,8 @@ class ReplyItemView extends StatelessWidget {
                 child: RichText(
                   text: TextSpan(
                     text: replyBean.replyName == null
-                        ? '${replyBean.realInfo.name.hideName()}：'
-                        : replyBean.realInfo.name.hideName(),
+                        ? '${replyBean.userInfo.username}：'
+                        : replyBean.userInfo.username,
                     style: TextStyle(
                         fontSize: 14, color: Theme.of(context).primaryColor),
                     children: [
@@ -88,7 +87,7 @@ class ReplyItemView extends StatelessWidget {
                         ),
                       if (replyBean.replyName != null)
                         TextSpan(
-                          text: '${replyBean.replyName!.hideName()}：',
+                          text: '${replyBean.replyName!}：',
                           style: TextStyle(
                               fontSize: 14,
                               color: Theme.of(context).primaryColor),

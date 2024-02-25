@@ -7,7 +7,6 @@ import 'package:csust_edu_system/common/forumlist/view/forum_control_view.dart';
 import 'package:csust_edu_system/common/forumlist/view/forum_image_view.dart';
 import 'package:csust_edu_system/common/forumlist/viewmodel/forum_item_view_model.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
-import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/util/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -80,11 +79,11 @@ class ForumItemView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Hero(
-                            tag: forum.realInfo.name +
+                            tag: forum.userInfo.username +
                                 forum.id.toString() +
                                 forumItemTypeToHeroTag(type),
                             child: Text(
-                              forum.realInfo.name.hideName(),
+                              forum.userInfo.username,
                               style: const TextStyle(
                                   fontSize: 14, color: Colors.black),
                             ),

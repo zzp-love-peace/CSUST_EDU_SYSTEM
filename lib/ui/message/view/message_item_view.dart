@@ -1,5 +1,4 @@
 import 'package:csust_edu_system/ass/string_assets.dart';
-import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:csust_edu_system/ui/message/jsonbean/message_bean.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +53,7 @@ class MessageItemView extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    msg.realInfo.name.hideName(),
+                    msg.userInfo.username,
                     style: const TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   Padding(

@@ -919,4 +919,8 @@ class StringAssets {
 
   /// 点击计算
   static const String pressCount = '点击计算';
+
+  /// 发帖底部tips
+  static const String postForumBottomTips =
+      'tips：论坛信息在后台均已实名，请勿发布违规内容，若造成负面影响后果自负！';
 }

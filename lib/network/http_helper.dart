@@ -21,7 +21,7 @@ class HttpHelper {
 
   /// url
   // static const _baseUrl = 'http://finalab.cn:8989';
-  static const _baseUrl = 'http://cop.eigeen.com';
+  static const _baseUrl = 'http://sdev.eigeen.com:8500';
 
   /// dio对象
   Dio? _dio;

@@ -78,7 +78,13 @@ class PostForumHome extends StatelessWidget {
             const PostForumTabItem(),
             const PostForumImageItem(),
             const PostForumAnonymousItem(),
-
+            const Padding(
+              padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
+              child: Text(
+                StringAssets.postForumBottomTips,
+                style: TextStyle(color: Colors.grey),
+              ),
+            )
           ],
         ),
       ),

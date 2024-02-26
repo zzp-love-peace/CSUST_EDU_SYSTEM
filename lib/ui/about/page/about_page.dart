@@ -30,13 +30,10 @@ class AboutPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              child: Image.asset(
-                ImageAssets.logo,
-                width: 80,
-                height: 80,
-              ),
+            Image.asset(
+              ImageAssets.logo,
+              width: 80,
+              height: 80,
             ),
             const SizedBox(
               height: 20,

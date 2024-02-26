@@ -19,8 +19,8 @@ class GuidePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => GuideViewModel(model: EmptyModel()),
-      child: const GuideHome());
+        create: (_) => GuideViewModel(model: EmptyModel()),
+        child: const GuideHome());
   }
 }
 
@@ -36,7 +36,6 @@ class GuideHome extends StatefulWidget {
 }
 
 class _GuideHomeState extends State<GuideHome> {
-
   late GuideViewModel _guideViewModel;
 
   @override
@@ -48,64 +47,63 @@ class _GuideHomeState extends State<GuideHome> {
           .addPostFrameCallback((_) => _guideViewModel.doPreWork());
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     List<Widget> schoolMotto1TextList = [];
     List<Widget> schoolMotto2TextList = [];
-    schoolMotto1TextList.addAll(StringAssets.schoolMotto1.split('')
-        .map((char) => _guideText(char)).toList());
+    schoolMotto1TextList.addAll(StringAssets.schoolMotto1
+        .split('')
+        .map((char) => _guideText(char))
+        .toList());
     schoolMotto1TextList.add(const SizedBox(height: 70));
     schoolMotto2TextList.add(const SizedBox(height: 70));
-    schoolMotto2TextList.addAll(StringAssets.schoolMotto2.split('')
-        .map((char) => _guideText(char)).toList());
+    schoolMotto2TextList.addAll(StringAssets.schoolMotto2
+        .split('')
+        .map((char) => _guideText(char))
+        .toList());
     return Scaffold(
         body: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: schoolMotto1TextList),
+              const SizedBox(
+                width: 30,
+              ),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: schoolMotto2TextList)
+            ],
+          ),
+        ),
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: schoolMotto1TextList
-                  ),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: schoolMotto2TextList
-                  )
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  child: Image.asset(
-                    ImageAssets.logo,
-                    width: 60,
-                    height: 60,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                const Text(
-                  StringAssets.appName,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
+            Image.asset(
+              ImageAssets.logo,
+              width: 60,
+              height: 60,
             ),
             const SizedBox(
-              height: 80,
-            )
+              width: 10,
+            ),
+            const Text(
+              StringAssets.appName,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ],
-        ));
+        ),
+        const SizedBox(
+          height: 80,
+        )
+      ],
+    ));
   }
 
   /// 开屏引导页文字
@@ -119,4 +117,3 @@ class _GuideHomeState extends State<GuideHome> {
             fontStyle: FontStyle.italic));
   }
 }
-

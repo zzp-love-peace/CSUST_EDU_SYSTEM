@@ -23,7 +23,7 @@ class MineViewModel extends BaseViewModel<EmptyModel, MineService> {
     service?.getCommunicationGroupID(onDataSuccess: (data, msg) {
       Clipboard.setData(ClipboardData(text: data));
       StringAssets.copyQQGroupNumSuccess.showToast();
-      HintDialog(title: StringAssets.tips, subTitle: '教务app交流群：$data')
+      HintDialog(title: StringAssets.tips, subTitle: '长理校园app交流群：$data')
           .showDialog();
     });
   }

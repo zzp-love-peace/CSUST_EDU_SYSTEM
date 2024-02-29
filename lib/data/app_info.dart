@@ -5,7 +5,7 @@
 /// @version v1.8.8
 class AppInfo {
   /// 版本号
-  static const String version = 'v1.8.8';
+  static const String version = 'v1.8.9';
 
   /// app名
   static const String appName = '新长理校园';

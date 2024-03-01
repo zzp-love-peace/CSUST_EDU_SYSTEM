@@ -6,16 +6,13 @@ import 'package:csust_edu_system/common/dialog/hint_dialog.dart';
 import 'package:csust_edu_system/data/date_info.dart';
 import 'package:csust_edu_system/ext/context_extension.dart';
 import 'package:csust_edu_system/ext/string_extension.dart';
-import 'package:csust_edu_system/network/data/http_response.dart';
 import 'package:csust_edu_system/network/http_helper.dart';
 import 'package:csust_edu_system/ui/stuinfo/model/stu_info_model.dart';
 import 'package:csust_edu_system/ui/stuinfo/service/stu_info_service.dart';
-import 'package:csust_edu_system/util/log.dart';
 import 'package:csust_edu_system/util/typedef_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:logger/logger.dart';
 
 import '../../../ass/key_assets.dart';
 import '../../../ass/url_assets.dart';
@@ -197,27 +194,26 @@ class StuInfoViewModel extends BaseViewModel<StuInfoModel, StuInfoService> {
     SmartDialog.showLoading(msg: StringAssets.loading);
     List allTerm =
         SpData<List<String>>(key: KeyAssets.termList, defaultValue: []).get();
-    Log.d(allTerm);
     List<GradeBean> allGradeList = [];
     for (String term in allTerm) {
-      var dbValue = await GradeDBManager.getGradesOfTerm(term);
-      if (dbValue.isEmpty) {
-        try {
-          var curTermGradeList = await _queryGrade(term);
-          allGradeList.addAll(curTermGradeList);
-        } catch (e) {
+      try {
+        var curTermGradeList = await _queryGrade(term);
+        allGradeList.addAll(curTermGradeList);
+      } catch (e) {
+        var dbValue = await GradeDBManager.getGradesOfTerm(term);
+        if (dbValue.isEmpty && term != DateInfo.nowTerm) {
           SmartDialog.dismiss();
           const HintDialog(
                   title: StringAssets.tips,
                   subTitle: StringAssets.queryFailWithError)
               .showDialog();
           return;
+        } else {
+          List<GradeBean> gradeList = dbValue
+              .map((e) => GradeBean.fromJson(jsonDecode(e.content)))
+              .toList();
+          allGradeList.addAll(gradeList);
         }
-      } else {
-        List<GradeBean> gradeList = dbValue
-            .map((e) => GradeBean.fromJson(jsonDecode(e.content)))
-            .toList();
-        allGradeList.addAll(gradeList);
       }
       if (term == DateInfo.nowTerm) {
         model.totalPoint = GradeUtil.getSumPoint(allGradeList);

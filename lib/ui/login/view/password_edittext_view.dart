@@ -25,6 +25,7 @@ class PasswordEditTextView extends StatelessWidget {
                 border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 labelText: StringAssets.password,
+                hintText: StringAssets.passwordHint,
                 suffixIcon: IconButton(
                     onPressed: () {
                       viewModel.changePasswordVisible();

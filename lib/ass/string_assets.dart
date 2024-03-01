@@ -29,6 +29,9 @@ class StringAssets {
   /// 密码
   static const String password = '密码';
 
+  /// 密码提示
+  static const String passwordHint = '与教学一体化服务平台密码一致';
+
   /// 记住密码&自动登录
   static const String rememberPasswordAndAutoLogin = '记住密码&自动登录';
 

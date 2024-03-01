@@ -95,9 +95,6 @@ class StuInfoHome extends StatelessWidget {
                 leading: StringAssets.className, trailing: StuInfo.className),
             SelectorView<StuInfoViewModel, double>(
                 selector: (ctx, viewModel) => viewModel.model.totalPoint,
-                // onInit: (ctx) {
-                //   stuInfoViewModel.getTotalPoint();
-                // },
                 builder: (ctx, totalPoint, _) {
                   return StuInfoListTile(
                     leading: StringAssets.totalPoint,

@@ -12,7 +12,6 @@ import 'package:csust_edu_system/ui/forumdetail/viewmodel/forum_detail_view_mode
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:provider/provider.dart';
-
 import '../../../common/dialog/select_dialog.dart';
 import '../../../common/forumlist/data/forum_item_type.dart';
 import '../../../common/forumlist/jsonbean/forum_bean.dart';

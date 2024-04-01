@@ -196,18 +196,24 @@ class DateUtil {
     } else {
       hour = postDateTime.hour.toString();
     }
+    // 计算天数差的postDateTime（置零）
+    var zpostDateTime = DateTime(postDateTime.year,postDateTime.month,postDateTime.day,0,0);
+    // 计算天数差的nowDateTime（置零）
+    var znowDateTime = DateTime(nowDateTime.year,nowDateTime.month,nowDateTime.day,0,0);
+    // 计算天数差的zdiffDateTime (置零)
+    var zdiffDateTime = znowDateTime.difference(zpostDateTime);
     String res =
         '${postDateTime.year} ${postDateTime.month}/${postDateTime.day} $hour:$minute';
     if (nowDateTime.year == postDateTime.year) {
       res = '${postDateTime.month}/${postDateTime.day} $hour:$minute';
     }
-    if (diffDateTime.inDays == 3) {
+    if (zdiffDateTime.inDays == 3) {
       res = '大前天 $hour:$minute';
-    } else if (diffDateTime.inDays == 2) {
+    } else if (zdiffDateTime.inDays == 2) {
       res = '前天 $hour:$minute';
-    } else if (diffDateTime.inDays == 1) {
+    } else if (zdiffDateTime.inDays == 1) {
       res = '昨天 $hour:$minute';
-    } else if (diffDateTime.inDays == 0) {
+    } else if (zdiffDateTime.inDays == 0) {
       res = '今天 $hour:$minute';
       if (diffDateTime.inMinutes < 1) {
         res = StringAssets.justNow;

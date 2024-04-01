@@ -4,7 +4,6 @@ import 'package:csust_edu_system/ext/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-
 import '../../../common/dialog/hint_dialog.dart';
 import '../../../common/dialog/select_dialog.dart';
 
